@@ -38,7 +38,9 @@ all things vehicle. database part: vehicle table.
 also:
 <br>
 #### eureka
+service discovery
 #### zuul
+gateway
 ### Authors
 *   [Vladimir Popović](https://github.com/PopovicV)
 *   [Ivana Brkić](https://github.com/ivanabrkic)
