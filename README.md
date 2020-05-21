@@ -3,6 +3,14 @@
 ### Team X 
 ![GitHub Logo](https://github.com/rushbdonotstop/main-app-rent-a-car/blob/master/service.png)
 <a href='https://pngtree.com/so/isometric'>isometric png from pngtree.com</a>
+<br>
+
+<br>
+
+Model was created using PowerDesigner15. If unable to open, screenshot is also present.
+
+<br>
+
 ### Microservices:
 #### cart
 #### catalogue
