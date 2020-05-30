@@ -10,14 +10,16 @@ public class VehicleBuilder {
     private int mileageLimit;
     private boolean collisionProtection;
     private int childrenSeats;
-    private int picture;
+    private String picturePath;
     private Date startDate;
     private Date endDate;
-    private Long vehicleFuelTypeId;
-    private Long vehicleMakeId;
-    private Long vehicleModelId;
-    private Long vehicleStypeId;
-    private Long vehicleTransmissionId;
+    private Long fuelTypeId;
+    private Long makeId;
+    private Long modelId;
+    private Long styleId;
+    private Long transmissionId;
+    private Long locationId;
+    private Long userId;
 
     public VehicleBuilder setId(long id) {
         this.id = id;
@@ -44,8 +46,8 @@ public class VehicleBuilder {
         return this;
     }
 
-    public VehicleBuilder setPicture(int picture) {
-        this.picture = picture;
+    public VehicleBuilder setPicture(String picturePath) {
+        this.picturePath = picturePath;
         return this;
     }
 
@@ -59,32 +61,42 @@ public class VehicleBuilder {
         return this;
     }
 
-    public VehicleBuilder setVehicleFuelTypeId(Long vehicleFuelTypeId) {
-        this.vehicleFuelTypeId = vehicleFuelTypeId;
+    public VehicleBuilder setFuelTypeId(Long fuelTypeId) {
+        this.fuelTypeId = fuelTypeId;
         return this;
     }
 
-    public VehicleBuilder setVehicleMakeId(Long vehicleMakeId) {
-        this.vehicleMakeId = vehicleMakeId;
+    public VehicleBuilder setMakeId(Long makeId) {
+        this.makeId = makeId;
         return this;
     }
 
-    public VehicleBuilder setVehicleModelId(Long vehicleModelId) {
-        this.vehicleModelId = vehicleModelId;
+    public VehicleBuilder setModelId(Long modelId) {
+        this.modelId = modelId;
         return this;
     }
 
-    public VehicleBuilder setVehicleStypeId(Long vehicleStypeId) {
-        this.vehicleStypeId = vehicleStypeId;
+    public VehicleBuilder setStyleId(Long styleId) {
+        this.styleId = styleId;
         return this;
     }
 
-    public VehicleBuilder setVehicleTransmissionId(Long vehicleTransmissionId) {
-        this.vehicleTransmissionId = vehicleTransmissionId;
+    public VehicleBuilder setTransmissionId(Long transmissionId) {
+        this.transmissionId = transmissionId;
+        return this;
+    }
+
+    public VehicleBuilder setLocationId(Long locationId) {
+        this.locationId = locationId;
+        return this;
+    }
+
+    public VehicleBuilder setUserId(Long userId) {
+        this.userId = userId;
         return this;
     }
 
     public Vehicle createVehicle() {
-        return new Vehicle(id, mileage, mileageLimit, collisionProtection, childrenSeats, picture, startDate, endDate, vehicleFuelTypeId, vehicleMakeId, vehicleModelId, vehicleStypeId, vehicleTransmissionId);
+        return new Vehicle(id, mileage, mileageLimit, collisionProtection, childrenSeats, picturePath, startDate, endDate, fuelTypeId, makeId, modelId, styleId, transmissionId, locationId, userId);
     }
 }

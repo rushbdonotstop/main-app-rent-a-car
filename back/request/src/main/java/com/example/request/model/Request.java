@@ -1,11 +1,9 @@
 package com.example.request.model;
 
 import com.example.request.model.enums.Status;
-import org.joda.time.LocalDate;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.time.LocalDate;
+
 
 @Entity
 public class Request {

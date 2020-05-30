@@ -26,13 +26,13 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     List<Vehicle> findByEndDate(Date endDate);
 
-    List<Vehicle> findByVehicleFuelTypeId(Long Id);
+    List<Vehicle> findByFuelTypeId(Long Id);
 
-    List<Vehicle> findByVehicleMakeId(Long Id);
+    List<Vehicle> findByMakeId(Long Id);
 
-    List<Vehicle> findByVehicleModelId(Long Id);
+    List<Vehicle> findByModelId(Long Id);
 
-    List<Vehicle> findByVehicleStypeId(Long Id);
+    List<Vehicle> findByStyleId(Long Id);
 
-    List<Vehicle> findByVehicleTransmissionId(Long Id);
+    List<Vehicle> findByTransmissionId(Long Id);
 }

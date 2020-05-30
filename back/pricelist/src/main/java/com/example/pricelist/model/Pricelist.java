@@ -1,22 +1,22 @@
 package com.example.pricelist.model;
 
-import com.example.pricelist.model.builders.PriceListBuilder;
+import com.example.pricelist.model.builders.PricelistBuilder;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-public class PriceList {
+public class Pricelist {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="start_date", nullable=false)
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name="end_date", nullable = false)
-    private Date endDate;
+    private LocalDate  endDate;
 
     @Column(name="price", nullable = false)
     private float price;
@@ -34,10 +34,10 @@ public class PriceList {
     @JoinColumn(name = "discount_id", referencedColumnName = "id", nullable = false)
     private VehicleDiscount vehicleDiscount;
 
-    public PriceList() {
+    public Pricelist() {
     }
 
-    public PriceList(Date startDate, Date endDate, float price, float priceByMile, float priceCollision, Long vehicleId, VehicleDiscount vehicleDiscount) {
+    public Pricelist(LocalDate startDate, LocalDate endDate, float price, float priceByMile, float priceCollision, Long vehicleId, VehicleDiscount vehicleDiscount) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.price = price;
@@ -47,8 +47,8 @@ public class PriceList {
         this.vehicleDiscount = vehicleDiscount;
     }
 
-    public static PriceListBuilder builder(){
-        return new PriceListBuilder();
+    public static PricelistBuilder builder(){
+        return new PricelistBuilder();
     }
 
 
@@ -60,19 +60,19 @@ public class PriceList {
         this.id = id;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
