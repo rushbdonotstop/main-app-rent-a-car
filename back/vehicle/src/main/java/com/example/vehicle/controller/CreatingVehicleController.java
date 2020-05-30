@@ -22,7 +22,7 @@ public class CreatingVehicleController {
     /**
      * POST /server/create
      *
-     * @return string which indicates status of operation creating certificate
+     * @return return status of creating vehicle request
      */
     @PostMapping(value = "/create", consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> create(@RequestBody NewVehicleDTO newVehicleDTO) throws Exception {
