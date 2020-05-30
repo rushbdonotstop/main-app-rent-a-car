@@ -1,5 +1,7 @@
 package com.example.pricelist.model;
 
+import com.example.pricelist.model.builders.PriceListBuilder;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -28,16 +30,21 @@ public class PriceList {
     @Column(name="vehicle_id", nullable = false)
     private Long vehicleId;
 
+    @OneToOne
+    @JoinColumn(name = "discount_id", referencedColumnName = "id", nullable = false)
+    private VehicleDiscount vehicleDiscount;
+
     public PriceList() {
     }
 
-    public PriceList(Date startDate, Date endDate, float price, float priceByMile, float priceCollision, Long vehicleId) {
+    public PriceList(Date startDate, Date endDate, float price, float priceByMile, float priceCollision, Long vehicleId, VehicleDiscount vehicleDiscount) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.price = price;
         this.priceByMile = priceByMile;
         this.priceCollision = priceCollision;
         this.vehicleId = vehicleId;
+        this.vehicleDiscount = vehicleDiscount;
     }
 
     public static PriceListBuilder builder(){
@@ -93,6 +100,22 @@ public class PriceList {
         this.priceCollision = priceCollision;
     }
 
+    public Long getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(Long vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public VehicleDiscount getVehicleDiscount() {
+        return vehicleDiscount;
+    }
+
+    public void setVehicleDiscount(VehicleDiscount vehicleDiscount) {
+        this.vehicleDiscount = vehicleDiscount;
+    }
+
     @Override
     public String toString() {
         return "PriceList{" +
@@ -102,6 +125,8 @@ public class PriceList {
                 ", price=" + price +
                 ", priceByMile=" + priceByMile +
                 ", priceCollision=" + priceCollision +
+                ", vehicleId=" + vehicleId +
+                ", vehicleDiscount=" + vehicleDiscount +
                 '}';
     }
 }
