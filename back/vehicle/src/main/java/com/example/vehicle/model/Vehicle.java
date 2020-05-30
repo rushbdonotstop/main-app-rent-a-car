@@ -33,7 +33,23 @@ public class Vehicle {
     @Column(name="end_date", nullable = false)
     private Date endDate;
 
-    public Vehicle(int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, int picture, Date startDate, Date endDate) {
+    @Column(name="vehicle_fuel_type_id", nullable = false)
+    private Long vehicleFuelTypeId;
+
+    @Column(name="vehicle_make_id", nullable = false)
+    private Long vehicleMakeId;
+
+    @Column(name="vehicle_model_id", nullable = false)
+    private Long vehicleModelId;
+
+    @Column(name="vehicle_style_id", nullable = false)
+    private Long vehicleStypeId;
+
+    @Column(name="vehicle_transmission_id", nullable = false)
+    private Long vehicleTransmissionId;
+
+    public Vehicle(long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, int picture, Date startDate, Date endDate, Long vehicleFuelTypeId, Long vehicleMakeId, Long vehicleModelId, Long vehicleStypeId, Long vehicleTransmissionId) {
+        this.id = id;
         this.mileage = mileage;
         this.mileageLimit = mileageLimit;
         this.collisionProtection = collisionProtection;
@@ -41,6 +57,11 @@ public class Vehicle {
         this.picture = picture;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.vehicleFuelTypeId = vehicleFuelTypeId;
+        this.vehicleMakeId = vehicleMakeId;
+        this.vehicleModelId = vehicleModelId;
+        this.vehicleStypeId = vehicleStypeId;
+        this.vehicleTransmissionId = vehicleTransmissionId;
     }
 
     public Vehicle() {
@@ -114,6 +135,50 @@ public class Vehicle {
         this.endDate = endDate;
     }
 
+    public boolean isCollisionProtection() {
+        return collisionProtection;
+    }
+
+    public Long getVehicleFuelTypeId() {
+        return vehicleFuelTypeId;
+    }
+
+    public void setVehicleFuelTypeId(Long vehicleFuelTypeId) {
+        this.vehicleFuelTypeId = vehicleFuelTypeId;
+    }
+
+    public Long getVehicleMakeId() {
+        return vehicleMakeId;
+    }
+
+    public void setVehicleMakeId(Long vehicleMakeId) {
+        this.vehicleMakeId = vehicleMakeId;
+    }
+
+    public Long getVehicleModelId() {
+        return vehicleModelId;
+    }
+
+    public void setVehicleModelId(Long vehicleModelId) {
+        this.vehicleModelId = vehicleModelId;
+    }
+
+    public Long getVehicleStypeId() {
+        return vehicleStypeId;
+    }
+
+    public void setVehicleStypeId(Long vehicleStypeId) {
+        this.vehicleStypeId = vehicleStypeId;
+    }
+
+    public Long getVehicleTransmissionId() {
+        return vehicleTransmissionId;
+    }
+
+    public void setVehicleTransmission(Long vehicleTransmissionId) {
+        this.vehicleTransmissionId = vehicleTransmissionId;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -125,6 +190,11 @@ public class Vehicle {
                 ", picture=" + picture +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", vehicleFuelTypeId=" + vehicleFuelTypeId +
+                ", vehicleMakeId=" + vehicleMakeId +
+                ", vehicleModelId=" + vehicleModelId +
+                ", vehicleStypeId=" + vehicleStypeId +
+                ", vehicleTransmissionId=" + vehicleTransmissionId +
                 '}';
     }
 }
