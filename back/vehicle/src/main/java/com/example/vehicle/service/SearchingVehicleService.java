@@ -43,22 +43,22 @@ public class SearchingVehicleService {
     }
 
     public List<Vehicle> findByVehicleFuelType(Long Id) {
-        return vehicleRepository.findByVehicleFuelTypeId(Id);
+        return vehicleRepository.findByFuelTypeId(Id);
     }
 
     public List<Vehicle> findByVehicleMake(Long Id) {
-        return vehicleRepository.findByVehicleMakeId(Id);
+        return vehicleRepository.findByMakeId(Id);
     }
 
     public List<Vehicle> findByVehicleModel(Long Id) {
-        return vehicleRepository.findByVehicleModelId(Id);
+        return vehicleRepository.findByModelId(Id);
     }
 
     public List<Vehicle> findByVehicleStyle(Long Id) {
-        return vehicleRepository.findByVehicleStypeId(Id);
+        return vehicleRepository.findByStyleId(Id);
     }
 
     public List<Vehicle> findByVehicleTransmission(Long Id) {
-        return vehicleRepository.findByVehicleStypeId(Id);
+        return vehicleRepository.findByStyleId(Id);
     }
 }

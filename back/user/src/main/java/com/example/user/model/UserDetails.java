@@ -21,13 +21,13 @@ public class UserDetails {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "business_num", nullable = false)
+    @Column(name = "business_num")
     private String businessNum;
 
     @Column(name = "vehicle_num", nullable = false)
     private String vehicleNum;
 
-    @Column(name = "user_type", nullable = true)
+    @Column(name = "user_type", nullable = false)
     private UserType userType;
 
     private transient List<Privilege> privilegeList;
