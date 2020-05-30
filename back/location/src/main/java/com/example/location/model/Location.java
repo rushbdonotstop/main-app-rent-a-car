@@ -9,15 +9,15 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="state", referencedColumnName = "value")
     private State state;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="city", referencedColumnName = "value")
     private City city;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="street", referencedColumnName = "value")
     private Street street;
 
