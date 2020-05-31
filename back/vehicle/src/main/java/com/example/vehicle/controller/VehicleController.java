@@ -72,18 +72,18 @@ public class VehicleController {
         return new ResponseEntity<VehicleDetailsDTO>(vehicleDetails, HttpStatus.OK);
     }
 
-//    /**
-//     * GET /server/vehicle/test
-//     *
-//     * @return return all pricelist objects
-//     */
-//    @GetMapping(value = "test", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<PriceListDTO>> getPricelists() throws Exception {
-//        System.out.println("Getting all pricelists");
-//        List<PriceListDTO> response = restTemplate.exchange("http://pricelist/pricelist/all",
-//                HttpMethod.GET, null, new ParameterizedTypeReference<List<PriceListDTO>>() {}).getBody();
-//        System.out.println(response);
-//        return new ResponseEntity<List<PriceListDTO>>(response, HttpStatus.OK);
-//    }
+    /**
+     * GET /server/vehicle/test
+     *
+     * @return return all pricelist objects
+     */
+    @GetMapping(value = "test", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PriceListDTO>> getPricelists() throws Exception {
+        System.out.println("Getting all pricelists");
+        List<PriceListDTO> response = restTemplate.exchange("http://pricelist/pricelist/all",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<PriceListDTO>>() {}).getBody();
+        System.out.println(response);
+        return new ResponseEntity<List<PriceListDTO>>(response, HttpStatus.OK);
+    }
 
 }
