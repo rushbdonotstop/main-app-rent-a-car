@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VehicleFuelTypeRepository extends JpaRepository<VehicleFuelType, Long> {
+    VehicleFuelType findOneById(long parseLong);
 }
