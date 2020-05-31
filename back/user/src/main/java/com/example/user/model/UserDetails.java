@@ -15,19 +15,19 @@ public class UserDetails {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", nullable = true)
     private String fullName;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     private String address;
 
     @Column(name = "business_num")
     private String businessNum;
 
-    @Column(name = "vehicle_num", nullable = false)
+    @Column(name = "vehicle_num", nullable = true)
     private String vehicleNum;
 
-    @Column(name = "user_type", nullable = false)
+    @Column(name = "user_type", nullable = true)
     private UserType userType;
 
     private transient List<Privilege> privilegeList;
