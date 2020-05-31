@@ -1,5 +1,5 @@
 insert into user_details(full_name, address, vehicle_num, user_type) values ('Ivana Brkic', 'Adresa 1', 0, 1);
-insert into user_details(full_name, address, business_num, vehicle_num, user_type) values ('Tamara Lazarevic', 'Adresa 2', '12A', 0, 2);
+insert into user_details(full_name, address, business_num, vehicle_num, user_type) values ('Tamara Lazarevic', 'Adresa 2', '12A', 1, 2);
 insert into user_details(full_name, address, business_num, vehicle_num, user_type) values ('Vladimir Popovic', 'Adresa 3', '12B', 0, 2);
 insert into user_details(full_name, address, vehicle_num, user_type) values ('Milan Lukic', 'Adresa 4', 0, 3);
 

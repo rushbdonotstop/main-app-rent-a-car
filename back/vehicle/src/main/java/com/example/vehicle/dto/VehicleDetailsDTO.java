@@ -1,27 +1,33 @@
 package com.example.vehicle.dto;
 
-import com.example.vehicle.dto.catalogue.VehicleFuelTypeDTO;
-import com.example.vehicle.dto.catalogue.VehicleStyleDTO;
-import com.example.vehicle.dto.catalogue.VehicleTransmissionDTO;
-import com.example.vehicle.dto.location.LocationDTO;
+import com.example.vehicle.dto.builders.VehicleDetailsDTOBuilder;
+import com.example.vehicle.model.builder.VehicleBuilder;
 
 public class VehicleDetailsDTO {
 
     private long id;
+
     private int mileage;
     private int mileageLimit;
     private boolean collisionProtection;
     private int childrenSeats;
     private String picturePath;
-    private VehicleFuelTypeDTO fuelType;
-    private VehicleStyleDTO style;
-    private VehicleTransmissionDTO transmission;
-    private LocationDTO location;
+
+    private String fuelType;
+    private String style;
+    private String transmission;
+
+    private String location;
+
+    private String priceByMile;
+    private String priceCollision;
+    private String discount;
+    private String numDaysDiscount;
 
     public VehicleDetailsDTO() {
     }
 
-    public VehicleDetailsDTO(long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String picturePath, VehicleFuelTypeDTO fuelType, VehicleStyleDTO style, VehicleTransmissionDTO transmission, LocationDTO location) {
+    public VehicleDetailsDTO(long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String picturePath, String fuelType, String style, String transmission, String location, String priceByMile, String priceCollision, String discount, String numDaysDiscount) {
         this.id = id;
         this.mileage = mileage;
         this.mileageLimit = mileageLimit;
@@ -32,6 +38,14 @@ public class VehicleDetailsDTO {
         this.style = style;
         this.transmission = transmission;
         this.location = location;
+        this.priceByMile = priceByMile;
+        this.priceCollision = priceCollision;
+        this.discount = discount;
+        this.numDaysDiscount = numDaysDiscount;
+    }
+
+    public static VehicleDetailsDTOBuilder builder(){
+        return new VehicleDetailsDTOBuilder();
     }
 
     public long getId() {
@@ -82,36 +96,68 @@ public class VehicleDetailsDTO {
         this.picturePath = picturePath;
     }
 
-    public VehicleFuelTypeDTO getFuelType() {
+    public String getFuelType() {
         return fuelType;
     }
 
-    public void setFuelType(VehicleFuelTypeDTO fuelType) {
+    public void setFuelType(String fuelType) {
         this.fuelType = fuelType;
     }
 
-    public VehicleStyleDTO getStyle() {
+    public String getStyle() {
         return style;
     }
 
-    public void setStyle(VehicleStyleDTO style) {
+    public void setStyle(String style) {
         this.style = style;
     }
 
-    public VehicleTransmissionDTO getTransmission() {
+    public String getTransmission() {
         return transmission;
     }
 
-    public void setTransmission(VehicleTransmissionDTO transmission) {
+    public void setTransmission(String transmission) {
         this.transmission = transmission;
     }
 
-    public LocationDTO getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(LocationDTO location) {
+    public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getPriceByMile() {
+        return priceByMile;
+    }
+
+    public void setPriceByMile(String priceByMile) {
+        this.priceByMile = priceByMile;
+    }
+
+    public String getPriceCollision() {
+        return priceCollision;
+    }
+
+    public void setPriceCollision(String priceCollision) {
+        this.priceCollision = priceCollision;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getNumDaysDiscount() {
+        return numDaysDiscount;
+    }
+
+    public void setNumDaysDiscount(String numDaysDiscount) {
+        this.numDaysDiscount = numDaysDiscount;
     }
 
     @Override
@@ -123,10 +169,14 @@ public class VehicleDetailsDTO {
                 ", collisionProtection=" + collisionProtection +
                 ", childrenSeats=" + childrenSeats +
                 ", picturePath='" + picturePath + '\'' +
-                ", fuelType=" + fuelType +
-                ", style=" + style +
-                ", transmission=" + transmission +
-                ", location=" + location +
+                ", fuelType='" + fuelType + '\'' +
+                ", style='" + style + '\'' +
+                ", transmission='" + transmission + '\'' +
+                ", location='" + location + '\'' +
+                ", priceByMile='" + priceByMile + '\'' +
+                ", priceCollision='" + priceCollision + '\'' +
+                ", discount='" + discount + '\'' +
+                ", numDaysDiscount='" + numDaysDiscount + '\'' +
                 '}';
     }
 }

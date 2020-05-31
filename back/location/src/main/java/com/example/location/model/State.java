@@ -9,7 +9,7 @@ public class State {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="value", nullable = false, unique = true)
+    @Column(name="state", nullable = false, unique = true)
     private String value;
 
     public State() {
