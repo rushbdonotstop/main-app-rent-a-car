@@ -5,7 +5,6 @@ import { CoreRoutingModule } from './core-routing.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpInterceptorService } from './http/http-interceptor.service';
 import { MenuComponent } from './header/menu/menu.component';
 
 
@@ -16,10 +15,6 @@ import { MenuComponent } from './header/menu/menu.component';
     CoreRoutingModule
   ],
   exports: [FooterComponent, HeaderComponent, MenuComponent],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: HttpInterceptorService,
-    multi: true
-  }]
+  providers: []
 })
 export class CoreModule { }
