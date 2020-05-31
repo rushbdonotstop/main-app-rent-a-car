@@ -3,7 +3,7 @@ package com.example.request.model;
 import com.example.request.model.enums.Status;
 import javax.persistence.*;
 import java.time.LocalDate;
-
+import java.util.List;
 
 @Entity
 public class Request {
@@ -24,16 +24,16 @@ public class Request {
     @Column(name = "status", nullable = false)
     private Status status;
 
-    public Request() {
+    @Column(name="user_id", nullable = false)
+    private long userId;
+
+    public long getUserId() {
+        return userId;
     }
 
-    public Request(float totalCost, LocalDate startDate, LocalDate endDate, Status status) {
-        this.totalCost = totalCost;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
-
 
     public Long getId() {
         return id;
@@ -83,6 +83,7 @@ public class Request {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", status=" + status +
+                ", userId=" + userId +
                 '}';
     }
 }
