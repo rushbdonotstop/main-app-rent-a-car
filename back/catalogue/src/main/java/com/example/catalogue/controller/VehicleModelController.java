@@ -17,6 +17,7 @@ public class VehicleModelController {
     @Autowired
     private VehicleModelService vehicleModelService;
 
+
     /**
      * GET server/catalogue/vehicleModel/{id}
      *
@@ -68,7 +69,7 @@ public class VehicleModelController {
      * @return return all vehicle models
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List> getVehicleFuelType() {
+    public ResponseEntity<List> getVehicleModels() {
         List<VehicleModel> vehicleModelList = vehicleModelService.getAllModels();
         if(vehicleModelList.size()==0) {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -82,7 +83,7 @@ public class VehicleModelController {
      * @return return status of creating vehicle model request
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> postVehicleFuelType(@RequestBody VehicleModel vehicleModel) {
+    public ResponseEntity<Notification> postVehicleModel(@RequestBody VehicleModel vehicleModel) {
         try {
             vehicleModelService.addNewModel(vehicleModel);
 

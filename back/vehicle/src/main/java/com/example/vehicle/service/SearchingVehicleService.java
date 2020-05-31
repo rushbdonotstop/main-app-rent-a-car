@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class SearchingVehicleService {
         return vehicleRepository.findByStyleId(Id);
     }
 
-    public List<VehicleMainViewDTO> getAllVehicleMainViewDTO(List<Vehicle> vehicleList, List<VehicleMakeDTO> vehicleMakeList, List<PricelistDTO> pricelist, List<VehicleModelDTO> vehicleModelList, List<OwnerDTO> ownerList) {
+    public List<VehicleMainViewDTO> getAllVehicleMainViewDTO(List<Vehicle> vehicleList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<OwnerDTO> ownerList) {
         List<VehicleMainViewDTO> listVMV = new ArrayList<>();
         for (Vehicle vehicle : vehicleList) {
             listVMV.add(vehicleToVehicleMainViewDTO(vehicle, vehicleMakeList, pricelist, vehicleModelList, ownerList));
@@ -72,7 +73,7 @@ public class SearchingVehicleService {
         return listVMV;
     }
 
-    public VehicleMainViewDTO vehicleToVehicleMainViewDTO(Vehicle vehicle, List<VehicleMakeDTO> vehicleMakeList, List<PricelistDTO> pricelist, List<VehicleModelDTO> vehicleModelList, List<OwnerDTO> ownerList) {
+    public VehicleMainViewDTO vehicleToVehicleMainViewDTO(Vehicle vehicle, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<OwnerDTO> ownerList) {
         VehicleMainViewDTO vmvDTO = new VehicleMainViewDTO();
         vmvDTO.setId(vehicle.getId());
         vmvDTO.setMake(getVehicleMake(vehicleMakeList, vehicle.getMakeId()));
@@ -83,17 +84,24 @@ public class SearchingVehicleService {
         return vmvDTO;
     }
 
-    public float getPrice(List<PricelistDTO> list,Long vehicleId) {
-        for (PricelistDTO pricelist : list) {
+    public float getPrice(List<Pricelist> list, Long vehicleId) {
+        List<Pricelist> newList = new ArrayList();
+        for (Pricelist pricelist : list) {
             if (vehicleId.equals(pricelist.getVehicleId())) {
-                return pricelist.getPrice();
+                newList.add(pricelist);
+            }
+            if (newList.size()==1) {
+                return newList.get(0).getPrice();
+            } else {
+                Collections.sort(newList);
+                return newList.get(0).getPrice();
             }
         }
         return 0;
     }
 
-    public String getVehicleMake(List<VehicleMakeDTO> list, Long vehicleMakeId) {
-        for (VehicleMakeDTO vehicleMake : list) {
+    public String getVehicleMake(List<VehicleMake> list, Long vehicleMakeId) {
+        for (VehicleMake vehicleMake : list) {
             if (vehicleMakeId.equals(vehicleMake.getId())) {
                 return vehicleMake.getValue();
             }
@@ -101,8 +109,8 @@ public class SearchingVehicleService {
         return null;
     }
 
-    public String getVehicleModel(List<VehicleModelDTO> list, Long vehicleModelId) {
-        for (VehicleModelDTO vehicleModel : list) {
+    public String getVehicleModel(List<VehicleModel> list, Long vehicleModelId) {
+        for (VehicleModel vehicleModel : list) {
             if(vehicleModelId.equals(vehicleModel.getId())) {
                 return vehicleModel.getValue();
             }

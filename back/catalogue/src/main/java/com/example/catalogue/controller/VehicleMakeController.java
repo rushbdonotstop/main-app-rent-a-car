@@ -69,7 +69,7 @@ public class VehicleMakeController {
      * @return return all vehicle fuel types
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List> getVehicleFuelType() {
+    public ResponseEntity<List> getAllMakes() {
         List<VehicleMake> vehicleMakeList = vehicleMakeService.getAllMakes();
         if(vehicleMakeList.size()==0) {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -84,7 +84,7 @@ public class VehicleMakeController {
      * @return return status of creating vehicle make request
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> postVehicleFuelType(@RequestBody VehicleMake vehicleMake) {
+    public ResponseEntity<Notification> postVehicleMake(@RequestBody VehicleMake vehicleMake) {
         try {
             vehicleMakeService.addNewMake(vehicleMake);
 

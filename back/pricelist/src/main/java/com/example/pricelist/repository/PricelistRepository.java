@@ -12,5 +12,7 @@ import java.util.List;
 public interface PricelistRepository extends JpaRepository<Pricelist, Long> {
     List<Pricelist> findByVehicleId(Long vehicleId);
 
+    List<Pricelist> findAll();
+
  
 }
