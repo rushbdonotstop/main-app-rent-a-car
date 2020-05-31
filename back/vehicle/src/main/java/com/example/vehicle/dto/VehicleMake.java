@@ -2,15 +2,15 @@ package com.example.vehicle.dto;
 
 import javax.persistence.*;
 
-public class VehicleMakeDTO {
+public class VehicleMake {
 
     private Long id;
     private String value;
 
-    public VehicleMakeDTO() {
+    public VehicleMake() {
     }
 
-    public VehicleMakeDTO(Long id, String value) {
+    public VehicleMake(Long id, String value) {
         this.id = id;
         this.value = value;
     }

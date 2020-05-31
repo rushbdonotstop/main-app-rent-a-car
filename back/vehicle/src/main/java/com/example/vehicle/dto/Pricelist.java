@@ -4,13 +4,14 @@ package com.example.vehicle.dto;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-public class PricelistDTO {
+public class Pricelist implements Comparable<Pricelist>{
 
     private Long id;
 
     private LocalDate startDate;
 
     private LocalDate  endDate;
+
     private float price;
 
     private float priceByMile;
@@ -19,12 +20,12 @@ public class PricelistDTO {
 
     private Long vehicleId;
 
-    private Long vehicleDiscountId;
+    private VehicleDiscount vehicleDiscount;
 
-    public PricelistDTO() {
+    public Pricelist() {
     }
 
-    public PricelistDTO(Long id, LocalDate startDate, LocalDate endDate, float price, float priceByMile, float priceCollision, Long vehicleId, Long vehicleDiscountId) {
+    public Pricelist(Long id, LocalDate startDate, LocalDate endDate, float price, float priceByMile, float priceCollision, Long vehicleId, VehicleDiscount vehicleDiscount) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -32,7 +33,7 @@ public class PricelistDTO {
         this.priceByMile = priceByMile;
         this.priceCollision = priceCollision;
         this.vehicleId = vehicleId;
-        this.vehicleDiscountId = vehicleDiscountId;
+        this.vehicleDiscount = vehicleDiscount;
     }
 
     public Long getId() {
@@ -91,12 +92,12 @@ public class PricelistDTO {
         this.vehicleId = vehicleId;
     }
 
-    public Long getVehicleDiscountId() {
-        return vehicleDiscountId;
+    public VehicleDiscount getVehicleDiscountId() {
+        return vehicleDiscount;
     }
 
-    public void setVehicleDiscountId(Long vehicleDiscountId) {
-        this.vehicleDiscountId = vehicleDiscountId;
+    public void setVehicleDiscountId(VehicleDiscount vehicleDiscountId) {
+        this.vehicleDiscount = vehicleDiscountId;
     }
 
     @Override
@@ -109,7 +110,12 @@ public class PricelistDTO {
                 ", priceByMile=" + priceByMile +
                 ", priceCollision=" + priceCollision +
                 ", vehicleId=" + vehicleId +
-                ", vehicleDiscountId=" + vehicleDiscountId +
+                ", vehicleDiscountId=" + vehicleDiscount +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Pricelist o) {
+        return this.startDate.compareTo(o.startDate);
     }
 }

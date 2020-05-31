@@ -3,19 +3,19 @@ package com.example.vehicle.dto;
 import javax.persistence.*;
 
 
-public class VehicleModelDTO {
+public class VehicleModel {
 
     private Long id;
     private String value;
     private Long vehicleMakeId;
 
-    public VehicleModelDTO(Long id, String value, Long vehicleMakeId) {
+    public VehicleModel(Long id, String value, Long vehicleMakeId) {
         this.id = id;
         this.value = value;
         this.vehicleMakeId = vehicleMakeId;
     }
 
-    public VehicleModelDTO() {
+    public VehicleModel() {
     }
 
     public Long getId() {
