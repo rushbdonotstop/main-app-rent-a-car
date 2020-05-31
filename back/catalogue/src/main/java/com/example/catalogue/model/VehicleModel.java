@@ -9,8 +9,12 @@ public class VehicleModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="value", nullable = false, unique = true)
+    @Column(name="model", nullable = false, unique = true)
     private String value;
+
+    @ManyToOne
+    @JoinColumn(name="make_id", referencedColumnName = "id", nullable = false)
+    private VehicleMake vehicleMake;
 
     public Long getId() {
         return id;
@@ -35,11 +39,20 @@ public class VehicleModel {
         this.value = value;
     }
 
+    public VehicleMake getVehicleMake() {
+        return vehicleMake;
+    }
+
+    public void setVehicleMake(VehicleMake vehicleMake) {
+        this.vehicleMake = vehicleMake;
+    }
+
     @Override
     public String toString() {
         return "VehicleModel{" +
                 "id=" + id +
                 ", value='" + value + '\'' +
+                ", vehicleMake=" + vehicleMake +
                 '}';
     }
 }

@@ -10,15 +10,15 @@ public class Location {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="state", referencedColumnName = "value")
+    @JoinColumn(name="state", referencedColumnName = "id")
     private State state;
 
     @ManyToOne
-    @JoinColumn(name="city", referencedColumnName = "value")
+    @JoinColumn(name="city", referencedColumnName = "id")
     private City city;
 
     @ManyToOne
-    @JoinColumn(name="street", referencedColumnName = "value")
+    @JoinColumn(name="street", referencedColumnName = "id")
     private Street street;
 
     public Location() {

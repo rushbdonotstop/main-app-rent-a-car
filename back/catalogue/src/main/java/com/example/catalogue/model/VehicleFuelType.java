@@ -9,7 +9,7 @@ public class VehicleFuelType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="value", nullable = false, unique = true)
+    @Column(name="fuel_type", nullable = false, unique = true)
     private String value;
 
     public VehicleFuelType() {

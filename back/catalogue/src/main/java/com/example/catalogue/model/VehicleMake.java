@@ -9,7 +9,7 @@ public class VehicleMake {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="value", nullable = false, unique = true)
+    @Column(name="make", nullable = false, unique = true)
     private String value;
 
     public VehicleMake() {

@@ -9,7 +9,7 @@ public class Street {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="value", nullable = false, unique = true)
+    @Column(name="street", nullable = false, unique = true)
     private String value;
 
     public Street() {

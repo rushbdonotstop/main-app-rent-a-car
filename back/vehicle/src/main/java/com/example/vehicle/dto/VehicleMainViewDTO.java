@@ -1,27 +1,22 @@
 package com.example.vehicle.dto;
 
-import com.example.vehicle.dto.catalogue.VehicleMakeDTO;
-import com.example.vehicle.dto.catalogue.VehicleModelDTO;
-import com.example.vehicle.dto.pricelist.PriceListDTO;
-import com.example.vehicle.dto.user.OwnerDTO;
-
 public class VehicleMainViewDTO {
 
     private long id;
-    private VehicleMakeDTO make;
-    private VehicleModelDTO model;
-    private PriceListDTO priceListDTO;
-    private OwnerDTO ownerDTO;
+    private String make;
+    private String model;
+    private String price;
+    private String ownerUsername;
 
     public VehicleMainViewDTO() {
     }
 
-    public VehicleMainViewDTO(long id, VehicleMakeDTO make, VehicleModelDTO model, PriceListDTO priceListDTO, OwnerDTO ownerDTO) {
+    public VehicleMainViewDTO(long id, String make, String model, String price, String ownerUsername) {
         this.id = id;
         this.make = make;
         this.model = model;
-        this.priceListDTO = priceListDTO;
-        this.ownerDTO = ownerDTO;
+        this.price = price;
+        this.ownerUsername = ownerUsername;
     }
 
     public long getId() {
@@ -32,46 +27,46 @@ public class VehicleMainViewDTO {
         this.id = id;
     }
 
-    public VehicleMakeDTO getMake() {
+    public String getMake() {
         return make;
     }
 
-    public void setMake(VehicleMakeDTO make) {
+    public void setMake(String make) {
         this.make = make;
     }
 
-    public VehicleModelDTO getModel() {
+    public String getModel() {
         return model;
     }
 
-    public void setModel(VehicleModelDTO model) {
+    public void setModel(String model) {
         this.model = model;
     }
 
-    public PriceListDTO getPriceListDTO() {
-        return priceListDTO;
+    public String getPrice() {
+        return price;
     }
 
-    public void setPriceListDTO(PriceListDTO priceListDTO) {
-        this.priceListDTO = priceListDTO;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public OwnerDTO getOwnerDTO() {
-        return ownerDTO;
+    public String getOwnerUsername() {
+        return ownerUsername;
     }
 
-    public void setOwnerDTO(OwnerDTO ownerDTO) {
-        this.ownerDTO = ownerDTO;
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
     }
 
     @Override
     public String toString() {
         return "VehicleMainViewDTO{" +
                 "id=" + id +
-                ", make=" + make +
-                ", model=" + model +
-                ", priceListDTO=" + priceListDTO +
-                ", ownerDTO=" + ownerDTO +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", price='" + price + '\'' +
+                ", ownerUsername='" + ownerUsername + '\'' +
                 '}';
     }
 }

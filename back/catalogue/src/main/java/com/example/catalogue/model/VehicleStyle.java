@@ -9,7 +9,7 @@ public class VehicleStyle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="value", nullable = false, unique = true)
+    @Column(name="style", nullable = false, unique = true)
     private String value;
 
     public VehicleStyle() {

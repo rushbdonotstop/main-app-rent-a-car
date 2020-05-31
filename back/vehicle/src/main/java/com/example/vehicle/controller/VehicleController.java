@@ -1,15 +1,11 @@
 package com.example.vehicle.controller;
 
-import com.example.vehicle.dto.VehicleDTO;
 import com.example.vehicle.dto.VehicleDetailsDTO;
 import com.example.vehicle.dto.VehicleMainViewDTO;
-import com.example.vehicle.dto.pricelist.PriceListDTO;
 import com.example.vehicle.model.Notification;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +30,9 @@ public class VehicleController {
      * @return return status of creating vehicle request
      */
     @PostMapping(value = "", consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> create(@RequestBody VehicleDTO vehicleDTO) throws Exception {
-        Notification notification = vehicleService.createVehicle(vehicleDTO);
-        return new ResponseEntity<>(notification, HttpStatus.OK);
+    public ResponseEntity<Long> create(@RequestBody Vehicle vehicle) throws Exception {
+        Long vehicleId = vehicleService.createVehicle(vehicle);
+        return new ResponseEntity<>(vehicleId, HttpStatus.OK);
     }
 
     /**
@@ -45,8 +41,8 @@ public class VehicleController {
      * @return return status of updating vehicle request
      */
     @PutMapping(value = "", consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> update(@RequestBody VehicleDTO vehicleDTO) throws Exception {
-        Notification notification = vehicleService.createVehicle(vehicleDTO);
+    public ResponseEntity<Notification> update(@RequestBody Vehicle vehicle) throws Exception {
+        Notification notification = vehicleService.updateVehicle(vehicle);
         return new ResponseEntity<>(notification, HttpStatus.OK);
     }
 
@@ -73,17 +69,28 @@ public class VehicleController {
     }
 
     /**
-     * GET /server/vehicle/test
+     * DELETE /server/vehicle/
      *
-     * @return return all pricelist objects
+     * @return return delete status
      */
-    @GetMapping(value = "test", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PriceListDTO>> getPricelists() throws Exception {
-        System.out.println("Getting all pricelists");
-        List<PriceListDTO> response = restTemplate.exchange("http://pricelist/pricelist/all",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<PriceListDTO>>() {}).getBody();
-        System.out.println(response);
-        return new ResponseEntity<List<PriceListDTO>>(response, HttpStatus.OK);
+    @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> delete(@RequestParam(value="vehicleId", required = true) Long vehicleId) throws Exception {
+        Notification notification = vehicleService.delete(vehicleId);
+        return new ResponseEntity<Notification>(notification, HttpStatus.OK);
     }
+
+//    /**
+//     * GET /server/vehicle/test
+//     *
+//     * @return return all pricelist objects
+//     */
+//    @GetMapping(value = "test", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<PriceListDTO>> getPricelists() throws Exception {
+//        System.out.println("Getting all pricelists");
+//        List<PriceListDTO> response = restTemplate.exchange("http://pricelist/pricelist/all",
+//                HttpMethod.GET, null, new ParameterizedTypeReference<List<PriceListDTO>>() {}).getBody();
+//        System.out.println(response);
+//        return new ResponseEntity<List<PriceListDTO>>(response, HttpStatus.OK);
+//    }
 
 }
