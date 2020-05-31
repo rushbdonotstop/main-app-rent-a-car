@@ -16,7 +16,9 @@ public class PricelistService {
     @Autowired
     private PricelistRepository pricelistRepository;
 
-    public List<Pricelist> getAll(Long vehicleId) {
+    public List<Pricelist> getAll() { return pricelistRepository.findAll(); }
+
+    public List<Pricelist> getAllByVehicle(Long vehicleId) {
         return pricelistRepository.findByVehicleId(vehicleId);
     }
 
@@ -93,7 +95,7 @@ public class PricelistService {
     }
 
     public boolean dateRangeExists(Pricelist pricelist){
-        List<Pricelist> pricelists = getAll(pricelist.getVehicleId());
+        List<Pricelist> pricelists = getAllByVehicle(pricelist.getVehicleId());
 
         for (Pricelist p : pricelists){
             if ((pricelist.getStartDate().isAfter(p.getStartDate()) && pricelist.getStartDate().isBefore(p.getEndDate()))
