@@ -25,8 +25,14 @@ public class PricelistController {
      * @return return all pricelist for vehicle
      */
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Pricelist>> getAll(@RequestParam(value="vehicleId", required = true) Long vehicleId) throws Exception {
-        List<Pricelist> pricelists = priceListService.getAll(vehicleId);
+    public ResponseEntity<List<Pricelist>> getAllByVehicle(@RequestParam(value="vehicleId", required = true) Long vehicleId) throws Exception {
+        List<Pricelist> pricelists = priceListService.getAllByVehicle(vehicleId);
+        return new ResponseEntity<List<Pricelist>>(pricelists, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Pricelist>> getAll() throws Exception {
+        List<Pricelist> pricelists = priceListService.getAll();
         return new ResponseEntity<List<Pricelist>>(pricelists, HttpStatus.OK);
     }
 

@@ -5,13 +5,13 @@ public class VehicleMainViewDTO {
     private long id;
     private String make;
     private String model;
-    private String price;
+    private float price;
     private String ownerUsername;
 
     public VehicleMainViewDTO() {
     }
 
-    public VehicleMainViewDTO(long id, String make, String model, String price, String ownerUsername) {
+    public VehicleMainViewDTO(long id, String make, String model, float price, String ownerUsername) {
         this.id = id;
         this.make = make;
         this.model = model;
@@ -43,11 +43,11 @@ public class VehicleMainViewDTO {
         this.model = model;
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

@@ -2,7 +2,6 @@ package com.example.vehicle.controller;
 
 import com.example.vehicle.dto.VehicleDetailsDTO;
 import com.example.vehicle.dto.VehicleMainViewDTO;
-import com.example.vehicle.dto.pricelist.PriceListDTO;
 import com.example.vehicle.model.Notification;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.service.VehicleService;
