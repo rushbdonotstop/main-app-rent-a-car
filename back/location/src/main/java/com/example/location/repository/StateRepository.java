@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StateRepository extends JpaRepository<State, Long> {
-    State findByState(String state);
+    State findByValue(String state);
 }

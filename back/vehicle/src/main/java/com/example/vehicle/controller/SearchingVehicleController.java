@@ -34,30 +34,26 @@ public class SearchingVehicleController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Pricelist>> getPricelists() throws Exception {
         System.out.println("Getting all pricelists");
         List<Pricelist> response = restTemplate.exchange("http://pricelist/pricelist/all",
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Pricelist>>() {}).getBody();
-        System.out.println(response);
+
         return new ResponseEntity<List<Pricelist>>(response, HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleMake>> getVehicleMakes() throws Exception {
         System.out.println("Getting all vehicle makes");
         List<VehicleMake> response = restTemplate.exchange("http://catalogue/catalogue/vehicleMake",
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<VehicleMake>>() {}).getBody();
-        System.out.println(response);
+
         return new ResponseEntity<List<VehicleMake>>(response, HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleModel>> getVehicleModels() throws Exception {
         System.out.println("Getting all vehicle models");
         List<VehicleModel> response = restTemplate.exchange("http://catalogue/catalogue/vehicleModel/",
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<VehicleModel>>() {}).getBody();
-        System.out.println(response);
         return new ResponseEntity<List<VehicleModel>>(response, HttpStatus.OK);
     }
 }

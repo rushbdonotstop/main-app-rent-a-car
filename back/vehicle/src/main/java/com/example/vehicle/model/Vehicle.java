@@ -3,6 +3,7 @@ package com.example.vehicle.model;
 import com.example.vehicle.model.builder.VehicleBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -10,12 +11,12 @@ public class Vehicle {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name="mileage", nullable = false)
     private int mileage;
 
-    @Column(name="milleage_limit", nullable = false)
+    @Column(name="mileage_limit", nullable = false)
     private int mileageLimit;
 
     @Column(name="collision_protection", nullable = false)
@@ -24,14 +25,14 @@ public class Vehicle {
     @Column(name="children_seats", nullable = false)
     private int childrenSeats;
 
-    @Column(name="picture", nullable = false)
+    @Column(name="picture_path", unique = true)
     private String picturePath;
 
     @Column(name="start_date", nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name="end_date", nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
 
     @Column(name="fuel_type_id", nullable = false)
     private Long fuelTypeId;
@@ -54,7 +55,7 @@ public class Vehicle {
     @Column(name="user_id", nullable = false)
     private Long userId;
 
-    public Vehicle(long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String picturePath, Date startDate, Date endDate, Long fuelTypeId, Long makeId, Long modelId, Long styleId, Long transmissionId, Long locationId, Long userId) {
+    public Vehicle(Long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String picturePath, LocalDate startDate, LocalDate endDate, Long fuelTypeId, Long makeId, Long modelId, Long styleId, Long transmissionId, Long locationId, Long userId) {
         this.id = id;
         this.mileage = mileage;
         this.mileageLimit = mileageLimit;
@@ -79,11 +80,11 @@ public class Vehicle {
         return new VehicleBuilder();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -103,10 +104,6 @@ public class Vehicle {
         this.mileageLimit = mileageLimit;
     }
 
-    public boolean getCollisetionProtection() {
-        return collisionProtection;
-    }
-
     public void setCollisionProtection(boolean collisionProtection) {
         this.collisionProtection = collisionProtection;
     }
@@ -119,23 +116,23 @@ public class Vehicle {
         this.childrenSeats = childrenSeats;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public boolean isCollisionProtection() {
+    public boolean getCollisionProtection() {
         return collisionProtection;
     }
 
