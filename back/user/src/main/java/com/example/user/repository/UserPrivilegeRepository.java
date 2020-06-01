@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface UserPrivilegeRepository extends JpaRepository<UserPrivilege, Long> {
-    List<UserPrivilege> findByUser(User u)
+    List<UserPrivilege> findByUser(User u);
 
     UserPrivilege findByUserAndPrivilege(User u, Privilege addDiscount);
 }

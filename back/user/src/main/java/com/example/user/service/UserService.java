@@ -81,9 +81,8 @@ public class UserService {
                     userDetailsRepository.save(userDetails);
                     notification.setText("Updated user vehicle number after create.");
                     if (userDetails.getUserType().equals(UserType.END_USER) && userDetails.getVehicleNum() == 3){
-                        System.out.println(userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE));
-                        userPrivilegeRepository.deleteUserPrivilege(u.getId(), Privilege.ADD_VEHICLE);
-                        System.out.println(userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE));
+                        UserPrivilege userPrivilege = userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE);
+                        userPrivilegeRepository.deleteById(userPrivilege.getId());
                         notification.setText("Updated user vehicle number after create. User reached max number of vehicles.");
                     }
                 }
