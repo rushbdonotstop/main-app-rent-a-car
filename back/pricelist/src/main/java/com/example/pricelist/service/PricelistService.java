@@ -2,7 +2,9 @@ package com.example.pricelist.service;
 
 import com.example.pricelist.model.Notification;
 import com.example.pricelist.model.Pricelist;
+import com.example.pricelist.model.VehicleDiscount;
 import com.example.pricelist.repository.PricelistRepository;
+import com.example.pricelist.repository.VehicleDiscountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +18,38 @@ public class PricelistService {
     @Autowired
     private PricelistRepository pricelistRepository;
 
+    @Autowired
+    private VehicleDiscountRepository vehicleDiscountRepository;
+
     public List<Pricelist> getAll() { return pricelistRepository.findAll(); }
 
     public List<Pricelist> getAllByVehicle(Long vehicleId) {
-        return pricelistRepository.findByVehicleId(vehicleId);
+        List<Pricelist> pricelistList = null;
+        try{
+            pricelistList = pricelistRepository.findByVehicleId(vehicleId);
+        }
+        catch(Exception e){
+
+        }
+        return pricelistList;
     }
 
     public Notification createPricelist(Pricelist pricelist) {
         Notification notification = new Notification("Failed to create pricelist.");
         try{
-            if (dateRangeExists(pricelist)){
+            pricelist.setId(null);
+
+            if (priceInvalid(pricelist)){
+                notification.setText("Invalid price.");
+                return notification;
+            }
+
+            if (discountInvalid(pricelist.getVehicleDiscount())){
+                notification.setText("Invalid discount.");
+                return notification;
+            }
+
+            if (dateRangeExists(pricelist, "CREATE")){
                 notification.setText("Already defined price for requested date. If you want to create pricelist item please first delete all items which have requested date range.");
                 return notification;
             }
@@ -50,7 +74,22 @@ public class PricelistService {
     public Notification updatePricelist(Pricelist pricelist) {
         Notification notification = new Notification("Failed to update pricelist.");
         try{
-            if (dateRangeExists(pricelist)){
+            if (!pricelistRepository.findById(pricelist.getId()).isPresent()){
+                notification.setText("Pricelist id does not exist.");
+                return notification;
+            }
+
+            if (priceInvalid(pricelist)){
+                notification.setText("Invalid price.");
+                return notification;
+            }
+
+            if (discountInvalid(pricelist.getVehicleDiscount()) || !vehicleDiscountRepository.findById(pricelist.getVehicleDiscount().getId()).isPresent()){
+                notification.setText("Invalid discount.");
+                return notification;
+            }
+
+            if (dateRangeExists(pricelist, "UPDATE") && pricelistRepository.findByVehicleId(pricelist.getVehicleId()).size() != 1){
                 notification.setText("Already defined price for requested date. If you want to update pricelist item please first delete all items which have requested date range.");
                 return notification;
             }
@@ -63,6 +102,7 @@ public class PricelistService {
                 return notification;
             }
             pricelistRepository.save(pricelist);
+            vehicleDiscountRepository.save(pricelist.getVehicleDiscount());
             notification.setText("Updated pricelist for requested vehicle.");
             return notification;
         }
@@ -94,13 +134,18 @@ public class PricelistService {
         return notification;
     }
 
-    public boolean dateRangeExists(Pricelist pricelist){
+    public boolean dateRangeExists(Pricelist pricelist, String operation){
         List<Pricelist> pricelists = getAllByVehicle(pricelist.getVehicleId());
 
         for (Pricelist p : pricelists){
             if ((pricelist.getStartDate().isAfter(p.getStartDate()) && pricelist.getStartDate().isBefore(p.getEndDate()))
             || (pricelist.getEndDate().isAfter(p.getStartDate()) && pricelist.getEndDate().isBefore(p.getEndDate()))
             || (pricelist.getStartDate().isBefore(p.getStartDate()) && pricelist.getEndDate().isAfter(p.getEndDate()))){
+                if (operation.equals("CREATE")){
+                    if (pricelist.getStartDate().equals(p.getStartDate()) && pricelist.getEndDate().equals(p.getEndDate())){
+                        return true;
+                    }
+                }
                 return true;
             }
         }
@@ -120,4 +165,20 @@ public class PricelistService {
         }
         return false;
     }
+
+    public boolean discountInvalid(VehicleDiscount vehicleDiscount){
+        if(vehicleDiscount.getDiscount() < 1 || vehicleDiscount.getDiscount() > 100
+        || vehicleDiscount.getNumDays() < 0){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean priceInvalid(Pricelist pricelist){
+        if(pricelist.getPrice() < 0 || pricelist.getPriceByMile() < 0 || pricelist.getPriceCollision() < 0){
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -5,9 +5,10 @@ import com.example.location.repository.CityRepository;
 import com.example.location.repository.LocationRepository;
 import com.example.location.repository.StateRepository;
 import com.example.location.repository.StreetRepository;
-import com.sun.source.doctree.SeeTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LocationService {
@@ -24,13 +25,12 @@ public class LocationService {
     @Autowired
     private StreetRepository streetRepository;
 
-    public Location getVehicleLocation(Long locationId) {
+    public Location get(Long locationId) {
         Location location = null;
         try{
             if(locationRepository.findById(locationId).isPresent()){
                 location = locationRepository.findById(locationId).get();
             }
-            return null;
         }
         catch (Exception e){
 
@@ -38,7 +38,7 @@ public class LocationService {
         return location;
     }
 
-    public Notification deleteLocation(Long locationId) {
+    public Notification delete(Long locationId) {
         Notification notification = new Notification("Deleting location failed.");
         try{
             if(locationRepository.findById(locationId).isPresent()){
@@ -55,14 +55,26 @@ public class LocationService {
         return notification;
     }
 
-    public Notification createLocation(Location location) {
+    public Notification create(Location location) {
         Notification notification = new Notification("Creating location failed.");
         try{
-            if(locationRepository.findByStateAndCityAndStreet(location.getState(), location.getCity(), location.getStreet()) != null){
+            if(locationRepository.findByStateAndCityAndStreet(location.getState().getValue(), location.getCity().getValue(), location.getStreet().getValue()) != null){
                 notification.setText("Location already exists.");
             }
             else{
-                locationRepository.save(location);
+                State stateObject = stateRepository.findByValue(location.getState().getValue());
+                if (stateObject == null){
+                    stateObject = stateRepository.save(new State(location.getState().getValue()));
+                }
+                City cityObject = cityRepository.findByValue(location.getCity().getValue());
+                if (cityObject == null){
+                    cityObject = cityRepository.save(new City(location.getCity().getValue()));
+                }
+                Street streetObject = streetRepository.findByValue(location.getStreet().getValue());
+                if (streetObject == null){
+                    streetObject = streetRepository.save(new Street(location.getStreet().getValue()));
+                }
+                locationRepository.save(new Location(stateObject, cityObject, streetObject));
                 notification.setText("Created location.");
             }
         }
@@ -72,29 +84,38 @@ public class LocationService {
         return notification;
     }
 
-    public Long findLocation(String state, String city, String street) {
+    public Long find(String state, String city, String street) {
+        Long locationId = null;
         try{
-            State stateObject = stateRepository.findByState(state);
-            if (stateObject == null){
-                stateObject = stateRepository.save(new State(state));
+            State stateObject = stateRepository.findByValue(state);
+            City cityObject = cityRepository.findByValue(city);
+            Street streetObject = streetRepository.findByValue(street);
+
+            if (stateObject == null|| cityObject == null|| streetObject == null){
+                locationId = null;
             }
-            City cityObject = cityRepository.findByCity(city);
-            if (cityObject == null){
-                cityObject = cityRepository.save(new City(city));
+            else{
+                Location location = locationRepository.findByStateAndCityAndStreet(stateObject.getValue(), cityObject.getValue(), streetObject.getValue());
+                if (location != null){
+                    locationId = location.getId();
+                }
             }
-            Street streetObject = streetRepository.findByStreet(street);
-            if (streetObject == null){
-                streetObject = streetRepository.save(new Street(street));
-            }
-            Location location = locationRepository.findByStateAndCityAndStreet(stateObject, cityObject, streetObject);
-            if (location == null){
-                location = locationRepository.save(new Location(stateObject, cityObject, streetObject));
-            }
-            return location.getId();
         }
         catch(Exception e){
 
         }
-        return null;
+        return locationId;
+    }
+
+    public List<Location> getAll() {
+        List<Location> locations = null;
+        try{
+            locations = locationRepository.findAll();
+        }
+        catch (Exception e){
+
+        }
+
+        return locations;
     }
 }

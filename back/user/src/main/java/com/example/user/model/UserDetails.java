@@ -25,7 +25,7 @@ public class UserDetails {
     private String businessNum;
 
     @Column(name = "vehicle_num", nullable = false)
-    private String vehicleNum;
+    private int vehicleNum;
 
     @Column(name = "user_type", nullable = false)
     private UserType userType;
@@ -35,13 +35,21 @@ public class UserDetails {
     public UserDetails() {
     }
 
-    public UserDetails(String fullName, String address, String businessNum, String vehicleNum, UserType userType, List<Privilege> privilegeList) {
+    public UserDetails(String fullName, String address, String businessNum, int vehicleNum, UserType userType, List<Privilege> privilegeList) {
         this.fullName = fullName;
         this.address = address;
         this.businessNum = businessNum;
         this.vehicleNum = vehicleNum;
         this.userType = userType;
         this.privilegeList = privilegeList;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -68,11 +76,11 @@ public class UserDetails {
         this.businessNum = businessNum;
     }
 
-    public String getVehicleNum() {
+    public int getVehicleNum() {
         return vehicleNum;
     }
 
-    public void setVehicleNum(String vehicleNum) {
+    public void setVehicleNum(int vehicleNum) {
         this.vehicleNum = vehicleNum;
     }
 
