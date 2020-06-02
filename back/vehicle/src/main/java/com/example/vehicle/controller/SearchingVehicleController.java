@@ -47,7 +47,6 @@ public class SearchingVehicleController {
         return new ResponseEntity<>(vehicleDTOList, HttpStatus.OK);
     }
 
-
     public ResponseEntity<List<Pricelist>> getPricelists() throws Exception {
         System.out.println("Getting all pricelists");
         List<Pricelist> response = restTemplate.exchange("http://pricelist/pricelist/all",
@@ -56,7 +55,6 @@ public class SearchingVehicleController {
         return new ResponseEntity<List<Pricelist>>(response, HttpStatus.OK);
     }
 
-
     public ResponseEntity<List<VehicleMake>> getVehicleMakes() throws Exception {
         System.out.println("Getting all vehicle makes");
         List<VehicleMake> response = restTemplate.exchange("http://catalogue/catalogue/vehicleMake",
@@ -64,7 +62,6 @@ public class SearchingVehicleController {
 
         return new ResponseEntity<List<VehicleMake>>(response, HttpStatus.OK);
     }
-
 
     public ResponseEntity<List<VehicleModel>> getVehicleModels() throws Exception {
         System.out.println("Getting all vehicle models");

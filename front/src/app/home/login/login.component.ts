@@ -1,33 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/core/authentication/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'pm-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-  public isLoggedIn = false;
+  form: FormGroup;
+  public loginInvalid: boolean;
 
-    constructor(
-        private _service:AuthService){}
- 
-    ngOnInit(){
-        this.isLoggedIn = this._service.checkCredentials();    
-        let i = window.location.href.indexOf('code');
-        if(!this.isLoggedIn && i != -1){
-            this._service.retrieveToken(window.location.href.substring(i + 5));
-        }
-    }
+  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar,private formBuilder: FormBuilder, private authService: AuthService) { 
+  }
 
-    login() {
-        window.location.href = 'http://localhost:8083/auth/realms/baeldung/protocol/openid-connect/auth?response_type=code&&scope=write%20read&client_id=' + 
-          this._service.clientId + '&redirect_uri='+ this._service.redirectUri;
+  ngOnInit() {
+    this.form = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      try {
+        alert(JSON.stringify(this.form.value))
+        this.authService.login(this.form.value)
+        .subscribe(user => {
+          alert(user)
+          if (user != null){
+            localStorage.setItem("userObject", JSON.stringify(user));
+            this._snackBar.open("Succesful login!", "",  {
+              duration: 2000,
+              verticalPosition : 'top'
+            });
+          }
+          else{
+            this.loginInvalid = true;
+          }
+        });
+      } catch (err) {
+        this.loginInvalid = true;
+      }
+    } else {
+      this.loginInvalid = true;
     }
- 
-    logout() {
-        this._service.logout();
-    }
+  }
+
 }

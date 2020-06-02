@@ -31,7 +31,7 @@ public class Pricelist {
     private Long vehicleId;
 
     @OneToOne
-    @JoinColumn(name = "discount_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "discount_id", referencedColumnName = "id")
     private VehicleDiscount vehicleDiscount;
 
     public Pricelist() {

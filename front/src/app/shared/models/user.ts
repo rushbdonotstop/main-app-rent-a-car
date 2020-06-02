@@ -1,9 +1,13 @@
-export class User {
-    id:number;
-    name:string;
+import { UserDetails } from './user-details';
 
-    public User(id, name){
-        this.id = id;
-        this.name = name;
-    }
+export class User{
+
+    id : number;
+
+    username : String;
+    password : String;
+
+    userDetails : UserDetails;
+
+    public User(){}
 }
