@@ -1,6 +1,6 @@
 package com.example.request.controller;
 
-import com.example.request.DTO.RequestDTO;
+import com.example.request.dto.RequestDTO;
 import com.example.request.model.Request;
 import com.example.request.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;

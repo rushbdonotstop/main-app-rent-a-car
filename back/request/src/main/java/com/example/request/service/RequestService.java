@@ -1,6 +1,6 @@
 package com.example.request.service;
 
-import com.example.request.DTO.RequestDTO;
+import com.example.request.dto.RequestDTO;
 import com.example.request.model.Request;
 import com.example.request.model.Request_Vehicle;
 import com.example.request.repository.RequestRepository;

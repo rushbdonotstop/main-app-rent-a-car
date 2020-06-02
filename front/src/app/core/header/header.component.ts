@@ -1,10 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'pm-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
 
