@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
-import { FeaturesAreaComponent } from './home/features-area/features-area.component';
-import { ProductAreaComponent } from './home/product-area/product-area.component';
-import { BannerAreaComponent } from './home/banner-area/banner-area.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -30,13 +27,39 @@ import { ViewUsersComponent } from '../components/admin-dashboard/system-users/v
 import { RegisterAgentComponent } from '../components/admin-dashboard/system-users/register-agent/register-agent.component';
 import { EditPermissionsComponent } from '../components/admin-dashboard/system-users/edit-permissions/edit-permissions.component';
 import { CreateDiscountComponent } from '../components/agent-specific-components/create-discount/create-discount.component';
-import { LogoutComponent } from './logout/logout.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  declarations: [BannerAreaComponent, FeaturesAreaComponent, ProductAreaComponent, HomeComponent, RegisterComponent, LoginComponent, SearchVehicleComponent, ViewVehiclesComponent, VehicleDetailsComponent, UserCartComponent, RequestHistoryComponent, UserInboxComponent, CreateVehicleComponent, CreateReviewComponent, ViewVehicleReviewsComponent, CreateReportComponent, VehicleStatisticComponent, CreatePriceListComponent, ViewPriceListComponent, CreateDiscountComponent, VehicleMapComponent, AdminDashboardComponent, EditCodebookComponent, ViewCodebookComponent, CommentRequestsComponent, ViewUsersComponent, RegisterAgentComponent, EditPermissionsComponent, LogoutComponent],
+  declarations: [
+    HomeComponent, 
+    RegisterComponent, 
+    LoginComponent, 
+    SearchVehicleComponent, 
+    ViewVehiclesComponent, 
+    VehicleDetailsComponent, 
+    UserCartComponent, 
+    RequestHistoryComponent, 
+    UserInboxComponent, 
+    CreateVehicleComponent, 
+    CreateReviewComponent, 
+    ViewVehicleReviewsComponent, 
+    CreateReportComponent, 
+    VehicleStatisticComponent, 
+    CreatePriceListComponent, 
+    ViewPriceListComponent, 
+    CreateDiscountComponent, 
+    VehicleMapComponent, 
+    AdminDashboardComponent, 
+    EditCodebookComponent, 
+    ViewCodebookComponent, 
+    CommentRequestsComponent, 
+    ViewUsersComponent, 
+    RegisterAgentComponent, 
+    EditPermissionsComponent],
   imports: [
     CommonModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    FontAwesomeModule
   ],
   exports: [HomeComponent]
 })
