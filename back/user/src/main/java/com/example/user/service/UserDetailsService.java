@@ -45,15 +45,15 @@ public class UserDetailsService {
             }
 
             UserDetails userDetails = new UserDetails();
-            userDetails.setAddress(userDetailsDTO.getAdress());
+            userDetails.setAddress(userDetailsDTO.getAddress());
             userDetails.setBusinessNum(userDetailsDTO.getBusinessNum());
             userDetails.setFullName(userDetailsDTO.getFullName());
             userDetails.setUserType(UserType.toEnum(userDetailsDTO.getUserType()));
             userDetails.setVehicleNum(userDetailsDTO.getVehicleNum());
             user.setUserDetails(userDetails);
 
-            userRepository.save(user);
             userDetailsRepository.save(userDetails);
+            userRepository.save(user);
         } catch (EntityNotFoundException e) {
             throw new EntityNotFoundException("User doesn't exist");
         }
@@ -73,7 +73,7 @@ public class UserDetailsService {
             throw new EntityNotFoundException("User details not found");
         }
 
-        userDetails.setAddress(userDetailsDTO.getAdress());
+        userDetails.setAddress(userDetailsDTO.getAddress());
         userDetails.setBusinessNum(userDetailsDTO.getBusinessNum());
         userDetails.setFullName(userDetailsDTO.getFullName());
         userDetails.setUserType(UserType.toEnum(userDetailsDTO.getUserType()));

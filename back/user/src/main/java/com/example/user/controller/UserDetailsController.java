@@ -31,9 +31,11 @@ public class UserDetailsController {
     /**
      * GET /userDetails/{id}
      *
+     *
+     *
      * @return returns object of type UserDetailsDTO
      */
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDetailsDTO> getOneUserDetails(@PathVariable String id) {
         try {
             return new ResponseEntity<>(userDetailsService.getOneUserDetails(id), HttpStatus.OK);
@@ -51,8 +53,8 @@ public class UserDetailsController {
      *
      * @return returns notification
      */
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> postOneUserDetails(@PathVariable String id, @RequestBody UserDetailsDTO userDetailsDTO) {
+    @PostMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> postOneUserDetails(@RequestBody UserDetailsDTO userDetailsDTO, @PathVariable String id) {
         try {
             userDetailsService.addNewUserDetails(id, userDetailsDTO);
             return new ResponseEntity<Notification>(new Notification("Adding user details to a user successfully done.", true), HttpStatus.OK);
@@ -73,7 +75,7 @@ public class UserDetailsController {
      *
      * @return returns notification
      */
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> putOneUserDetails(@PathVariable String id, @RequestBody UserDetailsDTO userDetailsDTO) {
         try {
             userDetailsService.changeUserDetails(id, userDetailsDTO);
@@ -93,7 +95,7 @@ public class UserDetailsController {
      *
      * @return returns notification
      */
-    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> deleteOneUserDetails(@PathVariable String id, @RequestBody UserDetailsDTO userDetailsDTO) {
         try {
             userDetailsService.deleteUserDetails(id, userDetailsDTO);
