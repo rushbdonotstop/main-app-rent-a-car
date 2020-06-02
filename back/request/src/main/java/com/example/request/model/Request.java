@@ -3,7 +3,6 @@ package com.example.request.model;
 import com.example.request.model.enums.Status;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class Request {
@@ -12,8 +11,8 @@ public class Request {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "total_cost", nullable = false)
-    private float totalCost;
+    @Column(name = "total_cost")
+    private Float totalCost;
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
@@ -24,14 +23,14 @@ public class Request {
     @Column(name = "status", nullable = false)
     private Status status;
 
-    @Column(name="user_id", nullable = false)
-    private long userId;
+    @Column(name="user_id")
+    private Long userId;
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -43,11 +42,11 @@ public class Request {
         this.id = id;
     }
 
-    public float getTotalCost() {
+    public Float getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(float totalCost) {
+    public void setTotalCost(Float totalCost) {
         this.totalCost = totalCost;
     }
 

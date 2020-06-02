@@ -8,6 +8,11 @@ public class RequestDTO {
     Request request;
     List<Long> vehicles;
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     public RequestDTO() {
     }
 
