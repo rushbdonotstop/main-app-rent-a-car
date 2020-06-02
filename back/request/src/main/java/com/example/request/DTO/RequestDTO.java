@@ -1,4 +1,4 @@
-package com.example.request.dto;
+package com.example.request.DTO;
 
 import com.example.request.model.Request;
 
@@ -7,6 +7,11 @@ import java.util.List;
 public class RequestDTO {
     Request request;
     List<Long> vehicles;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
     public RequestDTO() {
     }
