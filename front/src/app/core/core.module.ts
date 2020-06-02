@@ -4,18 +4,18 @@ import { CommonModule } from '@angular/common';
 import { CoreRoutingModule } from './core-routing.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { ContentComponent } from './content/content.component';
 import { HomeModule } from '../home/home.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
-  declarations: [FooterComponent, HeaderComponent, ContentComponent],
+  declarations: [FooterComponent, HeaderComponent],
   imports: [
     CommonModule,
     CoreRoutingModule,
-    HomeModule
+    FontAwesomeModule
   ],
-  exports: [FooterComponent, HeaderComponent, ContentComponent],
+  exports: [FooterComponent, HeaderComponent],
   providers: []
 })
 export class CoreModule { }
