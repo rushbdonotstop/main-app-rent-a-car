@@ -4,12 +4,14 @@ public class Notification {
 
     private String text;
 
+    private boolean success;
+
     public Notification() {
     }
 
-    public Notification(String text) {
+    public Notification(String text, boolean success) {
         this.text = text;
-    }
+        this.success = success;
 
     public String getText() {
         return text;
@@ -19,10 +21,11 @@ public class Notification {
         this.text = text;
     }
 
-    @Override
-    public String toString() {
-        return "Notification{" +
-                "text='" + text + '\'' +
-                '}';
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }
