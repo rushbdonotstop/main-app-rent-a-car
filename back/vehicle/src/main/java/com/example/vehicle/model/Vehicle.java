@@ -15,7 +15,7 @@ public class Vehicle {
     @Column(name="mileage", nullable = false)
     private int mileage;
 
-    @Column(name="milleage_limit", nullable = false)
+    @Column(name="mileage_limit", nullable = false)
     private int mileageLimit;
 
     @Column(name="collision_protection", nullable = false)
@@ -24,7 +24,7 @@ public class Vehicle {
     @Column(name="children_seats", nullable = false)
     private int childrenSeats;
 
-    @Column(name="picture", nullable = false)
+    @Column(name="picture_path", nullable = false)
     private String picturePath;
 
     @Column(name="start_date", nullable = false)

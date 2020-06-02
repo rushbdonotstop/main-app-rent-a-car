@@ -65,7 +65,7 @@ public class SearchingVehicleService {
         return vehicleRepository.findByStyleId(Id);
     }
 
-    public List<VehicleMainViewDTO> getAllVehicleMainViewDTO(List<Vehicle> vehicleList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<OwnerDTO> ownerList) {
+    public List<VehicleMainViewDTO> getAllVehicleMainViewDTO(List<Vehicle> vehicleList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList) {
         List<VehicleMainViewDTO> listVMV = new ArrayList<>();
         for (Vehicle vehicle : vehicleList) {
             listVMV.add(vehicleToVehicleMainViewDTO(vehicle, vehicleMakeList, pricelist, vehicleModelList, ownerList));
@@ -73,7 +73,7 @@ public class SearchingVehicleService {
         return listVMV;
     }
 
-    public VehicleMainViewDTO vehicleToVehicleMainViewDTO(Vehicle vehicle, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<OwnerDTO> ownerList) {
+    public VehicleMainViewDTO vehicleToVehicleMainViewDTO(Vehicle vehicle, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList) {
         VehicleMainViewDTO vmvDTO = new VehicleMainViewDTO();
         vmvDTO.setId(vehicle.getId());
         vmvDTO.setMake(getVehicleMake(vehicleMakeList, vehicle.getMakeId()));
@@ -118,12 +118,152 @@ public class SearchingVehicleService {
         return null;
     }
 
-    public String getOwner(List<OwnerDTO> list, Long vehicleOwnerId) {
-        for (OwnerDTO owner : list) {
+    public String getOwner(List<UserDTO> list, Long vehicleOwnerId) {
+        for (UserDTO owner : list) {
             if(vehicleOwnerId.equals(owner.getId())) {
                 return owner.getUsername();
             }
         }
         return null;
     }
+
+    public List<Vehicle> getVehiclesByMake(List<Vehicle> list, Long id) {
+        if (id == 0) {
+            return list;
+        }
+
+        List<Vehicle> vehicleList = new ArrayList<>();
+
+        for(Vehicle vehicle : list) {
+            if (vehicle.getMakeId().equals(id)) {
+                vehicleList.add(vehicle);
+            }
+        }
+        return vehicleList;
+    }
+
+    public List<Vehicle> getVehiclesByModel(List<Vehicle> list, Long id) {
+        if ( id== 0) {
+            return list;
+        }
+
+        List<Vehicle> vehicleList = new ArrayList<>();
+        for(Vehicle vehicle : list) {
+            if (vehicle.getModelId().equals(id)) {
+                vehicleList.add(vehicle);
+            }
+        }
+        return vehicleList;
+    }
+
+    public List<Vehicle> getVehiclesByStyle(List<Vehicle> list, Long id) {
+        if (id== 0) {
+            return list;
+        }
+
+        List<Vehicle> vehicleList = new ArrayList<>();
+        for(Vehicle vehicle : list) {
+            if (vehicle.getStyleId().equals(id)) {
+                vehicleList.add(vehicle);
+            }
+        }
+        return vehicleList;
+    }
+
+    public List<Vehicle> getVehiclesByFuel(List<Vehicle> list, Long id) {
+        if (id== 0) {
+            return list;
+        }
+
+        List<Vehicle> vehicleList = new ArrayList<>();
+        for(Vehicle vehicle : list) {
+            if (vehicle.getFuelTypeId().equals(id)) {
+                vehicleList.add(vehicle);
+            }
+        }
+        return vehicleList;
+    }
+
+    public List<Vehicle> getVehiclesByTransmission(List<Vehicle> list, Long id) {
+        if (id== 0) {
+            return list;
+        }
+
+        List<Vehicle> vehicleList = new ArrayList<>();
+        for(Vehicle vehicle : list) {
+            if (vehicle.getTransmissionId().equals(id)) {
+                vehicleList.add(vehicle);
+            }
+        }
+        return vehicleList;
+    }
+
+    public List<Vehicle> getVehiclesByMaxMileage(List<Vehicle> list, int maxMileage) {
+        if (maxMileage == 0) {
+            return list;
+        }
+        List<Vehicle> vehicleList = new ArrayList<>();
+        for(Vehicle vehicle : list) {
+            if(vehicle.getMileage() <= maxMileage) {
+                vehicleList.add(vehicle);
+            }
+        }
+        return vehicleList;
+    }
+
+    public List<Vehicle> getVehiclesByMileageLimit(List<Vehicle> list, int mileageLimit) {
+        if(mileageLimit == 0) {
+            return list;
+        }
+        List<Vehicle> vehicleList = new ArrayList<>();
+        for(Vehicle vehicle : list) {
+            if(vehicle.getMileageLimit() >= mileageLimit) {
+                vehicleList.add(vehicle);
+            }
+        }
+        return vehicleList;
+    }
+
+    public List<Vehicle> getVehiclesByCollisionDamage(List<Vehicle> list, boolean collisionProtection) {
+        List<Vehicle> vehicleList = new ArrayList<>();
+
+        if (collisionProtection == true) {
+            for (Vehicle vehicle : list) {
+                if (vehicle.getCollisetionProtection() == true) {
+                    vehicleList.add(vehicle);
+                }
+            }
+            return vehicleList;
+        } else {
+            for(Vehicle vehicle : list) {
+                if (vehicle.getCollisetionProtection() == false) {
+                    vehicleList.add(vehicle);
+                }
+            }
+            return vehicleList;
+        }
+    }
+
+    public List<Vehicle> getVehiclesByChildrenSeats (List<Vehicle> list, int childrenSeats) {
+        List<Vehicle> vehicleList = new ArrayList<>();
+
+        if (childrenSeats == 0) {
+            for (Vehicle vehicle : list) {
+                if (vehicle.getChildrenSeats() == 0) {
+                    vehicleList.add(vehicle);
+                }
+            }
+            return vehicleList;
+        } else {
+            for(Vehicle vehicle : list) {
+                if (vehicle.getChildrenSeats() >= childrenSeats) {
+                    vehicleList.add(vehicle);
+                }
+            }
+            return vehicleList;
+        }
+    }
+
+
+
 }

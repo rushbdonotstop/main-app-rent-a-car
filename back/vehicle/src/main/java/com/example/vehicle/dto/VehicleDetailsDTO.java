@@ -1,181 +1,119 @@
 package com.example.vehicle.dto;
 
 import com.example.vehicle.dto.builders.VehicleDetailsDTOBuilder;
+import com.example.vehicle.model.Vehicle;
 
 public class VehicleDetailsDTO {
 
-    private long id;
-
-    private int mileage;
-    private int mileageLimit;
-    private boolean collisionProtection;
-    private int childrenSeats;
-    private String picturePath;
-
-    private String fuelType;
-    private String style;
-    private String transmission;
-
-    private String location;
-
-    private String priceByMile;
-    private String priceCollision;
-    private String discount;
-    private String numDaysDiscount;
+    private Long vehicleId;
+    private Long fuelTypeId;
+    private Long styleId;
+    private Long transmissionId;
+    private Long modelId;
+    private Long makeId;
+    private Long locationId;
+    private Long ownerId;
 
     public VehicleDetailsDTO() {
     }
 
-    public VehicleDetailsDTO(long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String picturePath, String fuelType, String style, String transmission, String location, String priceByMile, String priceCollision, String discount, String numDaysDiscount) {
-        this.id = id;
-        this.mileage = mileage;
-        this.mileageLimit = mileageLimit;
-        this.collisionProtection = collisionProtection;
-        this.childrenSeats = childrenSeats;
-        this.picturePath = picturePath;
-        this.fuelType = fuelType;
-        this.style = style;
-        this.transmission = transmission;
-        this.location = location;
-        this.priceByMile = priceByMile;
-        this.priceCollision = priceCollision;
-        this.discount = discount;
-        this.numDaysDiscount = numDaysDiscount;
+    public VehicleDetailsDTO(Long vehicleId, Long fuelTypeId, Long styleId, Long transmissionId, Long modelId, Long makeId, Long locationId, Long ownerId) {
+        this.vehicleId = vehicleId;
+        this.fuelTypeId = fuelTypeId;
+        this.styleId = styleId;
+        this.transmissionId = transmissionId;
+        this.modelId = modelId;
+        this.makeId = makeId;
+        this.locationId = locationId;
+        this.ownerId = ownerId;
     }
 
-    public static VehicleDetailsDTOBuilder builder(){
-        return new VehicleDetailsDTOBuilder();
+    public VehicleDetailsDTO(Vehicle vehicle) {
+        this.vehicleId = vehicle.getId();
+        this.fuelTypeId = vehicle.getFuelTypeId();
+        this.styleId = vehicle.getStyleId();
+        this.transmissionId = vehicle.getTransmissionId();
+        this.modelId = vehicle.getModelId();
+        this.makeId = vehicle.getMakeId();
+        this.locationId = vehicle.getLocationId();
+        this.ownerId = vehicle.getUserId();
     }
 
-    public long getId() {
-        return id;
+    public Long getVehicleId() {
+        return vehicleId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setVehicleId(Long vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
-    public int getMileage() {
-        return mileage;
+    public Long getFuelTypeId() {
+        return fuelTypeId;
     }
 
-    public void setMileage(int mileage) {
-        this.mileage = mileage;
+    public void setFuelTypeId(Long fuelTypeId) {
+        this.fuelTypeId = fuelTypeId;
     }
 
-    public int getMileageLimit() {
-        return mileageLimit;
+    public Long getStyleId() {
+        return styleId;
     }
 
-    public void setMileageLimit(int mileageLimit) {
-        this.mileageLimit = mileageLimit;
+    public void setStyleId(Long styleId) {
+        this.styleId = styleId;
     }
 
-    public boolean isCollisionProtection() {
-        return collisionProtection;
+    public Long getTransmissionId() {
+        return transmissionId;
     }
 
-    public void setCollisionProtection(boolean collisionProtection) {
-        this.collisionProtection = collisionProtection;
+    public void setTransmissionId(Long transmissionId) {
+        this.transmissionId = transmissionId;
     }
 
-    public int getChildrenSeats() {
-        return childrenSeats;
+    public Long getModelId() {
+        return modelId;
     }
 
-    public void setChildrenSeats(int childrenSeats) {
-        this.childrenSeats = childrenSeats;
+    public void setModelId(Long modelId) {
+        this.modelId = modelId;
     }
 
-    public String getPicturePath() {
-        return picturePath;
+    public Long getMakeId() {
+        return makeId;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setMakeId(Long makeId) {
+        this.makeId = makeId;
     }
 
-    public String getFuelType() {
-        return fuelType;
+    public Long getLocationId() {
+        return locationId;
     }
 
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 
-    public String getStyle() {
-        return style;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    public String getTransmission() {
-        return transmission;
-    }
-
-    public void setTransmission(String transmission) {
-        this.transmission = transmission;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getPriceByMile() {
-        return priceByMile;
-    }
-
-    public void setPriceByMile(String priceByMile) {
-        this.priceByMile = priceByMile;
-    }
-
-    public String getPriceCollision() {
-        return priceCollision;
-    }
-
-    public void setPriceCollision(String priceCollision) {
-        this.priceCollision = priceCollision;
-    }
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
-
-    public String getNumDaysDiscount() {
-        return numDaysDiscount;
-    }
-
-    public void setNumDaysDiscount(String numDaysDiscount) {
-        this.numDaysDiscount = numDaysDiscount;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override
     public String toString() {
         return "VehicleDetailsDTO{" +
-                "id=" + id +
-                ", mileage=" + mileage +
-                ", mileageLimit=" + mileageLimit +
-                ", collisionProtection=" + collisionProtection +
-                ", childrenSeats=" + childrenSeats +
-                ", picturePath='" + picturePath + '\'' +
-                ", fuelType='" + fuelType + '\'' +
-                ", style='" + style + '\'' +
-                ", transmission='" + transmission + '\'' +
-                ", location='" + location + '\'' +
-                ", priceByMile='" + priceByMile + '\'' +
-                ", priceCollision='" + priceCollision + '\'' +
-                ", discount='" + discount + '\'' +
-                ", numDaysDiscount='" + numDaysDiscount + '\'' +
+                "vehicleId=" + vehicleId +
+                ", fuelTypeId=" + fuelTypeId +
+                ", styleId=" + styleId +
+                ", transmissionId=" + transmissionId +
+                ", modelId=" + modelId +
+                ", makeId=" + makeId +
+                ", locationId=" + locationId +
+                ", ownerId=" + ownerId +
                 '}';
     }
 }

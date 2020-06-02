@@ -15,6 +15,7 @@ import com.example.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,6 +32,19 @@ public class UserService {
 
     public Boolean userExists(LoginRequestDTO loginRequestDTO) {
         return userRepository.findByUsernameAndPassword(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()) != null;
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    public List<UserDTO> convertUserToUserDTO(List<User> list) {
+        List<UserDTO> newList = new ArrayList<>();
+        for(User user : list) {
+            UserDTO userDTO = new UserDTO(user.getId(), user.getUsername());
+            newList.add(userDTO);
+        }
+        return newList;
     }
 
     public UserDTO getUsername(UserDTO userDTO) {
@@ -69,35 +83,35 @@ public class UserService {
         return false;
     }
 
-    public Notification updateUserVehicleNumAfterCreate(Long userId) {
-        Notification notification = new Notification("Failed to update user vehicle number after create.");
-        try{
-            if (userRepository.findById(userId).isPresent()){
-                User u = userRepository.findById(userId).get();
-
-                if (userDetailsRepository.findById(u.getUserDetails().getId()).isPresent()){
-                    UserDetails userDetails = userDetailsRepository.findById(u.getUserDetails().getId()).get();
-                    userDetails.setVehicleNum(userDetails.getVehicleNum() + 1);
-                    userDetailsRepository.save(userDetails);
-                    notification.setText("Updated user vehicle number after create.");
-                    if (userDetails.getUserType().equals(UserType.END_USER) && userDetails.getVehicleNum() == 3){
-                        System.out.println(userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE));
-                        userPrivilegeRepository.deleteUserPrivilege(u.getId(), Privilege.ADD_VEHICLE);
-                        System.out.println(userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE));
-                        notification.setText("Updated user vehicle number after create. User reached max number of vehicles.");
-                    }
-                }
-                else{
-                    notification.setText("User details id does not exist.");
-                }
-            }
-            else{
-                notification.setText("User id does not exist.");
-            }
-        }
-        catch (Exception e){
-
-        }
-        return notification;
-    }
+//    public Notification updateUserVehicleNumAfterCreate(Long userId) {
+//        Notification notification = new Notification("Failed to update user vehicle number after create.");
+//        try{
+//            if (userRepository.findById(userId).isPresent()){
+//                User u = userRepository.findById(userId).get();
+//
+//                if (userDetailsRepository.findById(u.getUserDetails().getId()).isPresent()){
+//                    UserDetails userDetails = userDetailsRepository.findById(u.getUserDetails().getId()).get();
+//                    userDetails.setVehicleNum(userDetails.getVehicleNum() + 1);
+//                    userDetailsRepository.save(userDetails);
+//                    notification.setText("Updated user vehicle number after create.");
+//                    if (userDetails.getUserType().equals(UserType.END_USER) && userDetails.getVehicleNum() == 3){
+//                        System.out.println(userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE));
+//                        userPrivilegeRepository.deleteUserPrivilege(u.getId(), Privilege.ADD_VEHICLE);
+//                        System.out.println(userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE));
+//                        notification.setText("Updated user vehicle number after create. User reached max number of vehicles.");
+//                    }
+//                }
+//                else{
+//                    notification.setText("User details id does not exist.");
+//                }
+//            }
+//            else{
+//                notification.setText("User id does not exist.");
+//            }
+//        }
+//        catch (Exception e){
+//
+//        }
+//        return notification;
+//    }
 }
