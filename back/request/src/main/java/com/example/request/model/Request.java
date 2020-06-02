@@ -4,7 +4,6 @@ import com.example.request.model.enums.Status;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Entity
 public class Request {
 
@@ -12,8 +11,8 @@ public class Request {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "total_cost", nullable = false)
-    private float totalCost;
+    @Column(name = "total_cost")
+    private Float totalCost;
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
@@ -24,16 +23,16 @@ public class Request {
     @Column(name = "status", nullable = false)
     private Status status;
 
-    public Request() {
+    @Column(name="user_id")
+    private Long userId;
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public Request(float totalCost, LocalDate startDate, LocalDate endDate, Status status) {
-        this.totalCost = totalCost;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
-
 
     public Long getId() {
         return id;
@@ -43,11 +42,11 @@ public class Request {
         this.id = id;
     }
 
-    public float getTotalCost() {
+    public Float getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(float totalCost) {
+    public void setTotalCost(Float totalCost) {
         this.totalCost = totalCost;
     }
 
@@ -83,6 +82,7 @@ public class Request {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", status=" + status +
+                ", userId=" + userId +
                 '}';
     }
 }

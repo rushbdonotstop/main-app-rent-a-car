@@ -27,45 +27,45 @@ public class VehicleController {
     /**
      * POST /server/vehicle
      *
-     * @return return status of creating vehicle request
+     * @return return status of creating vehicle
      */
     @PostMapping(value = "", consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> create(@RequestBody Vehicle vehicle) throws Exception {
-        Long vehicleId = vehicleService.createVehicle(vehicle);
+        Long vehicleId = vehicleService.create(vehicle);
         return new ResponseEntity<>(vehicleId, HttpStatus.OK);
     }
 
     /**
      * PUT /server/vehicle
      *
-     * @return return status of updating vehicle request
+     * @return return status of updating vehicle
      */
     @PutMapping(value = "", consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> update(@RequestBody Vehicle vehicle) throws Exception {
-        Notification notification = vehicleService.updateVehicle(vehicle);
+        Notification notification = vehicleService.update(vehicle);
         return new ResponseEntity<>(notification, HttpStatus.OK);
     }
 
     /**
-     * GET /server/vehicle/all
+     * GET /server/vehicle
      *
      * @return return all vehicles
      */
-    @GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<VehicleMainViewDTO>> getAll() throws Exception {
-        List<VehicleMainViewDTO> vehicleMainViewDTOList = vehicleService.getAll();
-        return new ResponseEntity<List<VehicleMainViewDTO>>(vehicleMainViewDTOList, HttpStatus.OK);
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Vehicle>> getAll() throws Exception {
+        List<Vehicle> vehicles = vehicleService.getAll();
+        return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
     }
 
     /**
-     * GET /server/vehicle/details
+     * GET /server/vehicle/{vehicleId}
      *
-     * @return return vehicle details
+     * @return return vehicle
      */
-    @GetMapping(value = "details", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleDetailsDTO> getVehicleDetails(@RequestParam(value="vehicleId", required = true) Long vehicleId) throws Exception {
-        VehicleDetailsDTO vehicleDetails = vehicleService.getVehicleDetails(vehicleId);
-        return new ResponseEntity<VehicleDetailsDTO>(vehicleDetails, HttpStatus.OK);
+    @GetMapping(value = "/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Vehicle> get(@PathVariable Long vehicleId) throws Exception {
+        Vehicle vehicle = vehicleService.get(vehicleId);
+        return new ResponseEntity<Vehicle>(vehicle, HttpStatus.OK);
     }
 
     /**
@@ -73,10 +73,21 @@ public class VehicleController {
      *
      * @return return delete status
      */
-    @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> delete(@RequestParam(value="vehicleId", required = true) Long vehicleId) throws Exception {
+    @DeleteMapping(value = "/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> delete(@PathVariable Long vehicleId) throws Exception {
         Notification notification = vehicleService.delete(vehicleId);
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+    }
+
+    /**
+     * GET /server/vehicle/exists
+     *
+     * @return return true if vehicle exists
+     */
+    @GetMapping(value = "exists/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> exists(@PathVariable Long vehicleId) throws Exception {
+        Boolean exists = vehicleService.exists(vehicleId);
+        return new ResponseEntity<Boolean>(exists, HttpStatus.OK);
     }
 
 //    /**

@@ -1,0 +1,34 @@
+package com.example.request.DTO;
+
+import com.example.request.model.Request;
+
+import java.util.List;
+
+public class RequestDTO {
+    Request request;
+    List<Long> vehicles;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    public RequestDTO() {
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
+    public List<Long> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Long> vehicles) {
+        this.vehicles = vehicles;
+    }
+}

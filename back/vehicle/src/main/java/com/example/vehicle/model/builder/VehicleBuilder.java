@@ -2,6 +2,7 @@ package com.example.vehicle.model.builder;
 
 import com.example.vehicle.model.Vehicle;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class VehicleBuilder {
@@ -11,8 +12,8 @@ public class VehicleBuilder {
     private boolean collisionProtection;
     private int childrenSeats;
     private String picturePath;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Long fuelTypeId;
     private Long makeId;
     private Long modelId;
@@ -51,12 +52,12 @@ public class VehicleBuilder {
         return this;
     }
 
-    public VehicleBuilder setStartDate(Date startDate) {
+    public VehicleBuilder setStartDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public VehicleBuilder setEndDate(Date endDate) {
+    public VehicleBuilder setEndDate(LocalDate endDate) {
         this.endDate = endDate;
         return this;
     }

@@ -3,6 +3,7 @@ package com.example.user.controller;
 import com.example.user.dto.ChangeUsPwRequestDTO;
 import com.example.user.dto.CreateUserRequestDTO;
 import com.example.user.dto.LoginRequestDTO;
+import com.example.user.dto.UserCreateVehicleDTO;
 import com.example.user.dto.UserDTO;
 import com.example.user.model.Notification;
 import com.example.user.model.User;
@@ -111,5 +112,27 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
+
+    /**
+     * GET /user/canUserCreate/{userId}
+     *
+     * @return returns true if user can create vehicles
+     */
+    @GetMapping(value = "canUserCreate/{userId}", consumes= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> createVehicleValidation(@PathVariable Long userId) throws Exception {
+        Boolean userInfo = userService.canUserCreate(userId);
+        return new ResponseEntity<Boolean>(userInfo, HttpStatus.OK);
+    }
+
+    /**
+     * PUT /user/updateUserVehicleNumAfterCreate/{userId}
+     *
+     * @return updates user vehicle number after create
+     */
+    @PutMapping(value = "updateUserVehicleNumAfterCreate/{userId}", consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> updateUserVehicleNumAfterCreate(@PathVariable Long userId) throws Exception {
+        Notification notification = userService.updateUserVehicleNumAfterCreate(userId);
+        return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+
     }
 }

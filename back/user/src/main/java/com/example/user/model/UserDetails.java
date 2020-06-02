@@ -35,7 +35,7 @@ public class UserDetails {
     public UserDetails() {
     }
 
-    public UserDetails(String fullName, String address, String businessNum, String vehicleNum, UserType userType, List<Privilege> privilegeList) {
+    public UserDetails(String fullName, String address, String businessNum, int vehicleNum, UserType userType, List<Privilege> privilegeList) {
         this.fullName = fullName;
         this.address = address;
         this.businessNum = businessNum;
@@ -76,11 +76,11 @@ public class UserDetails {
         this.businessNum = businessNum;
     }
 
-    public String getVehicleNum() {
+    public int getVehicleNum() {
         return vehicleNum;
     }
 
-    public void setVehicleNum(String vehicleNum) {
+    public void setVehicleNum(int vehicleNum) {
         this.vehicleNum = vehicleNum;
     }
 

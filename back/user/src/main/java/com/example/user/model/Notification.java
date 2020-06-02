@@ -12,7 +12,6 @@ public class Notification {
     public Notification(String text, boolean success) {
         this.text = text;
         this.success = success;
-    }
 
     public String getText() {
         return text;
@@ -28,13 +27,5 @@ public class Notification {
 
     public void setSuccess(boolean success) {
         this.success = success;
-    }
-
-    @Override
-    public String toString() {
-        return "Notification{" +
-                "text='" + text + '\'' +
-                ", success=" + success +
-                '}';
     }
 }

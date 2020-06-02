@@ -3,14 +3,22 @@ package com.example.user.service;
 import com.example.user.dto.ChangeUsPwRequestDTO;
 import com.example.user.dto.CreateUserRequestDTO;
 import com.example.user.dto.LoginRequestDTO;
+import com.example.user.dto.UserCreateVehicleDTO;
 import com.example.user.dto.UserDTO;
 import com.example.user.model.User;
 import com.example.user.model.UserDetails;
+import com.example.user.model.Notification;
+import com.example.user.model.User;
+import com.example.user.model.UserDetails;
+import com.example.user.model.UserPrivilege;
+import com.example.user.model.enums.Privilege;
+import com.example.user.model.enums.UserType;
 import com.example.user.repository.UserDetailsRepository;
 import com.example.user.repository.UserPrivilegeRepository;
 import com.example.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -51,6 +59,7 @@ public class UserService {
         }
         return userDTO;
     }
+
 
     public List<UserDTO> getAllUsers() throws Exception{
         List<User> userList = userRepository.findAll();
@@ -109,5 +118,56 @@ public class UserService {
         } catch (EntityNotFoundException e) {
             throw new Exception("Id doesn't exists.");
         }
+
+    public boolean canUserCreate(Long userId) {
+        try{
+            if (userRepository.findById(userId).isPresent()){
+                User u = userRepository.findById(userId).get();
+                System.out.println("FOUND? " + userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE));
+                if((u.getUserDetails().getUserType().equals(UserType.END_USER) && u.getUserDetails().getVehicleNum() == 3)
+                || userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE) == null){
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+        }
+        catch(Exception e){
+
+        }
+
+        return false;
+    }
+
+    public Notification updateUserVehicleNumAfterCreate(Long userId) {
+        Notification notification = new Notification("Failed to update user vehicle number after create.", false);
+        try{
+            if (userRepository.findById(userId).isPresent()){
+                User u = userRepository.findById(userId).get();
+
+                if (userDetailsRepository.findById(u.getUserDetails().getId()).isPresent()){
+                    UserDetails userDetails = userDetailsRepository.findById(u.getUserDetails().getId()).get();
+                    userDetails.setVehicleNum(userDetails.getVehicleNum() + 1);
+                    userDetailsRepository.save(userDetails);
+                    notification.setText("Updated user vehicle number after create.");
+                    if (userDetails.getUserType().equals(UserType.END_USER) && userDetails.getVehicleNum() == 3){
+                        UserPrivilege userPrivilege = userPrivilegeRepository.findByUserAndPrivilege(u, Privilege.ADD_VEHICLE);
+                        userPrivilegeRepository.deleteById(userPrivilege.getId());
+                        notification.setText("Updated user vehicle number after create. User reached max number of vehicles.");
+                    }
+                }
+                else{
+                    notification.setText("User details id does not exist.");
+                }
+            }
+            else{
+                notification.setText("User id does not exist.");
+            }
+        }
+        catch (Exception e){
+
+        }
+        return notification;
     }
 }
