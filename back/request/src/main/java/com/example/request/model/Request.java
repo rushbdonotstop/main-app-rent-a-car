@@ -1,6 +1,7 @@
 package com.example.request.model;
 
 import com.example.request.model.enums.Status;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 public class Request {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "total_cost")
@@ -23,8 +24,41 @@ public class Request {
     @Column(name = "status", nullable = false)
     private Status status;
 
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private Long userId;
+
+    @Column(nullable = false)
+    private Long vehicleId;
+
+    @Column
+    private Long ownerId;
+
+    @OneToOne
+    private Bundle bundle;
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Bundle getBundle() {
+        return bundle;
+    }
+
+    public void setBundle(Bundle bundle) {
+        this.bundle = bundle;
+    }
+
+    public Long getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(Long vehicleId) {
+        this.vehicleId = vehicleId;
+    }
 
     public Long getUserId() {
         return userId;
@@ -83,6 +117,7 @@ public class Request {
                 ", endDate=" + endDate +
                 ", status=" + status +
                 ", userId=" + userId +
+                ", ownerId= " + ownerId +
                 '}';
     }
 }

@@ -1,12 +1,12 @@
 package com.example.request.service;
 
-import com.example.request.DTO.PhysicalRequestDTO;
 import com.example.request.DTO.RequestDTO;
+import com.example.request.model.Bundle;
 import com.example.request.model.Request;
-import com.example.request.model.Request_Vehicle;
 import com.example.request.model.enums.Status;
+import com.example.request.repository.BundleRepository;
 import com.example.request.repository.RequestRepository;
-import com.example.request.repository.Request_VehicleRepository;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +20,35 @@ public class RequestService {
     RequestRepository requestRepository;
 
     @Autowired
-    Request_VehicleRepository request_vehicleRepository;
+    BundleRepository bundleRepository;
 
     public boolean areDatesValid(LocalDate startDate, LocalDate endDate) {
         if (endDate.compareTo(startDate) >= 0 &&
                 startDate.compareTo(LocalDate.now()) >= 0)
             return true;
-        else
+        else {
+            System.err.println("Invalid dates");
             return false;
+        }
+    }
+
+    public boolean isBundleValid(Bundle bundle) {
+        List<Request> requests = bundle.getRequests();
+        System.out.println(requests);
+        if (requests.size() <= 1) {
+            System.err.println("Bundle cannot contain one vehicle only");
+            return false;
+        }
+        Long ownerId = requests.get(0).getOwnerId();
+        for (Request request : requests) {
+            if (!request.getOwnerId().equals(ownerId)) {
+                System.out.println(request.getOwnerId());
+                System.err.println("All bundle members must have the same owner");
+                return false;
+            }
+
+        }
+        return true;
     }
 
     public List<Request> findAll() {
@@ -45,15 +66,34 @@ public class RequestService {
         return null;
     }
 
-    public boolean addRequest(List<RequestDTO> requests) {
-        for (RequestDTO requestdto : requests) {
-            if (areDatesValid(requestdto.getRequest().getStartDate(), requestdto.getRequest().getEndDate())) {
-                Request newReq = requestRepository.saveAndFlush(requestdto.getRequest());
-                for (Long vehicleId : requestdto.getVehicles()) {
-                    request_vehicleRepository.save(new Request_Vehicle(vehicleId, newReq));
-                }
-            } else
+    public boolean addRequest(RequestDTO requests) {
+        //-----------------checks------------------
+
+        for (Bundle bundle : requests.getBundles()) {
+            if (!isBundleValid(bundle))
                 return false;
+            for (Request request : bundle.getRequests()) {
+                if (!(areDatesValid(request.getStartDate(), request.getEndDate()) && request.getUserId() != null))
+                    return false;
+            }
+        }
+        for (Request request : requests.getRequests()) {
+            if (!(areDatesValid(request.getStartDate(), request.getEndDate()) && request.getUserId() != null))
+                return false;
+        }
+
+        //-------------------------------------------
+
+        for (Bundle bundle : requests.getBundles()) {
+            Bundle newBundle = bundleRepository.saveAndFlush(new Bundle(requests.getRequests())); //contains Id
+            for (Request request : bundle.getRequests()) {
+                request.setBundle(newBundle);
+                requestRepository.saveAndFlush(request);
+            }
+
+        }
+        for (Request request : requests.getRequests()) {
+            requestRepository.saveAndFlush(request);
         }
         return true;
     }
@@ -67,30 +107,39 @@ public class RequestService {
         return false;
     }
 
-    //TODO : optimize
-    public boolean addPhysicalRenting(PhysicalRequestDTO request) {
-        
-        LocalDate startdate = request.getRequest().getStartDate();
-        LocalDate enddate = request.getRequest().getEndDate();
+    public boolean addPhysicalRenting(Request request) {
+
+        LocalDate startdate = request.getStartDate();
+        LocalDate enddate = request.getEndDate();
 
         if (areDatesValid(startdate, enddate)) {
 
-            List<Long> overlapingReqIds = requestRepository.overlapingRequests(startdate, enddate, request.getVehicleId());
-            //List<Request> bundleMembers = requestRepository.bundleMembers(overlapingReqIds);
+            List<Request> overlappingReqs = requestRepository.overlapingRequests(startdate, enddate, request.getVehicleId());
+            System.out.println(overlappingReqs);
 
-            for (Long requestId : overlapingReqIds) {
-                Request req = requestRepository.findById(requestId).get();
-                if (req != null) {
+            for (Request req : overlappingReqs) {
+                if (req.getBundle() == null) {
+                    //Cancel requests which are not part of a bundle
                     if (req.getStatus() != Status.RESERVED) {
                         req.setStatus(Status.CANCELLED);
                         requestRepository.save(req);
                     } else return false; //conflict
+                } else {
+                    //Cancel members of a bundle for each conflicting request that is in a bundle
+                    List<Request> bundleMembers = requestRepository.bundleMembers(req.getBundle());
+                    for (Request reqInBundle : bundleMembers) {
+                        if (reqInBundle.getStatus() != Status.RESERVED) {
+                            reqInBundle.setStatus(Status.CANCELLED);
+                            requestRepository.save(req);
+                        } else return false; //conflict
+                    }
                 }
+
             }
 
-            request.getRequest().setStatus(Status.RESERVED);
-            Request newReq = requestRepository.save(request.getRequest()); //Contains its new id
-            request_vehicleRepository.save(new Request_Vehicle(request.getVehicleId(), newReq));
+            request.setStatus(Status.RESERVED);
+            request.setBundle(null);
+            requestRepository.save(request);
             return true;
         } else return false;
     }

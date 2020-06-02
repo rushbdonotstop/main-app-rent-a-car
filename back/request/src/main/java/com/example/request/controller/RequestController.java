@@ -1,6 +1,5 @@
 package com.example.request.controller;
 
-import com.example.request.DTO.PhysicalRequestDTO;
 import com.example.request.DTO.RequestDTO;
 import com.example.request.model.Request;
 import com.example.request.service.RequestService;
@@ -48,7 +47,7 @@ public class RequestController {
      * @return returns status of new request creation
      */
     @PostMapping(value = "", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<String> newRequest(@RequestBody List<RequestDTO> requests) {
+    public ResponseEntity<String> newRequest(@RequestBody RequestDTO requests) {
         boolean status = this.requestService.addRequest(requests);
         if (status){
             return new ResponseEntity<>("Request successfully created", HttpStatus.OK);
@@ -79,7 +78,7 @@ public class RequestController {
      * @return returns status of new physical request creation
      */
     @PostMapping(value = "/physicalRent", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<String> physicalRenting(@RequestBody PhysicalRequestDTO request) {
+    public ResponseEntity<String> physicalRenting(@RequestBody Request request) {
         boolean status = this.requestService.addPhysicalRenting(request);
         if (status){
             return new ResponseEntity<>("Sucessfully rented", HttpStatus.OK);
