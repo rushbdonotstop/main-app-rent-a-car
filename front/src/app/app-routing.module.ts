@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router'; 
 import { HomeComponent } from './home/home/home.component';
-import { UserCartComponent } from './components/user-cart/user-cart.component';
+import { CoreRoutingModule } from './core/core-routing.module';
 
 const routes: Routes = [
-  {path: "cart", component:UserCartComponent},
-  {path : "" , component: HomeComponent}
+  { path: '', component: HomeComponent}
 ];
 
 @NgModule({

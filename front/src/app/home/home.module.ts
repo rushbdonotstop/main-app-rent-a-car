@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -28,6 +27,8 @@ import { RegisterAgentComponent } from '../components/admin-dashboard/system-use
 import { EditPermissionsComponent } from '../components/admin-dashboard/system-users/edit-permissions/edit-permissions.component';
 import { CreateDiscountComponent } from '../components/agent-specific-components/create-discount/create-discount.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CoreRoutingModule } from '../core/core-routing.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
@@ -58,8 +59,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     EditPermissionsComponent],
   imports: [
     CommonModule,
-    HomeRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    CoreModule
   ],
   exports: [HomeComponent]
 })
