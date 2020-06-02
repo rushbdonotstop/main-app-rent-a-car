@@ -27,40 +27,60 @@ import { RegisterAgentComponent } from '../components/admin-dashboard/system-use
 import { EditPermissionsComponent } from '../components/admin-dashboard/system-users/edit-permissions/edit-permissions.component';
 import { CreateDiscountComponent } from '../components/agent-specific-components/create-discount/create-discount.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CoreRoutingModule } from '../core/core-routing.module';
 import { CoreModule } from '../core/core.module';
+import { MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    HomeComponent, 
-    RegisterComponent, 
-    LoginComponent, 
-    SearchVehicleComponent, 
-    ViewVehiclesComponent, 
-    VehicleDetailsComponent, 
-    UserCartComponent, 
-    RequestHistoryComponent, 
-    UserInboxComponent, 
-    CreateVehicleComponent, 
-    CreateReviewComponent, 
-    ViewVehicleReviewsComponent, 
-    CreateReportComponent, 
-    VehicleStatisticComponent, 
-    CreatePriceListComponent, 
-    ViewPriceListComponent, 
-    CreateDiscountComponent, 
-    VehicleMapComponent, 
-    AdminDashboardComponent, 
-    EditCodebookComponent, 
-    ViewCodebookComponent, 
-    CommentRequestsComponent, 
-    ViewUsersComponent, 
-    RegisterAgentComponent, 
+    HomeComponent,
+    RegisterComponent,
+    LoginComponent,
+    SearchVehicleComponent,
+    ViewVehiclesComponent,
+    VehicleDetailsComponent,
+    UserCartComponent,
+    RequestHistoryComponent,
+    UserInboxComponent,
+    CreateVehicleComponent,
+    CreateReviewComponent,
+    ViewVehicleReviewsComponent,
+    CreateReportComponent,
+    VehicleStatisticComponent,
+    CreatePriceListComponent,
+    ViewPriceListComponent,
+    CreateDiscountComponent,
+    VehicleMapComponent,
+    AdminDashboardComponent,
+    EditCodebookComponent,
+    ViewCodebookComponent,
+    CommentRequestsComponent,
+    ViewUsersComponent,
+    RegisterAgentComponent,
     EditPermissionsComponent],
   imports: [
+    BrowserModule,
+    FormsModule,
     CommonModule,
+    ReactiveFormsModule,
     FontAwesomeModule,
-    CoreModule
+    CoreModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    MatDividerModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    RouterModule
   ],
   exports: [HomeComponent]
 })

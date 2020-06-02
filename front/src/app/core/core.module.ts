@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeModule } from '../home/home.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthService } from './services/auth.service';
 
 
 @NgModule({
@@ -16,6 +17,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ],
   exports: [FooterComponent, HeaderComponent],
-  providers: []
+  providers: [AuthService]
 })
 export class CoreModule { }

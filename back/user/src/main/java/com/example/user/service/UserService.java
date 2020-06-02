@@ -99,4 +99,14 @@ public class UserService {
         }
         return notification;
     }
+
+    public User loginTest(LoginRequestDTO loginRequestDTO) {
+        try{
+            return userRepository.findByUsernameAndPassword(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
+        }
+        catch(Exception e){
+
+        }
+        return null;
+    }
 }

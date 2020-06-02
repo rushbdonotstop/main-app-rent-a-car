@@ -7,7 +7,23 @@ import { HomeModule } from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreRoutingModule } from './core/core-routing.module';
+import {
+  MatToolbarModule,
+  MatMenuModule,
+  MatIconModule,
+  MatButtonModule,
+  MatTableModule,
+  MatDividerModule,
+  MatProgressSpinnerModule,
+  MatInputModule,
+  MatCardModule,
+  MatSlideToggleModule,
+  MatSelectModule,
+  MatOptionModule,
+  MatSnackBarModule
+} from '@angular/material';
 
+import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
@@ -15,14 +31,28 @@ import { CoreRoutingModule } from './core/core-routing.module';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CoreModule,
     HomeModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    MatDividerModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   bootstrap: [AppComponent],
   exports: [],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
