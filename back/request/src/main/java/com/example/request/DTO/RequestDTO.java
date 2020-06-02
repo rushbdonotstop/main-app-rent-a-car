@@ -1,34 +1,27 @@
 package com.example.request.DTO;
 
+import com.example.request.model.Bundle;
 import com.example.request.model.Request;
 
 import java.util.List;
 
 public class RequestDTO {
-    Request request;
-    List<Long> vehicles;
+    List<Request> requests;
+    List<Bundle> bundles;
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public List<Request> getRequests() {
+        return requests;
     }
 
-    public RequestDTO() {
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
     }
 
-    public Request getRequest() {
-        return request;
+    public List<Bundle> getBundles() {
+        return bundles;
     }
 
-    public void setRequest(Request request) {
-        this.request = request;
-    }
-
-    public List<Long> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(List<Long> vehicles) {
-        this.vehicles = vehicles;
+    public void setBundles(List<Bundle> bundles) {
+        this.bundles = bundles;
     }
 }
