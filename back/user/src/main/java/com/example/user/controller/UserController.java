@@ -38,7 +38,7 @@ public class UserController {
     }
 
     /**
-     * GET /user/userExists
+     * GET /user/usernames
      *
      * @return boolean value which indicates user existence
      */
@@ -65,14 +65,14 @@ public class UserController {
     }
 
     /**
-     * GET /user/username
+     * GET /user/username/{userId}
      *
-     * @return returns object of type UserDTO with user id and username
+     * @return returns username by user id
      */
-    @GetMapping(value = "/username", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> getUsername(@RequestBody UserDTO userDTO) throws Exception {
-        UserDTO userInfo = userService.getUsername(userDTO);
-        return new ResponseEntity<UserDTO>(userInfo, HttpStatus.OK);
+    @GetMapping(value = "/username/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> getUsername(@PathVariable Long userId) throws Exception {
+        UserDTO userDTO = userService.getUsername(userId);
+        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
     }
 
     /**

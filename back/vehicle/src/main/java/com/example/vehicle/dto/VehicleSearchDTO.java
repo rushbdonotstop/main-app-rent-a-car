@@ -1,6 +1,7 @@
 package com.example.vehicle.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class VehicleSearchDTO {
 
@@ -16,15 +17,15 @@ public class VehicleSearchDTO {
     private int mileageLimit;
     private boolean collisionProtection;
     private int childrenSeats;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String state;
     private String city;
 
     public VehicleSearchDTO() {
     }
 
-    public VehicleSearchDTO(Long make, Long model, Long style, Long fuel, Long transmission, float priceLowerLimit, float priceUpperLimit, int currentMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, LocalDate startDate, LocalDate endDate, String state, String city) {
+    public VehicleSearchDTO(Long make, Long model, Long style, Long fuel, Long transmission, float priceLowerLimit, float priceUpperLimit, int currentMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, LocalDateTime startDate, LocalDateTime endDate, String state, String city) {
         this.make = make;
         this.model = model;
         this.style = style;
@@ -130,19 +131,19 @@ public class VehicleSearchDTO {
         this.childrenSeats = childrenSeats;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

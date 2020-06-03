@@ -1,7 +1,6 @@
-package com.example.vehicle.dto;
+package com.example.vehicle.dto.pricelist;
 
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 public class Pricelist implements Comparable<Pricelist>{

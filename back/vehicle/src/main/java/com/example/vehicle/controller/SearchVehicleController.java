@@ -1,9 +1,13 @@
 package com.example.vehicle.controller;
 
 import com.example.vehicle.dto.*;
+import com.example.vehicle.dto.catalogue.VehicleMake;
+import com.example.vehicle.dto.catalogue.VehicleModel;
+import com.example.vehicle.dto.location.Location;
+import com.example.vehicle.dto.pricelist.Pricelist;
+import com.example.vehicle.dto.user.UserDTO;
 import com.example.vehicle.model.Vehicle;
-import com.example.vehicle.service.SearchingVehicleService;
-import com.netflix.ribbon.proxy.annotation.Http;
+import com.example.vehicle.service.SearchVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -13,22 +17,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.ws.rs.PathParam;
 import java.util.List;
 
 @RestController
 @RequestMapping("search")
-public class SearchingVehicleController {
+public class SearchVehicleController {
 
     @Autowired
-    private SearchingVehicleService searchingVehicleService;
+    private SearchVehicleService searchVehicleService;
 
     @Autowired
     RestTemplate restTemplate;
 
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleMainViewDTO>> parameterizedSearch(@RequestParam(value = "vehicleMake") Long vehicleMake, @RequestParam(value = "vehicleModel") Long vehicleModel, @RequestParam(value = "vehicleStyle") Long vehicleStyle, @RequestParam(value = "vehicleFuel") Long vehicleFuel, @RequestParam(value = "vehicleTransmission") Long vehicleTransmission, @RequestParam(value = "priceLowerLimit") float priceLowerLimit, @RequestParam(value = "priceUpperLimit") float priceUpperLimit, @RequestParam(value = "maxMileage") int maxMileage, @RequestParam(value = "mileageLimit") int mileageLimit, @RequestParam(value = "collisionProtection") Boolean collisionProtection, @RequestParam(value = "childrenSeats") int childrenSeats, @RequestParam(value = "state") String state, @RequestParam(value = "city") String city) throws Exception {
-        List<Vehicle> vehicleList = searchingVehicleService.findAll();
+        List<Vehicle> vehicleList = searchVehicleService.findAll();
 
         List<Pricelist> pricelist = (this.getPricelists()).getBody();
 
@@ -40,14 +43,16 @@ public class SearchingVehicleController {
 
         List<Location> locations = (this.getLocations()).getBody();
 
-        List<VehicleMainViewDTO> dtoList = searchingVehicleService.parameterizedSearch(vehicleList, locations, vehicleMakeList, pricelist, vehicleModelsList, usersList, vehicleMake, vehicleModel, vehicleStyle, vehicleFuel, vehicleTransmission, maxMileage, mileageLimit, collisionProtection, childrenSeats, state, city, priceLowerLimit, priceUpperLimit);
+        List<VehicleMainViewDTO> dtoList = searchVehicleService.parameterizedSearch(vehicleList, locations, vehicleMakeList, pricelist, vehicleModelsList, usersList, vehicleMake, vehicleModel, vehicleStyle, vehicleFuel, vehicleTransmission, maxMileage, mileageLimit, collisionProtection, childrenSeats, state, city, priceLowerLimit, priceUpperLimit);
+
+        System.out.println("DOBRA METODA ALAL TI VERA");
 
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleMainViewDTO>> getAll() throws Exception {
-        List<Vehicle> vehicleList = searchingVehicleService.findAll();
+        List<Vehicle> vehicleList = searchVehicleService.findAll();
 
         List<Pricelist> pricelist = (this.getPricelists()).getBody();
 
@@ -57,14 +62,14 @@ public class SearchingVehicleController {
 
         List<UserDTO> usersList = (this.getUsernames()).getBody();
 
-        List<VehicleMainViewDTO> vehicleDTOList = searchingVehicleService.getAllVehicleMainViewDTO(vehicleList, vehicleMakeList, pricelist, vehicleModelsList, usersList);
+        List<VehicleMainViewDTO> vehicleDTOList = searchVehicleService.getAllVehicleMainViewDTO(vehicleList, vehicleMakeList, pricelist, vehicleModelsList, usersList);
         return new ResponseEntity<>(vehicleDTOList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleDetailsDTO> getIdForDetails(@PathVariable Long vehicleId) throws Exception {
 
-        Vehicle vehicle = searchingVehicleService.findOneById(vehicleId);
+        Vehicle vehicle = searchVehicleService.findOneById(vehicleId);
         VehicleDetailsDTO dto = new VehicleDetailsDTO(vehicle);
 
         return new ResponseEntity<VehicleDetailsDTO>(dto, HttpStatus.OK);

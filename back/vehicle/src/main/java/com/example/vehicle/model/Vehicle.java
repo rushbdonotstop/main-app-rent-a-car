@@ -4,6 +4,7 @@ import com.example.vehicle.model.builder.VehicleBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -29,10 +30,10 @@ public class Vehicle {
     private String picturePath;
 
     @Column(name="start_date", nullable = false)
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
     @Column(name="end_date", nullable = false)
-    private LocalDate endDate;
+    private LocalDateTime endDate;
 
     @Column(name="fuel_type_id", nullable = false)
     private Long fuelTypeId;
@@ -55,7 +56,7 @@ public class Vehicle {
     @Column(name="user_id", nullable = false)
     private Long userId;
 
-    public Vehicle(Long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String picturePath, LocalDate startDate, LocalDate endDate, Long fuelTypeId, Long makeId, Long modelId, Long styleId, Long transmissionId, Long locationId, Long userId) {
+    public Vehicle(Long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String picturePath, LocalDateTime startDate, LocalDateTime endDate, Long fuelTypeId, Long makeId, Long modelId, Long styleId, Long transmissionId, Long locationId, Long userId) {
         this.id = id;
         this.mileage = mileage;
         this.mileageLimit = mileageLimit;
@@ -116,19 +117,19 @@ public class Vehicle {
         this.childrenSeats = childrenSeats;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
