@@ -17,7 +17,7 @@ public class User {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "user_details_id", referencedColumnName = "id", nullable = false, unique = true)
+    @JoinColumn(name = "user_details_id", referencedColumnName = "id", nullable = true, unique = true)
     private UserDetails userDetails;
 
     public User() {
