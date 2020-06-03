@@ -1,12 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { CoreRoutingModule } from './core/core-routing.module';
+
 import {
   MatToolbarModule,
   MatMenuModule,
@@ -24,6 +23,7 @@ import {
 } from '@angular/material';
 
 import { HttpClientModule } from '@angular/common/http'; 
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,6 @@ import { HttpClientModule } from '@angular/common/http';
     HomeModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    CoreRoutingModule,
     MatToolbarModule,
     MatInputModule,
     MatCardModule,

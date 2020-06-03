@@ -1,4 +1,4 @@
-import { UserDetails } from './user-details';
+import { UserDetails } from './UserDetails';
 
 export class User{
 
