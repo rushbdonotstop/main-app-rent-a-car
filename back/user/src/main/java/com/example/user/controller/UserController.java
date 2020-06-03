@@ -15,7 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.*;
 
 @RestController
@@ -35,6 +36,22 @@ public class UserController {
         User user = userService.loginTest(loginRequestDTO);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
+
+    /**
+     * GET /user/userExists
+     *
+     * @return boolean value which indicates user existence
+     */
+    @GetMapping(value = "/usernames", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserDTO>> getUsernames() throws Exception {
+        System.out.println("-------- tu sam -------");
+        List<User> users = userService.getUsers();
+        System.out.println("-------- useri -------" + users);
+        List<UserDTO> usernamesList = userService.convertUserToUserDTO(users);
+        System.out.println("-------- usernames -------" + usernamesList);
+        return new ResponseEntity<List<UserDTO>>(usernamesList, HttpStatus.OK);
+    }
+
 
     /**
      * GET /user/userExists

@@ -2,7 +2,7 @@ package com.example.vehicle.dto;
 
 public class VehicleMainViewDTO {
 
-    private long id;
+    private Long id;
     private String make;
     private String model;
     private float price;
@@ -11,7 +11,7 @@ public class VehicleMainViewDTO {
     public VehicleMainViewDTO() {
     }
 
-    public VehicleMainViewDTO(long id, String make, String model, float price, String ownerUsername) {
+    public VehicleMainViewDTO(Long id, String make, String model, float price, String ownerUsername) {
         this.id = id;
         this.make = make;
         this.model = model;
@@ -19,11 +19,11 @@ public class VehicleMainViewDTO {
         this.ownerUsername = ownerUsername;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,7 +65,7 @@ public class VehicleMainViewDTO {
                 "id=" + id +
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
                 ", ownerUsername='" + ownerUsername + '\'' +
                 '}';
     }

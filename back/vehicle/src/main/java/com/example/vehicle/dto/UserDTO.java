@@ -3,16 +3,16 @@ package com.example.vehicle.dto;
 import javax.persistence.*;
 
 
-public class OwnerDTO {
+public class UserDTO {
 
 
     private Long id;
     private String username;
 
-    public OwnerDTO() {
+    public UserDTO() {
     }
 
-    public OwnerDTO(Long id, String username) {
+    public UserDTO(Long id, String username) {
         this.id = id;
         this.username = username;
     }

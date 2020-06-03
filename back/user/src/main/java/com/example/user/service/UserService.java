@@ -18,8 +18,6 @@ import com.example.user.repository.UserPrivilegeRepository;
 import com.example.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +41,19 @@ public class UserService {
 
     public Boolean userExists(LoginRequestDTO loginRequestDTO) {
         return userRepository.findByUsernameAndPassword(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()) != null;
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    public List<UserDTO> convertUserToUserDTO(List<User> list) {
+        List<UserDTO> newList = new ArrayList<>();
+        for(User user : list) {
+            UserDTO userDTO = new UserDTO(user.getId(), user.getUsername());
+            newList.add(userDTO);
+        }
+        return newList;
     }
 
     public UserDTO getUsername(UserDTO userDTO) {
