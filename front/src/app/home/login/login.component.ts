@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   public loginInvalid: boolean;
 
-  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar,private formBuilder: FormBuilder, private authService: AuthService) { 
+  constructor(private router: Router, private fb: FormBuilder, private _snackBar: MatSnackBar, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -24,25 +25,26 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      try {
-        alert(JSON.stringify(this.form.value))
-        this.authService.login(this.form.value)
+      this.authService.login(this.form.value)
         .subscribe(user => {
-          alert(user)
-          if (user != null){
+          if (user != null) {
             localStorage.setItem("userObject", JSON.stringify(user));
-            this._snackBar.open("Succesful login!", "",  {
+            this._snackBar.open("Succesful login!", "", {
               duration: 2000,
-              verticalPosition : 'top'
+              verticalPosition: 'top'
             });
+            this.router.navigate(['home']);
           }
-          else{
+          else {
             this.loginInvalid = true;
           }
-        });
-      } catch (err) {
-        this.loginInvalid = true;
-      }
+        },
+          error => {
+            this._snackBar.open("Server error!", "", {
+              duration: 2000,
+              verticalPosition: 'top'
+            });
+          })
     } else {
       this.loginInvalid = true;
     }

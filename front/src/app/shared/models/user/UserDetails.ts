@@ -1,4 +1,4 @@
-import { UserType } from './user-type';
+import { UserType } from './UserType';
 
 export class UserDetails{
 
@@ -8,6 +8,7 @@ export class UserDetails{
     businessNum : String;
     vehicleNum : number;
     userType : UserType;
+
 
     public UserDetails(){}
 
