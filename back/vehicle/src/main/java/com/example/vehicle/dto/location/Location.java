@@ -1,7 +1,5 @@
-package com.example.vehicle.dto;
+package com.example.vehicle.dto.location;
 
-
-import javax.persistence.*;
 
 public class Location {
 

@@ -9,27 +9,34 @@ public class Request_Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Request getRequest() {
-        return request;
-    }
-
     @ManyToOne
     private Request request;
 
-    public Request_Vehicle(Long vehicleId, Request request) {
-        this.vehicleId = vehicleId;
-        this.request = request;
-    }
+    @Column(nullable = false)
+    private Long vehicleId;
 
-    public Request getRequestId() {
-        return request;
+    public Request_Vehicle(Request request, Long vehicleId) {
+        this.request = request;
+        this.vehicleId = vehicleId;
     }
 
     public Request_Vehicle() {
     }
 
-    public void setRequestId(Request requestId) {
-        this.request = requestId;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
     }
 
     public Long getVehicleId() {
@@ -40,14 +47,12 @@ public class Request_Vehicle {
         this.vehicleId = vehicleId;
     }
 
-    @Column(nullable = false)
-    private Long vehicleId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Request_Vehicle{" +
+                "id=" + id +
+                ", request=" + request +
+                ", vehicleId=" + vehicleId +
+                '}';
     }
 }

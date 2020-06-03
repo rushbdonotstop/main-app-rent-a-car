@@ -12,6 +12,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -62,8 +63,8 @@ public class VehicleService {
                     }
                     BufferedImage img = null;
                     img = ImageIO.read(new File(vehicle.getPicturePath()));
-                    File outputfile = new File("./images/" + Math.abs(pictureName) + ".jpg");
-                    ImageIO.write(img, "jpg", outputfile);
+                    File outputFile = new File("./images/" + Math.abs(pictureName) + ".jpg");
+                    ImageIO.write(img, "jpg", outputFile);
 
                     vehicle.setPicturePath("./images/" + Math.abs(pictureName) + ".jpg");
                 }
@@ -122,8 +123,8 @@ public class VehicleService {
         return true;
     }
 
-    public boolean invalidDate(LocalDate startDate, LocalDate endDate){
-        if (startDate.isAfter(endDate) || startDate.isBefore(LocalDate.now())){
+    public boolean invalidDate(LocalDateTime startDate, LocalDateTime endDate){
+        if (startDate.isAfter(endDate) || startDate.isBefore(LocalDateTime.now())){
             return true;
         }
         return false;

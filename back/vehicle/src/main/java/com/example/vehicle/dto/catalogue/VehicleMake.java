@@ -1,17 +1,17 @@
-package com.example.vehicle.dto;
+package com.example.vehicle.dto.catalogue;
 
 import javax.persistence.*;
 
-public class City {
+public class VehicleMake {
 
     private Long id;
-
     private String value;
 
-    public City() {
+    public VehicleMake() {
     }
 
-    public City(String value) {
+    public VehicleMake(Long id, String value) {
+        this.id = id;
         this.value = value;
     }
 
@@ -19,12 +19,12 @@ public class City {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getValue() {
         return value;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setValue(String value) {
@@ -33,9 +33,11 @@ public class City {
 
     @Override
     public String toString() {
-        return "City{" +
+        return "VehicleMake{" +
                 "id=" + id +
                 ", value='" + value + '\'' +
                 '}';
     }
+
+
 }

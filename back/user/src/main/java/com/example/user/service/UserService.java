@@ -47,10 +47,12 @@ public class UserService {
         return newList;
     }
 
-    public UserDTO getUsername(UserDTO userDTO) {
+    public UserDTO getUsername(Long userId) {
+        UserDTO userDTO = new UserDTO();
         try{
-            if(userRepository.findById(userDTO.getId()).isPresent()){
-                userDTO.setUsername(userRepository.findById(userDTO.getId()).get().getUsername());
+            if(userRepository.findById(userId).isPresent()){
+                userDTO.setId(userId);
+                userDTO.setUsername(userRepository.findById(userId).get().getUsername());
             }
             else{
                 userDTO.setUsername("User does not exist or wrong id.");

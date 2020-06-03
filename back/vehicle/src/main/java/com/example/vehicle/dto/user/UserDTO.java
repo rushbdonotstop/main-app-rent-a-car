@@ -1,4 +1,4 @@
-package com.example.vehicle.dto;
+package com.example.vehicle.dto.user;
 
 import javax.persistence.*;
 

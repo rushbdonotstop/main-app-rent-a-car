@@ -1,18 +1,24 @@
 package com.example.vehicle.service;
 
 import com.example.vehicle.dto.*;
+import com.example.vehicle.dto.catalogue.VehicleMake;
+import com.example.vehicle.dto.catalogue.VehicleModel;
+import com.example.vehicle.dto.location.Location;
+import com.example.vehicle.dto.pricelist.Pricelist;
+import com.example.vehicle.dto.user.UserDTO;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.transform.sax.SAXSource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 @Service
-public class SearchingVehicleService {
+public class SearchVehicleService {
 
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -135,10 +141,14 @@ public class SearchingVehicleService {
         List<Vehicle> vehicleList = new ArrayList<>();
 
         for(Vehicle vehicle : list) {
-            if (vehicle.getMakeId().equals(id)) {
+            System.out.println("VREDNOST ID VOZILA JE: " + vehicle.getMakeId());
+            System.out.println("VREDNOST POSLATOG ID JE: " + id);
+            if (vehicle.getMakeId() == id) {
+                System.out.println("USAO U IF");
                 vehicleList.add(vehicle);
             }
         }
+        System.out.println("SIZE JE: " + vehicleList.size());
         return vehicleList;
     }
 
@@ -218,6 +228,9 @@ public class SearchingVehicleService {
         List<Vehicle> vehicleList = new ArrayList<>();
         for(Vehicle vehicle : list) {
             if(vehicle.getMileageLimit() >= mileageLimit) {
+                System.out.println(vehicle.getMileageLimit() + " JE ");
+                System.out.println("VECE OD ");
+                System.out.println(mileageLimit);
                 vehicleList.add(vehicle);
             }
         }
@@ -267,31 +280,38 @@ public class SearchingVehicleService {
     public List<Vehicle> getVehiclesByLocation(List<Vehicle> vehicleList, List<Location> locationList, String state, String city) {
         List<Location> newLocations = new ArrayList<>();
         List<Vehicle> newVehicleList = new ArrayList<>();
-
+        System.out.println("DOBIJEN STATE JE: " + state);
+        System.out.println("DOBIJEN CITY JE: " + city);
         if(state.equals("") && city.equals("")) {
             newLocations = locationList;
         }
         if(!state.equals("") && city.equals("")) {
+            System.out.println("USAO 1");
             for(Location location : locationList) {
-                if (location.getState().equals(state)) {
+                if (location.getState().getValue().equals(state)) {
                     newLocations.add(location);
                 }
             }
         }
         if (state.equals("") && !city.equals("")) {
+            System.out.println("USAO 2");
+
             for(Location location : locationList) {
-                if (location.getCity().equals(city)) {
+                if (location.getCity().getValue().equals(city)) {
                     newLocations.add(location);
                 }
             }
         }
         if(!state.equals("") && !city.equals("")) {
+            System.out.println("USAO 3");
+
             for(Location location : locationList) {
-                if (location.getState().equals(state) && location.getCity().equals(city)) {
+                if (location.getState().getValue().equals(state) && location.getCity().getValue().equals(city)) {
                     newLocations.add(location);
                 }
             }
         }
+        System.out.println("VELICINA LOKACIJA LISTE JE: " + newLocations.size() );
         for(Location location : newLocations) {
             for(Vehicle vehicle : vehicleList) {
                 if(vehicle.getLocationId().equals(location.getId())) {
@@ -322,16 +342,27 @@ public class SearchingVehicleService {
     public List<VehicleMainViewDTO> parameterizedSearch(List<Vehicle> vehicleList, List<Location> locationList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelistList, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, Long makeId, Long modelId, Long styleId, Long fuelId, Long transmissionId, int maxMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String state, String city, float priceLowerLimit, float priceUpperLimit) {
 
         List<Vehicle> newList = getVehiclesByMake(vehicleList, makeId);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByModel(newList, modelId);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByStyle(newList, styleId);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByFuel(newList, fuelId);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByTransmission(newList, transmissionId);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByMaxMileage(newList, maxMileage);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByMileageLimit(newList, mileageLimit);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByCollisionDamage(newList, collisionProtection);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByChildrenSeats(newList, childrenSeats);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByLocation(newList, locationList, state, city);
+        System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByPrice(newList, pricelistList, priceLowerLimit, priceUpperLimit);
+        System.out.println("Velicina je: " +newList.size());
 
         List<VehicleMainViewDTO> dtoList = getAllVehicleMainViewDTO(newList, vehicleMakeList, pricelistList, vehicleModelList, ownerList);
         return dtoList;
