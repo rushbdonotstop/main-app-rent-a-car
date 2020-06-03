@@ -10,9 +10,15 @@ export class HeaderComponent implements OnInit {
 
   faHome = faHome
 
+  loggedUser = localStorage.getItem("userObject")
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  logout(){
+    localStorage.clear();
   }
 
 }
