@@ -123,7 +123,7 @@ public class UserService {
         }
     }
 
-    public void deleteUser(String id) throws Exception{
+    public void deleteUser(String id) throws Exception {
         try {
             User user = userRepository.findOneById(Long.parseLong(id));
 
@@ -131,6 +131,7 @@ public class UserService {
         } catch (EntityNotFoundException e) {
             throw new Exception("Id doesn't exists.");
         }
+    }
 
     public boolean canUserCreate(Long userId) {
         try{

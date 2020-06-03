@@ -142,6 +142,7 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
+    }
 
     /**
      * GET /user/canUserCreate/{userId}
