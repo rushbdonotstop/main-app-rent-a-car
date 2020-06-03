@@ -5,13 +5,13 @@ public class UserDetailsDTO {
     private String fullName;
     private String address;
     private String businessNum;
-    private String vehicleNum;
+    private int vehicleNum;
     private String userType;
 
     public UserDetailsDTO() {
     }
 
-    public UserDetailsDTO(Long id, String fullName, String address, String businessNum, String vehicleNum, String userType) {
+    public UserDetailsDTO(Long id, String fullName, String address, String businessNum, int vehicleNum, String userType) {
         this.id = id;
         this.fullName = fullName;
         this.address = address;
@@ -52,11 +52,11 @@ public class UserDetailsDTO {
         this.businessNum = businessNum;
     }
 
-    public String getVehicleNum() {
+    public int getVehicleNum() {
         return vehicleNum;
     }
 
-    public void setVehicleNum(String vehicleNum) {
+    public void setVehicleNum(int vehicleNum) {
         this.vehicleNum = vehicleNum;
     }
 

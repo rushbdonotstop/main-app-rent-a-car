@@ -12,6 +12,7 @@ public class Notification {
     public Notification(String text, boolean success) {
         this.text = text;
         this.success = success;
+    }
 
     public String getText() {
         return text;

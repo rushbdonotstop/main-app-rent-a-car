@@ -25,7 +25,7 @@ public class UserDetails {
     private String businessNum;
 
     @Column(name = "vehicle_num", nullable = true)
-    private String vehicleNum;
+    private int vehicleNum;
 
     @Column(name = "user_type", nullable = true)
     private UserType userType;
