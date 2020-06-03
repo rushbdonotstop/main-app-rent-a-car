@@ -1,6 +1,5 @@
 package com.example.vehicle.dto;
 
-import com.example.vehicle.dto.builders.VehicleDetailsDTOBuilder;
 import com.example.vehicle.model.Vehicle;
 
 public class VehicleDetailsDTO {

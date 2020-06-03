@@ -25,11 +25,7 @@ public class Vehicle {
     @Column(name="children_seats", nullable = false)
     private int childrenSeats;
 
-<<<<<<< HEAD
-    @Column(name="picture_path", nullable = false)
-=======
     @Column(name="picture_path", unique = true)
->>>>>>> 9cef641f0c702432f2024935e6d8238a12a21dc9
     private String picturePath;
 
     @Column(name="start_date", nullable = false)

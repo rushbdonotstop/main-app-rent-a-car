@@ -229,14 +229,14 @@ public class SearchingVehicleService {
 
         if (collisionProtection == true) {
             for (Vehicle vehicle : list) {
-                if (vehicle.getCollisetionProtection() == true) {
+                if (vehicle.getCollisionProtection() == true) {
                     vehicleList.add(vehicle);
                 }
             }
             return vehicleList;
         } else {
             for(Vehicle vehicle : list) {
-                if (vehicle.getCollisetionProtection() == false) {
+                if (vehicle.getCollisionProtection() == false) {
                     vehicleList.add(vehicle);
                 }
             }
@@ -264,6 +264,78 @@ public class SearchingVehicleService {
         }
     }
 
+    public List<Vehicle> getVehiclesByLocation(List<Vehicle> vehicleList, List<Location> locationList, String state, String city) {
+        List<Location> newLocations = new ArrayList<>();
+        List<Vehicle> newVehicleList = new ArrayList<>();
+
+        if(state.equals("") && city.equals("")) {
+            newLocations = locationList;
+        }
+        if(!state.equals("") && city.equals("")) {
+            for(Location location : locationList) {
+                if (location.getState().equals(state)) {
+                    newLocations.add(location);
+                }
+            }
+        }
+        if (state.equals("") && !city.equals("")) {
+            for(Location location : locationList) {
+                if (location.getCity().equals(city)) {
+                    newLocations.add(location);
+                }
+            }
+        }
+        if(!state.equals("") && !city.equals("")) {
+            for(Location location : locationList) {
+                if (location.getState().equals(state) && location.getCity().equals(city)) {
+                    newLocations.add(location);
+                }
+            }
+        }
+        for(Location location : newLocations) {
+            for(Vehicle vehicle : vehicleList) {
+                if(vehicle.getLocationId().equals(location.getId())) {
+                    newVehicleList.add(vehicle);
+                }
+            }
+        }
+        return newVehicleList;
+    }
+
+    public List<Vehicle> getVehiclesByPrice(List<Vehicle> vehicleList, List<Pricelist> pricelistList, float priceLowerLimit, float priceUpperLimit) {
+        List<Vehicle> newVehicleList = new ArrayList<>();
+
+        for(Vehicle vehicle: vehicleList) {
+            for (Pricelist pricelist : pricelistList) {
+                if (pricelist.getVehicleId().equals(vehicle.getId())) {
+                    if(pricelist.getPrice() >= priceLowerLimit && pricelist.getPrice() <= priceUpperLimit) {
+                        newVehicleList.add(vehicle);
+                        break;
+                    }
+                }
+            }
+        }
+        return newVehicleList;
+
+    }
+
+    public List<VehicleMainViewDTO> parameterizedSearch(List<Vehicle> vehicleList, List<Location> locationList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelistList, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, Long makeId, Long modelId, Long styleId, Long fuelId, Long transmissionId, int maxMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String state, String city, float priceLowerLimit, float priceUpperLimit) {
+
+        List<Vehicle> newList = getVehiclesByMake(vehicleList, makeId);
+        newList = getVehiclesByModel(newList, modelId);
+        newList = getVehiclesByStyle(newList, styleId);
+        newList = getVehiclesByFuel(newList, fuelId);
+        newList = getVehiclesByTransmission(newList, transmissionId);
+        newList = getVehiclesByMaxMileage(newList, maxMileage);
+        newList = getVehiclesByMileageLimit(newList, mileageLimit);
+        newList = getVehiclesByCollisionDamage(newList, collisionProtection);
+        newList = getVehiclesByChildrenSeats(newList, childrenSeats);
+        newList = getVehiclesByLocation(newList, locationList, state, city);
+        newList = getVehiclesByPrice(newList, pricelistList, priceLowerLimit, priceUpperLimit);
+
+        List<VehicleMainViewDTO> dtoList = getAllVehicleMainViewDTO(newList, vehicleMakeList, pricelistList, vehicleModelList, ownerList);
+        return dtoList;
+    }
 
 
 }
