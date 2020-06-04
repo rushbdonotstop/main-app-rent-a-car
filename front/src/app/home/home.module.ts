@@ -28,10 +28,12 @@ import { EditPermissionsComponent } from '../components/admin-dashboard/system-u
 import { CreateDiscountComponent } from '../components/agent-specific-components/create-discount/create-discount.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule } from '../core/core.module';
-import { MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatSliderModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule } from '@angular/material';
+import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import { AutocompleteComponent } from '../components/create-vehicle/autocomplete/autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,13 @@ import { RouterModule } from '@angular/router';
     CommentRequestsComponent,
     ViewUsersComponent,
     RegisterAgentComponent,
-    EditPermissionsComponent],
+    EditPermissionsComponent,
+    AutocompleteComponent
+],
+entryComponents: [
+  VehicleDetailsComponent, ViewPriceListComponent
+],
+
   imports: [
     BrowserModule,
     FormsModule,
@@ -67,6 +75,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     FontAwesomeModule,
     CoreModule,
+    RouterModule,
     MatToolbarModule,
     MatInputModule,
     MatCardModule,
@@ -80,7 +89,14 @@ import { RouterModule } from '@angular/router';
     MatOptionModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    RouterModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatSliderModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    NgbTimepickerModule,
+    MatIconModule
   ],
   exports: [HomeComponent]
 })

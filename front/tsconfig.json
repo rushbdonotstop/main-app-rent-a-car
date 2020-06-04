@@ -6,7 +6,7 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
-    "emitDecoratorMetadata": true,   // Needed for Stackblitz
+    "emitDecoratorMetadata": true, // Needed for Stackblitz
     "experimentalDecorators": true,
     "module": "esnext",
     "moduleResolution": "node",
