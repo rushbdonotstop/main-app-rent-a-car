@@ -118,7 +118,10 @@ public class Request {
                 ", endDate=" + endDate +
                 ", status=" + status +
                 ", userId=" + userId +
-                ", ownerId= " + ownerId +
+                ", vehicleId=" + vehicleId +
+                ", ownerId=" + ownerId +
+                ", bundle=" + bundle +
                 '}';
     }
+
 }

@@ -1,29 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { VehicleMainViewDTO } from 'src/app/shared/models/vehicle/VehicleMainViewDTO';
 import { VehicleService } from 'src/app/core/services/vehicle.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatTableDataSource, MatDialog } from '@angular/material';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.component';
+import { ViewPriceListComponent } from '../price-list/view-price-list/view-price-list.component';
+import { SearchVehicleComponent } from '../search-vehicle/search-vehicle.component';
+import { CartService } from 'src/app/core/services/cart.service';
+import { Vehicle } from 'src/app/shared/models/vehicle/Vehicle';
+import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 
 @Component({
   templateUrl: './view-vehicles.component.html',
-  styleUrls: ['./view-vehicles.component.css']
+  styleUrls: ['./view-vehicles.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ViewVehiclesComponent implements OnInit {
 
-  displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'add', 'bundle'];
+  displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'prices', 'add', 'bundle', 'rent'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
   vehicleList: VehicleMainViewDTO[];
-  dataSource : VehicleMainViewDTO[] = [];
-  dataSourceBundle : VehicleMainViewDTO[] = [];
+  bundleList: VehicleMainViewDTO[];
+  dataSource: MatTableDataSource<VehicleMainViewDTO>;
+  dataSourceBundle: MatTableDataSource<VehicleMainViewDTO>;
 
-  constructor(private vehicleService: VehicleService, private _snackBar: MatSnackBar) { }
+  results: VehicleMainViewDTO[]
+
+  getUpdatedvalue($event) {
+    this.results = $event;
+    this.dataSource = new MatTableDataSource<VehicleMainViewDTO>(this.results)
+  }
+
+  constructor(public dialog: MatDialog, private vehicleService: VehicleService, private _snackBar: MatSnackBar, private cartService: CartService) { }
 
   ngOnInit() {
     this.vehicleService.getAll()
       .subscribe(vehicles => {
         this.vehicleList = vehicles;
-        this.dataSource = this.vehicleList;
-        this.dataSourceBundle = []
-        this.dataSourceBundle.push(vehicles[0]);
+        this.dataSource = new MatTableDataSource<VehicleMainViewDTO>(this.vehicleList);
+        this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>();
+        this.bundleList = [];
       },
         error => {
           this._snackBar.open("Server error!", "", {
@@ -33,5 +55,90 @@ export class ViewVehiclesComponent implements OnInit {
         }
       )
   }
+
+  removeFromBundle(id: number) {
+    this.bundleList.forEach(element => {
+      if (element.id == id) {
+        this.bundleList.splice(this.bundleList.indexOf(element), 1);
+        this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>(this.bundleList);
+        return;
+      }
+    });
+  }
+
+  openPrices(vehicleId: number) {
+    const dialogRef = this.dialog.open(ViewPriceListComponent, {
+      width: '1200px',
+      height: '600px',
+      data: { id: vehicleId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDetails(vehicleId: number) {
+    const dialogRef = this.dialog.open(VehicleDetailsComponent, {
+      width: '1200px',
+      height: '600px',
+      data: { id: vehicleId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  addToCart(vehicle: VehicleMainViewDTO) {
+    this.cartService.addItemToCart(vehicle)
+    this._snackBar.open("Item added to cart", "", {
+      duration: 2000,
+      verticalPosition: 'bottom'
+    });
+  }
+
+  addBundleToCart(){
+    this.cartService.addBundleToCart(this.bundleList);
+    this._snackBar.open("Bundle added to cart", "", {
+      duration: 2000,
+      verticalPosition: 'bottom'
+    });
+  }
+
+  addToBundle(element: VehicleMainViewDTO) {
+    if (this.bundleList.length != 0) {
+      if (this.bundleList[0].ownerUsername == element.ownerUsername) {
+        this.bundleList.push(element);
+        this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>(this.bundleList);
+      }
+      else {
+        this._snackBar.open("Owner mismatch in bundle!", "", {
+          duration: 2000,
+          verticalPosition: 'top'
+        });
+      }
+    }
+    else {
+      this.bundleList.push(element);
+      this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>(this.bundleList);
+    }
+
+  }
+
+  inStoreRent(element){
+   this.openDialog(element)
+  }
+
+  openDialog(element): void {
+    const dialogRef = this.dialog.open(RentDialogComponent, {
+      width: '400px',
+      data:{make:element.make, price: element.price, ownerUsername:element.ownerUsername, model:element.model, id: element.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
 
 }

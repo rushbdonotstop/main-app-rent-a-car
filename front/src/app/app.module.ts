@@ -1,33 +1,21 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule,  HAMMER_GESTURE_CONFIG  } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { GestureConfig } from '@angular/material';
+import { AutocompleteComponent } from './components/create-vehicle/autocomplete/autocomplete.component';
+import { RentDialogComponent } from './components/rent-dialog/rent-dialog.component';
+import {MatButtonModule} from '@angular/material/button';
 
-import {
-  MatToolbarModule,
-  MatMenuModule,
-  MatIconModule,
-  MatButtonModule,
-  MatTableModule,
-  MatDividerModule,
-  MatProgressSpinnerModule,
-  MatInputModule,
-  MatCardModule,
-  MatSlideToggleModule,
-  MatSelectModule,
-  MatOptionModule,
-  MatSnackBarModule
-} from '@angular/material';
-
-import { HttpClientModule } from '@angular/common/http'; 
-import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,22 +24,13 @@ import { RouterModule } from '@angular/router';
     HomeModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MatToolbarModule,
-    MatInputModule,
-    MatCardModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    MatDividerModule,
-    MatSlideToggleModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatButtonModule
+    
   ],
+  providers : [ { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
   bootstrap: [AppComponent],
   exports: [],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents:[RentDialogComponent]
 })
 export class AppModule { }

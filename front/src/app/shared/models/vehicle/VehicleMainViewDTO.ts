@@ -5,5 +5,11 @@ export class VehicleMainViewDTO{
     price : number;
     ownerUsername : String;
 
-    public VehicleMainViewDTO(){}
+    constructor(id: number, make: String, model: String, price: number, ownerUsername: String){
+        this.id = id;
+        this.make = make;
+        this.model = model;
+        this.price = price;
+        this.ownerUsername = ownerUsername;
+    };
 }
