@@ -88,11 +88,13 @@ public class RequestService {
             Bundle newBundle = bundleRepository.saveAndFlush(new Bundle(requests.getRequests())); //contains Id
             for (Request request : bundle.getRequests()) {
                 request.setBundle(newBundle);
+                request.setStatus(Status.PENDING);
                 requestRepository.saveAndFlush(request);
             }
 
         }
         for (Request request : requests.getRequests()) {
+            request.setStatus(Status.PENDING);
             requestRepository.saveAndFlush(request);
         }
         return true;

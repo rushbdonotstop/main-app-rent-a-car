@@ -5,6 +5,7 @@ import com.example.request.model.Request;
 import com.example.request.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,18 +43,19 @@ public class RequestController {
     }
 
     /**
-     * POST /server/request/{id}
+     * POST /server/request/
      *
      * @return returns status of new request creation
      */
-    @PostMapping(value = "", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<String> newRequest(@RequestBody RequestDTO requests) {
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> newRequest(@RequestBody RequestDTO requests) {
+        System.out.println(requests);
         boolean status = this.requestService.addRequest(requests);
         if (status){
-            return new ResponseEntity<>("Request successfully created", HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>("Request creation failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
 
     }
