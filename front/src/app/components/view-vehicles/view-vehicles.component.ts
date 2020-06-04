@@ -8,6 +8,7 @@ import { ViewPriceListComponent } from '../price-list/view-price-list/view-price
 import { SearchVehicleComponent } from '../search-vehicle/search-vehicle.component';
 import { CartService } from 'src/app/core/services/cart.service';
 import { Vehicle } from 'src/app/shared/models/vehicle/Vehicle';
+import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 
 @Component({
   templateUrl: './view-vehicles.component.html',
@@ -22,7 +23,7 @@ import { Vehicle } from 'src/app/shared/models/vehicle/Vehicle';
 })
 export class ViewVehiclesComponent implements OnInit {
 
-  displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'prices', 'add', 'bundle'];
+  displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'prices', 'add', 'bundle', 'rent'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
   vehicleList: VehicleMainViewDTO[];
   bundleList: VehicleMainViewDTO[];
@@ -124,5 +125,20 @@ export class ViewVehiclesComponent implements OnInit {
     }
 
   }
+
+  inStoreRent(element){
+   this.openDialog(element)
+  }
+
+  openDialog(element): void {
+    const dialogRef = this.dialog.open(RentDialogComponent, {
+      width: '400px',
+      data:{make:element.make, price: element.price, ownerUsername:element.ownerUsername, model:element.model, id: element.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
 
 }

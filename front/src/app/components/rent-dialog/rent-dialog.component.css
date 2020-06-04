@@ -1,0 +1,6 @@
+.example-button-row {
+    display: table-cell;
+  }
+button{
+    margin: 10px;
+}
