@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public interface RequestRepository extends JpaRepository<Request,Long> {
     @Query("select r from Request r " +
             "where (r.startDate  <= ?2 and ?1 <= r.endDate " +
             "and r.vehicleId=?3)")
-    List<Request> overlapingRequests(LocalDate startdate, LocalDate enddate, Long vehicleId);
+    List<Request> overlapingRequests(LocalDateTime startdate, LocalDateTime enddate, Long vehicleId);
 
     @Query("select r from Request r where r.bundle=?1")
     List<Request> bundleMembers(Bundle b);

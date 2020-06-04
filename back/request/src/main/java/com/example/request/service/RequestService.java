@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,9 +23,9 @@ public class RequestService {
     @Autowired
     BundleRepository bundleRepository;
 
-    public boolean areDatesValid(LocalDate startDate, LocalDate endDate) {
+    public boolean areDatesValid(LocalDateTime startDate, LocalDateTime endDate) {
         if (endDate.compareTo(startDate) >= 0 &&
-                startDate.compareTo(LocalDate.now()) >= 0)
+                startDate.compareTo(LocalDateTime.now()) >= 0)
             return true;
         else {
             System.err.println("Invalid dates");
@@ -114,8 +115,8 @@ public class RequestService {
         if(request.getVehicleId()==null)
             return false;
 
-        LocalDate startdate = request.getStartDate();
-        LocalDate enddate = request.getEndDate();
+        LocalDateTime startdate = request.getStartDate();
+        LocalDateTime enddate = request.getEndDate();
 
         if (areDatesValid(startdate, enddate)) {
 
