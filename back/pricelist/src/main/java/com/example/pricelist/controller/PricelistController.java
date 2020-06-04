@@ -1,5 +1,6 @@
 package com.example.pricelist.controller;
 
+import com.example.pricelist.dto.MinAndMaxPricesDTO;
 import com.example.pricelist.model.Notification;
 import com.example.pricelist.model.Pricelist;
 import com.example.pricelist.service.PricelistService;
@@ -88,4 +89,10 @@ public class PricelistController {
         Notification notification = priceListService.deletePricelist(pricelistId);
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/minAndMax", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MinAndMaxPricesDTO> getMinAndMax() throws Exception {
+        return new ResponseEntity<>(priceListService.getMinAndMax(), HttpStatus.OK);
+    }
+
 }

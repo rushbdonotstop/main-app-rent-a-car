@@ -42,6 +42,7 @@ public class StateController {
         return new ResponseEntity<State>(state, HttpStatus.OK);
     }
 
+
     /**
      * DELETE /server/location/state/{id}
      *

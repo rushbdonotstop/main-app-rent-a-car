@@ -2,6 +2,7 @@ package com.example.catalogue.controller;
 
 import com.example.catalogue.model.Notification;
 import com.example.catalogue.model.VehicleModel;
+import com.example.catalogue.service.VehicleMakeService;
 import com.example.catalogue.service.VehicleModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ public class VehicleModelController {
     @Autowired
     private VehicleModelService vehicleModelService;
 
+    @Autowired
+    private VehicleMakeService vehicleMakeService;
+
 
     /**
      * GET server/catalogue/vehicleModel/{id}
@@ -27,6 +31,15 @@ public class VehicleModelController {
     public ResponseEntity<VehicleModel> getOneVehicleModel(@PathVariable String id) {
         try {
             return new ResponseEntity<>(vehicleModelService.findOneModel(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping(value = "/byMake/{makeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<VehicleModel>> getModelsByMake(@PathVariable String makeId) {
+        try {
+            return new ResponseEntity<>(vehicleModelService.getModelsByMake(vehicleMakeService.findOneMake(makeId)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }

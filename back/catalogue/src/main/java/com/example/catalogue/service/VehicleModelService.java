@@ -1,5 +1,6 @@
 package com.example.catalogue.service;
 
+import com.example.catalogue.model.VehicleMake;
 import com.example.catalogue.model.VehicleModel;
 import com.example.catalogue.repository.VehicleModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class VehicleModelService {
             vehicleModelRepository.save(vehicleModel);
         }
     }
+
+    public List<VehicleModel> getModelsByMake(VehicleMake vehicleMake) {return vehicleModelRepository.findByVehicleMake(vehicleMake);}
 
     public List<VehicleModel> getAllModels() {
         return vehicleModelRepository.findAll();

@@ -9,11 +9,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("catalogue/vehicleTransmission")
 public class VehicleTransmissionController {
     @Autowired
     private VehicleTransmissionService vehicleTransmissionService;
+
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<VehicleTransmission>> getAllTransmissions() {
+        try {
+            return new ResponseEntity<>(vehicleTransmissionService.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
 
     /**
      * GET server/catalogue/vehicleTransmission/{id}
