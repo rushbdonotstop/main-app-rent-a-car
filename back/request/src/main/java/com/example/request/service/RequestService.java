@@ -111,6 +111,9 @@ public class RequestService {
 
     public boolean addPhysicalRenting(Request request) {
 
+        if(request.getVehicleId()==null)
+            return false;
+
         LocalDate startdate = request.getStartDate();
         LocalDate enddate = request.getEndDate();
 

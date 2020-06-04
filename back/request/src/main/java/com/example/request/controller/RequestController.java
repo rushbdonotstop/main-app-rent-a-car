@@ -75,18 +75,19 @@ public class RequestController {
     }
 
     /**
-     * POST /server/request//physicalRent
+     * POST /server/request/physicalRent
      *
      * @return returns status of new physical request creation
      */
     @PostMapping(value = "/physicalRent", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<String> physicalRenting(@RequestBody Request request) {
+    public ResponseEntity<Boolean> physicalRenting(@RequestBody Request request) {
+        System.out.println(request);
         boolean status = this.requestService.addPhysicalRenting(request);
         if (status){
-            return new ResponseEntity<>("Sucessfully rented", HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>("Renting request failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
 
     }

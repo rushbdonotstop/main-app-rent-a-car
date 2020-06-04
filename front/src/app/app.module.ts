@@ -8,11 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { GestureConfig } from '@angular/material';
 import { AutocompleteComponent } from './components/create-vehicle/autocomplete/autocomplete.component';
+import { RentDialogComponent } from './components/rent-dialog/rent-dialog.component';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -20,12 +23,14 @@ import { AutocompleteComponent } from './components/create-vehicle/autocomplete/
     CoreModule,
     HomeModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatButtonModule
     
   ],
   providers : [ { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
   bootstrap: [AppComponent],
   exports: [],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents:[RentDialogComponent]
 })
 export class AppModule { }

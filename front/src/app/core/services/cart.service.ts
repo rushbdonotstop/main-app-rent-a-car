@@ -10,6 +10,7 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
 import { User } from 'src/app/shared/models/user/User';
+import { manualRequest } from 'src/app/shared/models/cart/manualRequest';
 
 const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -82,6 +83,10 @@ export class CartService {
 
   newCart(){
     localStorage.setItem('cart', JSON.stringify(new DetailedCart()))
+  }
+
+  manualRent(request: manualRequest){
+    return this.http.post<boolean>('server/request/request/physicalRent', JSON.stringify(request), httpOptions);
   }
 
 }

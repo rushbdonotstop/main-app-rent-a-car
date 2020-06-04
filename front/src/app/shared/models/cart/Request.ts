@@ -14,7 +14,6 @@ export class Request{
     ownerId:number = 1
     bundle:number
 
-
     constructor(details : RequestAndVehicle){
         this.vehicleId=details.vehicleId
         this.userId=details.ownerId
