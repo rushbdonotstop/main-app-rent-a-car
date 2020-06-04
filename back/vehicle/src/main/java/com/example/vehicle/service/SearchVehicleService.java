@@ -5,6 +5,8 @@ import com.example.vehicle.dto.catalogue.VehicleMake;
 import com.example.vehicle.dto.catalogue.VehicleModel;
 import com.example.vehicle.dto.location.Location;
 import com.example.vehicle.dto.pricelist.Pricelist;
+import com.example.vehicle.dto.request.RequestForVehicleDTO;
+import com.example.vehicle.dto.request.Status;
 import com.example.vehicle.dto.user.UserDTO;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.repository.VehicleRepository;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.transform.sax.SAXSource;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -260,6 +264,10 @@ public class SearchVehicleService {
     public List<Vehicle> getVehiclesByChildrenSeats (List<Vehicle> list, int childrenSeats) {
         List<Vehicle> vehicleList = new ArrayList<>();
 
+        if (childrenSeats == -1) {
+            return list;
+        }
+
         if (childrenSeats == 0) {
             for (Vehicle vehicle : list) {
                 if (vehicle.getChildrenSeats() == 0) {
@@ -339,7 +347,31 @@ public class SearchVehicleService {
 
     }
 
-    public List<VehicleMainViewDTO> parameterizedSearch(List<Vehicle> vehicleList, List<Location> locationList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelistList, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, Long makeId, Long modelId, Long styleId, Long fuelId, Long transmissionId, int maxMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String state, String city, float priceLowerLimit, float priceUpperLimit) {
+    public List<Vehicle> getVehiclesByDate(List<Vehicle> vehicleList, List<RequestForVehicleDTO> requestList, LocalDateTime startDate, LocalDateTime endDate) {
+        List<Vehicle> newVehicleList = new ArrayList<>();
+        if (startDate == null || endDate == null) {
+            return vehicleList;
+        }
+        for(Vehicle vehicle : vehicleList) {
+            if (vehicle.getStartDate().isBefore(startDate) && vehicle.getEndDate().isAfter(endDate)) {
+                newVehicleList.add(vehicle);
+            }
+        }
+        for(Vehicle vehicle : newVehicleList) {
+            for (RequestForVehicleDTO request : requestList) {
+                if (request.getVehicleId().equals(vehicle.getId())) {
+                    if (((request.getStartDate().isBefore(startDate) && request.getEndDate().isAfter(endDate)) || (request.getStartDate().isBefore(startDate) && request.getEndDate().isAfter(startDate) && request.getEndDate().isBefore(endDate) || (request.getStartDate().isAfter(startDate) && request.getStartDate().isBefore(endDate) && request.getEndDate().isAfter(endDate)) || (request.getStartDate().isAfter(startDate) && request.getStartDate().isBefore(endDate) && request.getEndDate().isBefore(endDate) && request.getEndDate().isAfter(startDate)) )) && (request.getStatus().equals(Status.RESERVED)|| request.getStatus().equals(Status.PAID))) {
+                        newVehicleList.remove(vehicle);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return newVehicleList;
+    }
+
+    public List<VehicleMainViewDTO> parameterizedSearch(List<Vehicle> vehicleList, List<RequestForVehicleDTO> requestsList,  List<Location> locationList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelistList, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, Long makeId, Long modelId, Long styleId, Long fuelId, Long transmissionId, int maxMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String state, String city, float priceLowerLimit, float priceUpperLimit, LocalDateTime startDate, LocalDateTime endDate) {
 
         List<Vehicle> newList = getVehiclesByMake(vehicleList, makeId);
         System.out.println("Velicina je: " +newList.size());
@@ -360,6 +392,8 @@ public class SearchVehicleService {
         newList = getVehiclesByChildrenSeats(newList, childrenSeats);
         System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByLocation(newList, locationList, state, city);
+        System.out.println("Velicina je: " +newList.size());
+        newList = getVehiclesByDate(newList, requestsList, startDate, endDate);
         System.out.println("Velicina je: " +newList.size());
         newList = getVehiclesByPrice(newList, pricelistList, priceLowerLimit, priceUpperLimit);
         System.out.println("Velicina je: " +newList.size());

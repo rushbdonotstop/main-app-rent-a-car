@@ -5,11 +5,13 @@ import com.example.vehicle.dto.catalogue.VehicleMake;
 import com.example.vehicle.dto.catalogue.VehicleModel;
 import com.example.vehicle.dto.location.Location;
 import com.example.vehicle.dto.pricelist.Pricelist;
+import com.example.vehicle.dto.request.RequestForVehicleDTO;
 import com.example.vehicle.dto.user.UserDTO;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.service.SearchVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,7 +33,7 @@ public class SearchVehicleController {
     RestTemplate restTemplate;
 
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<VehicleMainViewDTO>> parameterizedSearch(@RequestParam(value = "vehicleMake") Long vehicleMake, @RequestParam(value = "vehicleModel") Long vehicleModel, @RequestParam(value = "vehicleStyle") Long vehicleStyle, @RequestParam(value = "vehicleFuel") Long vehicleFuel, @RequestParam(value = "vehicleTransmission") Long vehicleTransmission, @RequestParam(value = "priceLowerLimit") float priceLowerLimit, @RequestParam(value = "priceUpperLimit") float priceUpperLimit, @RequestParam(value = "maxMileage") int maxMileage, @RequestParam(value = "mileageLimit") int mileageLimit, @RequestParam(value = "collisionProtection") Boolean collisionProtection, @RequestParam(value = "childrenSeats") int childrenSeats, @RequestParam(value = "state") String state, @RequestParam(value = "city") String city) throws Exception {
+    public ResponseEntity<List<VehicleMainViewDTO>> parameterizedSearch(@RequestParam(value = "vehicleMake") Long vehicleMake, @RequestParam(value = "vehicleModel") Long vehicleModel, @RequestParam(value = "vehicleStyle") Long vehicleStyle, @RequestParam(value = "vehicleFuel") Long vehicleFuel, @RequestParam(value = "vehicleTransmission") Long vehicleTransmission, @RequestParam(value = "priceLowerLimit") float priceLowerLimit, @RequestParam(value = "priceUpperLimit") float priceUpperLimit, @RequestParam(value = "maxMileage") int maxMileage, @RequestParam(value = "mileageLimit") int mileageLimit, @RequestParam(value = "collisionProtection") Boolean collisionProtection, @RequestParam(value = "childrenSeats") int childrenSeats, @RequestParam(value = "state") String state, @RequestParam(value = "city") String city, @RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) throws Exception {
         List<Vehicle> vehicleList = searchVehicleService.findAll();
 
         List<Pricelist> pricelist = (this.getPricelists()).getBody();
@@ -43,7 +46,9 @@ public class SearchVehicleController {
 
         List<Location> locations = (this.getLocations()).getBody();
 
-        List<VehicleMainViewDTO> dtoList = searchVehicleService.parameterizedSearch(vehicleList, locations, vehicleMakeList, pricelist, vehicleModelsList, usersList, vehicleMake, vehicleModel, vehicleStyle, vehicleFuel, vehicleTransmission, maxMileage, mileageLimit, collisionProtection, childrenSeats, state, city, priceLowerLimit, priceUpperLimit);
+        List<RequestForVehicleDTO> requestsList = (this.getRequests()).getBody();
+
+        List<VehicleMainViewDTO> dtoList = searchVehicleService.parameterizedSearch(vehicleList, requestsList, locations, vehicleMakeList, pricelist, vehicleModelsList, usersList, vehicleMake, vehicleModel, vehicleStyle, vehicleFuel, vehicleTransmission, maxMileage, mileageLimit, collisionProtection, childrenSeats, state, city, priceLowerLimit, priceUpperLimit, startDate, endDate);
 
         System.out.println("DOBRA METODA ALAL TI VERA");
 
@@ -115,5 +120,13 @@ public class SearchVehicleController {
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Location>>() {}).getBody();
 
         return new ResponseEntity<List<Location>>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<RequestForVehicleDTO>> getRequests() throws Exception {
+        System.out.println("Getting all requests");
+        List<RequestForVehicleDTO> response = restTemplate.exchange("http://request/request/",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<RequestForVehicleDTO>>() {}).getBody();
+
+        return new ResponseEntity<List<RequestForVehicleDTO>>(response, HttpStatus.OK);
     }
 }

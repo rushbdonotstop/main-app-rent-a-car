@@ -1,5 +1,6 @@
 package com.example.pricelist.service;
 
+import com.example.pricelist.dto.MinAndMaxPricesDTO;
 import com.example.pricelist.model.Notification;
 import com.example.pricelist.model.Pricelist;
 import com.example.pricelist.model.VehicleDiscount;
@@ -179,6 +180,27 @@ public class PricelistService {
             return true;
         }
         return false;
+    }
+
+    public MinAndMaxPricesDTO getMinAndMax() {
+        List<Pricelist> list = pricelistRepository.findAll();
+        float min = list.get(0).getPrice();
+        float max = list.get(0).getPrice();
+        for (Pricelist pricelist : list) {
+            if(pricelist.getPrice() > max) {
+                max = pricelist.getPrice();
+            }
+
+            if (pricelist.getPrice() < min) {
+                min = pricelist.getPrice();
+            }
+        }
+        if (min == max) {
+            min = 0;
+        }
+        MinAndMaxPricesDTO minAndMax = new MinAndMaxPricesDTO(min, max);
+
+        return minAndMax;
     }
 
 }

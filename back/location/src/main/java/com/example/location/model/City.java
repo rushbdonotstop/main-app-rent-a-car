@@ -3,7 +3,7 @@ package com.example.location.model;
 import javax.persistence.*;
 
 @Entity
-public class City {
+public class City implements Comparable<City> {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -41,5 +41,18 @@ public class City {
                 "id=" + id +
                 ", value='" + value + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(City o) {
+        if (this.getId() == o.getId())
+            return 0;
+        if (this.getId() > o.getId()) {
+            return 1;
+        }
+        if (this.getId() < o.getId()) {
+            return -1;
+        }
+        return 0;
     }
 }

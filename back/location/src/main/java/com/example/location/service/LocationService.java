@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
 @Service
 public class LocationService {
@@ -117,5 +119,9 @@ public class LocationService {
         }
 
         return locations;
+    }
+
+    public SortedSet<City> getCitiesByState(Long stateId) {
+        return this.locationRepository.getCitiesByState(stateId);
     }
 }
