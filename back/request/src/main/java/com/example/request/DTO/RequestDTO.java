@@ -6,6 +6,7 @@ import com.example.request.model.Request;
 import java.util.List;
 
 public class RequestDTO {
+
     List<Request> requests;
     List<Bundle> bundles;
 
@@ -23,5 +24,13 @@ public class RequestDTO {
 
     public void setBundles(List<Bundle> bundles) {
         this.bundles = bundles;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestDTO{" +
+                "requests=" + requests +
+                ", bundles=" + bundles +
+                '}';
     }
 }

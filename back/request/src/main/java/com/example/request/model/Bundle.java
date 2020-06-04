@@ -38,4 +38,12 @@ public class Bundle {
     public void setRequests(List<Request> requests) {
         this.requests = requests;
     }
+
+    @Override
+    public String toString() {
+        return "Bundle{" +
+                "id=" + id +
+                ", requests=" + requests +
+                '}';
+    }
 }
