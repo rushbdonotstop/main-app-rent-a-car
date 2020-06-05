@@ -13,6 +13,10 @@ export class LocationService {
 
   constructor(private http: HttpClient) { }
 
+  create(location : VehicleLocation){
+    return this.http.post<VehicleLocation>('server/location/location/', location, httpOptions);
+  }
+
   getCitiesByState(stateId : number) {
     return this.http.get<City[]>('server/location/location/citiesByState/'+stateId,  httpOptions);
   }

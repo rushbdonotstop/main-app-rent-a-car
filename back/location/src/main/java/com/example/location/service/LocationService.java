@@ -57,11 +57,11 @@ public class LocationService {
         return notification;
     }
 
-    public Notification create(Location location) {
-        Notification notification = new Notification("Creating location failed.");
+    public Location create(Location location) {
+        Location locationNew = null;
         try{
             if(locationRepository.findByStateAndCityAndStreet(location.getState().getValue(), location.getCity().getValue(), location.getStreet().getValue()) != null){
-                notification.setText("Location already exists.");
+                locationNew = locationRepository.findByStateAndCityAndStreet(location.getState().getValue(), location.getCity().getValue(), location.getStreet().getValue());
             }
             else{
                 State stateObject = stateRepository.findByValue(location.getState().getValue());
@@ -76,14 +76,13 @@ public class LocationService {
                 if (streetObject == null){
                     streetObject = streetRepository.save(new Street(location.getStreet().getValue()));
                 }
-                locationRepository.save(new Location(stateObject, cityObject, streetObject));
-                notification.setText("Created location.");
+                locationNew = locationRepository.save(new Location(stateObject, cityObject, streetObject));
             }
         }
         catch (Exception e){
 
         }
-        return notification;
+        return locationNew;
     }
 
     public Long find(String state, String city, String street) {

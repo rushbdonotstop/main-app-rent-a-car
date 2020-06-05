@@ -36,5 +36,4 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     List<Vehicle> findByTransmissionId(Long Id);
 
-    Vehicle findByPicturePath(String s);
 }

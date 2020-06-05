@@ -2,6 +2,7 @@ package com.example.vehicle.service;
 
 import com.example.vehicle.model.Notification;
 import com.example.vehicle.model.Vehicle;
+import com.example.vehicle.repository.VehicleImageRepository;
 import com.example.vehicle.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class VehicleService {
     @Autowired
     VehicleRepository vehicleRepository;
 
+    @Autowired
+    VehicleImageRepository imageRepository;
+
     public List<Vehicle> getAll() {
         return vehicleRepository.findAll();
     }
@@ -39,47 +43,25 @@ public class VehicleService {
         return v;
     }
 
-    public Long create(Vehicle vehicle) {
-        try{
+    public Vehicle create(Vehicle vehicle) {
             vehicle.setId(null);
 
             if(invalidDate(vehicle.getStartDate(), vehicle.getEndDate())){
+                System.out.println("invalid");
                 return null;
             }
 
             if(vehicle.getMileage() < 0 || vehicle.getMileageLimit() < 0 || vehicle.getChildrenSeats() < 0){
+                System.out.println("invalid2");
                 return null;
             }
 
-            if(!Files.exists(Paths.get(vehicle.getPicturePath()))){
-                vehicle.setPicturePath(null);
-            }
-            else{
-                try {
-                    Random random = new Random();
-                    Long pictureName = random.nextLong();
-                    while (vehicleRepository.findByPicturePath("./images/" + Math.abs(pictureName)) != null) {
-                        pictureName = random.nextLong();
-                    }
-                    BufferedImage img = null;
-                    img = ImageIO.read(new File(vehicle.getPicturePath()));
-                    File outputFile = new File("./images/" + Math.abs(pictureName) + ".jpg");
-                    ImageIO.write(img, "jpg", outputFile);
-
-                    vehicle.setPicturePath("./images/" + Math.abs(pictureName) + ".jpg");
-                }
-                catch(Exception e){
-                    vehicle.setPicturePath(null);
-                }
-            }
+            // povezi sliku
+            vehicle.setImage(imageRepository.findByName(vehicle.getImage().getName()).get());
 
             Vehicle v = vehicleRepository.save(vehicle);
-            return v.getId();
-        }
-        catch (Exception e){
+            return v;
 
-        }
-        return null;
     }
 
     public Notification update(Vehicle vehicle) {

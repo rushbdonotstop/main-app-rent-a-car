@@ -1,5 +1,6 @@
 package com.example.request.controller;
 
+import com.example.request.DTO.BundleDTO;
 import com.example.request.DTO.RequestDTO;
 import com.example.request.model.Request;
 import com.example.request.service.RequestService;
@@ -91,4 +92,10 @@ public class RequestController {
         }
 
     }
+
+//    @GetMapping(value = "/requestHistory", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<BundleDTO>> requestHistory(@RequestParam(value = "userId") Long userId, @RequestParam(value = "userType") int userType) {
+//
+//
+//    }
 }

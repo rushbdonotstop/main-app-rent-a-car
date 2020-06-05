@@ -101,6 +101,9 @@ public class SearchVehicleService {
                 newList.add(pricelist);
             }
         }
+        if (newList.size() == 0) {
+            return 0;
+        }
         if (newList.size()==1) {
             return newList.get(0).getPrice();
         } else {
