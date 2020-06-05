@@ -1,0 +1,28 @@
+<h4 *ngIf="dialog === 0">Add to cart</h4>
+<h4 *ngIf="dialog === 1">Add to bundle</h4>
+<img *ngIf="dialog === 0" class="icon" src=".\.\.\assets\img\supermarket.png">
+<img *ngIf="dialog === 1" class="icon" src=".\.\.\assets\img\box.png">
+<p style="float:left">make : {{data.make}}</p>
+<p style="clear: right" style="clear: left">model : {{data.model}}</p>
+<p>price : {{data.price}}</p>
+<p>owner : {{data.ownerUsername}}</p>
+
+<div>
+    <input placeholder="Start" [(ngModel)]="startDate" [owlDateTimeFilter]="myFilter" [min]="min"
+        [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+    <owl-date-time #dt></owl-date-time>
+</div>
+
+<div>
+    <input placeholder="End" [(ngModel)]="endDate" [owlDateTimeFilter]="myFilter" [min]="min" [owlDateTimeTrigger]="dt1"
+        [owlDateTime]="dt1">
+    <owl-date-time #dt1></owl-date-time>
+</div>
+
+<p class="validation" *ngIf="!datesValid">Time and date are required</p>
+
+<div class="example-button-row">
+    <button *ngIf="dialog === 0" mat-raised-button color="accent" (click)="addToCart()">Add to cart</button>
+    <button *ngIf="dialog === 1" mat-raised-button color="accent" (click)="addToBundle()">Add to bundle</button>
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

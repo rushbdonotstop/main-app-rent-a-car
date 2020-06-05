@@ -2,15 +2,22 @@ table {
   width: 100%;
 }
 
+.buttons {
+  text-align: center;
+}
+
 .rentButton {
   height: 50px;
   width: 200px;
   margin-top: 40px;
-  position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  ;
+  margin-right: 5px;
+}
+
+.clearButton {
+  height: 50px;
+  width: 70px;
+  margin-top: 40px;
+  text-align: center;
 }
 
 .icon {
@@ -30,3 +37,11 @@ table {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
+
+table {
+  table-layout: fixed ;
+  width: 100% ;
+}
+td {
+  width: 25% ;
+} 

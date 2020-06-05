@@ -3,8 +3,8 @@ import { Status } from './Status'
 export class manualRequest{
     id:number
     totalCost:number
-    startDate:Date = new Date()
-    endDate:Date = new Date()
+    startDate:Date
+    endDate:Date
     status:Status
     userId:number
     vehicleId:number

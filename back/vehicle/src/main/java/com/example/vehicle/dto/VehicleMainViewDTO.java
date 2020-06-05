@@ -1,5 +1,7 @@
 package com.example.vehicle.dto;
 
+import java.time.LocalDateTime;
+
 public class VehicleMainViewDTO {
 
     private Long id;
@@ -7,6 +9,9 @@ public class VehicleMainViewDTO {
     private String model;
     private float price;
     private String ownerUsername;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private Long ownerId;
 
     public VehicleMainViewDTO() {
     }
@@ -17,6 +22,30 @@ public class VehicleMainViewDTO {
         this.model = model;
         this.price = price;
         this.ownerUsername = ownerUsername;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Long getId() {

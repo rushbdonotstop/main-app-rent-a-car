@@ -6,8 +6,8 @@ import { RequestAndVehicle } from './RequestAndVehicle'
 export class Request{
     id:number
     totalCost:number
-    startDate:Date = new Date()
-    endDate:Date = new Date()
+    startDate:Date
+    endDate:Date
     status:Status
     userId:number
     vehicleId:number
@@ -17,6 +17,8 @@ export class Request{
     constructor(details : RequestAndVehicle){
         this.vehicleId=details.vehicleId
         this.userId=details.ownerId
+        this.startDate=details.startDate
+        this.endDate=details.endDate
     }
 
 }

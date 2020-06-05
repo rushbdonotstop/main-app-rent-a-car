@@ -12,20 +12,24 @@ import { UserService } from './user.service';
 import { User } from 'src/app/shared/models/user/User';
 import { manualRequest } from 'src/app/shared/models/cart/manualRequest';
 
-const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
 @Injectable({
   providedIn: 'root'
 })
+//TODO : get owner id
 export class CartService {
 
   constructor(private http: HttpClient, private loginService: UserService) { }
 
-  addItemToCart(vehicle: VehicleMainViewDTO) {
+  addItemToCart(vehicle: VehicleMainViewDTO, startDate: Date, endDate: Date) {
     var cart = localStorage.getItem('cart')
     if (cart == null) {
       var newCart = new DetailedCart()
       var request = new RequestAndVehicle(vehicle)
+      request.startDate = startDate
+      request.endDate = endDate
+      request.ownerId = 1
       newCart.requests.push(request)
       localStorage.setItem('cart', JSON.stringify(newCart))
       console.log(localStorage.getItem('cart'))
@@ -33,6 +37,9 @@ export class CartService {
     else {
       var oldCart = JSON.parse(localStorage.getItem('cart'));
       var request = new RequestAndVehicle(vehicle)
+      request.startDate = startDate
+      request.endDate = endDate
+      request.ownerId = 1
       oldCart.requests.push(request)
       localStorage.setItem('cart', JSON.stringify(oldCart))
       console.log(localStorage.getItem('cart'))
@@ -44,6 +51,7 @@ export class CartService {
     if (cart == null) {
       var newCart = new DetailedCart()
       var bundle = new BundleAndVehicle()
+      bundle.id=null
       for (let b of bundleList) {
         bundle.requests.push(new RequestAndVehicle(b))
       }
@@ -54,6 +62,7 @@ export class CartService {
     else {
       var oldCart = JSON.parse(localStorage.getItem('cart'));
       var bundle = new BundleAndVehicle()
+      bundle.id=null
       for (let b of bundleList) {
         bundle.requests.push(new RequestAndVehicle(b))
       }
@@ -81,11 +90,11 @@ export class CartService {
     return this.http.post<boolean>('server/request/request', JSON.stringify(cart), httpOptions);
   }
 
-  newCart(){
+  newCart() {
     localStorage.setItem('cart', JSON.stringify(new DetailedCart()))
   }
 
-  manualRent(request: manualRequest){
+  manualRent(request: manualRequest) {
     return this.http.post<boolean>('server/request/request/physicalRent', JSON.stringify(request), httpOptions);
   }
 

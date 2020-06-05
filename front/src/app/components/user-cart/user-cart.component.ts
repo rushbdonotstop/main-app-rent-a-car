@@ -9,6 +9,7 @@ import { Bundle } from 'src/app/shared/models/cart/Bundle';
 import { ViewPriceListComponent } from '../price-list/view-price-list/view-price-list.component';
 import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.component';
 import { BundleAndVehicle } from 'src/app/shared/models/cart/BundleAndVehicle';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   templateUrl: './user-cart.component.html',
@@ -24,8 +25,6 @@ export class UserCartComponent implements OnInit {
   dataSourceBundle: MatTableDataSource<BundleAndVehicle>;
   displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'prices', 'remove'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
-  displayedColumns3: string[] = ['id']
-  displayedColumns4: string[] = ['id']
 
   constructor(private cartService: CartService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
@@ -39,6 +38,7 @@ export class UserCartComponent implements OnInit {
       this.emptyCart = true
     else
       this.emptyCart = false
+    console.log(this.cart)
     // for (let bundle of this.cart.bundles) {
     //   this.dataSourceBundle.push(new MatTableDataSource<RequestAndVehicle>(bundle.requests));
     // }
@@ -80,10 +80,6 @@ export class UserCartComponent implements OnInit {
     });
   }
 
-  addToCart(vehicle: RequestAndVehicle) {
-    this.cartService.addItemToCart(vehicle)
-  }
-
   remove(request) {
     this.requests.forEach(element => {
       if (element.vehicleId == request.vehicleId) {
@@ -104,6 +100,11 @@ export class UserCartComponent implements OnInit {
       this.cartService.newCart()
       this.ngOnInit()
     })
+  }
+
+  clear() {
+    this.cartService.newCart()
+    this.ngOnInit()
   }
 
 

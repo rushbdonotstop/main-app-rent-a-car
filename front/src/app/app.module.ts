@@ -12,11 +12,14 @@ import { RentDialogComponent } from './components/rent-dialog/rent-dialog.compon
 import { MatButtonModule } from '@angular/material/button';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FormsModule } from '@angular/forms';
+import { CartDialogComponent } from './components/cart-dialog/cart-dialog.component';
+import { MatListModule, MatListItem } from '@angular/material/list';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RentDialogComponent
+    RentDialogComponent,
+    CartDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,12 +31,13 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    FormsModule
+    FormsModule,
+    MatListModule
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
   bootstrap: [AppComponent],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [RentDialogComponent]
+  entryComponents: [RentDialogComponent, CartDialogComponent]
 })
 export class AppModule { }
