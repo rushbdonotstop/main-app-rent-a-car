@@ -4,6 +4,7 @@ import { manualRequest } from 'src/app/shared/models/cart/manualRequest';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { CartService } from 'src/app/core/services/cart.service';
+import { OwlDateTime } from 'ng-pick-datetime/date-time/date-time.class';
 
 @Component({
   selector: 'pm-rent-dialog',
@@ -18,39 +19,61 @@ export class RentDialogComponent implements OnInit {
   price: any
   owner: any
 
+  startDate: Date
+  endDate: Date
+
+  datesValid: any
+
+  public min = new Date();
+  public myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    // Prevent Sunday from being selected.
+    return day !== 0
+  }
+
   constructor(
     public dialogRef: MatDialogRef<RentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: VehicleMainViewDTO, private rentService: CartService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.id=this.data.id
-    this.make=this.data.make
-    this.model=this.data.model
-    this.price=this.data.price
-    this.owner=this.data.ownerUsername
+    this.id = this.data.id
+    this.make = this.data.make
+    this.model = this.data.model
+    this.price = this.data.price
+    this.owner = this.data.ownerUsername
+    this.datesValid = true
+  }
+
+  close() {
+    this.dialogRef.close();
+
   }
 
   rent() {
-    var request = new manualRequest()
-    request.ownerId = this.owner
-    request.id = null
-    request.userId = null
-    request.endDate = new Date()
-    request.startDate = new Date()
-    request.vehicleId = this.id
-    alert(this.model)
-    this.rentService.manualRent(request).subscribe(data => {
-      this._snackBar.open("Successfully rented", "", {
-        duration: 2000,
-        verticalPosition: 'bottom'
-      });
-    },
-      error => {
-        this._snackBar.open("Failed", "", {
+    if (this.startDate != null && this.endDate != null) {
+      var request = new manualRequest()
+      request.ownerId = 1
+      request.id = null
+      request.userId = null
+      request.endDate = this.endDate
+      request.startDate = this.startDate
+      request.vehicleId = this.id
+      this.rentService.manualRent(request).subscribe(data => {
+        this._snackBar.open("Successfully rented", "", {
           duration: 2000,
           verticalPosition: 'bottom'
         });
-      })
+        this.close()
+      },
+        error => {
+          this._snackBar.open("Failed", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        })
+    } else {
+      this.datesValid = false
+    }
 
   }
 

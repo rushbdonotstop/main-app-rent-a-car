@@ -8,7 +8,7 @@
 </header>
 <section class="page-section">
     <div class="container">
-        <div class="row" style="justify-content: left;">
+        <div *ngIf="vehicleInfoShow" class="row" style="justify-content: left;">
             <mat-card style="width: 100%; box-sizing: border-box;">
                 <mat-card-title>
                     <label>Add your vehicle</label>
@@ -149,7 +149,7 @@
                         </div>
                         <div class="col-4">
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <button mat-raised-button color="accent" class="float-right" (click)="createVehicle()">
                                 Add vehicle
                             </button>
@@ -158,5 +158,6 @@
                 </mat-card-content>
             </mat-card>
         </div>
+        <pm-pricelist-create (valueUpdate)="getUpdatedvalue($event)" [(results)] = "results" *ngIf="vehicleInfoValid"></pm-pricelist-create>
     </div>
 </section>
