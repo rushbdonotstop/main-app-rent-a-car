@@ -1,10 +1,13 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { CatalogueItem } from 'src/app/shared/models/catalogue/CatalogueItem';
 import { VehicleService } from 'src/app/core/services/vehicle.service';
 import { PricelistService } from 'src/app/core/services/pricelist.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { CatalogueService } from 'src/app/core/services/catalogue.service';
 import { MatSnackBar } from '@angular/material';
+import { Pricelist } from 'src/app/shared/models/pricelist/Pricelist';
+import { Vehicle } from 'src/app/shared/models/vehicle/Vehicle';
+import { CreatePriceListComponent } from '../price-list/create-price-list/create-price-list.component';
 
 @Component({
   templateUrl: './create-vehicle.component.html',
@@ -23,23 +26,32 @@ export class CreateVehicleComponent implements OnInit {
   /// IMAGES /////
   imgURL: any;
   public imagePath;
+  selectedFile: File
 
   onFileChanged(files) {
     if (files.length === 0)
       return;
- 
+
     var mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
       alert("Only images are supported.");
       return;
     }
- 
+
     var reader = new FileReader();
     this.imagePath = files;
-    reader.readAsDataURL(files[0]); 
-    reader.onload = (_event) => { 
-      this.imgURL = reader.result; 
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.imgURL = reader.result;
     }
+  }
+
+  onUpload() {
+    // this.http is the injected HttpClient
+    this.vehicleService.uploadPicture(this.selectedFile)
+      .subscribe(notification => {
+
+      });
   }
 
   ////////
@@ -67,56 +79,70 @@ export class CreateVehicleComponent implements OnInit {
 
   minDate: Date
 
-  constructor(public zone: NgZone, private vehicleService : VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
+  vehicleInfoValid: boolean
+  vehicleInfoShow: boolean
+
+  constructor(public zone: NgZone, private vehicleService: VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.imgURL = 'assets/vehicles/nopicture.jpg'
     this.minDate = new Date();
     this.collisionProtection = false
+    this.vehicleInfoValid = false
+    this.vehicleInfoShow = true
+
+    this.results = new VehicleInfoPricelists()
+    this.results.vehicleInfo = new Vehicle()
+    this.results.pricelists = []
 
     this.catalogueService.getMakes()
-    .subscribe(makes => {
-      this.makes = makes;
-    },
-      error => {
-        this._snackBar.open("Error while retreiving makes!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-      })
+      .subscribe(makes => {
+        this.makes = makes;
+        this.selectedMake = makes[0]
+        this.onMakeChange();
+      },
+        error => {
+          this._snackBar.open("Error while retreiving makes!", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        })
 
-  this.catalogueService.getStyles()
-    .subscribe(styles => {
-      this.styles = styles;
-    },
-      error => {
-        this._snackBar.open("Error while retreiving styles!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-      })
+    this.catalogueService.getStyles()
+      .subscribe(styles => {
+        this.styles = styles;
+        this.selectedStyle = styles[0]
+      },
+        error => {
+          this._snackBar.open("Error while retreiving styles!", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        })
 
-  this.catalogueService.getTransmissions()
-    .subscribe(transmissions => {
-      this.transmissions = transmissions;
-    },
-      error => {
-        this._snackBar.open("Error while retreiving transmissions!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-      })
+    this.catalogueService.getTransmissions()
+      .subscribe(transmissions => {
+        this.transmissions = transmissions;
+        this.selectedTransmission = transmissions[0]
+      },
+        error => {
+          this._snackBar.open("Error while retreiving transmissions!", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        })
 
-  this.catalogueService.getFuelTypes()
-    .subscribe(fuelTypes => {
-      this.fuelTypes = fuelTypes;
-    },
-      error => {
-        this._snackBar.open("Error while retreiving fuel types!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-      })
+    this.catalogueService.getFuelTypes()
+      .subscribe(fuelTypes => {
+        this.fuelTypes = fuelTypes;
+        this.selectedFuelType = fuelTypes[0]
+      },
+        error => {
+          this._snackBar.open("Error while retreiving fuel types!", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        })
 
   }
 
@@ -133,6 +159,141 @@ export class CreateVehicleComponent implements OnInit {
           });
         })
   }
+
+  results: VehicleInfoPricelists
+
+  getUpdatedvalue($event) {
+    this.results = $event;
+    this.vehicleInfoShow = this.results.vehicleInfo.id == 0 ? true : false; 
+    this.vehicleInfoValid = this.results.vehicleInfo.id == 0 ? false : true; 
+  }
+
+  addPricelists() {
+
+    // if(this.locationInvalid()){
+    //   this._snackBar.open("In order to add prices you must choose valid location - street, city, state format!", "", {
+    //     duration: 2000,
+    //     verticalPosition: 'bottom'
+    //   });
+    //   return;
+    // }
+
+    // if(this.mileage < 0 || this.mileage == undefined){
+    //   this._snackBar.open("In order to add prices you must give valid mileage number!", "", {
+    //     duration: 2000,
+    //     verticalPosition: 'bottom'
+    //   });
+    //   return;
+    // }
+
+    // if(this.childrenSeats < 0 || this.childrenSeats == undefined){
+    //   this._snackBar.open("In order to add prices you must give valid children seats number!", "", {
+    //     duration: 2000,
+    //     verticalPosition: 'bottom'
+    //   });
+    //   return;
+    // }
+
+    if (this.startDate > this.endDate || this.startDate == undefined || this.endDate == undefined) {
+      this._snackBar.open("In order to add prices you must choose valid date!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      this.vehicleInfoValid = false;
+      return;
+    }
+    else {
+      this.results.vehicleInfo.startDate = this.startDate
+      this.results.vehicleInfo.endDate = this.endDate
+    }
+
+    if(this.mileageLimit < 0){
+      this._snackBar.open("In order to add prices you must give valid mileage limit number!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      this.vehicleInfoValid = false;
+      return;
+    }
+    else{
+      if (this.mileageLimit == undefined){
+        this.results.vehicleInfo.mileageLimit = 0
+      }
+      else{
+        this.results.vehicleInfo.mileageLimit = this.mileageLimit
+      }
+    }
+
+    this.results.vehicleInfo.collisionProtection = this.collisionProtection;
+    this.vehicleInfoValid = true;
+    this.vehicleInfoShow = false;
+  }
+
+  locationInvalid(): boolean {
+
+    if (this.formattedAddress == undefined) {
+      return true;
+    }
+
+    var location = this.formattedAddress.split(',');
+
+    if (location.length != 3) {
+      return true;
+    }
+
+    this.doGeocode();
+
+    if (this.formattedAddress == null) {
+      return true;
+    }
+
+    return false;
+  }
+
+  doGeocode() {
+    // Get geocoder instance
+    var geocoder = new google.maps.Geocoder();
+
+    // Geocode the address
+    geocoder.geocode({
+      'address': this.formattedAddress
+    }, function (results, status) {
+      if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
+        // set it to the correct, formatted address if it's valid
+        this.formatted_address = results[0].formatted_address;;
+
+        // show an error if it's not
+      } else {
+        this.formatted_address = "";
+      };
+    });
+  };
+
+  createVehicle() {
+
+
+  }
+
+  removePicture() {
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ////// GOOGLE PLACES
 
 
   getAddress(place: object) {
@@ -208,4 +369,11 @@ export class CreateVehicleComponent implements OnInit {
     return phone;
   }
 
+
+
+}
+
+export class VehicleInfoPricelists {
+  vehicleInfo: Vehicle;
+  pricelists: [];
 }
