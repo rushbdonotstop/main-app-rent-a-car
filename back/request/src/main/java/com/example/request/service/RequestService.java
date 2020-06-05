@@ -1,6 +1,10 @@
 package com.example.request.service;
 
+import com.example.request.DTO.BundleDTO;
 import com.example.request.DTO.RequestDTO;
+import com.example.request.DTO.RequestForFrontDTO;
+import com.example.request.DTO.VehicleMainViewDTO;
+import com.example.request.DTO.user.UserDTO;
 import com.example.request.model.Bundle;
 import com.example.request.model.Request;
 import com.example.request.model.enums.Status;
@@ -12,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 @Service
 public class RequestService {
@@ -148,5 +154,94 @@ public class RequestService {
             requestRepository.save(request);
             return true;
         } else return false;
+    }
+
+    public List<Request> getAllRequestsByOwner (Long ownerId) {
+        List<Request> requestsList = requestRepository.findAll();
+        List<Request> newRequestsList = new ArrayList<>();
+        for (Request request : requestsList) {
+            if (request.getOwnerId().equals(ownerId)) {
+                newRequestsList.add(request);
+            }
+        }
+        return newRequestsList;
+    }
+
+    public List<Request> getAllRequestsByUser (Long userId) {
+        List<Request> requestsList = requestRepository.findAll();
+        List<Request> newRequestsList = new ArrayList<>();
+        for (Request request : requestsList) {
+            if (request.getUserId().equals(userId)) {
+                newRequestsList.add(request);
+            }
+        }
+        return newRequestsList;
+    }
+    //TYPE OF USER - PARAMETER FOR CHOOSING OWNER USERNAME OR BUYER USERNAME
+    //USE 0 FOR OWNER USERNAME
+    //USE 1 FOR BUYER USERNAME
+    public List<RequestForFrontDTO> getDtoList (int typeOfUser, List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehicleList) {
+        List<RequestForFrontDTO> newDTOList = new ArrayList<>();
+        for (Request request : requestsList) {
+            RequestForFrontDTO dto = new RequestForFrontDTO();
+            dto.setId(request.getId());
+            dto.setTotalCost(request.getTotalCost());
+            dto.setStartDate(request.getStartDate());
+            dto.setEndDate(request.getEndDate());
+            dto.setStatus(request.getStatus());
+            //SETTING USERNAME FOR REQUEST DTO
+            for (UserDTO user : userDTOList) {
+                if (typeOfUser == 0) {
+                    if (user.getId() == request.getOwnerId()) {
+                        dto.setUsername(user.getUsername());
+                        break;
+                    }
+                } else {
+                    if (user.getId() == request.getUserId()) {
+                        dto.setUsername(user.getUsername());
+                        break;
+                    }
+                }
+            }
+
+            //SETTING VEHICLE MAKE AND MODEL FOR REQUEST DTO
+            for (VehicleMainViewDTO vehicle : vehicleList) {
+                if (vehicle.getId().equals(request.getVehicleId())) {
+                    dto.setMakePlusModel(vehicle.getMake() + " " + vehicle.getModel());
+                    break;
+                }
+            }
+
+            dto.setBundleId(request.getBundle().getId());
+            newDTOList.add(dto);
+        }
+
+        return newDTOList;
+    }
+
+    public List<BundleDTO> getBundles(List<RequestForFrontDTO> requestList) {
+        TreeSet<Long> bundleIdSet = new TreeSet<>();
+        List<BundleDTO> bundleList = new ArrayList<>();
+        for (RequestForFrontDTO request : requestList) {
+            bundleIdSet.add(request.getBundleId());
+        }
+
+        for (Long bundleId : bundleIdSet) {
+            BundleDTO dto = new BundleDTO();
+            for (RequestForFrontDTO request : requestList) {
+                dto.setId(bundleId);
+                if (request.getBundleId().equals(bundleId)) {
+                    dto.getRequestsList().add(request);
+                    dto.setUsername(request.getUsername());
+                }
+                float totalPrice = 0;
+                for (RequestForFrontDTO request1 : dto.getRequestsList()) {
+                    totalPrice += request1.getTotalCost();
+                }
+                dto.setTotalCost(totalPrice);
+            }
+            bundleList.add(dto);
+        }
+        return bundleList;
     }
 }
