@@ -100,14 +100,13 @@ public class SearchVehicleService {
             if (vehicleId.equals(pricelist.getVehicleId())) {
                 newList.add(pricelist);
             }
-            if (newList.size()==1) {
-                return newList.get(0).getPrice();
-            } else {
-                Collections.sort(newList);
-                return newList.get(0).getPrice();
-            }
         }
-        return 0;
+        if (newList.size()==1) {
+            return newList.get(0).getPrice();
+        } else {
+            Collections.sort(newList);
+            return newList.get(0).getPrice();
+        }
     }
 
     public String getVehicleMake(List<VehicleMake> list, Long vehicleMakeId) {
@@ -357,18 +356,29 @@ public class SearchVehicleService {
                 newVehicleList.add(vehicle);
             }
         }
+
+        if (newVehicleList.size() == 0) {
+            return newVehicleList;
+        }
+
+        List<Vehicle> tempList = new ArrayList<>();
+
+        for (Vehicle vehicle : newVehicleList){
+            tempList.add(vehicle);
+        }
+
         for(Vehicle vehicle : newVehicleList) {
             for (RequestForVehicleDTO request : requestList) {
                 if (request.getVehicleId().equals(vehicle.getId())) {
                     if (((request.getStartDate().isBefore(startDate) && request.getEndDate().isAfter(endDate)) || (request.getStartDate().isBefore(startDate) && request.getEndDate().isAfter(startDate) && request.getEndDate().isBefore(endDate) || (request.getStartDate().isAfter(startDate) && request.getStartDate().isBefore(endDate) && request.getEndDate().isAfter(endDate)) || (request.getStartDate().isAfter(startDate) && request.getStartDate().isBefore(endDate) && request.getEndDate().isBefore(endDate) && request.getEndDate().isAfter(startDate)) )) && (request.getStatus().equals(Status.RESERVED)|| request.getStatus().equals(Status.PAID))) {
-                        newVehicleList.remove(vehicle);
+                        tempList.remove(vehicle);
                         break;
                     }
                 }
             }
         }
 
-        return newVehicleList;
+        return tempList;
     }
 
     public List<VehicleMainViewDTO> parameterizedSearch(List<Vehicle> vehicleList, List<RequestForVehicleDTO> requestsList,  List<Location> locationList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelistList, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, Long makeId, Long modelId, Long styleId, Long fuelId, Long transmissionId, int maxMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String state, String city, float priceLowerLimit, float priceUpperLimit, LocalDateTime startDate, LocalDateTime endDate) {
