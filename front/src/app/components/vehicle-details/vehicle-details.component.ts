@@ -45,9 +45,12 @@ export class VehicleDetailsComponent implements OnInit {
       this.vehicleService.getVehicle(this.vehicleId)
       .subscribe(vehicle => {
         this.vehicle = vehicle;
-
-        var base64Data = this.vehicle.image.picByte;
-        this.retrievedImage = 'data:image/jpeg;base64,' + base64Data;
+        
+        this.vehicleService.getImage(this.vehicle.image.name).subscribe(results => {
+          var base64Data = results.picByte
+          this.retrievedImage = 'data:image/jpeg;base64,' + base64Data;
+        },
+        error => alert("ERROR while getting image"))
 
         if (this.vehicle.mileageLimit == 0){
           this.mileageLimit = "Unlimited";

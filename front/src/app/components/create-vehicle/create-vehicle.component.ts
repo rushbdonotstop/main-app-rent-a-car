@@ -12,6 +12,9 @@ import { VehicleLocation } from 'src/app/shared/models/location/VehicleLocation'
 import { City } from 'src/app/shared/models/location/City';
 import { State } from 'src/app/shared/models/location/State';
 import { Street } from 'src/app/shared/models/location/Street';
+import { HttpClient } from '@angular/common/http';
+import { Image } from 'src/app/shared/models/vehicle/Image';
+import { User } from 'src/app/shared/models/user/User';
 
 @Component({
   templateUrl: './create-vehicle.component.html',
@@ -39,14 +42,14 @@ export class CreateVehicleComponent implements OnInit {
     if (event.target.files.length === 0)
       return;
 
-    var mimeType = event.targetfiles[0].type;
+    var mimeType = event.target.files[0].type;
     if (mimeType.match(/image\/*/) == null) {
       alert("Only images are supported.");
       return;
     }
 
     var reader = new FileReader();
-    this.imagePath = event.targetfiles;
+    this.imagePath = event.target.files;
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (_event) => {
       this.imgURL = reader.result;
@@ -93,7 +96,7 @@ export class CreateVehicleComponent implements OnInit {
   vehicleInfoValid: boolean
   vehicleInfoShow: boolean
 
-  constructor(public zone: NgZone, private vehicleService: VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
+  constructor(private httpClient: HttpClient, public zone: NgZone, private vehicleService: VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.imgURL = 'assets/vehicles/nopicture.jpg'
@@ -281,49 +284,57 @@ export class CreateVehicleComponent implements OnInit {
   };
 
   createVehicle() {
-    const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    // if (this.results.pricelists.length != 0){
+      const uploadImageData = new FormData();
+      uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
 
-    this.vehicleService.uploadPicture(uploadImageData).subscribe(image => { 
-      alert ("Successful image upload!") 
-      var location = new VehicleLocation()
-      var splitted = this.formattedAddress.split(',')
-      location.state = new State()
-      location.state.value = splitted[2]
-      location.city = new City()
-      location.city.value = splitted[1]
-      location.street = new Street()
-      location.street.value = splitted[0]
-
-      this.locationService.create(location).subscribe(location => {
-        var vehicle = new Vehicle()
-        vehicle.makeId = this.selectedMake.id
-        vehicle.styleId = this.selectedStyle.id
-        vehicle.fuelTypeId = this.selectedFuelType.id
-        vehicle.transmissionId = this.selectedTransmission.id
-        vehicle.modelId = this.selectedModel.id
-        vehicle.locationId = location.id
-        vehicle.mileage = this.mileage
-        vehicle.mileageLimit = this.mileageLimit ? this.mileageLimit : 0
-        vehicle.startDate = this.startDate 
-        vehicle.endDate = this.endDate
-        vehicle.collisionProtection = this.collisionProtection
-        vehicle.childrenSeats = this.childrenSeats
-        vehicle.image = image
-        this.vehicleService.create(vehicle).subscribe(notification => {
-            alert(notification)
+      // Make a call to the Spring Boot Application to save the image
+      this.httpClient.post('server/vehicle/vehicle/image/upload', uploadImageData, { observe: 'response' })
+      .subscribe((response) => {
+        var location = new VehicleLocation()
+        var splitted = this.formattedAddress.split(',')
+        location.state = new State()
+        location.state.value = splitted[2]
+        location.city = new City()
+        location.city.value = splitted[1]
+        location.street = new Street()
+        location.street.value = splitted[0]  
+        this.locationService.create(location).subscribe(location => {
+          var vehicle = new Vehicle()
+          vehicle.makeId = this.selectedMake.id
+          vehicle.styleId = this.selectedStyle.id
+          vehicle.fuelTypeId = this.selectedFuelType.id
+          vehicle.transmissionId = this.selectedTransmission.id
+          vehicle.modelId = this.selectedModel.id
+          vehicle.locationId = location.id
+          vehicle.mileage = this.mileage
+          vehicle.mileageLimit = this.mileageLimit ? this.mileageLimit : 0
+          vehicle.startDate = this.startDate 
+          vehicle.endDate = this.endDate
+          vehicle.collisionProtection = this.collisionProtection
+          vehicle.childrenSeats = this.childrenSeats
+          vehicle.image = response.body as Image
+          var user = new User()
+          user = JSON.parse(localStorage.getItem('userObject'))
+          vehicle.userId = user.id;
+          this.vehicleService.create(vehicle).subscribe(notification => {
+            this._snackBar.open("Created vehicle!", "", {
+              duration: 2000,
+              verticalPosition: 'bottom'
+            });        },
+          error => {})
+    
         },
-        error => {})
+        error => {
+          this._snackBar.open("Creating vehicle failed!", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          }); 
+        })
+      }
+      );
   
-      },
-      error => {
-        alert("Creating vehicle failed!")
-      })
-    },
-    error => {
-      alert("Error!")
-    })
-
+    // }
   }
 
   removePicture() {
@@ -427,5 +438,5 @@ export class CreateVehicleComponent implements OnInit {
 
 export class VehicleInfoPricelists {
   vehicleInfo: Vehicle;
-  pricelists: [];
+  pricelists: Pricelist[];
 }

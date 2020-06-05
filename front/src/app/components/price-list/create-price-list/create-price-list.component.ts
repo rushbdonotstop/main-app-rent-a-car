@@ -120,7 +120,12 @@ export class CreatePriceListComponent implements OnInit{
   }
 
   finish(){
-    this.results.vehicleInfo.id = 0;
-    this.valueUpdate.emit(this.results);  
+    this.pricelistService.validatePricelists(this.tempPrices, this.results.vehicleInfo.startDate, this.results.vehicleInfo.endDate).subscribe(pricelists => {
+      if (pricelists != null){
+        this.results.pricelists = this.tempPrices
+        this.results.vehicleInfo.id = 0;
+        this.valueUpdate.emit(this.results); 
+      }
+    })
   }
 }
