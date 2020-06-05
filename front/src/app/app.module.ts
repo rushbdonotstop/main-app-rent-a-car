@@ -1,4 +1,4 @@
-import { BrowserModule,  HAMMER_GESTURE_CONFIG  } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -9,8 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { GestureConfig } from '@angular/material';
 import { AutocompleteComponent } from './components/create-vehicle/autocomplete/autocomplete.component';
 import { RentDialogComponent } from './components/rent-dialog/rent-dialog.component';
-import {MatButtonModule} from '@angular/material/button';
-
+import { MatButtonModule } from '@angular/material/button';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,13 +25,15 @@ import {MatButtonModule} from '@angular/material/button';
     HomeModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MatButtonModule
-    
+    MatButtonModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    FormsModule
   ],
-  providers : [ { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
+  providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
   bootstrap: [AppComponent],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents:[RentDialogComponent]
+  entryComponents: [RentDialogComponent]
 })
 export class AppModule { }
