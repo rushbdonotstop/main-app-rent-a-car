@@ -6,7 +6,6 @@ import com.example.pricelist.model.Pricelist;
 import com.example.pricelist.model.VehicleDiscount;
 import com.example.pricelist.repository.PricelistRepository;
 import com.example.pricelist.repository.VehicleDiscountRepository;
-import jdk.vm.ci.meta.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

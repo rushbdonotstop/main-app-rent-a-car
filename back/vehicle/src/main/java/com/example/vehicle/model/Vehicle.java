@@ -24,7 +24,8 @@ public class Vehicle {
     @Column(name="children_seats", nullable = false)
     private int childrenSeats;
 
-    @Column(name="image", unique = true)
+    @OneToOne
+    @JoinColumn(name="image", referencedColumnName = "id", nullable = true)
     private VehicleImage image;
 
     @Column(name="start_date", nullable = false)

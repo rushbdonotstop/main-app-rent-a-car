@@ -6,6 +6,7 @@ import com.example.pricelist.model.Pricelist;
 import com.example.pricelist.service.PricelistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -100,8 +101,8 @@ public class PricelistController {
     }
 
     @PostMapping(value = "/validatePricelists", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Pricelist>> validatePricelists(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true)
-            LocalDate startDate, @RequestParam(value="endDate", required = true) LocalDate endDate){
+    public ResponseEntity<List<Pricelist>> validatePricelists(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            LocalDate startDate, @RequestParam(value="endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate){
         return new ResponseEntity<List<Pricelist>>(priceListService.validatePricelists(pricelists, startDate, endDate), HttpStatus.OK);
     }
 
