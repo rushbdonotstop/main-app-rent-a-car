@@ -1,3 +1,5 @@
+import { VehicleDiscount } from './VehicleDiscount';
+
 export class Pricelist{
     id : number;
     startDate : Date;
@@ -6,5 +8,5 @@ export class Pricelist{
     priceByMile : number;
     priceCollision : number;
     vehicleId : number;
-    vehicleDiscount : number;
+    vehicleDiscount : VehicleDiscount;
 }
