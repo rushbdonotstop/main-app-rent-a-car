@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { VehicleMainViewDTO } from 'src/app/shared/models/vehicle/VehicleMainViewDTO';
 import { Vehicle } from 'src/app/shared/models/vehicle/Vehicle';
 import { SearchParams } from 'src/app/shared/models/SearchParams';
+import { Image } from 'src/app/shared/models/vehicle/Image';
 
 const httpOptions = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
 
@@ -21,8 +22,17 @@ export class VehicleService {
     return this.http.get<Vehicle>('server/vehicle/vehicle/'+vehicleId,  httpOptions);
   }
 
+  getImage(imageName : string){
+    return this.http.get<Image>('server/vehicle/vehicle/image/' + imageName,  httpOptions);
+  }
+
   uploadPicture(uploadImageData : any) {
-    return this.http.post<any>('server/vehicle/vehicle/uploadPicture', uploadImageData,  httpOptions);
+    let params = new HttpParams();
+    params = params.append('imageFile', uploadImageData)
+    const options = {
+      params : params
+    }
+    return this.http.post<any>('server/vehicle/vehicle/image/upload',  options);
   }
 
   create(vehicle : Vehicle) {
