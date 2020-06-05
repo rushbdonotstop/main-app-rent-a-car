@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeComponent } from './home/home.component';
@@ -32,8 +32,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatSliderModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule } from '@angular/material';
-import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutocompleteComponent } from '../components/create-vehicle/autocomplete/autocomplete.component';
+import { MatListModule } from '@angular/material/list';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -63,13 +65,14 @@ import { AutocompleteComponent } from '../components/create-vehicle/autocomplete
     RegisterAgentComponent,
     EditPermissionsComponent,
     AutocompleteComponent
-],
-entryComponents: [
-  VehicleDetailsComponent, ViewPriceListComponent
-],
+  ],
+  entryComponents: [
+    VehicleDetailsComponent, ViewPriceListComponent
+  ],
 
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -96,8 +99,10 @@ entryComponents: [
     MatNativeDateModule,
     MatCheckboxModule,
     NgbTimepickerModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ],
-  exports: [HomeComponent]
+  exports: [HomeComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeModule { }

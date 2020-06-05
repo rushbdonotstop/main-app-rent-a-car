@@ -10,9 +10,11 @@
   <div class="container">
     <div class="row" style="justify-content: left;">
       <mat-card style="width: 70%; box-sizing: border-box;">
-        <mat-card-title> 
-          <label>Bundle</label> 
-          <button mat-raised-button color="accent" class="float-right" (click)="addBundleToCart()">Add to cart</button>
+        <mat-card-title>
+          <label>Bundle</label>
+          <button mat-raised-button color="warn" class="float-right" (click)="clearBundle()">Clear</button>
+          <button mat-raised-button color="accent" class="float-right" (click)="addBundleToCart()"
+            style="margin-left: 5px;margin-right: 5px;">Add to cart</button>
         </mat-card-title>
         <mat-card-content>
           <table mat-table [dataSource]="dataSourceBundle" class="mat-elevation-z8">
@@ -55,7 +57,7 @@
         </mat-card-content>
       </mat-card>
     </div>
-    <pm-search-vehicle (valueUpdate)="getUpdatedvalue($event)" [results] = "results"></pm-search-vehicle>
+    <pm-search-vehicle (valueUpdate)="getUpdatedvalue($event)" [results]="results"></pm-search-vehicle>
     <div class="row" style="justify-content: center;">
       <mat-card style="width: 100%; box-sizing: border-box;">
         <mat-card-title> Vehicles </mat-card-title>
@@ -110,13 +112,13 @@
             <ng-container matColumnDef="bundle">
               <th mat-header-cell *matHeaderCellDef> </th>
               <td mat-cell *matCellDef="let element"> <button mat-raised-button color="warn"
-                  (click)="addToBundle(element)">Add to bundle</button> </td>
+                  (click)="addToBundleDialog(element)">Add to bundle</button> </td>
             </ng-container>
 
             <ng-container matColumnDef="rent">
               <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let element"> <button mat-raised-button
-                  (click)="inStoreRent(element)">In store rent</button> </td>
+              <td mat-cell *matCellDef="let element"> <button mat-raised-button (click)="inStoreRent(element)">In store
+                  rent</button> </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

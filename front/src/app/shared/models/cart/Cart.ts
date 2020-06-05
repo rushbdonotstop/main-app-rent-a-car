@@ -15,6 +15,8 @@ export class Cart {
         for (let request of detailedCart.requests) {
             var req = new Request(request)
             req.userId = userId
+            req.startDate = request.startDate
+            req.endDate = request.endDate
             requests.push(req)
         }
         for (let b of detailedCart.bundles) {
@@ -22,6 +24,8 @@ export class Cart {
             for (let r of b.requests) {
                 var req = new Request(r)
                 req.userId = userId
+                req.startDate = r.startDate
+                req.endDate = r.endDate
                 bundle.requests.push(req)
             }
             bundles.push(bundle)

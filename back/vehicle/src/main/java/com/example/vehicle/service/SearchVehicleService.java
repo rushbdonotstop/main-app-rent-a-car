@@ -90,6 +90,7 @@ public class SearchVehicleService {
         vmvDTO.setModel(getVehicleModel(vehicleModelList, vehicle.getModelId()));
         vmvDTO.setPrice(getPrice(pricelist, vehicle.getId()));
         vmvDTO.setOwnerUsername(getOwner(ownerList, vehicle.getUserId()));
+        vmvDTO.setOwnerId(getOwnerId(ownerList, vehicle.getUserId()));
 
         return vmvDTO;
     }
@@ -134,6 +135,15 @@ public class SearchVehicleService {
         for (UserDTO owner : list) {
             if(vehicleOwnerId.equals(owner.getId())) {
                 return owner.getUsername();
+            }
+        }
+        return null;
+    }
+
+    public Long getOwnerId(List<UserDTO> list, Long vehicleOwnerId) {
+        for (UserDTO owner : list) {
+            if(vehicleOwnerId.equals(owner.getId())) {
+                return owner.getId();
             }
         }
         return null;

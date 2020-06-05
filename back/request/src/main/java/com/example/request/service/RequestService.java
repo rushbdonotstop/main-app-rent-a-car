@@ -29,6 +29,8 @@ public class RequestService {
     BundleRepository bundleRepository;
 
     public boolean areDatesValid(LocalDateTime startDate, LocalDateTime endDate) {
+        if(startDate==null || endDate==null)
+            return false;
         if (endDate.compareTo(startDate) >= 0 &&
                 startDate.compareTo(LocalDateTime.now()) >= 0)
             return true;

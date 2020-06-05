@@ -6,7 +6,12 @@
         <div class="masthead-heading text-uppercase">Send it already</div>
     </div>S
 </header>
-<div *ngIf="!emptyCart"><button class="rentButton" mat-raised-button color="accent" (click)="buy()">Rent</button></div>
+<img class="icon" src=".\.\.\assets\img\supermarket.png">
+
+<div *ngIf="!emptyCart" class="buttons">
+    <button class="rentButton" mat-raised-button color="accent" (click)="buy()">Rent</button>
+    <button class="clearButton" mat-raised-button color="warn" (click)="clear()">Clear</button>
+</div>
 <section class="page-section">
     <div class="container">
         <div class="row" style="justify-content: center;">
@@ -67,7 +72,37 @@
                 </mat-card-content>
             </mat-card>
         </div>
-
-
     </div>
+    <div class="container">
+        <div class="row" style="justify-content: center;">
+            <mat-card style="width: 100%; box-sizing: border-box;">
+                <mat-card-title> Bundles </mat-card-title>
+                <mat-card-content>
+                    <table style="width:100%" role="list" *ngFor="let bundle of bundleList" style="margin: 10;">
+                        <caption>{{bundle.requests[0].ownerUsername}}</caption>
+                        <tr>
+                            <th>Make</th>
+                            <th>Model</th>
+                            <th>Price</th>
+                            <th>Owner username</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr *ngFor="let request of bundle.requests">
+                            <td>{{request.make}}</td>
+                            <td>{{request.model}}</td>
+                            <td>{{request.price}}</td>
+                            <td>{{request.ownerUsername}}</td>
+                            <td><button mat-raised-button (click)="openDetails(request.id)">Details</button></td>
+                            <td> <button mat-raised-button color="primary"
+                                    (click)="openPrices(request.id)">Prices</button> </td>
+                            <td><button mat-raised-button color="warn">Remove</button></td>
+                        </tr>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
 </section>

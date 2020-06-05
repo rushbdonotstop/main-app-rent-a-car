@@ -9,6 +9,8 @@ import { SearchVehicleComponent } from '../search-vehicle/search-vehicle.compone
 import { CartService } from 'src/app/core/services/cart.service';
 import { Vehicle } from 'src/app/shared/models/vehicle/Vehicle';
 import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
+import { CartDialogComponent } from '../cart-dialog/cart-dialog.component';
+import { DialogType } from 'src/app/shared/models/cart/DialogType';
 
 @Component({
   templateUrl: './view-vehicles.component.html',
@@ -91,19 +93,27 @@ export class ViewVehiclesComponent implements OnInit {
   }
 
   addToCart(vehicle: VehicleMainViewDTO) {
-    this.cartService.addItemToCart(vehicle)
-    this._snackBar.open("Item added to cart", "", {
-      duration: 2000,
-      verticalPosition: 'bottom'
-    });
+    this.openAddToCartDialog(vehicle, DialogType.Cart)
+
   }
 
-  addBundleToCart(){
-    this.cartService.addBundleToCart(this.bundleList);
-    this._snackBar.open("Bundle added to cart", "", {
-      duration: 2000,
-      verticalPosition: 'bottom'
-    });
+  addToBundleDialog(vehicle: VehicleMainViewDTO) {
+    this.openAddToCartDialog(vehicle, DialogType.Bundle)
+  }
+
+  addBundleToCart() {
+    if (this.bundleList.length > 1) {
+      this.cartService.addBundleToCart(this.bundleList);
+      this._snackBar.open("Bundle added to cart", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+    }else{
+      this._snackBar.open("Bundle cannot contain only one vehicle", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+    }
   }
 
   addToBundle(element: VehicleMainViewDTO) {
@@ -126,19 +136,41 @@ export class ViewVehiclesComponent implements OnInit {
 
   }
 
-  inStoreRent(element){
-   this.openDialog(element)
+  clearBundle(){
+    this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>([]);
+  }
+  inStoreRent(element) {
+    this.openManualRentDialog(element)
   }
 
-  openDialog(element): void {
+  openManualRentDialog(element): void {
     const dialogRef = this.dialog.open(RentDialogComponent, {
       width: '400px',
-      data:{make:element.make, price: element.price, ownerUsername:element.ownerUsername, model:element.model, id: element.id}
+      data: { make: element.make, price: element.price, ownerUsername: element.ownerUsername, model: element.model, id: element.id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
     });
   }
 
+  openAddToCartDialog(element, dialog: DialogType) {
+    const dialogRef = this.dialog.open(CartDialogComponent, {
+      width: '400px',
+      data: { make: element.make, price: element.price, ownerUsername: element.ownerUsername, model: element.model, id: element.id, dialog: dialog }
+    });
+
+    if (dialog == 1) {
+      dialogRef.afterClosed().subscribe(result => {
+        var request = new VehicleMainViewDTO(element.id, element.make, element.model, element.price, element.ownerUsername)
+        request.startDate = result.startDate
+        request.endDate = result.endDate
+        this.addToBundle(request)
+        this._snackBar.open("Item added to bundle", "", {
+          duration: 2000,
+          verticalPosition: 'bottom'
+        });
+      });
+    }
+  }
 
 }
