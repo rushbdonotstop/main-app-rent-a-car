@@ -1,23 +1,13 @@
 package com.example.vehicle.model;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "image_table")
 public class VehicleImage {
 
-    public VehicleImage() {
-        super();
-    }
-
-    public VehicleImage(String name, String type, byte[] picByte) {
-        this.name = name;
-        this.type = type;
-        this.picByte = picByte;
-    }
-
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -31,6 +21,25 @@ public class VehicleImage {
     //which is more than the default length for picByte column
     @Column(name = "picByte", length = 1000)
     private byte[] picByte;
+
+
+    public VehicleImage() {
+
+    }
+
+    public VehicleImage(String name, String type, byte[] picByte) {
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -54,5 +63,15 @@ public class VehicleImage {
 
     public void setPicByte(byte[] picByte) {
         this.picByte = picByte;
+    }
+
+    @Override
+    public String toString() {
+        return "VehicleImage{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", picByte=" + Arrays.toString(picByte) +
+                '}';
     }
 }

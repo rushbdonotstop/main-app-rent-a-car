@@ -30,9 +30,9 @@ public class VehicleController {
      * @return return status of creating vehicle
      */
     @PostMapping(value = "", consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> create(@RequestBody Vehicle vehicle) throws Exception {
-        Long vehicleId = vehicleService.create(vehicle);
-        return new ResponseEntity<>(vehicleId, HttpStatus.OK);
+    public ResponseEntity<Vehicle> create(@RequestBody Vehicle vehicle) throws Exception {
+        Vehicle vehicle1 = vehicleService.create(vehicle);
+        return new ResponseEntity<>(vehicle1, HttpStatus.OK);
     }
 
     /**

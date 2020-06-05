@@ -43,15 +43,16 @@ public class VehicleService {
         return v;
     }
 
-    public Long create(Vehicle vehicle) {
-        try{
+    public Vehicle create(Vehicle vehicle) {
             vehicle.setId(null);
 
             if(invalidDate(vehicle.getStartDate(), vehicle.getEndDate())){
+                System.out.println("invalid");
                 return null;
             }
 
             if(vehicle.getMileage() < 0 || vehicle.getMileageLimit() < 0 || vehicle.getChildrenSeats() < 0){
+                System.out.println("invalid2");
                 return null;
             }
 
@@ -59,12 +60,8 @@ public class VehicleService {
             vehicle.setImage(imageRepository.findByName(vehicle.getImage().getName()).get());
 
             Vehicle v = vehicleRepository.save(vehicle);
-            return v.getId();
-        }
-        catch (Exception e){
+            return v;
 
-        }
-        return null;
     }
 
     public Notification update(Vehicle vehicle) {

@@ -25,25 +25,20 @@ public class VehicleImageService {
     @Autowired
     VehicleImageRepository imageRepository;
 
-    public Notification upload(MultipartFile file) throws IOException{
-        Notification notification = new Notification("Image upload faled.");
-        try{
-            Random random = new Random();
-            Long imageName = random.nextLong();
-            while (imageRepository.findByName("./images/" + Math.abs(imageName)).isPresent()) {
-                imageName = random.nextLong();
-            }
-            System.out.println("Original Image Byte Size - " + file.getBytes().length);
-            VehicleImage img = new VehicleImage("./images/" + imageName + ".jpg", file.getContentType(),
-                    compressBytes(file.getBytes()));
-            imageRepository.save(img);
-
-            notification.setText("Image saved!");
+    public VehicleImage upload(MultipartFile file) throws IOException{
+        VehicleImage img = null;
+        Random random = new Random();
+        Long imageName = random.nextLong();
+        while (imageRepository.findByName(Math.abs(imageName) + ".jpg").isPresent()) {
+            imageName = random.nextLong();
         }
-        catch (Exception e){
+        System.out.println("Original Image Byte Size - " + file.getBytes().length);
+        img = new VehicleImage(Math.abs(imageName) + ".jpg", file.getContentType(),
+                compressBytes(file.getBytes()));
+        imageRepository.save(img);
 
-        }
-        return notification;
+
+        return img;
 
     }
 

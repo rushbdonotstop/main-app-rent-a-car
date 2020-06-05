@@ -84,8 +84,8 @@ public class LocationController {
      * @return return status of create location
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> create(@RequestBody Location location) throws Exception {
-        Notification notification = locationService.create(location);
-        return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+    public ResponseEntity<Location> create(@RequestBody Location location) throws Exception {
+        Location locationNew = locationService.create(location);
+        return new ResponseEntity<Location>(locationNew, HttpStatus.OK);
     }
 }
