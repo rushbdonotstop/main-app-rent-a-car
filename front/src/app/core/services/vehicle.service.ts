@@ -21,6 +21,10 @@ export class VehicleService {
     return this.http.get<Vehicle>('server/vehicle/vehicle/'+vehicleId,  httpOptions);
   }
 
+  uploadPicture(file : any) {
+    return this.http.post<string>('server/vehicle/vehicle/uploadPicture', file,  httpOptions);
+  }
+
   search(searchParams : SearchParams) {
     let params = new HttpParams();
 
