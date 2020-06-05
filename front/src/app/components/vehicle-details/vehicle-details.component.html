@@ -14,7 +14,7 @@
         <div class="col-lg-9">
 
           <div class="card mt-4">
-            <img *ngIf="vehicle != null" class="card-img-top img-fluid" src={{vehicle.picturePath}} alt="">
+            <img *ngIf="retrievedImage" class="card-img-top img-fluid" [src]="retrievedImage" alt="">
             <div class="card-body">
               <h3 *ngIf="make != null && model != null" class="card-title">{{make.value}} {{model.value}}</h3>
               <h4 *ngIf="username != null">Owner : {{username}}</h4>

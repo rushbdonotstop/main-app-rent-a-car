@@ -123,6 +123,4 @@ export class CreatePriceListComponent implements OnInit{
     this.results.vehicleInfo.id = 0;
     this.valueUpdate.emit(this.results);  
   }
-
-
 }
