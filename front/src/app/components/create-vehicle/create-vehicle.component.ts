@@ -8,6 +8,10 @@ import { MatSnackBar } from '@angular/material';
 import { Pricelist } from 'src/app/shared/models/pricelist/Pricelist';
 import { Vehicle } from 'src/app/shared/models/vehicle/Vehicle';
 import { CreatePriceListComponent } from '../price-list/create-price-list/create-price-list.component';
+import { VehicleLocation } from 'src/app/shared/models/location/VehicleLocation';
+import { City } from 'src/app/shared/models/location/City';
+import { State } from 'src/app/shared/models/location/State';
+import { Street } from 'src/app/shared/models/location/Street';
 
 @Component({
   templateUrl: './create-vehicle.component.html',
@@ -28,33 +32,40 @@ export class CreateVehicleComponent implements OnInit {
   public imagePath;
   selectedFile: File
 
-  onFileChanged(files) {
-    if (files.length === 0)
+  onFileChanged(event) {
+
+    this.selectedFile = event.target.files[0];
+
+    if (event.target.files.length === 0)
       return;
 
-    var mimeType = files[0].type;
+    var mimeType = event.targetfiles[0].type;
     if (mimeType.match(/image\/*/) == null) {
       alert("Only images are supported.");
       return;
     }
 
     var reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]);
+    this.imagePath = event.targetfiles;
+    reader.readAsDataURL(event.target.files[0]);
     reader.onload = (_event) => {
       this.imgURL = reader.result;
     }
   }
 
-  onUpload() {
+  uploadImage() {
     // this.http is the injected HttpClient
-    this.vehicleService.uploadPicture(this.selectedFile)
-      .subscribe(notification => {
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
 
-      });
+    this.vehicleService.uploadPicture(uploadImageData).subscribe(results => { 
+      alert ("Success!") },
+    error => {
+      alert("Error!")
+    })
   }
 
-  ////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////
 
   makes: CatalogueItem[] = []
   models: CatalogueItem[] = []
@@ -170,29 +181,29 @@ export class CreateVehicleComponent implements OnInit {
 
   addPricelists() {
 
-    // if(this.locationInvalid()){
-    //   this._snackBar.open("In order to add prices you must choose valid location - street, city, state format!", "", {
-    //     duration: 2000,
-    //     verticalPosition: 'bottom'
-    //   });
-    //   return;
-    // }
+    if(this.locationInvalid()){
+      this._snackBar.open("In order to add prices you must choose valid location - street, city, state format!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      return;
+    }
 
-    // if(this.mileage < 0 || this.mileage == undefined){
-    //   this._snackBar.open("In order to add prices you must give valid mileage number!", "", {
-    //     duration: 2000,
-    //     verticalPosition: 'bottom'
-    //   });
-    //   return;
-    // }
+    if(this.mileage < 0 || this.mileage == undefined){
+      this._snackBar.open("In order to add prices you must give valid mileage number!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      return;
+    }
 
-    // if(this.childrenSeats < 0 || this.childrenSeats == undefined){
-    //   this._snackBar.open("In order to add prices you must give valid children seats number!", "", {
-    //     duration: 2000,
-    //     verticalPosition: 'bottom'
-    //   });
-    //   return;
-    // }
+    if(this.childrenSeats < 0 || this.childrenSeats == undefined){
+      this._snackBar.open("In order to add prices you must give valid children seats number!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      return;
+    }
 
     if (this.startDate > this.endDate || this.startDate == undefined || this.endDate == undefined) {
       this._snackBar.open("In order to add prices you must choose valid date!", "", {
@@ -270,7 +281,48 @@ export class CreateVehicleComponent implements OnInit {
   };
 
   createVehicle() {
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
 
+    this.vehicleService.uploadPicture(uploadImageData).subscribe(image => { 
+      alert ("Successful image upload!") 
+      var location = new VehicleLocation()
+      var splitted = this.formattedAddress.split(',')
+      location.state = new State()
+      location.state.value = splitted[2]
+      location.city = new City()
+      location.city.value = splitted[1]
+      location.street = new Street()
+      location.street.value = splitted[0]
+
+      this.locationService.create(location).subscribe(location => {
+        var vehicle = new Vehicle()
+        vehicle.makeId = this.selectedMake.id
+        vehicle.styleId = this.selectedStyle.id
+        vehicle.fuelTypeId = this.selectedFuelType.id
+        vehicle.transmissionId = this.selectedTransmission.id
+        vehicle.modelId = this.selectedModel.id
+        vehicle.locationId = location.id
+        vehicle.mileage = this.mileage
+        vehicle.mileageLimit = this.mileageLimit ? this.mileageLimit : 0
+        vehicle.startDate = this.startDate 
+        vehicle.endDate = this.endDate
+        vehicle.collisionProtection = this.collisionProtection
+        vehicle.childrenSeats = this.childrenSeats
+        vehicle.image = image
+        this.vehicleService.create(vehicle).subscribe(notification => {
+            alert(notification)
+        },
+        error => {})
+  
+      },
+      error => {
+        alert("Creating vehicle failed!")
+      })
+    },
+    error => {
+      alert("Error!")
+    })
 
   }
 

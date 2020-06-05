@@ -21,8 +21,12 @@ export class VehicleService {
     return this.http.get<Vehicle>('server/vehicle/vehicle/'+vehicleId,  httpOptions);
   }
 
-  uploadPicture(file : any) {
-    return this.http.post<string>('server/vehicle/vehicle/uploadPicture', file,  httpOptions);
+  uploadPicture(uploadImageData : any) {
+    return this.http.post<any>('server/vehicle/vehicle/uploadPicture', uploadImageData,  httpOptions);
+  }
+
+  create(vehicle : Vehicle) {
+    return this.http.post<any>('server/vehicle/vehicle/', vehicle,  httpOptions);
   }
 
   search(searchParams : SearchParams) {

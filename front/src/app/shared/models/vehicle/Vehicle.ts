@@ -1,3 +1,5 @@
+import { Image } from './Image';
+
 export class Vehicle{
     id : number;
 
@@ -5,7 +7,7 @@ export class Vehicle{
     mileageLimit : number;
     collisionProtection : boolean;
     childrenSeats : number;
-    picturePath : String;
+    image : Image;
     startDate : Date;
     endDate : Date;
 

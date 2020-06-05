@@ -3,9 +3,7 @@ package com.example.vehicle.model;
 import com.example.vehicle.model.builder.VehicleBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 public class Vehicle {
@@ -26,8 +24,8 @@ public class Vehicle {
     @Column(name="children_seats", nullable = false)
     private int childrenSeats;
 
-    @Column(name="picture_path", unique = true)
-    private String picturePath;
+    @Column(name="image", unique = true)
+    private VehicleImage image;
 
     @Column(name="start_date", nullable = false)
     private LocalDateTime startDate;
@@ -56,13 +54,12 @@ public class Vehicle {
     @Column(name="user_id", nullable = false)
     private Long userId;
 
-    public Vehicle(Long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String picturePath, LocalDateTime startDate, LocalDateTime endDate, Long fuelTypeId, Long makeId, Long modelId, Long styleId, Long transmissionId, Long locationId, Long userId) {
+    public Vehicle(Long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, LocalDateTime startDate, LocalDateTime endDate, Long fuelTypeId, Long makeId, Long modelId, Long styleId, Long transmissionId, Long locationId, Long userId, VehicleImage vehicleImage) {
         this.id = id;
         this.mileage = mileage;
         this.mileageLimit = mileageLimit;
         this.collisionProtection = collisionProtection;
         this.childrenSeats = childrenSeats;
-        this.picturePath = picturePath;
         this.startDate = startDate;
         this.endDate = endDate;
         this.fuelTypeId = fuelTypeId;
@@ -72,6 +69,7 @@ public class Vehicle {
         this.transmissionId = transmissionId;
         this.locationId = locationId;
         this.userId = userId;
+        this.image = vehicleImage;
     }
 
     public Vehicle() {
@@ -105,10 +103,6 @@ public class Vehicle {
         this.mileageLimit = mileageLimit;
     }
 
-    public void setCollisionProtection(boolean collisionProtection) {
-        this.collisionProtection = collisionProtection;
-    }
-
     public int getChildrenSeats() {
         return childrenSeats;
     }
@@ -133,16 +127,20 @@ public class Vehicle {
         this.endDate = endDate;
     }
 
+    public void setCollisionProtection(boolean collisionProtection) {
+        this.collisionProtection = collisionProtection;
+    }
+
     public boolean getCollisionProtection() {
         return collisionProtection;
     }
 
-    public String getPicturePath() {
-        return picturePath;
+    public VehicleImage getImage() {
+        return image;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setImage(VehicleImage image) {
+        this.image = image;
     }
 
     public Long getFuelTypeId() {
@@ -209,7 +207,7 @@ public class Vehicle {
                 ", mileageLimit=" + mileageLimit +
                 ", collisionProtection=" + collisionProtection +
                 ", childrenSeats=" + childrenSeats +
-                ", picturePath='" + picturePath + '\'' +
+                ", picturePath='" + image.getName() + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", fuelTypeId=" + fuelTypeId +

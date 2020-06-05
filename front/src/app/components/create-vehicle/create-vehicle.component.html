@@ -43,7 +43,7 @@
                             </div>
                             <div class="row">
                                 <input #file accept="image/*" style="display: none" type="file"
-                                    (change)="onFileChanged(file.files)" #fileInput>
+                                    (change)="onFileChanged($event)" #fileInput>
                             </div>
                             <div class="row" style="margin-top: 50px;">
                                 <button style="margin-right: 20px;" mat-raised-button  color="primary"

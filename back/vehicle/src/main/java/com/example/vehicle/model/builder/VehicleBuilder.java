@@ -1,6 +1,7 @@
 package com.example.vehicle.model.builder;
 
 import com.example.vehicle.model.Vehicle;
+import com.example.vehicle.model.VehicleImage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ public class VehicleBuilder {
     private int mileageLimit;
     private boolean collisionProtection;
     private int childrenSeats;
-    private String picturePath;
+    private VehicleImage image;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Long fuelTypeId;
@@ -48,8 +49,8 @@ public class VehicleBuilder {
         return this;
     }
 
-    public VehicleBuilder setPicture(String picturePath) {
-        this.picturePath = picturePath;
+    public VehicleBuilder setPicture(VehicleImage image) {
+        this.image = image;
         return this;
     }
 
@@ -99,6 +100,6 @@ public class VehicleBuilder {
     }
 
     public Vehicle createVehicle() {
-        return new Vehicle(id, mileage, mileageLimit, collisionProtection, childrenSeats, picturePath, startDate, endDate, fuelTypeId, makeId, modelId, styleId, transmissionId, locationId, userId);
+        return new Vehicle(id, mileage, mileageLimit, collisionProtection, childrenSeats, startDate, endDate, fuelTypeId, makeId, modelId, styleId, transmissionId, locationId, userId, image);
     }
 }

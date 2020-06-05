@@ -29,6 +29,8 @@ export class VehicleDetailsComponent implements OnInit {
   mileageLimit : String;
   collisionProtection : String;
 
+  retrievedImage: any;
+
   constructor(public dialogRef: MatDialogRef<VehicleDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private vehicleService: VehicleService, 
@@ -43,6 +45,9 @@ export class VehicleDetailsComponent implements OnInit {
       this.vehicleService.getVehicle(this.vehicleId)
       .subscribe(vehicle => {
         this.vehicle = vehicle;
+
+        var base64Data = this.vehicle.image.picByte;
+        this.retrievedImage = 'data:image/jpeg;base64,' + base64Data;
 
         if (this.vehicle.mileageLimit == 0){
           this.mileageLimit = "Unlimited";

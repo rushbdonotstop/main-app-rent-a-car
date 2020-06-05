@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -53,12 +55,13 @@ public class PricelistController {
      * @return status of updating pricelist
      */
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> updatePricelist(@RequestBody Pricelist pricelist) throws Exception {
-        Boolean exists = restTemplate.exchange("http://vehicle/vehicle/exists/" + pricelist.getVehicleId(),
+    public ResponseEntity<Notification> update(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true)
+            LocalDate startDate, @RequestParam(value="endDate", required = true) LocalDate endDate) throws Exception {
+        Boolean exists = restTemplate.exchange("http://vehicle/vehicle/exists/" + pricelists.get(0).getVehicleId(),
                 HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
         Notification notification = new Notification("Vehicle id does not exist.");
         if (exists){
-            notification = priceListService.updatePricelist(pricelist);
+            notification = priceListService.updatePricelists(pricelists, startDate, endDate);
         }
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);
     }
@@ -69,12 +72,13 @@ public class PricelistController {
      * @return status of creating pricelist
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> createPricelist(@RequestBody Pricelist pricelist) throws Exception {
-        Boolean exists = restTemplate.exchange("http://vehicle/vehicle/exists/" + pricelist.getVehicleId(),
+    public ResponseEntity<Notification> create(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true)
+            LocalDate startDate, @RequestParam(value="endDate", required = true) LocalDate endDate) throws Exception {
+        Boolean exists = restTemplate.exchange("http://vehicle/vehicle/exists/" + pricelists.get(0).getVehicleId(),
                 HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
         Notification notification = new Notification("Vehicle id does not exist.");
         if (exists){
-            notification = priceListService.createPricelist(pricelist);
+            notification = priceListService.createPricelists(pricelists, startDate, endDate);
         }
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);
     }
@@ -85,7 +89,7 @@ public class PricelistController {
      * @return status of deleting pricelist
      */
     @DeleteMapping(value = "/{pricelistId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> deletePricelist(@PathVariable Long pricelistId) throws Exception {
+    public ResponseEntity<Notification> delete(@PathVariable Long pricelistId) throws Exception {
         Notification notification = priceListService.deletePricelist(pricelistId);
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);
     }
@@ -93,6 +97,12 @@ public class PricelistController {
     @GetMapping(value = "/minAndMax", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MinAndMaxPricesDTO> getMinAndMax() throws Exception {
         return new ResponseEntity<>(priceListService.getMinAndMax(), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/validatePricelists", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Pricelist>> validatePricelists(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true)
+            LocalDate startDate, @RequestParam(value="endDate", required = true) LocalDate endDate){
+        return new ResponseEntity<List<Pricelist>>(priceListService.validatePricelists(pricelists, startDate, endDate), HttpStatus.OK);
     }
 
 }
