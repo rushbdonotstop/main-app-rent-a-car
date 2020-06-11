@@ -219,7 +219,7 @@ public class PricelistService {
     }
 
     public boolean dateRangeOutdated(Pricelist pricelist){
-        if (pricelist.getStartDate().isBefore(LocalDate.now())){
+        if (pricelist.getStartDate().isBefore(LocalDateTime.now())){
             return true;
         }
         return false;
@@ -272,11 +272,11 @@ public class PricelistService {
 
     // Prilikom kreiranja vozila
 
-    public List<Pricelist> validatePricelists(List<Pricelist> pricelists, LocalDate startDate, LocalDate endDate) {
+    public List<Pricelist> validatePricelists(List<Pricelist> pricelists, LocalDateTime startDate, LocalDateTime endDate) {
         try{
             for(Pricelist pricelist : pricelists){
-                for (Pricelist pricelistCheck : pricelists){
-                    if(dateRangeOutdated(pricelist) || dateRangeInvalid(pricelist) || dateRangeOverlap(pricelist, pricelistCheck)
+                for (int i = 1 ; i < pricelists.size(); i++){
+                    if(dateRangeOutdated(pricelist) || dateRangeInvalid(pricelist) || dateRangeOverlap(pricelist, pricelists.get(i))
                     || dateRangeNotCovering(pricelist, startDate, endDate)){
                         return null;
                     }
@@ -290,7 +290,7 @@ public class PricelistService {
         return null;
     }
 
-    public boolean dateRangeNotCovering(Pricelist pricelist, LocalDate startDate, LocalDate endDate){
+    public boolean dateRangeNotCovering(Pricelist pricelist, LocalDateTime startDate, LocalDateTime endDate){
         if(startDate.isBefore(pricelist.getStartDate()) && endDate.isAfter(pricelist.getEndDate())
         || (startDate.equals(pricelist.getStartDate()) && endDate.equals(pricelist.getEndDate()))){
             return false;
