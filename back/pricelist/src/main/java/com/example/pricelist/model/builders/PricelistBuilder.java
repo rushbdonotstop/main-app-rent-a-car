@@ -4,22 +4,23 @@ import com.example.pricelist.model.Pricelist;
 import com.example.pricelist.model.VehicleDiscount;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PricelistBuilder {
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private float price;
     private float priceByMile;
     private float priceCollision;
     private Long vehicleId;
     private VehicleDiscount vehicleDiscount;
 
-    public PricelistBuilder setStartDate(LocalDate startDate) {
+    public PricelistBuilder setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public PricelistBuilder setEndDate(LocalDate endDate) {
+    public PricelistBuilder setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
         return this;
     }
