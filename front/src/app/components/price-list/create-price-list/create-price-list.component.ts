@@ -8,41 +8,41 @@ import { UserType } from 'src/app/shared/models/user/UserType';
 import { VehicleDiscount } from 'src/app/shared/models/pricelist/VehicleDiscount';
 
 @Component({
-  selector : 'pm-pricelist-create',
+  selector: 'pm-pricelist-create',
   templateUrl: './create-price-list.component.html',
   styleUrls: ['./create-price-list.component.css']
 })
-export class CreatePriceListComponent implements OnInit{
+export class CreatePriceListComponent implements OnInit {
 
   displayedColumns: string[] = ['startDate', 'endDate', 'price', 'priceByMile', 'priceCollision', 'discount'];
   dataSource: MatTableDataSource<Pricelist>;
 
-  @Input() public results : VehicleInfoPricelists;
-  @Output() valueUpdate = new EventEmitter(); 
+  @Input() public results: VehicleInfoPricelists;
+  @Output() valueUpdate = new EventEmitter();
 
   startDate: Date
   endDate: Date
 
-  priceCollision : number
-  numDays : number
-  priceByMile : number
-  discount : number
-  price : number
+  priceCollision: number
+  numDays: number
+  priceByMile: number
+  discount: number
+  price: number
 
-  agentTrue : boolean
+  agentTrue: boolean
 
-  tempPrices : Pricelist []
+  tempPrices: Pricelist[]
 
-  constructor(private _snackBar: MatSnackBar, private pricelistService : PricelistService) { }
+  constructor(private _snackBar: MatSnackBar, private pricelistService: PricelistService) { }
 
   ngOnInit() {
 
     var user = new User()
     user = JSON.parse(localStorage.getItem('userObject'))
-    if (user.userDetails.userType.toString() == "AGENT"){
+    if (user.userDetails.userType.toString() == "AGENT") {
       this.agentTrue = true;
     }
-    else{
+    else {
       this.agentTrue = false;
     }
 
@@ -50,81 +50,91 @@ export class CreatePriceListComponent implements OnInit{
   }
 
 
-  addPricelist(){
+  addPricelist() {
     var pricelist = new Pricelist()
 
-      if (this.startDate > this.endDate || this.startDate == undefined || this.endDate == undefined){
-        this._snackBar.open("In order to add prices you must choose valid date!", "", {
+    this.startDate.setTime(this.startDate.getTime() + (10 * 60 * 60 * 1000))
+    this.endDate.setTime(this.endDate.getTime() + (10 * 60 * 60 * 1000))
+
+    if (this.startDate > this.endDate || this.startDate == undefined || this.endDate == undefined) {
+      this._snackBar.open("In order to add prices you must choose valid date!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      return
+    }
+
+    pricelist.startDate = this.startDate
+    pricelist.endDate = this.endDate
+
+    if (this.price == undefined) {
+      this._snackBar.open("In order to add prices you must set valid price!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      return
+    }
+
+    pricelist.price = this.price
+
+    if (this.priceByMile == undefined && this.results.vehicleInfo.mileageLimit != 0) {
+      this._snackBar.open("In order to add prices you must set valid price by mile!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      return
+    }
+
+    pricelist.priceByMile = this.priceByMile ? this.priceByMile : 0
+
+    if (this.priceCollision == undefined && this.results.vehicleInfo.collisionProtection) {
+      this._snackBar.open("In order to add prices you must set valid price for collision protection!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      return
+    }
+
+    pricelist.priceCollision = this.priceCollision ? this.priceCollision : 0
+
+    if (this.agentTrue) {
+      if (this.discount == undefined || this.numDays == undefined || this.discount <= 0 || this.numDays < 0 || this.discount > 100) {
+        this._snackBar.open("In order to add discount you must set valid discount!", "", {
           duration: 2000,
           verticalPosition: 'bottom'
         });
         return
       }
+      pricelist.vehicleDiscount = new VehicleDiscount()
+      pricelist.vehicleDiscount.discount = this.discount
+      pricelist.vehicleDiscount.numDays = this.numDays
+    }
 
-      pricelist.startDate = this.startDate
-      pricelist.endDate = this.endDate
+    if (this.price < 0 || this.priceByMile < 0 || this.priceCollision < 0) {
+      this._snackBar.open("Numbers can't be negative!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
+      return
+    }
 
-      if (this.price == undefined){
-        this._snackBar.open("In order to add prices you must set valid price!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-        return
-      }
-
-      pricelist.price = this.price
-
-      if (this.priceByMile == undefined && this.results.vehicleInfo.mileageLimit != 0){
-        this._snackBar.open("In order to add prices you must set valid price by mile!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-        return
-      }
-
-      pricelist.priceByMile = this.priceByMile ? this.priceByMile : 0
-
-      if (this.priceCollision == undefined && this.results.vehicleInfo.collisionProtection){
-        this._snackBar.open("In order to add prices you must set valid price for collision protection!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-        return
-      }
-
-      pricelist.priceCollision = this.priceCollision ? this.priceCollision : 0
-
-      if(this.agentTrue){
-        if (this.discount == undefined || this.numDays == undefined || this.discount <= 0 || this.numDays < 0 || this.discount > 100){
-          this._snackBar.open("In order to add discount you must set valid discount!", "", {
-            duration: 2000,
-            verticalPosition: 'bottom'
-          });
-          return
-        }
-        pricelist.vehicleDiscount = new VehicleDiscount()
-        pricelist.vehicleDiscount.discount = this.discount
-        pricelist.vehicleDiscount.numDays = this.numDays
-      }
-
-      if (this.price < 0 || this.priceByMile < 0 || this.priceCollision < 0){
-        this._snackBar.open("Numbers can't be negative!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-        return
-      }
-
-      this.tempPrices.push(pricelist);
-      this.dataSource = new MatTableDataSource<Pricelist>(this.tempPrices)
+    this.tempPrices.push(pricelist);
+    this.dataSource = new MatTableDataSource<Pricelist>(this.tempPrices)
   }
 
-  finish(){
+  finish() {
     this.pricelistService.validatePricelists(this.tempPrices, this.results.vehicleInfo.startDate, this.results.vehicleInfo.endDate).subscribe(pricelists => {
-      if (pricelists != null){
+      if (pricelists != null) {
         this.results.pricelists = this.tempPrices
         this.results.vehicleInfo.id = 0;
-        this.valueUpdate.emit(this.results); 
+        this.valueUpdate.emit(this.results);
+      }
+      else {
+        this._snackBar.open("Invalid pricelists!", "", {
+          duration: 2000,
+          verticalPosition: 'bottom'
+        });
+        return
       }
     })
   }

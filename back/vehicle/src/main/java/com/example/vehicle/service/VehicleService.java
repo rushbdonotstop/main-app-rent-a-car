@@ -7,15 +7,8 @@ import com.example.vehicle.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class VehicleService {
@@ -57,7 +50,12 @@ public class VehicleService {
             }
 
             // povezi sliku
-            vehicle.setImage(imageRepository.findByName(vehicle.getImage().getName()).get());
+            if(vehicle.getImage() != null){
+                vehicle.setImage(imageRepository.findByName(vehicle.getImage().getName()).get());
+            }
+            else{
+                vehicle.setImage(null);
+            }
 
             Vehicle v = vehicleRepository.save(vehicle);
             return v;
@@ -106,7 +104,10 @@ public class VehicleService {
     }
 
     public boolean invalidDate(LocalDateTime startDate, LocalDateTime endDate){
-        if (startDate.isAfter(endDate) || startDate.isBefore(LocalDateTime.now())){
+        if (startDate.toLocalDate().isAfter(endDate.toLocalDate()) || (startDate.toLocalDate().isBefore(LocalDateTime.now().toLocalDate()) && !startDate.toLocalDate().equals(LocalDateTime.now().toLocalDate()))){
+            System.out.println(startDate);
+            System.out.println(endDate);
+            System.out.println(LocalDateTime.now());
             return true;
         }
         return false;

@@ -33,4 +33,22 @@ export class PricelistService {
 
     return this.http.post<Pricelist[]>('server/pricelist/pricelist/validatePricelists', pricelists, options);
   }
+
+  savePricelists(pricelists : Pricelist[], startDate : Date, endDate : Date) {
+    let params = new HttpParams();
+
+    params = params.append('startDate', startDate.toISOString())
+    params = params.append('endDate', endDate.toISOString())
+
+    const options = {
+      headers : new HttpHeaders({'Content-Type' : 'application/json'}),
+      params : params
+    }
+
+    return this.http.put<Notification>('server/pricelist/pricelist/', pricelists, options);
+  }
+}
+
+export class Notification{
+  text : String;
 }

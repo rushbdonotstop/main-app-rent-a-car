@@ -1,91 +1,42 @@
-version: '3'
+version: '3.7'
 
 services:
 
   eureka-serviceregistry:
-    build: ./eureka
+    build: 
+        context: ./eureka
+        dockerfile: Dockerfile
     ports:
      - "8761:8761"
+    networks:
+      - xml
     tty: true
+
    
   zuul-service:
-    build: ./zuul
-    restart: always
+    build: 
+        context: ./zuul
+        dockerfile: Dockerfile
+    restart: on-failure
     image: zuul-image
     volumes:
-    - $USERPROFILE/.m2:/root/.m2
+        - $USERPROFILE/.m2:/root/.m2
     ports:
-    - "8081:8081"
+        - "8081:8081"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
     tty: true
+    networks:
+      - xml
     depends_on:
-      - eureka-serviceregistry
+      - eureka-serviceregistry    
       
-
-  vehicle-service:
-    build: ./vehicle
-    restart: always
-    image: vehicle-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
-    ports:
-    - "8082:8082"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      
-      
-  user-service:
-    build: ./user
-    restart: always
-    image: user-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
-    ports:
-    - "8083:8083"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      
-      
-  pricelist-service:
-    build: ./pricelist
-    restart: always
-    image: pricelist-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
-    ports:
-    - "8084:8084"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      
-
-  location-service:
-    build: ./location
-    restart: always
-    image: location-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
-    ports:
-    - "8085:8085"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      
-      
+  
   catalogue-service:
-    build: ./catalogue
-    restart: always
+    build: 
+        context: ./catalogue
+        dockerfile: Dockerfile
+    restart: on-failure
     image: catalogue-image 
     volumes:
     - $USERPROFILE/.m2:/root/.m2
@@ -93,24 +44,46 @@ services:
     - "8086:8086"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=admin
+      - DATABASE_DOMAIN=postgres
+      - DATABASE_SCHEMA=jpa
     tty: true
+    networks:
+      - xml
     depends_on:
+      - postgres
       - eureka-serviceregistry
-      
-  request-service:
-    build: ./request
-    restart: always
-    image: request-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
+    
+          
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: on-failure
+    networks:
+      - xml
     ports:
-    - "8087:8087"
+      - "5432:5432"
     environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=jpa
+      
+  pg_admin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin4
+    networks:
+        - xml
+    ports:
+      - "15432:80"
+    environment:
+      - GUNICORN_THREADS=1
+      - PGADMIN_DEFAULT_EMAIL=ivanabrkic192@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
     depends_on:
-      - eureka-serviceregistry
-
-
-   
-
+      - postgres
+        
+networks:
+  xml:
+    name: xml
+    driver: bridge
