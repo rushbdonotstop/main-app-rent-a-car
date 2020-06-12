@@ -113,7 +113,6 @@ public class PricelistService {
         }
         return notification;
     }
-
     // Za search slider
 
     public MinAndMaxPricesDTO getMinAndMax() {
@@ -181,9 +180,6 @@ public class PricelistService {
                                 || dateRangeNotCovering(pricelists.get(i), startDate, endDate)){
                             return null;
                         }
-                    }
-                }
-            }
 
             System.out.println(carDays);
             System.out.println(pricelistDays);
@@ -207,10 +203,6 @@ public class PricelistService {
         || (startDate.toLocalDate().equals(pricelist.getStartDate().toLocalDate()) && endDate.toLocalDate().equals(pricelist.getEndDate().toLocalDate()))){
             return false;
         }
-        System.out.println(pricelist.getStartDate());
-        System.out.println(pricelist.getEndDate());
-        System.out.println(startDate);
-        System.out.println(endDate);
         System.out.println("Not covering");
         return true;
     }

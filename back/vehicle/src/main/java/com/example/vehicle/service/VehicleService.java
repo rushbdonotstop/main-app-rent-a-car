@@ -105,9 +105,6 @@ public class VehicleService {
 
     public boolean invalidDate(LocalDateTime startDate, LocalDateTime endDate){
         if (startDate.toLocalDate().isAfter(endDate.toLocalDate()) || (startDate.toLocalDate().isBefore(LocalDateTime.now().toLocalDate()) && !startDate.toLocalDate().equals(LocalDateTime.now().toLocalDate()))){
-            System.out.println(startDate);
-            System.out.println(endDate);
-            System.out.println(LocalDateTime.now());
             return true;
         }
         return false;
