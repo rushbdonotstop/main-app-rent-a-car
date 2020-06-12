@@ -8,6 +8,7 @@ public class VehicleMainViewDTO {
     private String make;
     private String model;
     private float price;
+    private int mileage;
     private String ownerUsername;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -16,12 +17,21 @@ public class VehicleMainViewDTO {
     public VehicleMainViewDTO() {
     }
 
-    public VehicleMainViewDTO(Long id, String make, String model, float price, String ownerUsername) {
+    public VehicleMainViewDTO(Long id, String make, String model, float price, String ownerUsername, int mileage) {
         this.id = id;
         this.make = make;
         this.model = model;
         this.price = price;
         this.ownerUsername = ownerUsername;
+        this.mileage = mileage;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
     }
 
     public LocalDateTime getStartDate() {
