@@ -12,8 +12,6 @@ Model was created using PowerDesigner15. If unable to open, screenshot is also p
 <br>
 
 ### Microservices:
-#### cart
-manages shopping. database: user cart and cart items.
 #### catalogue
 keeps track of vehicle catalogue. database parts: eveerything about vehicle details.
 #### location

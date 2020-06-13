@@ -1,0 +1,25 @@
+<h4>Rent vehicle from the store</h4>
+<img class="icon" src=".\.\.\assets\img\rent.png">
+<p style="float:left">make : {{data.make}}</p>
+<p style="clear: right" style="clear: left">model : {{data.model}}</p>
+<p>price : {{data.price}}</p>
+<p>owner : {{data.ownerUsername}}</p>
+
+<div>
+    <input placeholder="Start" [(ngModel)]="startDate" [owlDateTimeFilter]="myFilter" [min]="min"
+        [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+    <owl-date-time #dt></owl-date-time>
+</div>
+
+<div>
+    <input placeholder="End" [(ngModel)]="endDate" [owlDateTimeFilter]="myFilter" [min]="min" [owlDateTimeTrigger]="dt1"
+        [owlDateTime]="dt1">
+    <owl-date-time #dt1></owl-date-time>
+</div>
+
+<p class="validation" *ngIf="!datesValid">Time and date are required</p>
+
+<div class="example-button-row">
+    <button mat-raised-button color="accent" (click)="rent()">Rent</button>
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

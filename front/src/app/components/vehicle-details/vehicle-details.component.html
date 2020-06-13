@@ -1,0 +1,62 @@
+<!-- Custom styles for this template -->
+<link href="assets/css/shop-item.css" rel="stylesheet">
+<div style="overflow-y: hidden; overflow-x: hidden;" class="container">
+  <div class="row">
+    <div class="col-10">
+      <h1>Vehicle details</h1>
+    </div>
+    <div class="col-2">
+      <button mat-raised-button color="warn" class="pull-right" (click)="close()">X</button>
+    </div>
+  </div>
+  <div  mat-dialog-content>
+      <div class="row">
+        <div class="col-lg-9">
+
+          <div class="card mt-4">
+            <img *ngIf="retrievedImage" class="card-img-top img-fluid" [src]="retrievedImage" alt="">
+            <div class="card-body">
+              <h3 *ngIf="make != null && model != null" class="card-title">{{make.value}} {{model.value}}</h3>
+              <h4 *ngIf="username != null">Owner : {{username}}</h4>
+              <h6 *ngIf="location != null">Location : {{location.state.value}}, {{location.city.value}}, {{location.street.value}}</h6>
+              <p *ngIf="style != null">Style : {{style.value}}</p>
+              <p *ngIf="transmission != null">Transmission : {{transmission.value}}</p>
+              <p *ngIf="fuelType != null">Fuel type : {{fuelType.value}}</p>
+              <p *ngIf="vehicle != null">Mileage : {{vehicle.mileage}}</p>
+              <p *ngIf="vehicle != null">Mileage limit : {{vehicle.mileageLimit}}</p>
+              <p *ngIf="collisionProtection != null">Collision protection : {{collisionProtection}}</p>
+              <p *ngIf="vehicle != null">Children seats : {{vehicle.childrenSeats}}</p>
+              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+              4.0 stars
+            </div>
+          </div>
+          <!-- /.card -->
+          <div class="card card-outline-secondary my-4">
+            <div class="card-header">
+              Product Reviews
+            </div>
+            <div class="card-body">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+                necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+                necessitatibus quae sint natus.</p>
+              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+              <hr>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+                necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+                necessitatibus quae sint natus.</p>
+              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+              <hr>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+                necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+                necessitatibus quae sint natus.</p>
+              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+              <hr>
+              <a href="#" class="btn btn-success">Leave a Review</a>
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col-lg-9 -->
+      </div>
+  </div>
+</div>

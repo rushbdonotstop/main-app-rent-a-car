@@ -1,0 +1,181 @@
+<section class="page-section">
+  <div class="container">
+    <div class="row">
+      <mat-card style="width: 100%; box-sizing: border-box;">
+        <mat-card-title> Filter </mat-card-title>
+        <mat-card-content>
+          <div class="row" style="justify-content: left;">
+            <div class="col-3">
+              <mat-form-field>
+                <mat-label>Vehicle make</mat-label>
+                <mat-select (selectionChange)="onMakeChange()" [(value)]="selectedMake">
+                  <mat-option *ngFor="let make of makes" [value]="make">
+                    {{make.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Vehicle model</mat-label>
+                <mat-select [(value)]="selectedModel">
+                  <mat-option *ngFor="let model of models" [value]="model">
+                    {{model.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field class="example-full-width">
+                <mat-label>Max mileage</mat-label>
+                <input matInput placeholder="Ex. 10000" type="number" [(ngModel)]="maxMileage">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Min mileage limit</mat-label>
+                <input matInput placeholder="Ex. 10000" type="number" [(ngModel)]="minMileageLimit">
+              </mat-form-field>
+            </div>
+            <div class="col-5">
+              <div class="row">
+                <div class="col-3">
+                  <mat-form-field style="width: 80px;" class="example-full-width">
+                    <mat-label>Min price</mat-label>
+                    <input disabled matInput placeholder="Ex. 10000" [(ngModel)]="minPrice">
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-slider thumbLabel [displayWith]="price" [min]="minPrice" [max]="maxPrice"
+                    [(ngModel)]="sliderValue"></mat-slider>
+                </div>
+                <div class="col-3">
+                  <mat-form-field style="width: 80px;" class="example-full-width">
+                    <mat-label>Max price</mat-label>
+                    <input disabled matInput placeholder="Ex. 10000" [(ngModel)]="maxPrice">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="justify-content: left;">
+            <div class="col-3">
+              <mat-form-field>
+                <mat-label>Vehicle style</mat-label>
+                <mat-select [(value)]="selectedStyle">
+                  <mat-option value='0'>
+                    All
+                  </mat-option>
+                  <mat-option *ngFor="let style of styles" [value]="style">
+                    {{style.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Vehicle transmission</mat-label>
+                <mat-select [(value)]="selectedTransmission">
+                  <mat-option value='0'>
+                    All
+                  </mat-option>
+                  <mat-option *ngFor="let transmission of transmissions" [value]="transmission">
+                    {{transmission.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Vehicle fuel type</mat-label>
+                <mat-select [(value)]="selectedFuelType">
+                  <mat-option value='0'>
+                    All
+                  </mat-option>
+                  <mat-option *ngFor="let fuelType of fuelTypes" [value]="fuelType">
+                    {{fuelType.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field>
+                <mat-label>State</mat-label>
+                <mat-select (selectionChange)="onStateChange()" [(value)]="selectedState">
+                  <input (keyup)="onKeyState($event.target.value)">
+                  <mat-option [value]=""></mat-option>
+                  <mat-option *ngFor="let state of states" [value]="state">{{state.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>City</mat-label>
+                <mat-select [(value)]="selectedCity">
+                  <input (keyup)="onKeyCity($event.target.value)">
+                  <mat-option [value]=""></mat-option>
+                  <mat-option *ngFor="let city of cities" [value]="city">{{city.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-5">
+              <div class="row">
+                <div class="col-5">
+                  <div class="row">
+                    <mat-form-field style="width: 180px;">
+                      <mat-label>Choose start date</mat-label>
+                      <input matInput [min]="minDate" [matDatepicker]="startDateDP" [(ngModel)]="startDate">
+                      <mat-datepicker-toggle matSuffix [for]="startDateDP"></mat-datepicker-toggle>
+                      <mat-datepicker #startDateDP></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="row">
+                      <ngb-timepicker *ngIf="selectTime" size="small" [(ngModel)]="startTime"></ngb-timepicker>
+                  </div>
+                  <div class="row">
+                    <mat-form-field style="width: 80px;" class="example-full-width">
+                      <mat-label>Child seats</mat-label>
+                      <input matInput placeholder="Ex. 5" type="number" [(ngModel)]="childrenSeats">
+                    </mat-form-field>
+                  </div>
+                  <div class="row">
+                    <mat-checkbox [(ngModel)]="collisionProtection">Collision protection</mat-checkbox>
+                  </div>
+                </div>
+                <div class="col-5">
+                  <div class="row">
+                    <mat-form-field style="width: 180px;">
+                      <mat-label>Choose end date</mat-label>
+                      <input matInput [min]="minDate" [matDatepicker]="endDateDP" [(ngModel)]="endDate">
+                      <mat-datepicker-toggle matSuffix [for]="endDateDP"></mat-datepicker-toggle>
+                      <mat-datepicker #endDateDP></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="row">
+                      <ngb-timepicker *ngIf="selectTime" size="small" [(ngModel)]="endTime"></ngb-timepicker>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <button mat-mini-fab color="primary" class="float-right" (click)="setTime()">
+                    <mat-icon>more_time</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3">
+
+            </div>
+            <div class="col-3">
+            </div>
+            <div class="col-5">
+              <div class="row">
+                <div class="col-4">
+                </div>
+                <div class="col-8">
+                  <button style="margin-left: 10px;" mat-mini-fab color="primary" class="float-right" (click)="removeFilter()">
+                    <mat-icon>delete_sweep</mat-icon>
+                  </button>
+                  <button mat-mini-fab color="warn" class="float-right" (click)="filter()">
+                    <mat-icon>filter_list</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</section>
