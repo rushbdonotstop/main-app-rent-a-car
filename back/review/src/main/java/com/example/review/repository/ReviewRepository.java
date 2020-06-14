@@ -15,4 +15,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findAllByStatus(Status pending);
 
     List<Review> findAllByVehicleIdAndStatus(Long vehicleId, Status approved);
+
+    List<Review> findAllByVehicleIdAndUserIdAndStatusNot(Long vehicleId, Long userId, Status rejected);
 }

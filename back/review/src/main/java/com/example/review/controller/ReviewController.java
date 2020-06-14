@@ -89,9 +89,20 @@ public class ReviewController {
      *
      * @return return pending reviews
      */
-    @GetMapping(value = "/getByVehicleId/getPending", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getPending", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Review>> getPending() throws Exception {
         List<Review> reviews = reviewService.getPending();
+        return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+    }
+
+    /**
+     * GET /server/review/userPosted
+     *
+     * @return returns review if user posted pending or approved review for vehicle
+     */
+    @GetMapping(value = "/userPosted/{vehicleId}+{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Review>> userPosted(@PathVariable Long vehicleId, @PathVariable Long userId) throws Exception {
+        List<Review> reviews = reviewService.userPosted(vehicleId, userId);
         return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
     }
 }

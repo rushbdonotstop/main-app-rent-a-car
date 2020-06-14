@@ -20,6 +20,10 @@ public class ReviewService {
         return reviewRepository.findAllByVehicleIdAndStatus(vehicleId, Status.APPROVED);
     }
 
+    public List<Review> userPosted(Long vehicleId, Long userId) {
+        return reviewRepository.findAllByVehicleIdAndUserIdAndStatusNot(vehicleId, userId, Status.REJECTED);
+    }
+
     public Notification update(Review review) {
         Notification notification = new Notification("Review can't be updated!");
         try{
@@ -29,9 +33,8 @@ public class ReviewService {
             }
 
             if(reviewRepository.findById(review.getId()).isPresent()){
-                review.setStatus(Status.PENDING);
                 reviewRepository.save(review);
-                notification.setText("Updated review. Waiting for admin to approve.");
+                notification.setText("Updated review.");
             }
             else{
                 notification.setText("Review does not exist.");

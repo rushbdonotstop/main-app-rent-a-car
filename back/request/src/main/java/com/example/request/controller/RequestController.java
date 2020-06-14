@@ -2,13 +2,21 @@ package com.example.request.controller;
 
 import com.example.request.DTO.BundleDTO;
 import com.example.request.DTO.RequestDTO;
+import com.example.request.DTO.RequestForFrontDTO;
+import com.example.request.DTO.VehicleMainViewDTO;
+import com.example.request.DTO.user.UserDTO;
+import com.example.request.model.Bundle;
 import com.example.request.model.Request;
 import com.example.request.service.RequestService;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -18,6 +26,9 @@ public class RequestController {
 
     @Autowired
     RequestService requestService;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     /**
      * GET /server/request
@@ -93,9 +104,53 @@ public class RequestController {
 
     }
 
-//    @GetMapping(value = "/requestHistory", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<BundleDTO>> requestHistory(@RequestParam(value = "userId") Long userId, @RequestParam(value = "userType") int userType) {
-//
-//
-//    }
+    @GetMapping(value = "/ownerRequestHistory", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<BundleDTO>> ownerRequestHistory(@RequestParam(value = "ownerId") Long ownerId) throws Exception {
+        List<UserDTO> users = (this.getUsernames()).getBody();
+        List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
+
+        List<Request> requestList = requestService.getAllRequestsForOwner(ownerId);
+        List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
+        List<BundleDTO> bundleList = requestService.getBundles(requestDTOList);
+
+        return new ResponseEntity<List<BundleDTO>>(bundleList, HttpStatus.OK);
+   }
+
+    @GetMapping(value = "/buyerRequestHistory", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<BundleDTO>> buyerRequestHistory(@RequestParam(value = "userId") Long userId) throws Exception {
+        List<UserDTO> users = (this.getUsernames()).getBody();
+        List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
+
+        List<Request> requestList = requestService.getAllRequestsForUser(userId);
+        List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForUser(requestList, users, vehicles);
+        List<BundleDTO> bundleList = requestService.getBundles(requestDTOList);
+
+        return new ResponseEntity<List<BundleDTO>>(bundleList, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<UserDTO>> getUsernames() throws Exception {
+        System.out.println("Getting all usernames");
+        List<UserDTO> response = restTemplate.exchange("http://user/user/usernames/",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<UserDTO>>() {}).getBody();
+
+        return new ResponseEntity<List<UserDTO>>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<VehicleMainViewDTO>> getVehicleMainViewDTO() throws Exception {
+        System.out.println("Getting all vehicles");
+        List<VehicleMainViewDTO> response = restTemplate.exchange("http://vehicle/search/",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<VehicleMainViewDTO>>() {}).getBody();
+
+        return new ResponseEntity<List<VehicleMainViewDTO>>(response, HttpStatus.OK);
+    }
+
+    /**
+     * GET /server/request/canUserPostReview
+     *
+     * @return return true if user can post review
+     */
+    @GetMapping(value = "canUserPostReview/{vehicleId}+{userId}")
+    public ResponseEntity<Boolean> canUserPostReview(@PathVariable Long userId, @PathVariable Long vehicleId) {
+        return new ResponseEntity<Boolean>(this.requestService.canUserPostReview(vehicleId, userId), HttpStatus.OK);
+    }
 }
