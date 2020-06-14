@@ -25,4 +25,5 @@ public interface RequestRepository extends JpaRepository<Request,Long> {
     @Query("select r from Request r where r.bundle=?1")
     List<Request> bundleMembers(Bundle b);
 
+    List<Request> findAllByVehicleIdAndUserIdAndStatus(Long vehicleId, Long userId, Status paid);
 }

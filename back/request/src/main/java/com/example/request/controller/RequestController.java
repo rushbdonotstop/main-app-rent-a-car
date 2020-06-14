@@ -143,4 +143,14 @@ public class RequestController {
 
         return new ResponseEntity<List<VehicleMainViewDTO>>(response, HttpStatus.OK);
     }
+
+    /**
+     * GET /server/request/canUserPostReview
+     *
+     * @return return true if user can post review
+     */
+    @GetMapping(value = "canUserPostReview/{vehicleId}+{userId}")
+    public ResponseEntity<Boolean> canUserPostReview(@PathVariable Long userId, @PathVariable Long vehicleId) {
+        return new ResponseEntity<Boolean>(this.requestService.canUserPostReview(vehicleId, userId), HttpStatus.OK);
+    }
 }

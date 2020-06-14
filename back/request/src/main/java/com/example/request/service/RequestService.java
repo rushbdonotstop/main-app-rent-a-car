@@ -344,4 +344,21 @@ public class RequestService {
         }
         return true;
     }
+
+    public Boolean canUserPostReview(Long vehicleId, Long userId) {
+        try{
+            List<Request> requests = requestRepository.findAllByVehicleIdAndUserIdAndStatus(vehicleId, userId, Status.PAID);
+
+            for(Request r : requests){
+                if(r.getEndDate().isBefore(LocalDateTime.now())){
+                    return true;
+                }
+            }
+            return false;
+        }
+        catch(Exception e){
+            System.out.println("Exception in canUserPostReview");
+        }
+        return false;
+    }
 }
