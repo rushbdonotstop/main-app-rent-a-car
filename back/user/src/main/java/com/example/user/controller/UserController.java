@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping(value = "/usernames", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserDTO>> getUsernames() throws Exception {
         System.out.println("-------- tu sam -------");
-        List<User> users = userService.getUsers();
+        List<User> users = userService.getUnblockedUsers();
         System.out.println("-------- useri -------" + users);
         List<UserDTO> usernamesList = userService.convertUserToUserDTO(users);
         System.out.println("-------- usernames -------" + usernamesList);

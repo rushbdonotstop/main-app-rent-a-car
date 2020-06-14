@@ -425,5 +425,19 @@ public class SearchVehicleService {
         return dtoList;
     }
 
+    public List<VehicleMainViewDTO> getNotBlocked(List<VehicleMainViewDTO> vehicles, List<UserDTO> users) {
+        List<VehicleMainViewDTO> newList = new ArrayList<>();
+
+        for (VehicleMainViewDTO vehicle : vehicles) {
+            for (UserDTO user : users) {
+                if (vehicle.getOwnerId().equals(user.getId())) {
+                    newList.add(vehicle);
+                    break;
+                }
+            }
+        }
+        return newList;
+    }
+
 
 }

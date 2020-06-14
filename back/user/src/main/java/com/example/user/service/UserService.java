@@ -194,4 +194,16 @@ public class UserService {
         }
         return null;
     }
+
+    public List<User> getUnblockedUsers() {
+        List<User> users = userRepository.findAll();
+        List<User> newList = new ArrayList<>();
+
+        for (User user : users) {
+            if (user.getUserDetails().getPrivilegeList().size() > 0) {
+                newList.add(user);
+            }
+        }
+        return newList;
+    }
 }
