@@ -9,12 +9,11 @@ export class VehicleMainViewDTO{
     ownerId: number
     mileage: number
 
-    constructor(id: number, make: String, model: String, price: number, ownerUsername: String, mileage:number){
+    constructor(id: number, make: String, model: String, price: number, ownerUsername: String){
         this.id = id;
         this.make = make;
         this.model = model;
         this.price = price;
         this.ownerUsername = ownerUsername;
-        this.mileage = mileage;
     };
 }

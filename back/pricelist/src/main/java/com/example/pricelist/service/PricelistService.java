@@ -173,13 +173,16 @@ public class PricelistService {
                 pricelistDays += Days.daysBetween(sd, ed).getDays() + 1;
             }
 
-            for(int i = 0 ; i < pricelists.size(); i++){
-                for (int j = 1 ; j < pricelists.size(); j++){
-                    if (i != j){
-                        if(dateRangeOutdated(pricelists.get(i)) || dateRangeInvalid(pricelists.get(i)) || dateRangeOverlap(pricelists.get(i), pricelists.get(j))
-                                || dateRangeNotCovering(pricelists.get(i), startDate, endDate)){
+            for(int i = 0 ; i < pricelists.size(); i++) {
+                for (int j = 1; j < pricelists.size(); j++) {
+                    if (i != j) {
+                        if (dateRangeOutdated(pricelists.get(i)) || dateRangeInvalid(pricelists.get(i)) || dateRangeOverlap(pricelists.get(i), pricelists.get(j))
+                                || dateRangeNotCovering(pricelists.get(i), startDate, endDate)) {
                             return null;
                         }
+                    }
+                }
+            }
 
             System.out.println(carDays);
             System.out.println(pricelistDays);

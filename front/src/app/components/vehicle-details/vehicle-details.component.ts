@@ -7,6 +7,7 @@ import { LocationService } from 'src/app/core/services/location.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { CatalogueItem } from 'src/app/shared/models/catalogue/CatalogueItem';
 import { VehicleLocation } from 'src/app/shared/models/location/VehicleLocation';
+import { StarRatingColor } from '../vehicle-review/create-review/create-review.component';
 
 @Component({
   templateUrl: './vehicle-details.component.html',
@@ -28,6 +29,17 @@ export class VehicleDetailsComponent implements OnInit {
   collisionProtection: String;
 
   retrievedImage: any;
+
+  rating:number = 3;
+  starCount:number = 5;
+  starColor:StarRatingColor = StarRatingColor.accent;
+  starColorP:StarRatingColor = StarRatingColor.primary;
+  starColorW:StarRatingColor = StarRatingColor.warn;
+
+  onRatingChanged(rating){
+    console.log(rating);
+    this.rating = rating;
+  }
 
   constructor(public dialogRef: MatDialogRef<VehicleDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
