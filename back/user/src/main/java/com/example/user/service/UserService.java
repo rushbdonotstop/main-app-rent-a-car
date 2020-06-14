@@ -19,9 +19,7 @@ import com.example.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -199,8 +197,15 @@ public class UserService {
         List<User> users = userRepository.findAll();
         List<User> newList = new ArrayList<>();
 
+        List<UserPrivilege> userPrivileges = userPrivilegeRepository.findAll();
+        Set<Long> usersWithPrivilege = new TreeSet<Long>();
+
+        for(UserPrivilege userPrivilege : userPrivileges){
+            usersWithPrivilege.add(userPrivilege.getUser().getId());
+        }
+
         for (User user : users) {
-            if (user.getUserDetails().getPrivilegeList().size() > 0) {
+            if (usersWithPrivilege.contains(user.getId())) {
                 newList.add(user);
             }
         }

@@ -1,33 +1,21 @@
-package com.example.review.model;
+package com.example.vehicle.dto.review;
 
-import com.example.review.model.enums.Status;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
 public class Review {
 
-    @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="text", nullable=true)
     private String text;
 
-    @Column(name="rating", nullable=false)
     private int rating;
 
-    @Column(name="status", nullable=false)
     private Status status;
 
-    @Column(name="vehicle_id", nullable=false)
     private Long vehicleId;
 
-    @Column(name="user_id", nullable=false)
     private Long userId;
 
-    @Column(name="date_posted", nullable=false)
     private LocalDateTime date;
 
     public Review() {

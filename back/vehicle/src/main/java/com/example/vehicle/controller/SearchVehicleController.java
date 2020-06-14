@@ -6,6 +6,7 @@ import com.example.vehicle.dto.catalogue.VehicleModel;
 import com.example.vehicle.dto.location.Location;
 import com.example.vehicle.dto.pricelist.Pricelist;
 import com.example.vehicle.dto.request.RequestForVehicleDTO;
+import com.example.vehicle.dto.review.Review;
 import com.example.vehicle.dto.user.UserDTO;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.service.SearchVehicleService;
@@ -48,7 +49,9 @@ public class SearchVehicleController {
 
         List<RequestForVehicleDTO> requestsList = (this.getRequests()).getBody();
 
-        List<VehicleMainViewDTO> dtoList = searchVehicleService.parameterizedSearch(vehicleList, requestsList, locations, vehicleMakeList, pricelist, vehicleModelsList, usersList, vehicleMake, vehicleModel, vehicleStyle, vehicleFuel, vehicleTransmission, maxMileage, mileageLimit, collisionProtection, childrenSeats, state, city, priceLowerLimit, priceUpperLimit, startDate, endDate);
+        List<Review> reviewList = (this.getReviews()).getBody();
+
+        List<VehicleMainViewDTO> dtoList = searchVehicleService.parameterizedSearch(vehicleList, requestsList, locations, vehicleMakeList, pricelist, vehicleModelsList, usersList, reviewList, vehicleMake, vehicleModel, vehicleStyle, vehicleFuel, vehicleTransmission, maxMileage, mileageLimit, collisionProtection, childrenSeats, state, city, priceLowerLimit, priceUpperLimit, startDate, endDate);
 
         List<VehicleMainViewDTO> vehicleDtoListFinal = searchVehicleService.getNotBlocked(dtoList, usersList);
 
@@ -69,7 +72,9 @@ public class SearchVehicleController {
 
         List<UserDTO> usersList = (this.getUsernames()).getBody();
 
-        List<VehicleMainViewDTO> vehicleDTOList = searchVehicleService.getAllVehicleMainViewDTO(vehicleList, vehicleMakeList, pricelist, vehicleModelsList, usersList);
+        List<Review> reviewList = (this.getReviews()).getBody();
+
+        List<VehicleMainViewDTO> vehicleDTOList = searchVehicleService.getAllVehicleMainViewDTO(vehicleList, vehicleMakeList, pricelist, vehicleModelsList, usersList, reviewList);
 
         List<VehicleMainViewDTO> vehicleDtoListFinal = searchVehicleService.getNotBlocked(vehicleDTOList, usersList);
         return new ResponseEntity<>(vehicleDtoListFinal, HttpStatus.OK);
@@ -132,5 +137,13 @@ public class SearchVehicleController {
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<RequestForVehicleDTO>>() {}).getBody();
 
         return new ResponseEntity<List<RequestForVehicleDTO>>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Review>> getReviews() throws Exception {
+        System.out.println("Getting all reviews");
+        List<Review> response = restTemplate.exchange("http://review/review/",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<Review>>() {}).getBody();
+
+        return new ResponseEntity<List<Review>>(response, HttpStatus.OK);
     }
 }
