@@ -31,11 +31,13 @@ import { CoreModule } from '../core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatSliderModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule } from '@angular/material';
+import { MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatSliderModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatSortModule, MatPaginatorModule } from '@angular/material';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutocompleteComponent } from '../components/create-vehicle/autocomplete/autocomplete.component';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule} from '@angular/material/tooltip'
+import {TextFieldModule} from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
@@ -100,7 +102,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCheckboxModule,
     NgbTimepickerModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTooltipModule,
+    TextFieldModule
   ],
   exports: [HomeComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

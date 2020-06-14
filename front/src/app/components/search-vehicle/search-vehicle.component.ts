@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { ThemePalette, MatSnackBar } from '@angular/material';
+import { ThemePalette, MatSnackBar, MatPaginator, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { CatalogueItem } from 'src/app/shared/models/catalogue/CatalogueItem';
 import { State } from 'src/app/shared/models/location/State';
@@ -52,15 +52,16 @@ export class SearchVehicleComponent implements OnInit {
 
   sliderValue: number;
 
-  selectTime : boolean
+  selectTime: boolean
   startTime
   endTime
 
-  constructor(private vehicleService : VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
+  constructor(private vehicleService: VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
     this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() + 2)
 
     this.models.push({ "value": "All", "id": 0 })
     this.selectedModel = this.models[this.models.length - 1]
@@ -143,21 +144,23 @@ export class SearchVehicleComponent implements OnInit {
         })
   }
 
-  setTime(){
+  setTime() {
     this.selectTime = !this.selectTime
   }
 
   onStateChange() {
-    this.locationService.getCitiesByState(this.selectedState.id)
-      .subscribe(cities => {
-        this.cities = cities;
-      },
-        error => {
-          this._snackBar.open("Error while retreiving cities!", "", {
-            duration: 2000,
-            verticalPosition: 'bottom'
-          });
-        })
+    if (this.selectedState != undefined) {
+      this.locationService.getCitiesByState(this.selectedState.id)
+        .subscribe(cities => {
+          this.cities = cities;
+        },
+          error => {
+            this._snackBar.open("Error while retreiving cities!", "", {
+              duration: 2000,
+              verticalPosition: 'bottom'
+            });
+          })
+    }
   }
 
   onMakeChange() {
@@ -201,9 +204,23 @@ export class SearchVehicleComponent implements OnInit {
     return this.cities.filter(option => option.value.toLowerCase().startsWith(filter));
   }
 
+  removeFilter() {
+    this.vehicleService.getAll()
+      .subscribe(vehicles => {
+        this.results = vehicles
+        this.valueUpdate.emit(this.results);
+      },
+        error => {
+          this._snackBar.open("Server error!", "", {
+            duration: 2000,
+            verticalPosition: 'top'
+          });
+        }
+      )
+  }
 
-   @Input() public results : VehicleMainViewDTO[];
-   @Output() valueUpdate = new EventEmitter(); 
+  @Input() public results: VehicleMainViewDTO[];
+  @Output() valueUpdate = new EventEmitter();
 
 
   filter() {
@@ -222,10 +239,10 @@ export class SearchVehicleComponent implements OnInit {
 
     searchParams.collisionProtection = this.collisionProtection
 
-    if (this.childrenSeats == undefined){
+    if (this.childrenSeats == undefined) {
       searchParams.childrenSeats = -1
     }
-    else{
+    else {
       if (this.childSeatsValidation()) {
         searchParams.childrenSeats = this.childrenSeats
       }
@@ -237,11 +254,11 @@ export class SearchVehicleComponent implements OnInit {
       }
     }
 
-    if(this.minMileageLimit == undefined){
+    if (this.minMileageLimit == undefined) {
       this.minMileageLimit = 0
     }
 
-    if(this.maxMileage == undefined){
+    if (this.maxMileage == undefined) {
       this.maxMileage = 0
     }
 
@@ -259,11 +276,11 @@ export class SearchVehicleComponent implements OnInit {
     searchParams.priceLowerLimit = this.minPrice
     searchParams.priceUpperLimit = this.sliderValue
 
-    if(this.startDate == undefined){
+    if (this.startDate == undefined) {
       this.startDate = null
     }
 
-    if (this.endDate == undefined){
+    if (this.endDate == undefined) {
       this.endDate = null
     }
 
@@ -271,13 +288,13 @@ export class SearchVehicleComponent implements OnInit {
     if (this.dateValidation()) {
       searchParams.startDate = this.startDate
       searchParams.endDate = this.endDate
-      if (this.selectTime && this.startTime != null && this.startTime != undefined && this.endTime != null && this.endTime != undefined){
-        searchParams.startDate.setHours(this.startTime.hour)   
-        searchParams.startDate.setMinutes(this.startTime.minute)   
-        searchParams.endDate.setHours(this.endTime.hour)   
-        searchParams.endDate.setMinutes(this.endTime.minute)   
+      if (this.selectTime && this.startTime != null && this.startTime != undefined && this.endTime != null && this.endTime != undefined) {
+        searchParams.startDate.setHours(this.startTime.hour)
+        searchParams.startDate.setMinutes(this.startTime.minute)
+        searchParams.endDate.setHours(this.endTime.hour)
+        searchParams.endDate.setMinutes(this.endTime.minute)
 
-        if (searchParams.startDate >= searchParams.endDate){
+        if (searchParams.startDate >= searchParams.endDate) {
           searchParams.startDate = null
           searchParams.endDate = null
           this.startDate = null
@@ -300,22 +317,19 @@ export class SearchVehicleComponent implements OnInit {
     }
 
     this.vehicleService.search(searchParams)
-    .subscribe(vehicles => {
-      this.results = vehicles;
-      this.valueUpdate.emit(this.results);  
-    },
-    error => {
-      this._snackBar.open("Search failed!", "", {
-        duration: 2000,
-        verticalPosition: 'bottom'
-      });
-    })
+      .subscribe(vehicles => {
+        this.results = vehicles;
+        this.valueUpdate.emit(this.results);
+      },
+        error => {
+          this._snackBar.open("Search failed!", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        })
 
   }
 
-  timeValidation() : void{
-
-  }
 
   childSeatsValidation(): boolean {
     if (this.childrenSeats < 0) {
@@ -339,7 +353,7 @@ export class SearchVehicleComponent implements OnInit {
   }
 
   stateValidation() {
-    if(this.selectedState == undefined){
+    if (this.selectedState == undefined) {
       this.selectedState = new State()
       this.selectedState.value = ""
       this.selectedState.id = 0
@@ -352,7 +366,7 @@ export class SearchVehicleComponent implements OnInit {
   }
 
   cityValidation() {
-    if (this.selectedCity == undefined){
+    if (this.selectedCity == undefined) {
       this.selectedCity = new City()
       this.selectedCity.id = 0
       this.selectedCity.value = ""

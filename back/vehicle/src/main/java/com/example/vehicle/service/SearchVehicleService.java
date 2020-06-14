@@ -91,6 +91,7 @@ public class SearchVehicleService {
         vmvDTO.setPrice(getPrice(pricelist, vehicle.getId()));
         vmvDTO.setOwnerUsername(getOwner(ownerList, vehicle.getUserId()));
         vmvDTO.setOwnerId(getOwnerId(ownerList, vehicle.getUserId()));
+        vmvDTO.setMileage(vehicle.getMileage());
 
         return vmvDTO;
     }
