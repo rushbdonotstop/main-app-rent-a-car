@@ -50,9 +50,11 @@ public class SearchVehicleController {
 
         List<VehicleMainViewDTO> dtoList = searchVehicleService.parameterizedSearch(vehicleList, requestsList, locations, vehicleMakeList, pricelist, vehicleModelsList, usersList, vehicleMake, vehicleModel, vehicleStyle, vehicleFuel, vehicleTransmission, maxMileage, mileageLimit, collisionProtection, childrenSeats, state, city, priceLowerLimit, priceUpperLimit, startDate, endDate);
 
+        List<VehicleMainViewDTO> vehicleDtoListFinal = searchVehicleService.getNotBlocked(dtoList, usersList);
+
         System.out.println("DOBRA METODA ALAL TI VERA");
 
-        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+        return new ResponseEntity<>(vehicleDtoListFinal, HttpStatus.OK);
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,7 +70,9 @@ public class SearchVehicleController {
         List<UserDTO> usersList = (this.getUsernames()).getBody();
 
         List<VehicleMainViewDTO> vehicleDTOList = searchVehicleService.getAllVehicleMainViewDTO(vehicleList, vehicleMakeList, pricelist, vehicleModelsList, usersList);
-        return new ResponseEntity<>(vehicleDTOList, HttpStatus.OK);
+
+        List<VehicleMainViewDTO> vehicleDtoListFinal = searchVehicleService.getNotBlocked(vehicleDTOList, usersList);
+        return new ResponseEntity<>(vehicleDtoListFinal, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)

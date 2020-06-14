@@ -275,4 +275,73 @@ public class RequestService {
         }
         return bundleList;
     }
+
+    public boolean changeRequestStatusToReserved(Long requestId) {
+        Request req = requestRepository.findById(requestId).get();
+        List<Request> requestList = requestRepository.findAll();
+
+        for (Request request : requestList) {
+            if (request.getId().equals(req.getId())) {
+                continue;
+            }
+            if (request.getVehicleId().equals(req.getVehicleId()) && request.getStatus().equals(Status.RESERVED)) {
+                return false;
+            }
+        }
+
+        req.setStatus(Status.RESERVED);
+        return true;
+    }
+
+    public boolean changeBundleStatusToReserved(Long bundleId) {
+        List<Request> requestList = requestRepository.findAll();
+        for (Request request : requestList) {
+            if (request.getBundle().getId().equals(bundleId)) {
+                 if (!changeRequestStatusToReserved(request.getId())) {
+                     return false;
+                 }
+            }
+        }
+        return true;
+    }
+
+    public boolean changeRequestStatusToPaid(Long requestId) {
+        Request req = requestRepository.findById(requestId).get();
+        List<Request> requestList = requestRepository.findAll();
+
+        for (Request request : requestList) {
+            if (request.getId().equals(req.getId())) {
+                continue;
+            }
+
+            if (request.getVehicleId().equals(req.getVehicleId())) {
+                request.setStatus(Status.CANCELLED);
+            }
+        }
+        return true;
+    }
+
+    public boolean changeBundleStatusToPaid(Long bundleId) {
+        List<Request> requestList = requestRepository.findAll();
+        for (Request request : requestList) {
+            if (request.getBundle().getId().equals(bundleId)) {
+                boolean value = changeRequestStatusToPaid(request.getId());
+            }
+        }
+        return true;
+    }
+
+    public boolean changeRequestStatusToCancelled(Long requestId) {
+        Request req = requestRepository.findById(requestId).get();
+        req.setStatus(Status.CANCELLED);
+        return true;
+    }
+
+    public boolean ChangeBundleStatusToCancelled(Long bundleId) {
+        List<Request> requestList = requestRepository.findAll();
+        for (Request request : requestList) {
+            boolean value = changeRequestStatusToCancelled(request.getId());
+        }
+        return true;
+    }
 }
