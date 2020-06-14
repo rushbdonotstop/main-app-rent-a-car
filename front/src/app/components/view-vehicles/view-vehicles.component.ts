@@ -25,7 +25,7 @@ import { DialogType } from 'src/app/shared/models/cart/DialogType';
 })
 export class ViewVehiclesComponent implements OnInit {
 
-  displayedColumns: string[] = ['make', 'model', 'price', 'mileage', 'owner', 'details', 'prices', 'add', 'bundle', 'rent'];
+  displayedColumns: string[] = ['make', 'model', 'averageRating', 'price', 'mileage', 'owner', 'details', 'prices', 'add', 'bundle', 'rent'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
   vehicleList: VehicleMainViewDTO[];
   bundleList: VehicleMainViewDTO[];

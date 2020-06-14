@@ -1,1 +1,6 @@
-<p>view-vehicle-reviews works!</p>
+<div *ngFor="let review of reviews">
+  <p>{{review.text}}</p>
+  <p>Rating {{review.rating}}/5</p>
+  <small class="text-muted">Posted by {{review.userId}} on {{review.date}}</small>
+  <hr>
+</div>

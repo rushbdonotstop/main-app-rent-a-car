@@ -36,6 +36,9 @@ import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutocompleteComponent } from '../components/create-vehicle/autocomplete/autocomplete.component';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule} from '@angular/material/tooltip'
+import {TextFieldModule} from '@angular/cdk/text-field';
+import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header/admin-header.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +67,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ViewUsersComponent,
     RegisterAgentComponent,
     EditPermissionsComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    AdminHeaderComponent
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent
@@ -102,7 +106,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatIconModule,
     MatListModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTooltipModule,
+    TextFieldModule
   ],
   exports: [HomeComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
