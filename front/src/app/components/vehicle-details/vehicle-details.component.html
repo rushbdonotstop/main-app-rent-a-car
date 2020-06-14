@@ -38,7 +38,7 @@
             </div>
           </div>
           <!-- /.card -->
-          <div class="card mt-4">
+          <div *ngIf="userId != userIdInVehicle" class="card mt-4">
             <div class="card-header">
               Add Review
             </div>
@@ -46,7 +46,7 @@
               <div class="row">
                 <mat-form-field style="width: 400px;" [style.fontSize]="16">
                   <mat-label>What's on your mind?</mat-label>
-                  <textarea matInput
+                  <textarea matInput [(ngModel)]="reviewText"
                             cdkTextareaAutosize
                             #autosize="cdkTextareaAutosize"
                             cdkAutosizeMinRows="1"
@@ -57,7 +57,7 @@
                 <pm-create-review [rating]="rating"  [starCount]="starCount" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></pm-create-review>
               </div>
               <div class="row">
-                <button mat-raised-button	color="accent">Add</button>
+                <button mat-raised-button	color="accent" (click)="addReview()">Add</button>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { ReviewStatus } from './ReviewStatus';
 export class Review {
 
     id : number;
-    text : string;
+    text : String;
     rating : number;
     status : ReviewStatus;
     vehicleId : number;

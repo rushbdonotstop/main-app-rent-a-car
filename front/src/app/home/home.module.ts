@@ -38,6 +38,7 @@ import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule} from '@angular/material/tooltip'
 import {TextFieldModule} from '@angular/cdk/text-field';
+import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header/admin-header.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {TextFieldModule} from '@angular/cdk/text-field';
     ViewUsersComponent,
     RegisterAgentComponent,
     EditPermissionsComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    AdminHeaderComponent
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent

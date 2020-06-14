@@ -8,6 +8,8 @@ import { ViewVehiclesComponent } from './components/view-vehicles/view-vehicles.
 import { CreateVehicleComponent } from './components/create-vehicle/create-vehicle.component';
 import { RequestHistoryComponent } from './components/request-history/request-history.component';
 import { UserCartComponent } from './components/user-cart/user-cart.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { CommentRequestsComponent } from './components/admin-dashboard/comment-requests/comment-requests.component';
 
 const routes: Routes = [{ path: 'login', component: LoginComponent},
 { path: 'register', component: RegisterComponent},
@@ -16,6 +18,8 @@ const routes: Routes = [{ path: 'login', component: LoginComponent},
 { path: 'history', component: RequestHistoryComponent },
 { path: 'cart', component: UserCartComponent },
 { path: 'home', component: HomeComponent },
+{ path: 'dashboard', component : AdminDashboardComponent},
+{ path: 'reviews', component : CommentRequestsComponent},
 { path: '', redirectTo: 'home', pathMatch : 'full'},
 { path: '**', component: HomeComponent }];
 
