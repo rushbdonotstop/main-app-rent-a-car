@@ -7,6 +7,8 @@ export class VehicleMainViewDTO{
     startDate : Date;
     endDate: Date
     ownerId: number
+    mileage: number
+    averageRating : number
 
     constructor(id: number, make: String, model: String, price: number, ownerUsername: String){
         this.id = id;

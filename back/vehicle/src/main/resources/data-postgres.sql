@@ -16,4 +16,4 @@ values (47902, 5000, true, 0, DATE('2020-06-08'), DATE('2020-08-08'), 2, 3, 6, 5
 insert into vehicle (mileage, mileage_limit, collision_protection, children_seats, start_date, end_date, fuel_type_id, make_id, model_id, style_id, transmission_id, user_id, location_id)
 values (113200, 8000, true, 1, DATE('2020-06-23'), DATE('2020-12-23'), 3, 4, 7, 4, 1, 2, 1);
 insert into vehicle (mileage, mileage_limit, collision_protection, children_seats, start_date, end_date, fuel_type_id, make_id, model_id, style_id, transmission_id, user_id, location_id)
-values (72410, 8000, false, 1, DATE('2020-07-10'), DATE('2020-11-11'), 6, 4, 8, 5, 2, 2, 1);
+values (72410, 8000, false, 1, DATE('2020-06-08'), DATE('2020-11-11'), 6, 4, 8, 5, 2, 2, 1);

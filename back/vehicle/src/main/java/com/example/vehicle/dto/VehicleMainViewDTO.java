@@ -8,6 +8,8 @@ public class VehicleMainViewDTO {
     private String make;
     private String model;
     private float price;
+    private float averageRating;
+    private int mileage;
     private String ownerUsername;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -16,12 +18,25 @@ public class VehicleMainViewDTO {
     public VehicleMainViewDTO() {
     }
 
-    public VehicleMainViewDTO(Long id, String make, String model, float price, String ownerUsername) {
+    public VehicleMainViewDTO(Long id, String make, String model, float price, float averageRating, int mileage, String ownerUsername, LocalDateTime startDate, LocalDateTime endDate, Long ownerId) {
         this.id = id;
         this.make = make;
         this.model = model;
         this.price = price;
+        this.averageRating = averageRating;
+        this.mileage = mileage;
         this.ownerUsername = ownerUsername;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.ownerId = ownerId;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
     }
 
     public LocalDateTime getStartDate() {
@@ -88,6 +103,14 @@ public class VehicleMainViewDTO {
         this.ownerUsername = ownerUsername;
     }
 
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
+    }
+
     @Override
     public String toString() {
         return "VehicleMainViewDTO{" +
@@ -95,7 +118,12 @@ public class VehicleMainViewDTO {
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", price=" + price +
+                ", averageRating=" + averageRating +
+                ", mileage=" + mileage +
                 ", ownerUsername='" + ownerUsername + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", ownerId=" + ownerId +
                 '}';
     }
 }

@@ -1,1 +1,71 @@
-<p>comment-requests works!</p>
+<pm-admin-header></pm-admin-header>
+<!-- Masthead-->
+<header class="masthead" style="background-image: url('assets/css/img/admin-bg-3.jpg');">
+    <div class="container">
+        <div class="masthead-subheading">Watch those mean comments</div>
+        <div class="masthead-heading text-uppercase">You are the boss</div>
+    </div>
+</header>
+<section class="page-section">
+    <div class="container">
+        <div class="row" style="justify-content: center;">
+            <mat-card style="width: 100%; box-sizing: border-box;">
+                <mat-card-title> Review requests </mat-card-title>
+                <mat-card-content>
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                        <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="text">
+                            <th mat-header-cell *matHeaderCellDef> Text </th>
+                            <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+                        </ng-container>
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="rating">
+                            <th mat-header-cell *matHeaderCellDef> Rating </th>
+                            <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="vehicleId">
+                            <th mat-header-cell *matHeaderCellDef> Vehicle id </th>
+                            <td mat-cell *matCellDef="let element"> {{element.vehicleId}} </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="userId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> User id </th>
+                            <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="approve">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary"
+                                    (click)="approve(element)">Approve</button> </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="reject">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element"> <button mat-raised-button color="warn"
+                                    (click)="reject(element)">Reject</button> </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]"></mat-paginator>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</section>

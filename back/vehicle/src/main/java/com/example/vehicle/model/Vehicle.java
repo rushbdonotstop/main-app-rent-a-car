@@ -24,7 +24,7 @@ public class Vehicle {
     @Column(name="children_seats", nullable = false)
     private int childrenSeats;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="image", referencedColumnName = "id", nullable = true)
     private VehicleImage image;
 

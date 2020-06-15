@@ -38,7 +38,7 @@ insert into pricelist(start_date, end_date, price, price_by_mile, price_collisio
 values (DATE('2020-09-14'), DATE('2020-12-23'), 65, 3, 80, 7, 2);
 --vehicle 8
 insert into pricelist(start_date, end_date, price, price_by_mile, price_collision, vehicle_id, discount_id)
-values (DATE('2020-07-10'), DATE('2020-08-26'), 80, 2, 0, 8, 3);
+values (DATE('2020-06-08'), DATE('2020-08-26'), 80, 2, 0, 8, 3);
 insert into pricelist(start_date, end_date, price, price_by_mile, price_collision, vehicle_id)
 values (DATE('2020-08-27'), DATE('2020-11-11'), 90, 2, 0, 8);
 

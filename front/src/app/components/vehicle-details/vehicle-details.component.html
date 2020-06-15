@@ -26,35 +26,41 @@
               <p *ngIf="vehicle != null">Mileage limit : {{vehicle.mileageLimit}}</p>
               <p *ngIf="collisionProtection != null">Collision protection : {{collisionProtection}}</p>
               <p *ngIf="vehicle != null">Children seats : {{vehicle.childrenSeats}}</p>
-              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-              4.0 stars
             </div>
           </div>
           <!-- /.card -->
           <div class="card card-outline-secondary my-4">
             <div class="card-header">
-              Product Reviews
+              Vehicle Reviews
             </div>
             <div class="card-body">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-                necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-                necessitatibus quae sint natus.</p>
-              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-              <hr>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-                necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-                necessitatibus quae sint natus.</p>
-              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-              <hr>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-                necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-                necessitatibus quae sint natus.</p>
-              <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-              <hr>
-              <a href="#" class="btn btn-success">Leave a Review</a>
+              <pm-view-reviews [(vehicleId)] = "vehicleId"></pm-view-reviews>
             </div>
           </div>
           <!-- /.card -->
+          <div *ngIf="userId != userIdInVehicle" class="card mt-4">
+            <div class="card-header">
+              Add Review
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <mat-form-field style="width: 400px;" [style.fontSize]="16">
+                  <mat-label>What's on your mind?</mat-label>
+                  <textarea matInput [(ngModel)]="reviewText"
+                            cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize"
+                            cdkAutosizeMinRows="1"
+                            cdkAutosizeMaxRows="5"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <pm-create-review [rating]="rating"  [starCount]="starCount" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></pm-create-review>
+              </div>
+              <div class="row">
+                <button mat-raised-button	color="accent" (click)="addReview()">Add</button>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.col-lg-9 -->
       </div>

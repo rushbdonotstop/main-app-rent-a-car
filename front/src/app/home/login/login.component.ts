@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { UserType } from 'src/app/shared/models/user/UserType';
 
 @Component({
   templateUrl: './login.component.html',
@@ -33,7 +34,12 @@ export class LoginComponent implements OnInit {
               duration: 2000,
               verticalPosition: 'top'
             });
-            this.router.navigate(['home']);
+            if(user.userDetails.userType.toString() === 'ADMINISTRATOR'){
+              this.router.navigate(['dashboard']);
+            }
+            else{
+              this.router.navigate(['home']);
+            }
           }
           else {
             this.loginInvalid = true;

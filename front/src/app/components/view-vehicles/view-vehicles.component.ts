@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { VehicleMainViewDTO } from 'src/app/shared/models/vehicle/VehicleMainViewDTO';
 import { VehicleService } from 'src/app/core/services/vehicle.service';
-import { MatSnackBar, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatSnackBar, MatTableDataSource, MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.component';
 import { ViewPriceListComponent } from '../price-list/view-price-list/view-price-list.component';
@@ -25,7 +25,7 @@ import { DialogType } from 'src/app/shared/models/cart/DialogType';
 })
 export class ViewVehiclesComponent implements OnInit {
 
-  displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'prices', 'add', 'bundle', 'rent'];
+  displayedColumns: string[] = ['make', 'model', 'averageRating', 'price', 'mileage', 'owner', 'details', 'prices', 'add', 'bundle', 'rent'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
   vehicleList: VehicleMainViewDTO[];
   bundleList: VehicleMainViewDTO[];
@@ -37,7 +37,12 @@ export class ViewVehiclesComponent implements OnInit {
   getUpdatedvalue($event) {
     this.results = $event;
     this.dataSource = new MatTableDataSource<VehicleMainViewDTO>(this.results)
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private vehicleService: VehicleService, private _snackBar: MatSnackBar, private cartService: CartService) { }
 
@@ -46,6 +51,8 @@ export class ViewVehiclesComponent implements OnInit {
       .subscribe(vehicles => {
         this.vehicleList = vehicles;
         this.dataSource = new MatTableDataSource<VehicleMainViewDTO>(this.vehicleList);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>();
         this.bundleList = [];
       },
@@ -108,7 +115,7 @@ export class ViewVehiclesComponent implements OnInit {
         duration: 2000,
         verticalPosition: 'bottom'
       });
-    }else{
+    } else {
       this._snackBar.open("Bundle cannot contain only one vehicle", "", {
         duration: 2000,
         verticalPosition: 'bottom'
@@ -136,7 +143,7 @@ export class ViewVehiclesComponent implements OnInit {
 
   }
 
-  clearBundle(){
+  clearBundle() {
     this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>([]);
   }
   inStoreRent(element) {

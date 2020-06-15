@@ -10,6 +10,7 @@ import com.example.request.model.Request;
 import com.example.request.model.enums.Status;
 import com.example.request.repository.BundleRepository;
 import com.example.request.repository.RequestRepository;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -157,32 +158,43 @@ public class RequestService {
         } else return false;
     }
 
-    public List<Request> getAllRequestsByOwner (Long ownerId) {
-        List<Request> requestsList = requestRepository.findAll();
-        List<Request> newRequestsList = new ArrayList<>();
-        for (Request request : requestsList) {
+    public List<Request> getAllRequestsForOwner (Long ownerId) {
+        List<Request> requestList = requestRepository.findAll();
+        List<Request> newRequestList = new ArrayList<>();
+        for (Request request : requestList) {
             if (request.getOwnerId().equals(ownerId)) {
-                newRequestsList.add(request);
+                newRequestList.add(request);
             }
         }
-        return newRequestsList;
+        return newRequestList;
     }
 
-    public List<Request> getAllRequestsByUser (Long userId) {
-        List<Request> requestsList = requestRepository.findAll();
-        List<Request> newRequestsList = new ArrayList<>();
-        for (Request request : requestsList) {
+    public List<Request> getAllRequestsForUser (Long userId) {
+        List<Request> requestList = requestRepository.findAll();
+        List<Request> newRequestList = new ArrayList<>();
+        for (Request request : requestList) {
             if (request.getUserId().equals(userId)) {
-                newRequestsList.add(request);
+                newRequestList.add(request);
             }
         }
-        return newRequestsList;
+        return newRequestList;
     }
-    //TYPE OF USER - PARAMETER FOR CHOOSING OWNER USERNAME OR BUYER USERNAME
-    //USE 0 FOR OWNER USERNAME
-    //USE 1 FOR BUYER USERNAME
-    public List<RequestForFrontDTO> getDtoList (int typeOfUser, List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehicleList) {
+//
+//    public List<Request> getAllRequestsByUser (Long userId) {
+//        List<Request> requestsList = requestRepository.findAll();
+//        List<Request> newRequestsList = new ArrayList<>();
+//        for (Request request : requestsList) {
+//            if (request.getUserId().equals(userId)) {
+//                newRequestsList.add(request);
+//            }
+//        }
+//        return newRequestsList;
+//    }
+
+
+    public List<RequestForFrontDTO> getDTOListForOwner (List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehiclesList) {
         List<RequestForFrontDTO> newDTOList = new ArrayList<>();
+
         for (Request request : requestsList) {
             RequestForFrontDTO dto = new RequestForFrontDTO();
             dto.setId(request.getId());
@@ -190,33 +202,51 @@ public class RequestService {
             dto.setStartDate(request.getStartDate());
             dto.setEndDate(request.getEndDate());
             dto.setStatus(request.getStatus());
-            //SETTING USERNAME FOR REQUEST DTO
             for (UserDTO user : userDTOList) {
-                if (typeOfUser == 0) {
-                    if (user.getId() == request.getOwnerId()) {
-                        dto.setUsername(user.getUsername());
-                        break;
-                    }
-                } else {
-                    if (user.getId() == request.getUserId()) {
-                        dto.setUsername(user.getUsername());
-                        break;
-                    }
+                if (user.getId().equals(request.getUserId())) {
+                    dto.setUsername(user.getUsername());
                 }
             }
-
             //SETTING VEHICLE MAKE AND MODEL FOR REQUEST DTO
-            for (VehicleMainViewDTO vehicle : vehicleList) {
+            for (VehicleMainViewDTO vehicle : vehiclesList) {
                 if (vehicle.getId().equals(request.getVehicleId())) {
                     dto.setMakePlusModel(vehicle.getMake() + " " + vehicle.getModel());
                     break;
                 }
             }
-
             dto.setBundleId(request.getBundle().getId());
             newDTOList.add(dto);
-        }
 
+        }
+        return newDTOList;
+    }
+
+    public List<RequestForFrontDTO> getDTOListForUser (List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehiclesList) {
+        List<RequestForFrontDTO> newDTOList = new ArrayList<>();
+
+        for (Request request : requestsList) {
+            RequestForFrontDTO dto = new RequestForFrontDTO();
+            dto.setId(request.getId());
+            dto.setTotalCost(request.getTotalCost());
+            dto.setStartDate(request.getStartDate());
+            dto.setEndDate(request.getEndDate());
+            dto.setStatus(request.getStatus());
+            for (UserDTO user : userDTOList) {
+                if (user.getId().equals(request.getOwnerId())) {
+                    dto.setUsername(user.getUsername());
+                }
+            }
+            //SETTING VEHICLE MAKE AND MODEL FOR REQUEST DTO
+            for (VehicleMainViewDTO vehicle : vehiclesList) {
+                if (vehicle.getId().equals(request.getVehicleId())) {
+                    dto.setMakePlusModel(vehicle.getMake() + " " + vehicle.getModel());
+                    break;
+                }
+            }
+            dto.setBundleId(request.getBundle().getId());
+            newDTOList.add(dto);
+
+        }
         return newDTOList;
     }
 
@@ -244,5 +274,91 @@ public class RequestService {
             bundleList.add(dto);
         }
         return bundleList;
+    }
+
+    public boolean changeRequestStatusToReserved(Long requestId) {
+        Request req = requestRepository.findById(requestId).get();
+        List<Request> requestList = requestRepository.findAll();
+
+        for (Request request : requestList) {
+            if (request.getId().equals(req.getId())) {
+                continue;
+            }
+            if (request.getVehicleId().equals(req.getVehicleId()) && request.getStatus().equals(Status.RESERVED)) {
+                return false;
+            }
+        }
+
+        req.setStatus(Status.RESERVED);
+        return true;
+    }
+
+    public boolean changeBundleStatusToReserved(Long bundleId) {
+        List<Request> requestList = requestRepository.findAll();
+        for (Request request : requestList) {
+            if (request.getBundle().getId().equals(bundleId)) {
+                 if (!changeRequestStatusToReserved(request.getId())) {
+                     return false;
+                 }
+            }
+        }
+        return true;
+    }
+
+    public boolean changeRequestStatusToPaid(Long requestId) {
+        Request req = requestRepository.findById(requestId).get();
+        List<Request> requestList = requestRepository.findAll();
+
+        for (Request request : requestList) {
+            if (request.getId().equals(req.getId())) {
+                continue;
+            }
+
+            if (request.getVehicleId().equals(req.getVehicleId())) {
+                request.setStatus(Status.CANCELLED);
+            }
+        }
+        return true;
+    }
+
+    public boolean changeBundleStatusToPaid(Long bundleId) {
+        List<Request> requestList = requestRepository.findAll();
+        for (Request request : requestList) {
+            if (request.getBundle().getId().equals(bundleId)) {
+                boolean value = changeRequestStatusToPaid(request.getId());
+            }
+        }
+        return true;
+    }
+
+    public boolean changeRequestStatusToCancelled(Long requestId) {
+        Request req = requestRepository.findById(requestId).get();
+        req.setStatus(Status.CANCELLED);
+        return true;
+    }
+
+    public boolean ChangeBundleStatusToCancelled(Long bundleId) {
+        List<Request> requestList = requestRepository.findAll();
+        for (Request request : requestList) {
+            boolean value = changeRequestStatusToCancelled(request.getId());
+        }
+        return true;
+    }
+
+    public Boolean canUserPostReview(Long vehicleId, Long userId) {
+        try{
+            List<Request> requests = requestRepository.findAllByVehicleIdAndUserIdAndStatus(vehicleId, userId, Status.PAID);
+
+            for(Request r : requests){
+                if(r.getEndDate().isBefore(LocalDateTime.now())){
+                    return true;
+                }
+            }
+            return false;
+        }
+        catch(Exception e){
+            System.out.println("Exception in canUserPostReview");
+        }
+        return false;
     }
 }

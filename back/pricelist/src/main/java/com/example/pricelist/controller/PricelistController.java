@@ -51,35 +51,18 @@ public class PricelistController {
     }
 
     /**
-     * PUT /server/pricelist
+     * PUT /server/pricelist/
      *
-     * @return status of updating pricelist
+     * @return status of saving updated list of pricelists
      */
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> update(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true)
-            LocalDate startDate, @RequestParam(value="endDate", required = true) LocalDate endDate) throws Exception {
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, @RequestParam(value="endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) throws Exception {
         Boolean exists = restTemplate.exchange("http://vehicle/vehicle/exists/" + pricelists.get(0).getVehicleId(),
                 HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
         Notification notification = new Notification("Vehicle id does not exist.");
         if (exists){
-            notification = priceListService.updatePricelists(pricelists, startDate, endDate);
-        }
-        return new ResponseEntity<Notification>(notification, HttpStatus.OK);
-    }
-
-    /**
-     * POST /server/pricelist
-     *
-     * @return status of creating pricelist
-     */
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> create(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true)
-            LocalDate startDate, @RequestParam(value="endDate", required = true) LocalDate endDate) throws Exception {
-        Boolean exists = restTemplate.exchange("http://vehicle/vehicle/exists/" + pricelists.get(0).getVehicleId(),
-                HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
-        Notification notification = new Notification("Vehicle id does not exist.");
-        if (exists){
-            notification = priceListService.createPricelists(pricelists, startDate, endDate);
+            notification = priceListService.savePricelists(pricelists, startDate, endDate);
         }
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);
     }
@@ -102,8 +85,8 @@ public class PricelistController {
 
     @PostMapping(value = "/validatePricelists", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Pricelist>> validatePricelists(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            LocalDate startDate, @RequestParam(value="endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate){
-        return new ResponseEntity<List<Pricelist>>(priceListService.validatePricelists(pricelists, startDate, endDate), HttpStatus.OK);
+            LocalDateTime startDate, @RequestParam(value="endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate){
+        return new ResponseEntity<List<Pricelist>>(priceListService.validatePricelistsDate(pricelists, startDate, endDate), HttpStatus.OK);
     }
 
 }

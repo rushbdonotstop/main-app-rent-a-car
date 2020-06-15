@@ -7,6 +7,7 @@ import com.example.vehicle.dto.location.Location;
 import com.example.vehicle.dto.pricelist.Pricelist;
 import com.example.vehicle.dto.request.RequestForVehicleDTO;
 import com.example.vehicle.dto.request.Status;
+import com.example.vehicle.dto.review.Review;
 import com.example.vehicle.dto.user.UserDTO;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.repository.VehicleRepository;
@@ -14,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.transform.sax.SAXSource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -75,15 +79,15 @@ public class SearchVehicleService {
         return vehicleRepository.findByStyleId(Id);
     }
 
-    public List<VehicleMainViewDTO> getAllVehicleMainViewDTO(List<Vehicle> vehicleList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList) {
+    public List<VehicleMainViewDTO> getAllVehicleMainViewDTO(List<Vehicle> vehicleList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, List<Review> reviewList) {
         List<VehicleMainViewDTO> listVMV = new ArrayList<>();
         for (Vehicle vehicle : vehicleList) {
-            listVMV.add(vehicleToVehicleMainViewDTO(vehicle, vehicleMakeList, pricelist, vehicleModelList, ownerList));
+            listVMV.add(vehicleToVehicleMainViewDTO(vehicle, vehicleMakeList, pricelist, vehicleModelList, ownerList, reviewList));
         }
         return listVMV;
     }
 
-    public VehicleMainViewDTO vehicleToVehicleMainViewDTO(Vehicle vehicle, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList) {
+    public VehicleMainViewDTO vehicleToVehicleMainViewDTO(Vehicle vehicle, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, List<Review> reviewList) {
         VehicleMainViewDTO vmvDTO = new VehicleMainViewDTO();
         vmvDTO.setId(vehicle.getId());
         vmvDTO.setMake(getVehicleMake(vehicleMakeList, vehicle.getMakeId()));
@@ -91,6 +95,8 @@ public class SearchVehicleService {
         vmvDTO.setPrice(getPrice(pricelist, vehicle.getId()));
         vmvDTO.setOwnerUsername(getOwner(ownerList, vehicle.getUserId()));
         vmvDTO.setOwnerId(getOwnerId(ownerList, vehicle.getUserId()));
+        vmvDTO.setMileage(vehicle.getMileage());
+        vmvDTO.setAverageRating(calculateAverageRating(reviewList, vehicle.getId()));
 
         return vmvDTO;
     }
@@ -394,7 +400,7 @@ public class SearchVehicleService {
         return tempList;
     }
 
-    public List<VehicleMainViewDTO> parameterizedSearch(List<Vehicle> vehicleList, List<RequestForVehicleDTO> requestsList,  List<Location> locationList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelistList, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, Long makeId, Long modelId, Long styleId, Long fuelId, Long transmissionId, int maxMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String state, String city, float priceLowerLimit, float priceUpperLimit, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<VehicleMainViewDTO> parameterizedSearch(List<Vehicle> vehicleList, List<RequestForVehicleDTO> requestsList,  List<Location> locationList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelistList, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, List<Review> reviewList, Long makeId, Long modelId, Long styleId, Long fuelId, Long transmissionId, int maxMileage, int mileageLimit, boolean collisionProtection, int childrenSeats, String state, String city, float priceLowerLimit, float priceUpperLimit, LocalDateTime startDate, LocalDateTime endDate) {
 
         List<Vehicle> newList = getVehiclesByMake(vehicleList, makeId);
         System.out.println("Velicina je: " +newList.size());
@@ -421,9 +427,44 @@ public class SearchVehicleService {
         newList = getVehiclesByPrice(newList, pricelistList, priceLowerLimit, priceUpperLimit);
         System.out.println("Velicina je: " +newList.size());
 
-        List<VehicleMainViewDTO> dtoList = getAllVehicleMainViewDTO(newList, vehicleMakeList, pricelistList, vehicleModelList, ownerList);
+        List<VehicleMainViewDTO> dtoList = getAllVehicleMainViewDTO(newList, vehicleMakeList, pricelistList, vehicleModelList, ownerList, reviewList);
         return dtoList;
     }
 
+    public List<VehicleMainViewDTO> getNotBlocked(List<VehicleMainViewDTO> vehicles, List<UserDTO> users) {
+        List<VehicleMainViewDTO> newList = new ArrayList<>();
+
+        for (VehicleMainViewDTO vehicle : vehicles) {
+            for (UserDTO user : users) {
+                if (vehicle.getOwnerId().equals(user.getId())) {
+                    newList.add(vehicle);
+                    break;
+                }
+            }
+        }
+        return newList;
+    }
+
+    public float calculateAverageRating(List<Review> reviewList, Long vehicleId) {
+
+
+        Float rating = (float) 0;
+        int numberOfReviews = 0;
+        for (Review review : reviewList) {
+            if (review.getVehicleId().equals(vehicleId) && review.getStatus().equals(com.example.vehicle.dto.review.Status.APPROVED)) {
+                rating += review.getRating();
+                numberOfReviews++;
+            }
+        }
+        rating = rating / numberOfReviews;
+        if (!rating.isNaN() && !rating.isInfinite()) {
+            BigDecimal bd = new BigDecimal(rating).setScale(2, RoundingMode.HALF_UP);
+            rating = bd.floatValue();
+        }
+        else{
+            rating = (float) 0;
+        }
+        return rating;
+    }
 
 }

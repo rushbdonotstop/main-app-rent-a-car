@@ -6,12 +6,13 @@ import com.example.pricelist.model.Pricelist;
 import com.example.pricelist.model.VehicleDiscount;
 import com.example.pricelist.repository.PricelistRepository;
 import com.example.pricelist.repository.VehicleDiscountRepository;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,6 +30,7 @@ public class PricelistService {
         List<Pricelist> pricelistList = null;
         try{
             pricelistList = pricelistRepository.findByVehicleId(vehicleId);
+            System.out.println(pricelistList);
         }
         catch(Exception e){
 
@@ -36,64 +38,30 @@ public class PricelistService {
         return pricelistList;
     }
 
-    public Notification createPricelists(List<Pricelist> pricelists, LocalDate startDate, LocalDate endDate){
+    @Transactional
+    public Notification savePricelists(List<Pricelist> pricelists, LocalDateTime startDate, LocalDateTime endDate){
         Notification notification = new Notification("Failed to create pricelists.");
         try{
-            for(Pricelist pricelist : pricelists){
-                for(Pricelist pricelistCheck : pricelists){
-                    if (dateRangeOverlap(pricelist, pricelistCheck)){
-                        notification.setText("Date ranges overlap.");
-                        return notification;
-                    }
-                }
+            if (validatePricelistsDate(pricelists, startDate, endDate) == null){
+                notification.setText("Pricelists date invalid");
+                return notification;
             }
 
-            boolean allGood = false;
+            boolean allGood = true;
 
             for(Pricelist pricelist : pricelists){
-               if(createPricelist(pricelist, startDate, endDate, "CREATE")){
-                    allGood = true;
+               if(invalidPricelistsFields(pricelist)){
+                   System.out.println("InvalidPriceListFields");
+                    allGood = false;
                }
             }
 
             if (allGood){
                 for(Pricelist pricelist : pricelists){
                     pricelistRepository.save(pricelist);
-                    vehicleDiscountRepository.save(pricelist.getVehicleDiscount());
-                }
-                notification.setText("Created pricelists!");
-            }
-        }
-        catch(Exception e){
-
-        }
-        return notification;
-    }
-
-    public Notification updatePricelists(List<Pricelist> pricelists, LocalDate startDate, LocalDate endDate){
-        Notification notification = new Notification("Failed to update pricelist.");
-        try{
-            for(Pricelist pricelist : pricelists){
-                for(Pricelist pricelistCheck : pricelists){
-                    if (dateRangeOverlap(pricelist, pricelistCheck)){
-                        notification.setText("Date ranges overlap.");
-                        return notification;
+                    if(pricelist.getVehicleDiscount() != null){
+                        vehicleDiscountRepository.save(pricelist.getVehicleDiscount());
                     }
-                }
-            }
-
-            boolean allGood = false;
-
-            for(Pricelist pricelist : pricelists){
-                if(createPricelist(pricelist, startDate, endDate, "UPDATE")){
-                    allGood = true;
-                }
-            }
-
-            if (allGood){
-                for(Pricelist pricelist : pricelists){
-                    pricelistRepository.save(pricelist);
-                    vehicleDiscountRepository.save(pricelist.getVehicleDiscount());
                 }
                 notification.setText("Updated pricelists!");
             }
@@ -104,58 +72,19 @@ public class PricelistService {
         return notification;
     }
 
-    public boolean createPricelist(Pricelist pricelist, LocalDate startDate, LocalDate endDate, String operation) {
+    public boolean invalidPricelistsFields(Pricelist pricelist) {
         try{
             if (priceInvalid(pricelist)){
-                return false;
+                return true;
             }
 
-            if (discountInvalid(pricelist.getVehicleDiscount())){
-                return false;
+            if (pricelist.getVehicleDiscount() != null){
+                if (discountInvalid(pricelist.getVehicleDiscount())){
+                    return true;
+                }
             }
 
-            if (dateRangeExists(pricelist, operation)){
-                return false;
-            }
-            if (dateRangeOutdated(pricelist)){
-                return false;
-            }
-            if (dateRangeInvalid(pricelist)){
-                return false;
-            }
-
-            return true;
-        }
-        catch(Exception e){
-
-        }
-        return false;
-    }
-
-    public boolean updatePricelist(Pricelist pricelist, LocalDate startDate, LocalDate endDate, String operation) {
-        try{
-            if (!pricelistRepository.findById(pricelist.getId()).isPresent()){
-                return false;
-            }
-
-            if (priceInvalid(pricelist)){
-                return false;
-            }
-
-            if (discountInvalid(pricelist.getVehicleDiscount()) || !vehicleDiscountRepository.findById(pricelist.getVehicleDiscount().getId()).isPresent()){
-                return false;
-            }
-
-            if (dateRangeExists(pricelist, operation) && pricelistRepository.findByVehicleId(pricelist.getVehicleId()).size() != 1){
-                return false;
-            }
-            if (dateRangeOutdated(pricelist)){
-                return false;
-            }
-            if (dateRangeInvalid(pricelist)){
-                return false;
-            }
-            return true;
+            return false;
         }
         catch(Exception e){
 
@@ -184,69 +113,6 @@ public class PricelistService {
         }
         return notification;
     }
-
-    // Za uopsteno kreiranje kod postojeceg vozila
-
-    public boolean dateRangeExists(Pricelist pricelist, String operation){
-        List<Pricelist> pricelists = getAllByVehicle(pricelist.getVehicleId());
-
-        for (Pricelist p : pricelists){
-            if ((pricelist.getStartDate().isAfter(p.getStartDate()) && pricelist.getStartDate().isBefore(p.getEndDate()))
-            || (pricelist.getEndDate().isAfter(p.getStartDate()) && pricelist.getEndDate().isBefore(p.getEndDate()))
-            || (pricelist.getStartDate().isBefore(p.getStartDate()) && pricelist.getEndDate().isAfter(p.getEndDate()))){
-                if (operation.equals("CREATE")){
-                    if (pricelist.getStartDate().equals(p.getStartDate()) && pricelist.getEndDate().equals(p.getEndDate())){
-                        return true;
-                    }
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean dateRangeOverlap(Pricelist pricelist1, Pricelist pricelist2){
-        if ((pricelist1.getStartDate().isAfter(pricelist2.getStartDate()) && pricelist1.getStartDate().isBefore(pricelist2.getEndDate()))
-                || (pricelist1.getEndDate().isAfter(pricelist2.getStartDate()) && pricelist1.getEndDate().isBefore(pricelist2.getEndDate()))
-                || (pricelist1.getStartDate().isBefore(pricelist2.getStartDate()) && pricelist1.getEndDate().isAfter(pricelist2.getEndDate()))
-                || pricelist1.getStartDate().equals(pricelist2.getStartDate())
-                || pricelist1.getStartDate().equals(pricelist2.getEndDate())
-                || pricelist1.getEndDate().equals(pricelist2.getStartDate())
-                || pricelist1.getEndDate().equals(pricelist2.getEndDate())){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean dateRangeOutdated(Pricelist pricelist){
-        if (pricelist.getStartDate().isBefore(LocalDate.now())){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean dateRangeInvalid(Pricelist pricelist){
-        if (pricelist.getStartDate().isAfter(pricelist.getEndDate())){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean discountInvalid(VehicleDiscount vehicleDiscount){
-        if(vehicleDiscount.getDiscount() < 1 || vehicleDiscount.getDiscount() > 100
-        || vehicleDiscount.getNumDays() < 0){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean priceInvalid(Pricelist pricelist){
-        if(pricelist.getPrice() < 0 || pricelist.getPriceByMile() < 0 || pricelist.getPriceCollision() < 0){
-            return true;
-        }
-        return false;
-    }
-
     // Za search slider
 
     public MinAndMaxPricesDTO getMinAndMax() {
@@ -270,31 +136,120 @@ public class PricelistService {
         return minAndMax;
     }
 
-    // Prilikom kreiranja vozila
+    // validacija pricelists datuma u odnosu na datum vozila
 
-    public List<Pricelist> validatePricelists(List<Pricelist> pricelists, LocalDate startDate, LocalDate endDate) {
+    public List<Pricelist> validatePricelistsDate(List<Pricelist> pricelists, LocalDateTime startDate, LocalDateTime endDate) {
         try{
-            for(Pricelist pricelist : pricelists){
-                for (Pricelist pricelistCheck : pricelists){
-                    if(dateRangeOutdated(pricelist) || dateRangeInvalid(pricelist) || dateRangeOverlap(pricelist, pricelistCheck)
-                    || dateRangeNotCovering(pricelist, startDate, endDate)){
-                        return null;
+            if(pricelists.size() == 0){
+                System.out.println("Pricelist size 0");
+                return null;
+            }
+
+            LocalDate sd = new LocalDate(startDate.getYear(), startDate.getMonthValue(), startDate.getDayOfMonth());
+            LocalDate ed = new LocalDate(endDate.getYear(), endDate.getMonthValue(), endDate.getDayOfMonth());
+
+            int carDays = Days.daysBetween(sd, ed).getDays();
+            int pricelistDays = 0;
+
+            if(pricelists.size() == 1){
+                sd = new LocalDate(pricelists.get(0).getStartDate().getYear(), pricelists.get(0).getStartDate().getMonthValue(), pricelists.get(0).getStartDate().getDayOfMonth());
+                ed = new LocalDate(pricelists.get(0).getEndDate().getYear(), pricelists.get(0).getEndDate().getMonthValue(), pricelists.get(0).getEndDate().getDayOfMonth());
+                pricelistDays += Days.daysBetween(sd, ed).getDays();
+                if(dateRangeOutdated(pricelists.get(0)) || dateRangeInvalid(pricelists.get(0))
+                        || (!pricelists.get(0).getStartDate().equals(startDate) && !pricelists.get(0).getEndDate().equals(endDate))
+                        || carDays != pricelistDays){
+                    return null;
+                }
+                return pricelists;
+            }
+
+            sd = new LocalDate(pricelists.get(0).getStartDate().getYear(), pricelists.get(0).getStartDate().getMonthValue(), pricelists.get(0).getStartDate().getDayOfMonth());
+            ed = new LocalDate(pricelists.get(0).getEndDate().getYear(), pricelists.get(0).getEndDate().getMonthValue(), pricelists.get(0).getEndDate().getDayOfMonth());
+            pricelistDays += Days.daysBetween(sd, ed).getDays();
+
+            for (int i = 1 ; i < pricelists.size(); i++) {
+                sd = new LocalDate(pricelists.get(i).getStartDate().getYear(), pricelists.get(i).getStartDate().getMonthValue(), pricelists.get(i).getStartDate().getDayOfMonth());
+                ed = new LocalDate(pricelists.get(i).getEndDate().getYear(), pricelists.get(i).getEndDate().getMonthValue(), pricelists.get(i).getEndDate().getDayOfMonth());
+                pricelistDays += Days.daysBetween(sd, ed).getDays() + 1;
+            }
+
+            for(int i = 0 ; i < pricelists.size(); i++) {
+                for (int j = 1; j < pricelists.size(); j++) {
+                    if (i != j) {
+                        if (dateRangeOutdated(pricelists.get(i)) || dateRangeInvalid(pricelists.get(i)) || dateRangeOverlap(pricelists.get(i), pricelists.get(j))
+                                || dateRangeNotCovering(pricelists.get(i), startDate, endDate)) {
+                            return null;
+                        }
                     }
                 }
             }
+
+            System.out.println(carDays);
+            System.out.println(pricelistDays);
+
+            if (carDays != pricelistDays){
+                return null;
+            }
+
             return pricelists;
         }
         catch(Exception e){
-
+            System.out.println("Exception in function validatePricelistsDate " + e.getLocalizedMessage());
         }
         return null;
     }
 
-    public boolean dateRangeNotCovering(Pricelist pricelist, LocalDate startDate, LocalDate endDate){
-        if(startDate.isBefore(pricelist.getStartDate()) && endDate.isAfter(pricelist.getEndDate())
-        || (startDate.equals(pricelist.getStartDate()) && endDate.equals(pricelist.getEndDate()))){
+    public boolean dateRangeNotCovering(Pricelist pricelist, LocalDateTime startDate, LocalDateTime endDate){
+        if((startDate.toLocalDate().isBefore(pricelist.getStartDate().toLocalDate()) && endDate.toLocalDate().isAfter(pricelist.getEndDate().toLocalDate()))
+        || (startDate.toLocalDate().isBefore(pricelist.getStartDate().toLocalDate()) && endDate.toLocalDate().equals(pricelist.getEndDate().toLocalDate()))
+        || (startDate.toLocalDate().equals(pricelist.getStartDate().toLocalDate()) && endDate.toLocalDate().isAfter(pricelist.getEndDate().toLocalDate()))
+        || (startDate.toLocalDate().equals(pricelist.getStartDate().toLocalDate()) && endDate.toLocalDate().equals(pricelist.getEndDate().toLocalDate()))){
             return false;
         }
+        System.out.println("Not covering");
         return true;
+    }
+
+    public boolean dateRangeOverlap(Pricelist pricelist1, Pricelist pricelist2){
+        if ((pricelist1.getStartDate().toLocalDate().isBefore(pricelist2.getEndDate().toLocalDate()) && pricelist2.getStartDate().toLocalDate().isBefore(pricelist1.getEndDate().toLocalDate()))
+            || pricelist1.getStartDate().toLocalDate().equals(pricelist2.getEndDate().toLocalDate())
+            || pricelist1.getEndDate().toLocalDate().equals(pricelist2.getStartDate().toLocalDate())
+            || pricelist1.getStartDate().toLocalDate().equals(pricelist2.getStartDate().toLocalDate())
+            || pricelist1.getEndDate().toLocalDate().equals(pricelist2.getEndDate().toLocalDate())){
+            System.out.println("Overlap");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean dateRangeOutdated(Pricelist pricelist){
+        if (pricelist.getStartDate().toLocalDate().isBefore(java.time.LocalDate.now()) && !pricelist.getStartDate().toLocalDate().equals(java.time.LocalDate.now())){
+            System.out.println("Outdated");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean dateRangeInvalid(Pricelist pricelist){
+        if (pricelist.getStartDate().toLocalDate().isAfter(pricelist.getEndDate().toLocalDate())){
+            System.out.println("Invalid");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean discountInvalid(VehicleDiscount vehicleDiscount){
+        if(vehicleDiscount.getDiscount() < 1 || vehicleDiscount.getDiscount() > 100
+                || vehicleDiscount.getNumDays() < 0){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean priceInvalid(Pricelist pricelist){
+        if(pricelist.getPrice() < 0 || pricelist.getPriceByMile() < 0 || pricelist.getPriceCollision() < 0){
+            return true;
+        }
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import com.example.pricelist.model.builders.PricelistBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Pricelist {
@@ -13,10 +14,10 @@ public class Pricelist {
     private Long id;
 
     @Column(name="start_date", nullable=false)
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
     @Column(name="end_date", nullable = false)
-    private LocalDate  endDate;
+    private LocalDateTime  endDate;
 
     @Column(name="price", nullable = false)
     private float price;
@@ -37,7 +38,7 @@ public class Pricelist {
     public Pricelist() {
     }
 
-    public Pricelist(LocalDate startDate, LocalDate endDate, float price, float priceByMile, float priceCollision, Long vehicleId, VehicleDiscount vehicleDiscount) {
+    public Pricelist(LocalDateTime startDate, LocalDateTime endDate, float price, float priceByMile, float priceCollision, Long vehicleId, VehicleDiscount vehicleDiscount) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.price = price;
@@ -60,19 +61,19 @@ public class Pricelist {
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
