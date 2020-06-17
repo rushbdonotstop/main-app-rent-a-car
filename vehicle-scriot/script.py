@@ -1,8 +1,11 @@
 import json
 
+import googlemaps
 import pika
 import requests
 from twisted.internet import task, reactor
+
+from generateCoords import get_points_along_path
 
 global token
 timeout = 15.0 # 15 seconds
@@ -54,11 +57,13 @@ def closeConnection(connection):
     connection.close()
 
 
-sendTokenRequest()
-connection, channel = openConnection()
+# sendTokenRequest()
+# connection, channel = openConnection()
+#
+# l = task.LoopingCall(sendCoordinates)
+# l.start(timeout) # call every 15 seconds
+#
+# reactor.run()
+# closeConnection(connection)
 
-l = task.LoopingCall(sendCoordinates)
-l.start(timeout) # call every 15 seconds
-
-reactor.run()
-closeConnection(connection)
+dict = get_points_along_path("AIzaSyBcBUQxfS6JldNG0Ltoju5YxE_0-CKJsu4", "HashedIn Technologies, Bangalore", "World Trade Centre, Bangalore", departure_time=None, period=15)
