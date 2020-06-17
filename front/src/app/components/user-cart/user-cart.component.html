@@ -79,6 +79,7 @@
                 <mat-card-title> Bundles </mat-card-title>
                 <mat-card-content>
                     <table style="width:100%" role="list" *ngFor="let bundle of bundleList" style="margin: 10;">
+                        <button mat-fab color="warn" (click)="removeBundle(bundle)">Remove</button>
                       
                         <tr>
                             <th>Make</th>
@@ -97,7 +98,7 @@
                             <td><button mat-raised-button (click)="openDetails(request.id)">Details</button></td>
                             <td> <button mat-raised-button color="primary"
                                     (click)="openPrices(request.id)">Prices</button> </td>
-                            <td><button mat-raised-button color="warn">Remove</button></td>
+                            <td><button mat-raised-button color="warn" (click)="removeFromBundle(request,bundle)">Remove</button></td>
                         </tr>
                     </table>
                 </mat-card-content>

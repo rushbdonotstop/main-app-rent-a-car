@@ -6,13 +6,13 @@
 <p>owner : {{data.ownerUsername}}</p>
 
 <div>
-    <input placeholder="Start" [(ngModel)]="startDate" [owlDateTimeFilter]="myFilter" [min]="min"
+    <input placeholder="Start" [(ngModel)]="startDate" (ngModelChange)="startDateSelected($event)" [owlDateTimeFilter]="myFilter" [min]="min"
         [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
     <owl-date-time #dt></owl-date-time>
 </div>
 
 <div>
-    <input placeholder="End" [(ngModel)]="endDate" [owlDateTimeFilter]="myFilter" [min]="min" [owlDateTimeTrigger]="dt1"
+    <input placeholder="End" [(ngModel)]="endDate" [owlDateTimeFilter]="myFilter" [min]="minEndDate" [owlDateTimeTrigger]="dt1"
         [owlDateTime]="dt1">
     <owl-date-time #dt1></owl-date-time>
 </div>
