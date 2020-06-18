@@ -12,6 +12,8 @@ import { BundleAndVehicle } from 'src/app/shared/models/cart/BundleAndVehicle';
 import { MatListModule } from '@angular/material/list';
 import { PricelistService } from 'src/app/core/services/pricelist.service';
 import { Pricelist } from 'src/app/shared/models/pricelist/Pricelist';
+import { PrivilegeService } from 'src/app/core/services/privilege.service';
+import { User } from 'src/app/shared/models/user/User';
 
 @Component({
   templateUrl: './user-cart.component.html',
@@ -28,8 +30,10 @@ export class UserCartComponent implements OnInit {
   displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'prices', 'remove'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
   price: number = 0
+  rentingPrivilege: boolean = false
 
-  constructor(private cartService: CartService, public dialog: MatDialog, private _snackBar: MatSnackBar, private pricelistService: PricelistService) { }
+  constructor(private cartService: CartService, public dialog: MatDialog, private _snackBar: MatSnackBar,
+    private pricelistService: PricelistService, private privilegeService: PrivilegeService) { }
 
   ngOnInit() {
     this.cart = this.cartService.getCart()
@@ -43,8 +47,14 @@ export class UserCartComponent implements OnInit {
     else {
       this.emptyCart = false
       this.calculateTotalPrice()
+      this.privilegeService.getPrivileges(JSON.parse(localStorage.getItem('userObject')).id).subscribe(data => {
+        for (let privilege of data.userPrivileges) {
+          if (privilege.toString() == "RENT_VEHICLE") {
+            this.rentingPrivilege = true;
+          }
+        }
+      })
     }
-    console.log(this.cart)
   }
 
   removeFromBundle(element: RequestAndVehicle, bundle: BundleAndVehicle) {
@@ -98,20 +108,29 @@ export class UserCartComponent implements OnInit {
   }
 
   buy() {
-    this.cartService.buy().subscribe(data => {
-      this._snackBar.open("Successfully rented!", "", {
-        duration: 2000,
-        verticalPosition: 'bottom'
-      });
-      this.cartService.newCart()
-      this.ngOnInit()
-    },
-      error => {
-        this._snackBar.open("Error occured", "", {
+    console.log(this.rentingPrivilege)
+    if (this.rentingPrivilege) {
+      this.cartService.buy().subscribe(data => {
+        this._snackBar.open("Successfully rented!", "", {
           duration: 2000,
           verticalPosition: 'bottom'
         });
-      })
+        this.cartService.newCart()
+        this.ngOnInit()
+      },
+        error => {
+          this._snackBar.open("Error occured", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        })
+    }
+    else {
+      this._snackBar.open("You have no renting privileges. Please try contacting an administrator to get the issue resolved", "", {
+        duration: 5000,
+        verticalPosition: 'bottom'
+      });
+    }
   }
 
   clear() {
@@ -128,9 +147,9 @@ export class UserCartComponent implements OnInit {
   }
 
   calculateRequestPrice(requests) {
-    this.price=0
+    this.price = 0
     for (let r of requests) {
-      var requestPrice=0
+      var requestPrice = 0
       var startDate = r.startDate
       var endDate = r.endDate
       var prices = []
@@ -143,7 +162,7 @@ export class UserCartComponent implements OnInit {
           console.log(this.daysDiff(endDate, startDate))
           if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == 1) {
             this.price += p.price * (this.daysDiff(endDate, startDate))
-            requestPrice  += p.price * (this.daysDiff(endDate, startDate))
+            requestPrice += p.price * (this.daysDiff(endDate, startDate))
           }
           else if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == -1) {
             this.price += p.price * (this.daysDiff(p.endDate, startDate))
@@ -154,7 +173,7 @@ export class UserCartComponent implements OnInit {
             requestPrice += p.price * (this.daysDiff(endDate, p.startDate))
           }
         }
-        r.price=requestPrice
+        r.price = requestPrice
       });
     }
 
