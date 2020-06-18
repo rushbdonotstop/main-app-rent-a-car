@@ -18,6 +18,20 @@ public class VehicleMakeController {
     @Autowired
     private VehicleMakeService vehicleMakeService;
 
+//    /**
+//     * GET server/catalogue/vehicleMake/byModel/{id}
+//     *
+//     * @return return a vehicle make
+//     */
+//    @GetMapping(value = "byModel/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<VehicleMake> getOneVehicleMakeByModel(@PathVariable String id) {
+//        try {
+//            return new ResponseEntity<>(vehicleMakeService.findOneMakeByModel(id), HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+//        }
+//    }
+
     /**
      * GET server/catalogue/vehicleMake/{id}
      *

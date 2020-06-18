@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { CatalogueItem } from 'src/app/shared/models/catalogue/CatalogueItem';
+import { VehicleModel } from 'src/app/shared/models/catalogue/VehicleModel';
+import { NotificationFromServer } from 'src/app/shared/models/Notification';
 
 const httpOptions = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
 
@@ -8,7 +10,6 @@ const httpOptions = {headers: new HttpHeaders({'Content-Type' : 'application/jso
   providedIn: 'root'
 })
 export class CatalogueService {
-
   constructor(private http: HttpClient) { }
 
   getModelByMake(makeId : number) {
@@ -20,7 +21,7 @@ export class CatalogueService {
   }
 
   getModel(id : number) {
-    return this.http.get<CatalogueItem>('server/catalogue/catalogue/vehicleModel/'+id,  httpOptions);
+    return this.http.get<VehicleModel>('server/catalogue/catalogue/vehicleModel/'+id,  httpOptions);
   }
 
   getFuelType(id : number) {
@@ -40,7 +41,7 @@ export class CatalogueService {
   }
 
   getModels() {
-    return this.http.get<CatalogueItem[]>('server/catalogue/catalogue/vehicleModel/',  httpOptions);
+    return this.http.get<VehicleModel[]>('server/catalogue/catalogue/vehicleModel/',  httpOptions);
   }
 
   getFuelTypes() {
@@ -53,5 +54,28 @@ export class CatalogueService {
 
   getTransmissions() {
     return this.http.get<CatalogueItem[]>('server/catalogue/catalogue/vehicleTransmission/',  httpOptions);
+  }
+  
+  putFuelType(fuelType: CatalogueItem) {
+    return this.http.put<NotificationFromServer>('server/catalogue/catalogue/vehicleFuelType/'+fuelType.id, JSON.stringify(fuelType), httpOptions);
+  }
+
+  
+  putVehicleMake(catalogueItemEditRequest: CatalogueItem) {
+    return this.http.put<NotificationFromServer>('server/catalogue/catalogue/vehicleMake/'+catalogueItemEditRequest.id, JSON.stringify(catalogueItemEditRequest), httpOptions);
+  }
+
+  
+  putVehicleModel(catalogueItemEditRequest: VehicleModel) {
+    return this.http.put<NotificationFromServer>('server/catalogue/catalogue/vehicleModel/'+catalogueItemEditRequest.id, JSON.stringify(catalogueItemEditRequest), httpOptions);
+  }
+  
+  putVehicleTransmission(catalogueItemEditRequest: CatalogueItem) {
+    alert(JSON.stringify(catalogueItemEditRequest));
+    return this.http.put<NotificationFromServer>('server/catalogue/catalogue/vehicleTransmission/'+catalogueItemEditRequest.id, JSON.stringify(catalogueItemEditRequest), httpOptions);
+  }
+  putVehicleStyle(catalogueItemEditRequest: CatalogueItem) {
+    alert(JSON.stringify(catalogueItemEditRequest));
+    return this.http.put<NotificationFromServer>('server/catalogue/catalogue/vehicleStyle/'+catalogueItemEditRequest.id, JSON.stringify(catalogueItemEditRequest), httpOptions);
   }
 }

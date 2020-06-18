@@ -20,7 +20,7 @@ import { ViewPriceListComponent } from '../components/price-list/view-price-list
 import { VehicleMapComponent } from '../components/vehicle-map/vehicle-map.component';
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { EditCodebookComponent } from '../components/admin-dashboard/vehicles-codebook/edit-codebook/edit-codebook.component';
-import { ViewCodebookComponent } from '../components/admin-dashboard/vehicles-codebook/view-codebook/view-codebook.component';
+import { ViewCodebookComponent, EditFuelTypeDialog, EditMakeDialog, EditModelDialog, EditStyleDialog, EditTransmissionlDialog } from '../components/admin-dashboard/vehicles-codebook/view-codebook/view-codebook.component';
 import { CommentRequestsComponent } from '../components/admin-dashboard/comment-requests/comment-requests.component';
 import { ViewUsersComponent } from '../components/admin-dashboard/system-users/view-users/view-users.component';
 import { RegisterAgentComponent } from '../components/admin-dashboard/system-users/register-agent/register-agent.component';
@@ -31,13 +31,13 @@ import { CoreModule } from '../core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatSliderModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatSortModule, MatPaginatorModule } from '@angular/material';
+import { MatTable, MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatSliderModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatSortModule, MatPaginatorModule, MatTabsModule } from '@angular/material';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutocompleteComponent } from '../components/create-vehicle/autocomplete/autocomplete.component';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTooltipModule} from '@angular/material/tooltip'
-import {TextFieldModule} from '@angular/cdk/text-field';
+import { MatTooltipModule} from '@angular/material/tooltip';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header/admin-header.component';
 
 @NgModule({
@@ -68,10 +68,15 @@ import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header
     RegisterAgentComponent,
     EditPermissionsComponent,
     AutocompleteComponent,
-    AdminHeaderComponent
+    AdminHeaderComponent,
+    EditFuelTypeDialog,
+    EditMakeDialog,
+    EditModelDialog,
+    EditStyleDialog,
+    EditTransmissionlDialog,
   ],
   entryComponents: [
-    VehicleDetailsComponent, ViewPriceListComponent
+    VehicleDetailsComponent, ViewPriceListComponent, EditFuelTypeDialog, EditMakeDialog, EditModelDialog, EditTransmissionlDialog
   ],
 
   imports: [
@@ -108,7 +113,9 @@ import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header
     MatSortModule,
     MatPaginatorModule,
     MatTooltipModule,
-    TextFieldModule
+    TextFieldModule,
+    MatTabsModule,
+    MatTableModule
   ],
   exports: [HomeComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

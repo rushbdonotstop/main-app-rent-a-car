@@ -6,7 +6,7 @@ import { HomeModule } from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { GestureConfig } from '@angular/material';
+import { GestureConfig, MatTabsModule, MatTable, MatTableModule } from '@angular/material';
 import { AutocompleteComponent } from './components/create-vehicle/autocomplete/autocomplete.component';
 import { RentDialogComponent } from './components/rent-dialog/rent-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,7 +32,9 @@ import { MatListModule, MatListItem } from '@angular/material/list';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     FormsModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule,
+    MatTableModule
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
   bootstrap: [AppComponent],
