@@ -1,5 +1,6 @@
 package com.example.request.DTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BundleDTO {
@@ -10,6 +11,7 @@ public class BundleDTO {
     private String username;
 
     public BundleDTO() {
+        this.requestsList = new ArrayList<RequestForFrontDTO>();
     }
 
     public BundleDTO(Long id, List<RequestForFrontDTO> requestsList, float totalCost, String username) {
