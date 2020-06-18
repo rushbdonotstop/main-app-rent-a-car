@@ -51,20 +51,22 @@ public class UserPrivilegeService {
     }
 
     public UserPrivilegeDTO getOneUserPrivileges(String id) throws EntityNotFoundException {
+        System.out.println("NZM KAKO DA DEBAGUJEM HVALA");
         try {
             userRepository.findOneById(Long.parseLong(id));
         } catch (EntityNotFoundException e) {
             throw new EntityNotFoundException("User doesn't exists.");
         }
+        System.out.println("PROSO");
 
         List<UserPrivilege> userPrivilegeList = userPrivilegeRepository.findAllByUserId(Long.parseLong(id));
 
         UserPrivilegeDTO userPrivilegeDTO = new UserPrivilegeDTO();
         userPrivilegeDTO.setUserId(Long.parseLong(id));
-        userPrivilegeList.stream().forEach(userPrivilege -> {
-            userPrivilegeDTO.addPrivilege(userPrivilege.getPrivilege().toString());
-        });
-
+        for (UserPrivilege up:
+             userPrivilegeList) {
+            userPrivilegeDTO.addPrivilege(up.getPrivilege().toString());
+        }
         return userPrivilegeDTO;
     }
 
