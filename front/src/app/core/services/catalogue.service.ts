@@ -71,11 +71,30 @@ export class CatalogueService {
   }
   
   putVehicleTransmission(catalogueItemEditRequest: CatalogueItem) {
-    alert(JSON.stringify(catalogueItemEditRequest));
     return this.http.put<NotificationFromServer>('server/catalogue/catalogue/vehicleTransmission/'+catalogueItemEditRequest.id, JSON.stringify(catalogueItemEditRequest), httpOptions);
   }
+
   putVehicleStyle(catalogueItemEditRequest: CatalogueItem) {
-    alert(JSON.stringify(catalogueItemEditRequest));
     return this.http.put<NotificationFromServer>('server/catalogue/catalogue/vehicleStyle/'+catalogueItemEditRequest.id, JSON.stringify(catalogueItemEditRequest), httpOptions);
+  }
+  
+  addFuelType(newFuelType: CatalogueItem) {
+    return this.http.post<NotificationFromServer>('server/catalogue/catalogue/vehicleFuelType/', JSON.stringify(newFuelType), httpOptions);
+  }
+  
+  addMake(newMake: CatalogueItem) {
+    return this.http.post<NotificationFromServer>('server/catalogue/catalogue/vehicleMake/', JSON.stringify(newMake), httpOptions);
+  }
+  
+  addModel(newModel: VehicleModel) {
+    return this.http.post<NotificationFromServer>('server/catalogue/catalogue/vehicleModel/', JSON.stringify(newModel), httpOptions);
+  }
+
+  addStyle(newStyle: CatalogueItem) {
+    return this.http.post<NotificationFromServer>('server/catalogue/catalogue/vehicleStyle/', JSON.stringify(newStyle), httpOptions);
+  }
+
+  addTransmission(newTransmission: CatalogueItem) {
+    return this.http.post<NotificationFromServer>('server/catalogue/catalogue/vehicleTransmission/', JSON.stringify(newTransmission), httpOptions);
   }
 }

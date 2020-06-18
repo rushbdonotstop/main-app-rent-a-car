@@ -70,4 +70,20 @@ public class VehicleTransmissionController {
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
     }
+
+    /**
+     * POST server/catalogue/vehicleTransmission
+     *
+     * @return return status of creating transmission type request
+     */
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> postVehicleFuelType(@RequestBody VehicleTransmission vehicleTransmission) {
+        try {
+            vehicleTransmissionService.addNew(vehicleTransmission);
+
+            return new ResponseEntity<>(new Notification("Successfully added vehicle transmission type " + vehicleTransmission.getValue(), true), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
+        }
+    }
 }

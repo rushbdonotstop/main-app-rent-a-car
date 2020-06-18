@@ -23,12 +23,13 @@ export class ViewCodebookComponent implements OnInit {
   dataSourceTransmissionTypes: MatTableDataSource<CatalogueItem>;
 
   modelList: VehicleModel[] = [];
+  makeList: CatalogueItem[] = [];
 
   @ViewChildren(MatPaginator) paginator: QueryList<MatPaginator>;
   @ViewChildren(MatSort) sort: QueryList<MatSort>;
 
   constructor(private snackBar: MatSnackBar, private catalogueService: CatalogueService, private dialog: MatDialog) { }
-
+  
   ngOnInit() {
     this.catalogueService.getFuelTypes()
       .subscribe(data => {
@@ -48,6 +49,7 @@ export class ViewCodebookComponent implements OnInit {
       this.dataSourceMakes = new MatTableDataSource<CatalogueItem>(data);
       this.dataSourceMakes.paginator = this.paginator.toArray[1];
       this.dataSourceMakes.sort = this.sort.toArray[1];
+      this.makeList = data;
     },
     error => {
       this.snackBar.open("Server error!", "", {
@@ -263,6 +265,101 @@ export class ViewCodebookComponent implements OnInit {
       });
       }
     });
+  }
+
+  newFuelType: CatalogueItem = new CatalogueItem();
+  newMake: CatalogueItem = new CatalogueItem();
+  newModel: VehicleModel = new VehicleModel();
+  selectedMake: CatalogueItem = new CatalogueItem();
+  newStyle: CatalogueItem = new CatalogueItem();
+  newTransmission: CatalogueItem = new CatalogueItem();
+
+  addFuelType() {
+    if(!this.newFuelType.value) {
+      this.snackBar.open("Enter fuel type value!", "", {
+        duration: 2000,
+          verticalPosition: 'top'
+      });
+    } else {
+      this.catalogueService.addFuelType(this.newFuelType).subscribe(data=> {
+          this.snackBar.open(data.text, "", { 
+            duration: 2000,
+          verticalPosition: 'bottom'});
+      });
+      this.newFuelType.value = "";
+    }
+  }
+
+  addMake() {
+    if(!this.newMake.value) {
+      this.snackBar.open("Enter vehicle make value!", "", {
+        duration: 2000,
+          verticalPosition: 'top'
+      });
+    } else {
+      this.catalogueService.addMake(this.newMake).subscribe(data=> {
+          this.snackBar.open(data.text, "", { 
+            duration: 2000,
+          verticalPosition: 'bottom'});
+      });
+      this.newMake.value = "";
+    }
+  }
+
+  addModel() {
+    alert(JSON.stringify(this.selectedMake));
+    if(!this.newModel.value) {
+      this.snackBar.open("Enter vehicle model value!", "", {
+        duration: 2000,
+          verticalPosition: 'top'
+      });
+    } else if(!this.selectedMake) {
+      this.snackBar.open("Select vehicle make value!", "", {
+        duration: 2000,
+          verticalPosition: 'top'
+      });
+    } else {
+      this.newModel.vehicleMake = this.selectedMake;
+      this.catalogueService.addModel(this.newModel).subscribe(data=> {
+          this.snackBar.open(data.text, "", { 
+            duration: 2000,
+          verticalPosition: 'bottom'});
+      });
+      this.newModel.value = "";
+      this.selectedMake = new CatalogueItem();
+    }
+  }
+
+  addTransmission() {
+    if(!this.newTransmission.value) {
+      this.snackBar.open("Enter vehicle transmission type value!", "", {
+        duration: 2000,
+          verticalPosition: 'top'
+      });
+    } else {
+      this.catalogueService.addTransmission(this.newTransmission).subscribe(data=> {
+          this.snackBar.open(data.text, "", { 
+            duration: 2000,
+          verticalPosition: 'bottom'});
+      });
+      this.newTransmission.value = "";
+    }
+  }
+
+  addStyle() {
+    if(!this.newStyle.value) {
+      this.snackBar.open("Enter vehicle style value!", "", {
+        duration: 2000,
+          verticalPosition: 'top'
+      });
+    } else {
+      this.catalogueService.addStyle(this.newStyle).subscribe(data=> {
+          this.snackBar.open(data.text, "", { 
+            duration: 2000,
+          verticalPosition: 'bottom'});
+      });
+      this.newStyle.value = "";
+    }
   }
 }
 
