@@ -130,6 +130,7 @@ export class UserCartComponent implements OnInit {
   calculateRequestPrice(requests) {
     this.price=0
     for (let r of requests) {
+      var requestPrice=0
       var startDate = r.startDate
       var endDate = r.endDate
       var prices = []
@@ -142,14 +143,18 @@ export class UserCartComponent implements OnInit {
           console.log(this.daysDiff(endDate, startDate))
           if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == 1) {
             this.price += p.price * (this.daysDiff(endDate, startDate))
+            requestPrice  += p.price * (this.daysDiff(endDate, startDate))
           }
           else if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == -1) {
             this.price += p.price * (this.daysDiff(p.endDate, startDate))
+            requestPrice += p.price * (this.daysDiff(p.endDate, startDate))
           }
           else if (this.compareDate(p.startDate, startDate) == 1 && this.compareDate(p.endDate, endDate) == -1) {
             this.price += p.price * (this.daysDiff(endDate, p.startDate))
+            requestPrice += p.price * (this.daysDiff(endDate, p.startDate))
           }
         }
+        r.price=requestPrice
       });
     }
 
