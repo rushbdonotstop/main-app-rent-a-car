@@ -13,6 +13,7 @@ import { CartDialogComponent } from '../cart-dialog/cart-dialog.component';
 import { DialogType } from 'src/app/shared/models/cart/DialogType';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserType } from 'src/app/shared/models/user/UserType';
+import { User } from 'src/app/shared/models/user/User';
 
 @Component({
   templateUrl: './view-vehicles.component.html',
@@ -199,13 +200,16 @@ export class ViewVehiclesComponent implements OnInit {
   }
 
   isRentingAllowed(car: VehicleMainViewDTO) {
-    var loggedInUser = JSON.parse(localStorage.getItem("userObject"));
+    var loggedInUser = new User()
+    loggedInUser = JSON.parse(localStorage.getItem('userObject'))
 
     //agent cant rent his own car
-    if (loggedInUser.userDetails.userType == UserType.AGENT)
+    if (loggedInUser.userDetails.userType.toString() == "AGENT")
       if (car.ownerId == loggedInUser.id)
         return false;
       else
+        return true
+    else
         return true;
 
   }

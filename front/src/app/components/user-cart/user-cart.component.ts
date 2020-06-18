@@ -10,6 +10,8 @@ import { ViewPriceListComponent } from '../price-list/view-price-list/view-price
 import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.component';
 import { BundleAndVehicle } from 'src/app/shared/models/cart/BundleAndVehicle';
 import { MatListModule } from '@angular/material/list';
+import { PricelistService } from 'src/app/core/services/pricelist.service';
+import { Pricelist } from 'src/app/shared/models/pricelist/Pricelist';
 
 @Component({
   templateUrl: './user-cart.component.html',
@@ -25,8 +27,9 @@ export class UserCartComponent implements OnInit {
   dataSourceBundle: MatTableDataSource<BundleAndVehicle>;
   displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'prices', 'remove'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
+  price: number = 0
 
-  constructor(private cartService: CartService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private cartService: CartService, public dialog: MatDialog, private _snackBar: MatSnackBar, private pricelistService: PricelistService) { }
 
   ngOnInit() {
     this.cart = this.cartService.getCart()
@@ -34,26 +37,28 @@ export class UserCartComponent implements OnInit {
     this.bundleList = this.cart.bundles
     this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>(this.requests);
     this.dataSourceBundle = new MatTableDataSource<BundleAndVehicle>(this.bundleList);
+
     if (this.requests.length == 0 && this.bundleList.length == 0)
       this.emptyCart = true
-    else
+    else {
       this.emptyCart = false
+      this.calculateTotalPrice()
+    }
     console.log(this.cart)
-    // for (let bundle of this.cart.bundles) {
-    //   this.dataSourceBundle.push(new MatTableDataSource<RequestAndVehicle>(bundle.requests));
-    // }
   }
 
   removeFromBundle(element: RequestAndVehicle, bundle: BundleAndVehicle) {
-    const index = bundle.requests.indexOf(element,0);
-    bundle.requests.splice(index,1)
+    const index = bundle.requests.indexOf(element, 0);
+    bundle.requests.splice(index, 1)
     this.cartService.updateBundles(this.bundleList)
+    this.calculateTotalPrice()
   }
 
   removeBundle(bundle: BundleAndVehicle) {
-    const index = this.bundleList.indexOf(bundle,0);
-    this.bundleList.splice(index,1)
+    const index = this.bundleList.indexOf(bundle, 0);
+    this.bundleList.splice(index, 1)
     this.cartService.updateBundles(this.bundleList)
+    this.calculateTotalPrice()
   }
 
   openPrices(vehicleId: number) {
@@ -86,6 +91,7 @@ export class UserCartComponent implements OnInit {
         this.requests.splice(this.requests.indexOf(element), 1);
         this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>(this.requests);
         this.cartService.updateRequests(this.requests)
+        this.calculateTotalPrice()
         return;
       }
     });
@@ -100,12 +106,12 @@ export class UserCartComponent implements OnInit {
       this.cartService.newCart()
       this.ngOnInit()
     },
-    error => {
-      this._snackBar.open("Error occured", "", {
-        duration: 2000,
-        verticalPosition: 'bottom'
-      });
-    })
+      error => {
+        this._snackBar.open("Error occured", "", {
+          duration: 2000,
+          verticalPosition: 'bottom'
+        });
+      })
   }
 
   clear() {
@@ -113,6 +119,62 @@ export class UserCartComponent implements OnInit {
     this.ngOnInit()
   }
 
+  calculateTotalPrice() {
+    this.calculateRequestPrice(this.requests)
 
+    for (let b of this.bundleList) {
+      this.calculateRequestPrice(b.requests)
+    }
+  }
+
+  calculateRequestPrice(requests) {
+    this.price=0
+    for (let r of requests) {
+      var startDate = r.startDate
+      var endDate = r.endDate
+      var prices = []
+      this.pricelistService.getPricelists(r.vehicleId).subscribe(data => {
+        prices = data
+        console.log(prices)
+        for (let p of prices) {
+          console.log(startDate, endDate, p.startDate, p.endDate)
+          console.log(p.price)
+          console.log(this.daysDiff(endDate, startDate))
+          if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == 1) {
+            this.price += p.price * (this.daysDiff(endDate, startDate))
+          }
+          else if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == -1) {
+            this.price += p.price * (this.daysDiff(p.endDate, startDate))
+          }
+          else if (this.compareDate(p.startDate, startDate) == 1 && this.compareDate(p.endDate, endDate) == -1) {
+            this.price += p.price * (this.daysDiff(endDate, p.startDate))
+          }
+        }
+      });
+    }
+
+  }
+
+  compareDate(date1: Date, date2: Date): number {
+    let d1 = new Date(date1); let d2 = new Date(date2);
+
+    // // Check if the dates are equal
+    // let same = d1.getTime() === d2.getTime();
+    // if (same) return 0;
+
+    // Check if the first is greater than second
+    if (d1 >= d2) return 1;
+
+    // Check if the first is less than second
+    if (d1 <= d2) return -1;
+  }
+
+  daysDiff(date1, date2) {
+
+    var diff = Math.abs(new Date(date1).getTime() - new Date(date2).getTime());
+    var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+    return diffDays
+
+  }
 
 }
