@@ -3,12 +3,13 @@ package com.example.request.DTO;
 import com.example.request.model.Bundle;
 import com.example.request.model.Request;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RequestDTO {
 
-    List<Request> requests;
-    List<Bundle> bundles;
+    List<Request> requests = new ArrayList<>();
+    List<Bundle> bundles = new ArrayList<>();
 
     public List<Request> getRequests() {
         return requests;

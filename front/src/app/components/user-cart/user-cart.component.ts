@@ -44,17 +44,17 @@ export class UserCartComponent implements OnInit {
     // }
   }
 
-  removeFromBundle(id: number) {
-    // this.bundleList.forEach(element => {
-    //   if (element.id == id) {
-    //     this.bundleList.splice(this.bundleList.indexOf(element), 1);
-    //     this.dataSourceBundle = new MatTableDataSource<RequestAndVehicle>(this.bundleList);
-    //     return;
-    //   }
-    // });
+  removeFromBundle(element: RequestAndVehicle, bundle: BundleAndVehicle) {
+    const index = bundle.requests.indexOf(element,0);
+    bundle.requests.splice(index,1)
+    this.cartService.updateBundles(this.bundleList)
   }
 
-  removeBundle() { }
+  removeBundle(bundle: BundleAndVehicle) {
+    const index = this.bundleList.indexOf(bundle,0);
+    this.bundleList.splice(index,1)
+    this.cartService.updateBundles(this.bundleList)
+  }
 
   openPrices(vehicleId: number) {
     const dialogRef = this.dialog.open(ViewPriceListComponent, {
@@ -99,6 +99,12 @@ export class UserCartComponent implements OnInit {
       });
       this.cartService.newCart()
       this.ngOnInit()
+    },
+    error => {
+      this._snackBar.open("Error occured", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
     })
   }
 

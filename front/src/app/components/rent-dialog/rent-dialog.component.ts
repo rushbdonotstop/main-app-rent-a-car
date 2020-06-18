@@ -2,9 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { VehicleMainViewDTO } from 'src/app/shared/models/vehicle/VehicleMainViewDTO';
 import { manualRequest } from 'src/app/shared/models/cart/manualRequest';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button';
 import { CartService } from 'src/app/core/services/cart.service';
-import { OwlDateTime } from 'ng-pick-datetime/date-time/date-time.class';
+import * as moment from 'moment'
 
 @Component({
   selector: 'pm-rent-dialog',
@@ -24,7 +23,15 @@ export class RentDialogComponent implements OnInit {
 
   datesValid: any
 
-  public min = new Date();
+  public min = moment(new Date())
+  .add(2,'d') 
+  .toDate(); 
+
+  public minEndDate = moment(new Date())
+  .add(2,'d') 
+  .toDate(); 
+
+
   public myFilter = (d: Date): boolean => {
     const day = d.getDay();
     // Prevent Sunday from being selected.
@@ -58,14 +65,14 @@ export class RentDialogComponent implements OnInit {
       request.endDate = this.endDate
       request.startDate = this.startDate
       request.vehicleId = this.id
-      this.rentService.manualRent(request).subscribe(data => {
+      this.rentService.manualRent(request).subscribe(() => {
         this._snackBar.open("Successfully rented", "", {
           duration: 2000,
           verticalPosition: 'bottom'
         });
         this.close()
       },
-        error => {
+        () => {
           this._snackBar.open("Failed", "", {
             duration: 2000,
             verticalPosition: 'bottom'
@@ -75,6 +82,10 @@ export class RentDialogComponent implements OnInit {
       this.datesValid = false
     }
 
+  }
+
+  startDateSelected(val){
+    this.minEndDate=val
   }
 
 }

@@ -11,6 +11,8 @@ import { Vehicle } from 'src/app/shared/models/vehicle/Vehicle';
 import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 import { CartDialogComponent } from '../cart-dialog/cart-dialog.component';
 import { DialogType } from 'src/app/shared/models/cart/DialogType';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { UserType } from 'src/app/shared/models/user/UserType';
 
 @Component({
   templateUrl: './view-vehicles.component.html',
@@ -44,7 +46,7 @@ export class ViewVehiclesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private vehicleService: VehicleService, private _snackBar: MatSnackBar, private cartService: CartService) { }
+  constructor(public dialog: MatDialog, private vehicleService: VehicleService, private _snackBar: MatSnackBar, private cartService: CartService, private authService: AuthService) { }
 
   ngOnInit() {
     this.vehicleService.getAll()
@@ -111,12 +113,13 @@ export class ViewVehiclesComponent implements OnInit {
   addBundleToCart() {
     if (this.bundleList.length > 1) {
       this.cartService.addBundleToCart(this.bundleList);
+      this.clearBundle()
       this._snackBar.open("Bundle added to cart", "", {
         duration: 2000,
         verticalPosition: 'bottom'
       });
     } else {
-      this._snackBar.open("Bundle cannot contain only one vehicle", "", {
+      this._snackBar.open("Bundle must contain at least two vehicles", "", {
         duration: 2000,
         verticalPosition: 'bottom'
       });
@@ -124,26 +127,33 @@ export class ViewVehiclesComponent implements OnInit {
   }
 
   addToBundle(element: VehicleMainViewDTO) {
-    if (this.bundleList.length != 0) {
-      if (this.bundleList[0].ownerUsername == element.ownerUsername) {
+    if (this.isRentingAllowed(element)) {
+      if (this.bundleList.length != 0) {
+        if (this.bundleList[0].ownerUsername == element.ownerUsername) {
+          this.bundleList.push(element);
+          this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>(this.bundleList);
+        }
+        else {
+          this._snackBar.open("Owner mismatch in bundle!", "", {
+            duration: 2000,
+            verticalPosition: 'top'
+          });
+        }
+      }
+      else {
         this.bundleList.push(element);
         this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>(this.bundleList);
       }
-      else {
-        this._snackBar.open("Owner mismatch in bundle!", "", {
-          duration: 2000,
-          verticalPosition: 'top'
-        });
-      }
+    } else {
+      this._snackBar.open("Renting your own car not allowed!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
+      });
     }
-    else {
-      this.bundleList.push(element);
-      this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>(this.bundleList);
-    }
-
   }
 
   clearBundle() {
+    this.bundleList = []
     this.dataSourceBundle = new MatTableDataSource<VehicleMainViewDTO>([]);
   }
   inStoreRent(element) {
@@ -161,23 +171,43 @@ export class ViewVehiclesComponent implements OnInit {
   }
 
   openAddToCartDialog(element, dialog: DialogType) {
-    const dialogRef = this.dialog.open(CartDialogComponent, {
-      width: '400px',
-      data: { make: element.make, price: element.price, ownerUsername: element.ownerUsername, model: element.model, id: element.id, dialog: dialog }
-    });
+    if (this.isRentingAllowed(element)) {
+      const dialogRef = this.dialog.open(CartDialogComponent, {
+        width: '400px',
+        data: { make: element.make, price: element.price, ownerUsername: element.ownerUsername, model: element.model, id: element.id, dialog: dialog }
+      });
 
-    if (dialog == 1) {
-      dialogRef.afterClosed().subscribe(result => {
-        var request = new VehicleMainViewDTO(element.id, element.make, element.model, element.price, element.ownerUsername)
-        request.startDate = result.startDate
-        request.endDate = result.endDate
-        this.addToBundle(request)
-        this._snackBar.open("Item added to bundle", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
+      if (dialog == 1) {
+        dialogRef.afterClosed().subscribe(result => {
+          var request = new VehicleMainViewDTO(element.id, element.make, element.model, element.price, element.ownerUsername)
+          request.startDate = result.startDate
+          request.endDate = result.endDate
+          this.addToBundle(request)
+          this._snackBar.open("Item added to bundle", "", {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
         });
+      }
+    }
+    else {
+      this._snackBar.open("Renting your own car not allowed!", "", {
+        duration: 2000,
+        verticalPosition: 'bottom'
       });
     }
+  }
+
+  isRentingAllowed(car: VehicleMainViewDTO) {
+    var loggedInUser = JSON.parse(localStorage.getItem("userObject"));
+
+    //agent cant rent his own car
+    if (loggedInUser.userDetails.userType == UserType.AGENT)
+      if (car.ownerId == loggedInUser.id)
+        return false;
+      else
+        return true;
+
   }
 
 }
