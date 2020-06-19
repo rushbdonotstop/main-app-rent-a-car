@@ -62,6 +62,8 @@ export class UserCartComponent implements OnInit {
     bundle.requests.splice(index, 1)
     this.cartService.updateBundles(this.bundleList)
     this.calculateTotalPrice()
+    if (this.isCartEmpty)
+      this.emptyCart = true
   }
 
   removeBundle(bundle: BundleAndVehicle) {
@@ -69,6 +71,8 @@ export class UserCartComponent implements OnInit {
     this.bundleList.splice(index, 1)
     this.cartService.updateBundles(this.bundleList)
     this.calculateTotalPrice()
+    if (this.isCartEmpty)
+      this.emptyCart = true
   }
 
   openPrices(vehicleId: number) {
@@ -96,15 +100,14 @@ export class UserCartComponent implements OnInit {
   }
 
   remove(request) {
-    this.requests.forEach(element => {
-      if (element.vehicleId == request.vehicleId) {
-        this.requests.splice(this.requests.indexOf(element), 1);
-        this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>(this.requests);
-        this.cartService.updateRequests(this.requests)
-        this.calculateTotalPrice()
-        return;
-      }
-    });
+    this.requests.splice(this.requests.indexOf(request), 1);
+    this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>(this.requests);
+    this.cartService.updateRequests(this.requests)
+    this.calculateTotalPrice()
+    if (this.isCartEmpty)
+      this.emptyCart = true
+    return;
+
   }
 
   buy() {
@@ -116,7 +119,8 @@ export class UserCartComponent implements OnInit {
           verticalPosition: 'bottom'
         });
         this.cartService.newCart()
-        this.ngOnInit()
+        if (this.isCartEmpty)
+          this.emptyCart = true
       },
         error => {
           this._snackBar.open("Error occured", "", {
@@ -194,11 +198,28 @@ export class UserCartComponent implements OnInit {
   }
 
   daysDiff(date1, date2) {
-
     var diff = Math.abs(new Date(date1).getTime() - new Date(date2).getTime());
     var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     return diffDays
+  }
 
+  isCartEmpty(): boolean {
+    if (this.requests.length == 0)
+      if (this.bundleList.length == 0)
+        return true;
+      else {
+        for (let bundle of this.bundleList) {
+          if (bundle.requests.length != 0)
+            return false;
+        }
+        return true;
+      }
+  }
+
+  isBundleEmpty(bundle: Bundle): boolean {
+    if (bundle.requests.length==0)
+      return true
+    return false
   }
 
 }

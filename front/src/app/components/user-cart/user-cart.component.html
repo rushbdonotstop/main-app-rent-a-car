@@ -80,9 +80,9 @@
                 <mat-card-title> Bundles </mat-card-title>
                 <mat-card-content>
                     <table style="width:100%" role="list" *ngFor="let bundle of bundleList" style="margin: 10;">
-                        <button mat-fab color="warn" (click)="removeBundle(bundle)">Remove</button>
+                        <button *ngIf="!isBundleEmpty(bundle)" mat-fab color="warn" (click)="removeBundle(bundle)">Remove</button>
                       
-                        <tr>
+                        <tr *ngIf="!isBundleEmpty(bundle)">
                             <th>Make</th>
                             <th>Model</th>
                             <th>Price</th>
