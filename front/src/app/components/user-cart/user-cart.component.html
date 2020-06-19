@@ -12,6 +12,7 @@
     <button class="rentButton" mat-raised-button color="accent" (click)="buy()">Rent</button>
     <button class="clearButton" mat-raised-button color="warn" (click)="clear()">Clear</button>
 </div>
+<p class="price" *ngIf="!emptyCart">Total Price : {{price}}</p>
 <section class="page-section">
     <div class="container">
         <div class="row" style="justify-content: center;">
@@ -79,9 +80,9 @@
                 <mat-card-title> Bundles </mat-card-title>
                 <mat-card-content>
                     <table style="width:100%" role="list" *ngFor="let bundle of bundleList" style="margin: 10;">
-                        <button mat-fab color="warn" (click)="removeBundle(bundle)">Remove</button>
+                        <button *ngIf="!isBundleEmpty(bundle)" mat-fab color="warn" (click)="removeBundle(bundle)">Remove</button>
                       
-                        <tr>
+                        <tr *ngIf="!isBundleEmpty(bundle)">
                             <th>Make</th>
                             <th>Model</th>
                             <th>Price</th>

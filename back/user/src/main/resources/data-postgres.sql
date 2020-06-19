@@ -27,5 +27,3 @@ insert into user_privilege(user_id, privilege) values (3, 3);
 
 insert into user_privilege(user_id, privilege) values (4, 0);
 insert into user_privilege(user_id, privilege) values (4, 3);
-
-
