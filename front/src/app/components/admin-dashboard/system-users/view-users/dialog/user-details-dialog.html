@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+    <h2>User details</h2>
+    <form> 
+        <label>Full name: </label>
+        <textarea disabled="true">{{value.fullName}} </textarea>
+        <label>Address: </label>
+        <textarea disabled="true"> {{value.address}} </textarea>
+        <label>Business Number: </label>
+        <textarea disabled="true" >{{value.businessNum}} </textarea>
+        <label>Vehicle Number: </label>
+        <textarea disabled="true">{{value.vehicleNum}} </textarea>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+</div>

@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -22,7 +21,7 @@ import { AdminDashboardComponent } from '../components/admin-dashboard/admin-das
 import { EditCodebookComponent } from '../components/admin-dashboard/vehicles-codebook/edit-codebook/edit-codebook.component';
 import { ViewCodebookComponent, EditFuelTypeDialog, EditMakeDialog, EditModelDialog, EditStyleDialog, EditTransmissionlDialog } from '../components/admin-dashboard/vehicles-codebook/view-codebook/view-codebook.component';
 import { CommentRequestsComponent } from '../components/admin-dashboard/comment-requests/comment-requests.component';
-import { ViewUsersComponent } from '../components/admin-dashboard/system-users/view-users/view-users.component';
+import { ViewUsersComponent, UserDetailsDialog } from '../components/admin-dashboard/system-users/view-users/view-users.component';
 import { RegisterAgentComponent } from '../components/admin-dashboard/system-users/register-agent/register-agent.component';
 import { EditPermissionsComponent } from '../components/admin-dashboard/system-users/edit-permissions/edit-permissions.component';
 import { CreateDiscountComponent } from '../components/agent-specific-components/create-discount/create-discount.component';
@@ -74,9 +73,10 @@ import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header
     EditModelDialog,
     EditStyleDialog,
     EditTransmissionlDialog,
+    UserDetailsDialog,
   ],
   entryComponents: [
-    VehicleDetailsComponent, ViewPriceListComponent, EditFuelTypeDialog, EditMakeDialog, EditModelDialog, EditTransmissionlDialog
+    VehicleDetailsComponent, ViewPriceListComponent, EditFuelTypeDialog, EditMakeDialog, EditModelDialog, EditTransmissionlDialog, UserDetailsDialog, EditPermissionsComponent,
   ],
 
   imports: [
