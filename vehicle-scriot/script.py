@@ -1,11 +1,16 @@
 import json
+import random
 
+import googlemaps
 import pika
 import requests
 from twisted.internet import task, reactor
 
+from generateCoords import get_points_along_path
+
 global token
-timeout = 15.0 # 15 seconds
+timeout = 5.0  # 5 seconds
+
 
 # send request for jwt token to mainapp
 def sendTokenRequest():
@@ -25,11 +30,13 @@ def sendTokenRequest():
 # send a single message to the queue
 def sendCoordinates():
     global token
+    global second_counter
+
     message = '''{
                     \"headers\":  {
                             \"Authorization\":\" ''' + token + '''\"
                             },
-                    \"body\" : ''' + '\"45.2461 N, 19.8517 E\"''' + '''
+                    \"body\" : ''' + '\"'''+ str(dict[second_counter][0])+''', '''+ str(dict[second_counter][1]) +'''\"''' + '''
                 }'''
     message_bytes = message.encode('ascii')
     print(message_bytes.decode('ascii'))
@@ -39,6 +46,7 @@ def sendCoordinates():
                           #     content_type='application/json'
                           # ),
                           body=message_bytes)
+    second_counter+=15
     pass
 
 
@@ -54,11 +62,35 @@ def closeConnection(connection):
     connection.close()
 
 
+def getRandomCities():
+    cities = ['Eiffel Tower, Avenue Anatole France, Paris, France', 'Leaning Tower of Pisa, Pisa, Province of Pisa, Italy', 'Piața Arcul de Triumf, București, Romania', 'Đavolja Varoš, Mehane',
+              'Berlin Wall Memorial, Bernauer Straße, Berlin, Germany']
+    random_city_index_start = random.randrange(5)
+    random_city_index_end = random.randrange(5)
+    while random_city_index_end == random_city_index_start:
+        random_city_index_end = random.randrange(5)
+    print(cities[random_city_index_start], cities[random_city_index_end])
+    return cities[random_city_index_start], cities[random_city_index_end]
+
+def getCoords(city1, city2):
+    dict = get_points_along_path("AIzaSyBcBUQxfS6JldNG0Ltoju5YxE_0-CKJsu4", city1,
+                                 city2, departure_time=None, period=5)
+    return dict
+
+
 sendTokenRequest()
 connection, channel = openConnection()
 
+randomCities = getRandomCities()
+dict = getCoords(randomCities[0], randomCities[1])
+print(dict)
+
+second_counter = 0
 l = task.LoopingCall(sendCoordinates)
-l.start(timeout) # call every 15 seconds
+l.start(timeout) # call every 5 seconds
 
 reactor.run()
 closeConnection(connection)
+
+
+
