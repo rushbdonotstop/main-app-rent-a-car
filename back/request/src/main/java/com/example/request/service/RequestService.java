@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -32,13 +33,48 @@ public class RequestService {
     public boolean areDatesValid(LocalDateTime startDate, LocalDateTime endDate) {
         if(startDate==null || endDate==null)
             return false;
+
+        LocalDateTime twoDaysFromNow = LocalDateTime.now().plusDays(2);
+
         if (endDate.compareTo(startDate) >= 0 &&
-                startDate.compareTo(LocalDateTime.now()) >= 0)
+                startDate.compareTo(twoDaysFromNow) >= 0)
             return true;
         else {
             System.err.println("Invalid dates");
             return false;
         }
+    }
+
+    //perform checks
+    public boolean isRentingAllowed(RequestDTO requestDTO){
+
+        for (Request request: requestDTO.getRequests()){
+            if(request.getOwnerId()==null || request.getUserId()==null)
+                return false;
+            //owner cannot rent his own car
+            if (request.getOwnerId().equals(request.getUserId())) {
+                System.err.println("Owner cannot rent his own car");
+                return false;
+            }
+            if (!(areDatesValid(request.getStartDate(), request.getEndDate()) && request.getUserId() != null))
+                return false;
+        }
+        for(Bundle bundle: requestDTO.getBundles()){
+            if (!isBundleValid(bundle))
+                return false;
+            for (Request request: requestDTO.getRequests()){
+                if(request.getOwnerId()==null || request.getUserId()==null)
+                    return false;
+                //owner cannot rent his own car
+                if (request.getOwnerId().equals(request.getUserId())){
+                    System.err.println("Owner cannot rent his own car");
+                    return false;
+                }
+                if (!(areDatesValid(request.getStartDate(), request.getEndDate()) && request.getUserId() != null))
+                    return false;
+            }
+        }
+        return true;
     }
 
     public boolean isBundleValid(Bundle bundle) {
@@ -76,22 +112,9 @@ public class RequestService {
     }
 
     public boolean addRequest(RequestDTO requests) {
-        //-----------------checks------------------
 
-        for (Bundle bundle : requests.getBundles()) {
-            if (!isBundleValid(bundle))
-                return false;
-            for (Request request : bundle.getRequests()) {
-                if (!(areDatesValid(request.getStartDate(), request.getEndDate()) && request.getUserId() != null))
-                    return false;
-            }
-        }
-        for (Request request : requests.getRequests()) {
-            if (!(areDatesValid(request.getStartDate(), request.getEndDate()) && request.getUserId() != null))
-                return false;
-        }
-
-        //-------------------------------------------
+        if(!isRentingAllowed(requests))
+            return false;
 
         for (Bundle bundle : requests.getBundles()) {
             Bundle newBundle = bundleRepository.saveAndFlush(new Bundle(requests.getRequests())); //contains Id

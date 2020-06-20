@@ -1,3 +1,4 @@
+
 insert into bundle(id) values (1);
 
 insert into request(start_date, end_date, status, total_cost, user_id, owner_id, vehicle_id, bundle_id)

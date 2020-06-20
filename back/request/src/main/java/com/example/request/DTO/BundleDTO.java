@@ -6,7 +6,7 @@ import java.util.List;
 public class BundleDTO {
 
     private Long id;
-    private List<RequestForFrontDTO> requestsList;
+    private List<RequestForFrontDTO> requestsList = new ArrayList<>();;
     private float totalCost;
     private String username;
 

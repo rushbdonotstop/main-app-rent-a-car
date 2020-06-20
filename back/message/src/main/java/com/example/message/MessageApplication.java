@@ -9,9 +9,9 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class MessageApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MessageApplication.class, args);
-	}
+    public static void main(String[] args) throws InterruptedException {
+        SpringApplication.run(MessageApplication.class, args);
+    }
 
 	@Bean
 	@LoadBalanced
