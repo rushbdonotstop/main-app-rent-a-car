@@ -14,6 +14,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FormsModule } from '@angular/forms';
 import { CartDialogComponent } from './components/cart-dialog/cart-dialog.component';
 import { MatListModule, MatListItem } from '@angular/material/list';
+import { RequestDetailsComponent } from './components/request-history/request-details/request-details.component';
 
 @NgModule({
   declarations: [

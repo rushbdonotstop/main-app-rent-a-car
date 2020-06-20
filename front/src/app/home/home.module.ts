@@ -38,6 +38,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header/admin-header.component';
+import { RequestDetailsComponent } from '../components/request-history/request-details/request-details.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,8 @@ import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent, EditFuelTypeDialog, EditMakeDialog, EditModelDialog, EditTransmissionlDialog, UserDetailsDialog, EditPermissionsComponent,
+
+    RequestDetailsComponent
   ],
 
   imports: [

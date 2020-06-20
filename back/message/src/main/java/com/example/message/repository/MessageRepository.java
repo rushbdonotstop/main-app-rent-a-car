@@ -5,6 +5,7 @@ import com.example.message.model.enums.MessageType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -21,4 +22,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findALlByMessageType(MessageType messageType);
 
     List<Message> findAllByConversationId(Long conversationId);
+
 }

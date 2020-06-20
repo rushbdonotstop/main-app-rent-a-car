@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class UserDetails {
@@ -30,10 +31,15 @@ public class UserDetails {
     @Column(name = "user_type", nullable = true)
     private UserType userType;
 
+    @OneToMany()
+    @JoinColumn(name = "userdetail_id") //so the new table doesnt get created
+    private Set<Penalty> penalties;
+
     private transient List<Privilege> privilegeList;
 
     public UserDetails() {
     }
+
 
     public UserDetails(String fullName, String address, String businessNum, int vehicleNum, UserType userType, List<Privilege> privilegeList) {
         this.fullName = fullName;
@@ -42,6 +48,14 @@ public class UserDetails {
         this.vehicleNum = vehicleNum;
         this.userType = userType;
         this.privilegeList = privilegeList;
+    }
+
+    public void setPenalties(Set<Penalty> penalties) {
+        this.penalties = penalties;
+    }
+
+    public Set<Penalty> getPenalties() {
+        return penalties;
     }
 
     public Long getId() {

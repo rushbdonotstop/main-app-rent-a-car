@@ -81,6 +81,12 @@ export class CartService {
     localStorage.setItem('cart', JSON.stringify(oldCart))
   }
 
+  updateBundles(bundles: BundleAndVehicle[]) {
+    var oldCart = JSON.parse(localStorage.getItem('cart'));
+    oldCart.bundles = bundles
+    localStorage.setItem('cart', JSON.stringify(oldCart))
+  }
+
   buy() {
     var detailedCart = this.getCart()
     var userId = JSON.parse(localStorage.getItem('userObject')).id;
