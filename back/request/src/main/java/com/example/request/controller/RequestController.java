@@ -123,6 +123,28 @@ public class RequestController {
 
         return new ResponseEntity<List<BundleDTO>>(bundleList, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/ownerSingleRequests", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RequestForFrontDTO>> ownerSingleRequets(@RequestParam(value = "ownerId") Long ownerId) throws Exception {
+        List<UserDTO> users = (this.getUsernames()).getBody();
+        List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
+
+        List<Request> requestList = requestService.getSingleRequestsForOwner(ownerId);
+        List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
+
+        return new ResponseEntity<List<RequestForFrontDTO>>(requestDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/buyerSingleRequests", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RequestForFrontDTO>> buyerSingleRequests(@RequestParam(value = "userId") Long ownerId) throws Exception {
+        List<UserDTO> users = (this.getUsernames()).getBody();
+        List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
+
+        List<Request> requestList = requestService.getSingleRequestsForUser(ownerId);
+        List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
+
+        return new ResponseEntity<List<RequestForFrontDTO>>(requestDTOList, HttpStatus.OK);
+    }
     //TYPE IS FOR ACCEPTING REQUEST, TYPE 2 IS FOR CANCELING
     @GetMapping(value = "/changeStatus", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> changeStaus(@RequestParam(value = "bundleId") Long bundleId, @RequestParam(value = "changeType") Long changeType) throws Exception {

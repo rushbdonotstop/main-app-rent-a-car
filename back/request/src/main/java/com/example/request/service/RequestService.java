@@ -186,7 +186,18 @@ public class RequestService {
         List<Request> requestList = requestRepository.findAll();
         List<Request> newRequestList = new ArrayList<>();
         for (Request request : requestList) {
-            if (request.getOwnerId().equals(ownerId)) {
+            if (request.getOwnerId().equals(ownerId) && request.getBundle() != null) {
+                newRequestList.add(request);
+            }
+        }
+        return newRequestList;
+    }
+    //RETURNING LIST OF REQUESTS THAT ARE NOT IN THE BUNDLE!!!
+    public List<Request> getSingleRequestsForOwner(Long ownerId) {
+        List<Request> requestList = requestRepository.findAll();
+        List<Request> newRequestList = new ArrayList<>();
+        for (Request request : requestList) {
+            if (request.getOwnerId().equals(ownerId) && request.getBundle() == null) {
                 newRequestList.add(request);
             }
         }
@@ -197,7 +208,19 @@ public class RequestService {
         List<Request> requestList = requestRepository.findAll();
         List<Request> newRequestList = new ArrayList<>();
         for (Request request : requestList) {
-            if (request.getUserId().equals(userId)) {
+            if (request.getUserId().equals(userId) && request.getBundle() != null) {
+                newRequestList.add(request);
+            }
+        }
+        return newRequestList;
+    }
+
+    //RETURNING LIST OF REQUESTS THAT ARE NOT IN THE BUNDLE!!!
+    public List<Request> getSingleRequestsForUser(Long userId) {
+        List<Request> requestList = requestRepository.findAll();
+        List<Request> newRequestList = new ArrayList<>();
+        for (Request request : requestList) {
+            if (request.getUserId().equals(userId) && request.getBundle() == null) {
                 newRequestList.add(request);
             }
         }
@@ -226,7 +249,10 @@ public class RequestService {
                     break;
                 }
             }
-            dto.setBundleId(request.getBundle().getId());
+            dto.setVehicleId((request.getVehicleId()));
+            if (request.getBundle() != null) {
+                dto.setBundleId(request.getBundle().getId());
+            }
             newDTOList.add(dto);
 
         }
