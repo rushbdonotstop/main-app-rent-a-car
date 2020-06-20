@@ -41,8 +41,12 @@ public class PenaltyService {
         return this.penaltyRepository.findById(id);
     }
 
-    private List<Penalty> findAll() {
+    public List<Penalty> findAll() {
         return this.penaltyRepository.findAll();
+    }
+
+    public List<Penalty> unpaidPenalties(Long userId) {
+        return this.penaltyRepository.unpaidPenalties(userId);
     }
 
 }

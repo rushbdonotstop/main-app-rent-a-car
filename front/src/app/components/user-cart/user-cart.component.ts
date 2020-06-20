@@ -14,6 +14,8 @@ import { PricelistService } from 'src/app/core/services/pricelist.service';
 import { Pricelist } from 'src/app/shared/models/pricelist/Pricelist';
 import { PrivilegeService } from 'src/app/core/services/privilege.service';
 import { User } from 'src/app/shared/models/user/User';
+import { PenaltyStatus } from 'src/app/shared/models/user/PenaltyStatus';
+import { PenaltyService } from 'src/app/core/services/penalty.service';
 
 @Component({
   templateUrl: './user-cart.component.html',
@@ -22,7 +24,7 @@ import { User } from 'src/app/shared/models/user/User';
 export class UserCartComponent implements OnInit {
 
   emptyCart: boolean
-  cart: DetailedCart
+  cart: DetailedCart = new DetailedCart()
   requests: RequestAndVehicle[] = []
   bundleList: BundleAndVehicle[] = []
   dataSourceRequests: MatTableDataSource<RequestAndVehicle>;
@@ -31,9 +33,10 @@ export class UserCartComponent implements OnInit {
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
   price: number = 0
   rentingPrivilege: boolean = false
+  hasPenalties: boolean = false
 
   constructor(private cartService: CartService, public dialog: MatDialog, private _snackBar: MatSnackBar,
-    private pricelistService: PricelistService, private privilegeService: PrivilegeService) { }
+    private pricelistService: PricelistService, private privilegeService: PrivilegeService, private penaltyService: PenaltyService) { }
 
   ngOnInit() {
     this.cart = this.cartService.getCart()
@@ -47,11 +50,22 @@ export class UserCartComponent implements OnInit {
     else {
       this.emptyCart = false
       this.calculateTotalPrice()
+      //Check privileges
       this.privilegeService.getPrivileges(JSON.parse(localStorage.getItem('userObject')).id).subscribe(data => {
         for (let privilege of data.userPrivileges) {
           if (privilege.toString() == "RENT_VEHICLE") {
             this.rentingPrivilege = true;
           }
+          //Check penalties
+          var loggedInUser = new User()
+          loggedInUser = JSON.parse(localStorage.getItem('userObject'))
+          this.penaltyService.getPenalties(loggedInUser.id).subscribe(
+            data => {
+              if (data.length > 0) {
+                this.hasPenalties = true;
+              }
+            }
+          )
         }
       })
     }
@@ -111,23 +125,23 @@ export class UserCartComponent implements OnInit {
   }
 
   buy() {
-    console.log(this.rentingPrivilege)
-    if (this.rentingPrivilege) {
-      this.cartService.buy().subscribe(data => {
-        this._snackBar.open("Successfully rented!", "", {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-        this.cartService.newCart()
-        if (this.isCartEmpty)
-          this.emptyCart = true
-      },
-        error => {
-          this._snackBar.open("Error occured", "", {
+    if (this.rentingPrivilege && !this.hasPenalties) {
+        this.cartService.buy().subscribe(data => {
+          this._snackBar.open("Successfully rented!", "", {
             duration: 2000,
             verticalPosition: 'bottom'
           });
-        })
+          this.cartService.newCart()
+          this.cart = new DetailedCart()
+          if (this.isCartEmpty)
+            this.emptyCart = true
+        },
+          error => {
+            this._snackBar.open("Error occured", "", {
+              duration: 2000,
+              verticalPosition: 'bottom'
+            });
+          })
     }
     else {
       this._snackBar.open("You have no renting privileges. Please try contacting an administrator to get the issue resolved", "", {
@@ -217,7 +231,7 @@ export class UserCartComponent implements OnInit {
   }
 
   isBundleEmpty(bundle: Bundle): boolean {
-    if (bundle.requests.length==0)
+    if (bundle.requests.length == 0)
       return true
     return false
   }
