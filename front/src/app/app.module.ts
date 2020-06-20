@@ -15,12 +15,14 @@ import { FormsModule } from '@angular/forms';
 import { CartDialogComponent } from './components/cart-dialog/cart-dialog.component';
 import { MatListModule, MatListItem } from '@angular/material/list';
 import { RequestDetailsComponent } from './components/request-history/request-details/request-details.component';
+import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RentDialogComponent,
     CartDialogComponent,
+    ReportDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,6 @@ import { RequestDetailsComponent } from './components/request-history/request-de
   bootstrap: [AppComponent],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [RentDialogComponent, CartDialogComponent]
+  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent]
 })
 export class AppModule { }

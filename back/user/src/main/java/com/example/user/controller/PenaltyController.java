@@ -5,11 +5,11 @@ import com.example.user.model.Penalty;
 import com.example.user.service.PenaltyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("penalty")
 @RestController
@@ -26,7 +26,6 @@ public class PenaltyController {
     @PostMapping(value = "", produces = "application/json", consumes = "application/json")
     public ResponseEntity<PenaltyDTO> addPenalty(@RequestBody PenaltyDTO penalty) {
         try {
-            System.out.println(penalty);
             Penalty newPenalty = this.penaltyService.addPenalty(penalty);
             return new ResponseEntity<>(penalty, HttpStatus.OK);
         } catch (Exception e) {
@@ -35,4 +34,21 @@ public class PenaltyController {
         }
 
     }
+
+    /**
+     * GET /server/penalty/{userId}
+     *
+     * @return returns all unpaid penalties for user
+     */
+
+    @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Penalty>> userUnpaidPenalties(@PathVariable Long userId){
+        try{
+            return new ResponseEntity<>(this.penaltyService.unpaidPenalties(userId),HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
