@@ -5,10 +5,8 @@ import com.example.request.DTO.RequestDTO;
 import com.example.request.DTO.RequestForFrontDTO;
 import com.example.request.DTO.VehicleMainViewDTO;
 import com.example.request.DTO.user.UserDTO;
-import com.example.request.model.Bundle;
 import com.example.request.model.Request;
 import com.example.request.service.RequestService;
-import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -126,6 +124,19 @@ public class RequestController {
         List<BundleDTO> bundleList = requestService.getBundles(requestDTOList);
 
         return new ResponseEntity<List<BundleDTO>>(bundleList, HttpStatus.OK);
+    }
+    //TYPE IS FOR ACCEPTING REQUEST, TYPE 2 IS FOR CANCELING
+    @GetMapping(value = "/changeStatus", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> changeStaus(@RequestParam(value = "bundleId") Long bundleId, @RequestParam(value = "changeType") Long changeType) throws Exception {
+        Boolean value;
+        if (changeType == 1) {
+            value = requestService.changeBundleStatusToPaid(bundleId);
+        } else if (changeType == 2) {
+            value = requestService.changeBundleStatusToCancelled(bundleId);
+        } else {
+            value = false;
+        }
+        return new ResponseEntity<Boolean>(value, HttpStatus.OK);
     }
 
     public ResponseEntity<List<UserDTO>> getUsernames() throws Exception {
