@@ -3,6 +3,7 @@ import { BundleDTO } from 'src/app/shared/models/request/bundleDTO';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { RequestService } from 'src/app/core/services/request.service';
 import { RequestDetailsComponent } from './request-details/request-details.component';
+import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
 
 @Component({
   templateUrl: './request-history.component.html',
@@ -13,8 +14,11 @@ export class RequestHistoryComponent implements OnInit {
   selectedHistory = 'receivedRequests';
   showSelectedHistory = 'Received Requests'
   displayedColumns: string[] = ['username', 'totalCost', 'numberOfRequests', 'status', 'details'];
+  displayedColumns2: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status'];
   bundleList : BundleDTO[];
+  requestList : RequestDTO[];
   dataSource: MatTableDataSource<BundleDTO>;
+  dataSourceRequests : MatTableDataSource<RequestDTO>
   constructor(private requestService : RequestService, public dialog: MatDialog)  { 
     
   }
