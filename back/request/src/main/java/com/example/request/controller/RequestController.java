@@ -61,10 +61,9 @@ public class RequestController {
     public ResponseEntity<Boolean> newRequest(@RequestBody RequestDTO requests) {
         System.out.println(requests);
         boolean status = this.requestService.addRequest(requests);
-        if (status){
+        if (status) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
 
@@ -93,10 +92,9 @@ public class RequestController {
     public ResponseEntity<Boolean> physicalRenting(@RequestBody Request request) {
         System.out.println(request);
         boolean status = this.requestService.addPhysicalRenting(request);
-        if (status){
+        if (status) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
 
@@ -112,7 +110,7 @@ public class RequestController {
         List<BundleDTO> bundleList = requestService.getBundles(requestDTOList);
 
         return new ResponseEntity<List<BundleDTO>>(bundleList, HttpStatus.OK);
-   }
+    }
 
     @GetMapping(value = "/buyerRequestHistory", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<BundleDTO>> buyerRequestHistory(@RequestParam(value = "userId") Long userId) throws Exception {
@@ -142,7 +140,8 @@ public class RequestController {
     public ResponseEntity<List<UserDTO>> getUsernames() throws Exception {
         System.out.println("Getting all usernames");
         List<UserDTO> response = restTemplate.exchange("http://user/user/usernames/",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<UserDTO>>() {}).getBody();
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<UserDTO>>() {
+                }).getBody();
 
         return new ResponseEntity<List<UserDTO>>(response, HttpStatus.OK);
     }
@@ -150,7 +149,8 @@ public class RequestController {
     public ResponseEntity<List<VehicleMainViewDTO>> getVehicleMainViewDTO() throws Exception {
         System.out.println("Getting all vehicles");
         List<VehicleMainViewDTO> response = restTemplate.exchange("http://vehicle/search/",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<VehicleMainViewDTO>>() {}).getBody();
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<VehicleMainViewDTO>>() {
+                }).getBody();
 
         return new ResponseEntity<List<VehicleMainViewDTO>>(response, HttpStatus.OK);
     }
@@ -163,5 +163,19 @@ public class RequestController {
     @GetMapping(value = "canUserPostReview/{vehicleId}+{userId}")
     public ResponseEntity<Boolean> canUserPostReview(@PathVariable Long userId, @PathVariable Long vehicleId) {
         return new ResponseEntity<Boolean>(this.requestService.canUserPostReview(vehicleId, userId), HttpStatus.OK);
+    }
+
+    /**
+     * GET /server/request/rentingFinished
+     *
+     * @return return true if user can post review
+     */
+    @GetMapping(value = "/rentingFinished", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Request>> rentingFinishedRequests() {
+        try {
+            return new ResponseEntity<>(this.requestService.rentingFinishedReports(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
