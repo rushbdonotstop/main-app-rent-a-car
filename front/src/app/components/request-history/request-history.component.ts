@@ -4,6 +4,9 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { RequestService } from 'src/app/core/services/request.service';
 import { RequestDetailsComponent } from './request-details/request-details.component';
 import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
+import { User } from 'src/app/shared/models/user/User';
+import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+
 
 @Component({
   templateUrl: './request-history.component.html',
@@ -19,16 +22,20 @@ export class RequestHistoryComponent implements OnInit {
   requestList : RequestDTO[];
   dataSource: MatTableDataSource<BundleDTO>;
   dataSourceRequests : MatTableDataSource<RequestDTO>
+
+
   constructor(private requestService : RequestService, public dialog: MatDialog)  { 
     
   }
 
   ngOnInit() {
+
     this.requestService.getOwnerRequestHistory().subscribe(
       bundleList => {
         
         this.bundleList = bundleList;
         this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+        console.log(bundleList)
       }
     )
   }
@@ -66,4 +73,6 @@ export class RequestHistoryComponent implements OnInit {
 
     });
   }
+
+
 }

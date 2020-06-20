@@ -1,8 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
-import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { RequestService } from 'src/app/core/services/request.service';
 import { BundleDTO } from 'src/app/shared/models/request/bundleDTO';
+import { ReportDialogComponent } from '../../report-dialog/report-dialog.component';
+import { User } from 'src/app/shared/models/user/User';
 
 @Component({
   selector: 'pm-request-details',
@@ -19,8 +21,10 @@ export class RequestDetailsComponent implements OnInit {
   selectedHistory: String;
   dataSource: MatTableDataSource<RequestDTO>;
   displayedColumns: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status'];
+  isUserAgent: boolean;
 
   constructor(public dialogRef: MatDialogRef<RequestDetailsComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private requestService: RequestService, private _snackBar: MatSnackBar) {
     this.bundleId = data.bundle.id;
@@ -32,6 +36,12 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    var loggedInUser = new User()
+    loggedInUser = JSON.parse(localStorage.getItem('userObject'))
+    if (loggedInUser.userDetails.userType.toString() == "AGENT") {
+      this.isUserAgent = true;
+      this.displayedColumns = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report'];
+    }
   }
 
 
@@ -57,7 +67,7 @@ export class RequestDetailsComponent implements OnInit {
       }
     )
   }
-  
+
   decline() {
     this.requestService.changeStatusOfRequest(this.bundleId, 2).subscribe(
       data => {
@@ -75,5 +85,24 @@ export class RequestDetailsComponent implements OnInit {
         }
       }
     )
+  }
+
+  createReport(element: BundleDTO) {
+    const dialogRef = this.dialog.open(ReportDialogComponent, {
+      width: '400px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  isRentingFinished(request: RequestDTO) {
+    if (new Date(request.endDate) < new Date()){
+      return true;
+    }
+    else{
+      return false;
+    };
   }
 }

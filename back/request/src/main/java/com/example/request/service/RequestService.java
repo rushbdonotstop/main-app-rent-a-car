@@ -6,6 +6,7 @@ import com.example.request.DTO.RequestForFrontDTO;
 import com.example.request.DTO.VehicleMainViewDTO;
 import com.example.request.DTO.user.UserDTO;
 import com.example.request.model.Bundle;
+import com.example.request.model.Report;
 import com.example.request.model.Request;
 import com.example.request.model.enums.Status;
 import com.example.request.repository.BundleRepository;
@@ -31,7 +32,7 @@ public class RequestService {
     BundleRepository bundleRepository;
 
     public boolean areDatesValid(LocalDateTime startDate, LocalDateTime endDate) {
-        if(startDate==null || endDate==null)
+        if (startDate == null || endDate == null)
             return false;
 
         LocalDateTime twoDaysFromNow = LocalDateTime.now().plusDays(2);
@@ -46,10 +47,10 @@ public class RequestService {
     }
 
     //perform checks
-    public boolean isRentingAllowed(RequestDTO requestDTO){
+    public boolean isRentingAllowed(RequestDTO requestDTO) {
 
-        for (Request request: requestDTO.getRequests()){
-            if(request.getOwnerId()==null || request.getUserId()==null)
+        for (Request request : requestDTO.getRequests()) {
+            if (request.getOwnerId() == null || request.getUserId() == null)
                 return false;
             //owner cannot rent his own car
             if (request.getOwnerId().equals(request.getUserId())) {
@@ -59,14 +60,14 @@ public class RequestService {
             if (!(areDatesValid(request.getStartDate(), request.getEndDate()) && request.getUserId() != null))
                 return false;
         }
-        for(Bundle bundle: requestDTO.getBundles()){
+        for (Bundle bundle : requestDTO.getBundles()) {
             if (!isBundleValid(bundle))
                 return false;
-            for (Request request: requestDTO.getRequests()){
-                if(request.getOwnerId()==null || request.getUserId()==null)
+            for (Request request : requestDTO.getRequests()) {
+                if (request.getOwnerId() == null || request.getUserId() == null)
                     return false;
                 //owner cannot rent his own car
-                if (request.getOwnerId().equals(request.getUserId())){
+                if (request.getOwnerId().equals(request.getUserId())) {
                     System.err.println("Owner cannot rent his own car");
                     return false;
                 }
@@ -113,7 +114,7 @@ public class RequestService {
 
     public boolean addRequest(RequestDTO requests) {
 
-        if(!isRentingAllowed(requests))
+        if (!isRentingAllowed(requests))
             return false;
 
         for (Bundle bundle : requests.getBundles()) {
@@ -143,7 +144,7 @@ public class RequestService {
 
     public boolean addPhysicalRenting(Request request) {
 
-        if(request.getVehicleId()==null)
+        if (request.getVehicleId() == null)
             return false;
 
         LocalDateTime startdate = request.getStartDate();
@@ -181,7 +182,7 @@ public class RequestService {
         } else return false;
     }
 
-    public List<Request> getAllRequestsForOwner (Long ownerId) {
+    public List<Request> getAllRequestsForOwner(Long ownerId) {
         List<Request> requestList = requestRepository.findAll();
         List<Request> newRequestList = new ArrayList<>();
         for (Request request : requestList) {
@@ -192,7 +193,7 @@ public class RequestService {
         return newRequestList;
     }
 
-    public List<Request> getAllRequestsForUser (Long userId) {
+    public List<Request> getAllRequestsForUser(Long userId) {
         List<Request> requestList = requestRepository.findAll();
         List<Request> newRequestList = new ArrayList<>();
         for (Request request : requestList) {
@@ -203,7 +204,7 @@ public class RequestService {
         return newRequestList;
     }
 
-    public List<RequestForFrontDTO> getDTOListForOwner (List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehiclesList) {
+    public List<RequestForFrontDTO> getDTOListForOwner(List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehiclesList) {
         List<RequestForFrontDTO> newDTOList = new ArrayList<>();
 
         for (Request request : requestsList) {
@@ -232,7 +233,7 @@ public class RequestService {
         return newDTOList;
     }
 
-    public List<RequestForFrontDTO> getDTOListForUser (List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehiclesList) {
+    public List<RequestForFrontDTO> getDTOListForUser(List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehiclesList) {
         List<RequestForFrontDTO> newDTOList = new ArrayList<>();
 
         for (Request request : requestsList) {
@@ -309,6 +310,7 @@ public class RequestService {
         requestRepository.save(req);
         return true;
     }
+
     //RETURNS TRUE IF ALL REQUESTS ARE CHANGED TO STATUS PAID AND, ALL OTHER REQUEST ARE CHANGED TO CANCELED IF DATES OVERLAP
     //RETURN FALSE IF THERE IS ALREADY PAID REQUEST WITH DATE THAT OVERLAP
     public boolean changeBundleStatusToPaid(Long bundleId) {
@@ -339,19 +341,22 @@ public class RequestService {
     }
 
     public Boolean canUserPostReview(Long vehicleId, Long userId) {
-        try{
+        try {
             List<Request> requests = requestRepository.findAllByVehicleIdAndUserIdAndStatus(vehicleId, userId, Status.PAID);
 
-            for(Request r : requests){
-                if(r.getEndDate().isBefore(LocalDateTime.now())){
+            for (Request r : requests) {
+                if (r.getEndDate().isBefore(LocalDateTime.now())) {
                     return true;
                 }
             }
             return false;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Exception in canUserPostReview");
         }
         return false;
+    }
+
+    public List<Request> rentingFinishedReports() {
+        return this.requestRepository.rentingFinishedRequests(LocalDateTime.now());
     }
 }
