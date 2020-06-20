@@ -2,6 +2,7 @@ package com.example.user.service;
 
 import com.example.user.dto.PenaltyDTO;
 import com.example.user.model.Penalty;
+import com.example.user.model.PenaltyStatus;
 import com.example.user.model.User;
 import com.example.user.model.UserDetails;
 import com.example.user.repository.PenaltyRepository;
@@ -27,6 +28,8 @@ public class PenaltyService {
         UserDetails userDetails = user.getUserDetails();
         Penalty penalty = new Penalty();
         penalty.setTotal(penaltyDTO.getTotal());
+        penalty.setPenaltyStatus(PenaltyStatus.NOT_PAID);
+        penalty.setId(null);
         Penalty newPenalty = this.penaltyRepository.save(penalty);
         userDetails.getPenalties().add(newPenalty);
         this.userRepository.save(user);

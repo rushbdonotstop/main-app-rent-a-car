@@ -26,7 +26,6 @@ public class PenaltyController {
     @PostMapping(value = "", produces = "application/json", consumes = "application/json")
     public ResponseEntity<PenaltyDTO> addPenalty(@RequestBody PenaltyDTO penalty) {
         try {
-            System.out.println(penalty);
             Penalty newPenalty = this.penaltyService.addPenalty(penalty);
             return new ResponseEntity<>(penalty, HttpStatus.OK);
         } catch (Exception e) {

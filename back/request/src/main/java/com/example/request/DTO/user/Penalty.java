@@ -6,7 +6,17 @@ public class Penalty {
 
     private Long total;
 
+    private PenaltyStatus penaltyStatus;
+
     public Penalty() {
+    }
+
+    public PenaltyStatus getPenaltyStatus() {
+        return penaltyStatus;
+    }
+
+    public void setPenaltyStatus(PenaltyStatus penaltyStatus) {
+        this.penaltyStatus = penaltyStatus;
     }
 
     public Long getId() {
