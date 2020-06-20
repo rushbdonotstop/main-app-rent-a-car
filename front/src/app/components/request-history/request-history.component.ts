@@ -17,7 +17,7 @@ export class RequestHistoryComponent implements OnInit {
   selectedHistory = 'receivedRequests';
   showSelectedHistory = 'Received Requests'
   displayedColumns: string[] = ['username', 'totalCost', 'numberOfRequests', 'status', 'details'];
-  displayedColumns2: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status'];
+  displayedColumns2: string[] = ['username', 'makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report'];
   bundleList : BundleDTO[];
   requestList : RequestDTO[];
   dataSource: MatTableDataSource<BundleDTO>;
@@ -37,24 +37,47 @@ export class RequestHistoryComponent implements OnInit {
         this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
         console.log(bundleList)
       }
+    );
+
+    this.requestService.getOwnerSingleRequests().subscribe(
+      requestList => {
+        this.requestList = requestList;
+        this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+      }
     )
   }
   
   onChange() {
     if(this.selectedHistory == 'sentRequests') {
+      this.showSelectedHistory = 'Sent Requests';
       this.requestService.getBuyerRequestHistory().subscribe(
         bundleList => {
           this.bundleList = bundleList;
           this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
         }
       )
+
+      this.requestService.getBuyerSingleRequests().subscribe(
+        requestList => {
+          this.requestList = requestList;
+          this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+        }
+      )
     }
 
     if(this.selectedHistory == 'receivedRequests') {
+      this.showSelectedHistory = 'Received Requests'
       this.requestService.getOwnerRequestHistory().subscribe(
         bundleList => {
           this.bundleList = bundleList;
           this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+        }
+      )
+
+      this.requestService.getOwnerSingleRequests().subscribe(
+        requestList => {
+          this.requestList = requestList;
+          this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
         }
       )
     }
