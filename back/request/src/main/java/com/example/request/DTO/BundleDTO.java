@@ -11,6 +11,7 @@ public class BundleDTO {
     private String username;
 
     public BundleDTO() {
+        this.requestsList = new ArrayList<RequestForFrontDTO>();
     }
 
     public BundleDTO(Long id, List<RequestForFrontDTO> requestsList, float totalCost, String username) {
