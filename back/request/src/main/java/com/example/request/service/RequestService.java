@@ -179,18 +179,6 @@ public class RequestService {
         }
         return newRequestList;
     }
-//
-//    public List<Request> getAllRequestsByUser (Long userId) {
-//        List<Request> requestsList = requestRepository.findAll();
-//        List<Request> newRequestsList = new ArrayList<>();
-//        for (Request request : requestsList) {
-//            if (request.getUserId().equals(userId)) {
-//                newRequestsList.add(request);
-//            }
-//        }
-//        return newRequestsList;
-//    }
-
 
     public List<RequestForFrontDTO> getDTOListForOwner (List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehiclesList) {
         List<RequestForFrontDTO> newDTOList = new ArrayList<>();
@@ -277,35 +265,6 @@ public class RequestService {
         return bundleList;
     }
 
-    public boolean changeRequestStatusToReserved(Long requestId) {
-        Request req = requestRepository.findById(requestId).get();
-        List<Request> requestList = requestRepository.findAll();
-
-        for (Request request : requestList) {
-            if (request.getId().equals(req.getId())) {
-                continue;
-            }
-            if (request.getVehicleId().equals(req.getVehicleId()) && request.getStatus().equals(Status.RESERVED)) {
-                return false;
-            }
-        }
-
-        req.setStatus(Status.RESERVED);
-        return true;
-    }
-
-    public boolean changeBundleStatusToReserved(Long bundleId) {
-        List<Request> requestList = requestRepository.findAll();
-        for (Request request : requestList) {
-            if (request.getBundle().getId().equals(bundleId)) {
-                 if (!changeRequestStatusToReserved(request.getId())) {
-                     return false;
-                 }
-            }
-        }
-        return true;
-    }
-
     public boolean changeRequestStatusToPaid(Long requestId) {
         Request req = requestRepository.findById(requestId).get();
         List<Request> requestList = requestRepository.findAll();
@@ -323,6 +282,8 @@ public class RequestService {
                 request.setStatus(Status.CANCELLED);
             }
         }
+        req.setStatus(Status.PAID);
+        requestRepository.save(req);
         return true;
     }
     //RETURNS TRUE IF ALL REQUESTS ARE CHANGED TO STATUS PAID AND, ALL OTHER REQUEST ARE CHANGED TO CANCELED IF DATES OVERLAP
@@ -342,10 +303,11 @@ public class RequestService {
     public boolean changeRequestStatusToCancelled(Long requestId) {
         Request req = requestRepository.findById(requestId).get();
         req.setStatus(Status.CANCELLED);
+        requestRepository.save(req);
         return true;
     }
 
-    public boolean ChangeBundleStatusToCancelled(Long bundleId) {
+    public boolean changeBundleStatusToCancelled(Long bundleId) {
         List<Request> requestList = requestRepository.findAll();
         for (Request request : requestList) {
             boolean value = changeRequestStatusToCancelled(request.getId());
