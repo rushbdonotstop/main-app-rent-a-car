@@ -46,7 +46,7 @@ public class UserPrivilegeController {
     }
 
     /**
-     * GET /userPrivilege/{id}
+     * POST /userPrivilege/{id}
      *
      * id is user id!
      * consumes object type UserPrivilegeRequestDTO
@@ -66,16 +66,18 @@ public class UserPrivilegeController {
     }
 
     /**
-     * DELETE /userPrivilege/{id}
+     * DELETE /userPrivilege/{id}/{privilege}
      *
      * id is user id!
      * consumes object type UserPrivilegeRequestDTO
      *
      * @return returns notification
      */
-    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> deleteUserPrivilege(@RequestBody UserPrivilegeRequestDTO userPrivilegeRequestDTO, @PathVariable String id) {
+    @DeleteMapping(value = "{id}/{privilege}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> deleteUserPrivilege(@PathVariable String id, @PathVariable String privilege) {
         try {
+            UserPrivilegeRequestDTO userPrivilegeRequestDTO = new UserPrivilegeRequestDTO();
+            userPrivilegeRequestDTO.setUserPrivilege(privilege);
             userPrivilegeService.deleteUserPrivilege(id, userPrivilegeRequestDTO);
             return new ResponseEntity<>(new Notification("User privilege deleted.", true), HttpStatus.OK);
         } catch (EntityNotFoundException e) {

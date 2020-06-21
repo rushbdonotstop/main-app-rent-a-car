@@ -7,6 +7,8 @@ import com.example.catalogue.model.VehicleModel;
 import com.example.catalogue.service.VehicleMakeService;
 import com.example.catalogue.service.VehicleModelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,8 @@ public class VehicleModelController {
     @Autowired
     private VehicleMakeService vehicleMakeService;
 
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     /**
@@ -57,6 +61,12 @@ public class VehicleModelController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> deleteVehicleModel(@PathVariable Long id) {
         try {
+            ResponseEntity<List> response = restTemplate
+                    .exchange("http://vehicle/search/model/" + id, HttpMethod.GET, null, List.class);
+            List<Long> vehicleList = response.getBody();
+            if(vehicleList.size() != 0) {
+                return new ResponseEntity<>(new Notification("There is a vehicle registered with model id " + id + "\nModel wasn't deleted.", false), HttpStatus.CONFLICT);
+            }
             vehicleModelService.deleteOneModel(id);
             return new ResponseEntity<>(new Notification("Successfully deleted vehicle model id = " + id, true), HttpStatus.OK);
         } catch (Exception e) {

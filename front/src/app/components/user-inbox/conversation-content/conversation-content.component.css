@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+  }
+.highlight {
+    color: white;
+    background: white;
+}
+
+.notHighlight {
+    color: red;
+    background: #FADC9D;
+}

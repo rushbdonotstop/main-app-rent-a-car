@@ -13,6 +13,7 @@
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/history']">Request history</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/cart']">Cart</a></li>
                 <li *ngIf="loggedUser == null"  class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/login']">Login</a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/inbox']">Inbox</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" (click)="logout()">Logout</a></li>
             </ul>
         </div>

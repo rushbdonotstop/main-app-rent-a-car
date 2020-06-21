@@ -61,10 +61,10 @@ public class UserPrivilegeService {
 
         UserPrivilegeDTO userPrivilegeDTO = new UserPrivilegeDTO();
         userPrivilegeDTO.setUserId(Long.parseLong(id));
-        userPrivilegeList.stream().forEach(userPrivilege -> {
-            userPrivilegeDTO.addPrivilege(userPrivilege.getPrivilege().toString());
-        });
-
+        for (UserPrivilege up:
+             userPrivilegeList) {
+            userPrivilegeDTO.addPrivilege(up.getPrivilege().toString());
+        }
         return userPrivilegeDTO;
     }
 

@@ -5,10 +5,8 @@ import com.example.request.DTO.RequestDTO;
 import com.example.request.DTO.RequestForFrontDTO;
 import com.example.request.DTO.VehicleMainViewDTO;
 import com.example.request.DTO.user.UserDTO;
-import com.example.request.model.Bundle;
 import com.example.request.model.Request;
 import com.example.request.service.RequestService;
-import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -63,10 +61,9 @@ public class RequestController {
     public ResponseEntity<Boolean> newRequest(@RequestBody RequestDTO requests) {
         System.out.println(requests);
         boolean status = this.requestService.addRequest(requests);
-        if (status){
+        if (status) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
 
@@ -95,10 +92,9 @@ public class RequestController {
     public ResponseEntity<Boolean> physicalRenting(@RequestBody Request request) {
         System.out.println(request);
         boolean status = this.requestService.addPhysicalRenting(request);
-        if (status){
+        if (status) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
 
@@ -114,7 +110,7 @@ public class RequestController {
         List<BundleDTO> bundleList = requestService.getBundles(requestDTOList);
 
         return new ResponseEntity<List<BundleDTO>>(bundleList, HttpStatus.OK);
-   }
+    }
 
     @GetMapping(value = "/buyerRequestHistory", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<BundleDTO>> buyerRequestHistory(@RequestParam(value = "userId") Long userId) throws Exception {
@@ -128,10 +124,46 @@ public class RequestController {
         return new ResponseEntity<List<BundleDTO>>(bundleList, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/ownerSingleRequests", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RequestForFrontDTO>> ownerSingleRequets(@RequestParam(value = "ownerId") Long ownerId) throws Exception {
+        List<UserDTO> users = (this.getUsernames()).getBody();
+        List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
+
+        List<Request> requestList = requestService.getSingleRequestsForOwner(ownerId);
+        List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
+
+        return new ResponseEntity<List<RequestForFrontDTO>>(requestDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/buyerSingleRequests", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RequestForFrontDTO>> buyerSingleRequests(@RequestParam(value = "userId") Long ownerId) throws Exception {
+        List<UserDTO> users = (this.getUsernames()).getBody();
+        List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
+
+        List<Request> requestList = requestService.getSingleRequestsForUser(ownerId);
+        List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
+
+        return new ResponseEntity<List<RequestForFrontDTO>>(requestDTOList, HttpStatus.OK);
+    }
+    //TYPE IS FOR ACCEPTING REQUEST, TYPE 2 IS FOR CANCELING
+    @GetMapping(value = "/changeStatus", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> changeStaus(@RequestParam(value = "bundleId") Long bundleId, @RequestParam(value = "changeType") Long changeType) throws Exception {
+        Boolean value;
+        if (changeType == 1) {
+            value = requestService.changeBundleStatusToPaid(bundleId);
+        } else if (changeType == 2) {
+            value = requestService.changeBundleStatusToCancelled(bundleId);
+        } else {
+            value = false;
+        }
+        return new ResponseEntity<Boolean>(value, HttpStatus.OK);
+    }
+
     public ResponseEntity<List<UserDTO>> getUsernames() throws Exception {
         System.out.println("Getting all usernames");
         List<UserDTO> response = restTemplate.exchange("http://user/user/usernames/",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<UserDTO>>() {}).getBody();
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<UserDTO>>() {
+                }).getBody();
 
         return new ResponseEntity<List<UserDTO>>(response, HttpStatus.OK);
     }
@@ -139,7 +171,8 @@ public class RequestController {
     public ResponseEntity<List<VehicleMainViewDTO>> getVehicleMainViewDTO() throws Exception {
         System.out.println("Getting all vehicles");
         List<VehicleMainViewDTO> response = restTemplate.exchange("http://vehicle/search/",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<VehicleMainViewDTO>>() {}).getBody();
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<VehicleMainViewDTO>>() {
+                }).getBody();
 
         return new ResponseEntity<List<VehicleMainViewDTO>>(response, HttpStatus.OK);
     }
@@ -152,5 +185,19 @@ public class RequestController {
     @GetMapping(value = "canUserPostReview/{vehicleId}+{userId}")
     public ResponseEntity<Boolean> canUserPostReview(@PathVariable Long userId, @PathVariable Long vehicleId) {
         return new ResponseEntity<Boolean>(this.requestService.canUserPostReview(vehicleId, userId), HttpStatus.OK);
+    }
+
+    /**
+     * GET /server/request/rentingFinished
+     *
+     * @return return true if user can post review
+     */
+    @GetMapping(value = "/rentingFinished", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Request>> rentingFinishedRequests() {
+        try {
+            return new ResponseEntity<>(this.requestService.rentingFinishedReports(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

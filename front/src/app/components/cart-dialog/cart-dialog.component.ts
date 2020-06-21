@@ -6,6 +6,7 @@ import { CartService } from 'src/app/core/services/cart.service';
 import { DialogType } from 'src/app/shared/models/cart/DialogType';
 import { DialogDTO } from './DialogDTO';
 import { DateDTO } from './DateDTO';
+import * as moment from 'moment'
 
 @Component({
   selector: 'pm-cart-dialog',
@@ -28,12 +29,21 @@ export class CartDialogComponent implements OnInit {
 
   datesValid: any
 
-  public min = new Date();
+  public min = moment(new Date())
+  .add(2,'d') 
+  .toDate(); 
+
+  public minEndDate = moment(new Date())
+  .add(2,'d') 
+  .toDate(); 
+
+
   public myFilter = (d: Date): boolean => {
     const day = d.getDay();
     // Prevent Sunday from being selected.
     return day !== 0
   }
+
 
   constructor(
     public dialogRef: MatDialogRef<RentDialogComponent>,
@@ -72,6 +82,10 @@ export class CartDialogComponent implements OnInit {
 
   addToBundle() {
     this.dialogRef.close(new DateDTO(this.startDate, this.endDate))
+  }
+
+  startDateSelected(val){
+    this.minEndDate=val
   }
 
 

@@ -5,6 +5,7 @@ import com.example.catalogue.model.VehicleStyle;
 import com.example.catalogue.model.VehicleTransmission;
 import com.example.catalogue.service.VehicleTransmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping("catalogue/vehicleTransmission")
 public class VehicleTransmissionController {
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Autowired
     private VehicleTransmissionService vehicleTransmissionService;
 
@@ -51,6 +55,14 @@ public class VehicleTransmissionController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> deleteVehicleTransmission(@PathVariable Long id) {
         try {
+            ResponseEntity<List> response = restTemplate
+                    .exchange("http://vehicle/search/transmissionType/" + id, HttpMethod.GET, null, List.class);
+            List<Long> vehicleList = response.getBody();
+            System.out.println("OVDE JE DUZINA LISTE " + vehicleList.size());
+            if(vehicleList.size() != 0) {
+                return new ResponseEntity<>(new Notification("There is a vehicle registered with transmission type id " + id + "\nTransmission type wasn't deleted.", false), HttpStatus.CONFLICT);
+            }
+
             vehicleTransmissionService.deleteOne(id);
             return new ResponseEntity<>(new Notification("Successfully deleted vehicle transmission id = " + id, true), HttpStatus.OK);
         } catch (Exception e) {
@@ -83,4 +95,21 @@ public class VehicleTransmissionController {
     public ResponseEntity<VehicleTransmission> createReturnObject(@RequestBody VehicleTransmission vehicleTransmission) {
         return new ResponseEntity<VehicleTransmission>(vehicleTransmissionService.createTransmission(vehicleTransmission), HttpStatus.OK);
     }
+  
+  
+     * POST server/catalogue/vehicleTransmission
+     *
+     * @return return status of creating transmission type request
+     */
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> postVehicleFuelType(@RequestBody VehicleTransmission vehicleTransmission) {
+        try {
+            vehicleTransmissionService.addNew(vehicleTransmission);
+
+            return new ResponseEntity<>(new Notification("Successfully added vehicle transmission type " + vehicleTransmission.getValue(), true), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
+        }
+    }
+
 }

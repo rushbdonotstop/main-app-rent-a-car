@@ -1,1 +1,53 @@
-<p>user-inbox works!</p>
+<pm-header></pm-header>
+<!-- Masthead-->
+<header class="masthead">
+  <div class="container">
+    <div class="masthead-subheading">Keep track of all your requests</div>
+    <div class="masthead-heading text-uppercase">We keep you updated</div>
+  </div>
+</header>
+<section class="page-section">
+  <div class="container">
+    <div class="row" style="justify-content: left;">
+      <mat-card style="width: 70%; box-sizing: border-box;">
+        <mat-card-title>
+          <label> Your conversations </label>
+        </mat-card-title>
+        <mat-card-content>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef> Conversation with user </th>
+              <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="lastMessage">
+              <th mat-header-cell *matHeaderCellDef> Message </th>
+              <td mat-cell *matCellDef="let element"> {{element.lastMessage}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="timeOfLastMessage">
+              <th mat-header-cell *matHeaderCellDef> Time of last message </th>
+              <td mat-cell *matCellDef="let element"> {{element.timeOfLastMessage}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="open">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element"> <button (click)="openConversation(element)" mat-raised-button
+                  color="primary">Open conversation</button> </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+</section>

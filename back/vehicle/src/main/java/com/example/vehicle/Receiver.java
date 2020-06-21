@@ -20,7 +20,7 @@ public class Receiver {
 
     // lets it signal that the message has been received
     private CountDownLatch latch = new CountDownLatch(1);
-    
+
     public void receiveMessage(byte[] messageByte) throws UnsupportedEncodingException, JsonProcessingException {
 
             String messageStringJSON = new String(messageByte, "UTF-8");

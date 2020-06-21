@@ -1,6 +1,7 @@
 package com.example.message.model;
 
 
+import com.example.message.DTO.MessageDTO;
 import com.example.message.model.enums.MessageType;
 
 import javax.persistence.*;
@@ -15,6 +16,9 @@ public class Message {
 
     @Column(name = "sender_id", nullable = false)
     private Long senderId;
+
+    @Column(name = "receiver_id", nullable = false)
+    private Long receiverId;
 
     @Column(name = "date_and_time", nullable = false)
     private LocalDateTime dateAndTime;
@@ -31,13 +35,23 @@ public class Message {
     public Message() {
     }
 
-    public Message(Long id, Long senderId, LocalDateTime dateAndTime, String text, Long conversationId, MessageType messageType) {
+    public Message(Long id, Long senderId, Long receiverId, LocalDateTime dateAndTime, String text, Long conversationId, MessageType messageType) {
         this.id = id;
         this.senderId = senderId;
+        this.receiverId = receiverId;
         this.dateAndTime = dateAndTime;
         this.text = text;
         this.conversationId = conversationId;
         this.messageType = messageType;
+    }
+
+    public Message(MessageDTO messageDTO) {
+        this.senderId = messageDTO.getSenderId();
+        this.receiverId = messageDTO.getReceiverId();
+        this.dateAndTime = messageDTO.getDateAndTime();
+        this.text = messageDTO.getText();
+        this.conversationId = messageDTO.getConversationId();
+        this.messageType = messageDTO.getMessageType();
     }
 
     public Long getId() {
@@ -88,17 +102,24 @@ public class Message {
         this.messageType = messageType;
     }
 
+    public Long getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
                 "id=" + id +
                 ", senderId=" + senderId +
+                ", receiverId=" + receiverId +
                 ", dateAndTime=" + dateAndTime +
                 ", text='" + text + '\'' +
                 ", conversationId=" + conversationId +
                 ", messageType=" + messageType +
                 '}';
     }
-
-
 }
