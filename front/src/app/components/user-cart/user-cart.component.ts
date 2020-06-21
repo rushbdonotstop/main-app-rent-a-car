@@ -40,35 +40,40 @@ export class UserCartComponent implements OnInit {
 
   ngOnInit() {
     this.cart = this.cartService.getCart()
-    this.requests = this.cart.requests
-    this.bundleList = this.cart.bundles
-    this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>(this.requests);
-    this.dataSourceBundle = new MatTableDataSource<BundleAndVehicle>(this.bundleList);
 
-    if (this.requests.length == 0 && this.bundleList.length == 0)
-      this.emptyCart = true
-    else {
-      this.emptyCart = false
-      this.calculateTotalPrice()
-      //Check privileges
-      this.privilegeService.getPrivileges(JSON.parse(localStorage.getItem('userObject')).id).subscribe(data => {
-        for (let privilege of data.userPrivileges) {
-          if (privilege.toString() == "RENT_VEHICLE") {
-            this.rentingPrivilege = true;
-          }
-          //Check penalties
-          var loggedInUser = new User()
-          loggedInUser = JSON.parse(localStorage.getItem('userObject'))
-          this.penaltyService.getPenalties(loggedInUser.id).subscribe(
-            data => {
-              if (data.length > 0) {
-                this.hasPenalties = true;
-              }
+    if(this.cart != null){
+      this.requests = this.cart.requests
+      this.bundleList = this.cart.bundles
+      this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>(this.requests);
+      this.dataSourceBundle = new MatTableDataSource<BundleAndVehicle>(this.bundleList);
+  
+      if (this.requests.length == 0 && this.bundleList.length == 0)
+        this.emptyCart = true
+      else {
+        this.emptyCart = false
+        this.calculateTotalPrice()
+        //Check privileges
+        this.privilegeService.getPrivileges(JSON.parse(localStorage.getItem('userObject')).id).subscribe(data => {
+          for (let privilege of data.userPrivileges) {
+            if (privilege.toString() == "RENT_VEHICLE") {
+              this.rentingPrivilege = true;
             }
-          )
-        }
-      })
+            //Check penalties
+            var loggedInUser = new User()
+            loggedInUser = JSON.parse(localStorage.getItem('userObject'))
+            this.penaltyService.getPenalties(loggedInUser.id).subscribe(
+              data => {
+                if (data.length > 0) {
+                  this.hasPenalties = true;
+                }
+              }
+            )
+          }
+        })
+      }
     }
+
+  
   }
 
   removeFromBundle(element: RequestAndVehicle, bundle: BundleAndVehicle) {

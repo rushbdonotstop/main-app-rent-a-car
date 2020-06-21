@@ -29,7 +29,7 @@ export class ViewPriceListComponent implements OnInit {
     error => {
       this._snackBar.open("Error while retreiving vehicle pricelists!", "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     })
   }

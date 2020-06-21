@@ -40,7 +40,7 @@ export class ViewCodebookComponent implements OnInit {
       error => {
         this.snackBar.open("Server error!", "", {
           duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
         });
       }
     );
@@ -54,7 +54,7 @@ export class ViewCodebookComponent implements OnInit {
     error => {
       this.snackBar.open("Server error!", "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     });
     this.catalogueService.getModels()
@@ -66,7 +66,7 @@ export class ViewCodebookComponent implements OnInit {
     error => {
       this.snackBar.open("Server error!", "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     });
     this.catalogueService.getStyles()
@@ -78,7 +78,7 @@ export class ViewCodebookComponent implements OnInit {
     error => {
       this.snackBar.open("Server error!", "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     });
     this.catalogueService.getTransmissions()
@@ -90,7 +90,7 @@ export class ViewCodebookComponent implements OnInit {
     error => {
       this.snackBar.open("Server error!", "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     });
   }
@@ -124,7 +124,7 @@ export class ViewCodebookComponent implements OnInit {
       error => {
         this.snackBar.open("Server error!", "", {
           duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
         });
       });
       }
@@ -158,7 +158,7 @@ export class ViewCodebookComponent implements OnInit {
       error => {
         this.snackBar.open("Server error!", "", {
           duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
         });
       });
       }
@@ -192,7 +192,7 @@ export class ViewCodebookComponent implements OnInit {
       error => {
         this.snackBar.open("Server error!", "", {
           duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
         });
       });
       }
@@ -226,7 +226,7 @@ export class ViewCodebookComponent implements OnInit {
       error => {
         this.snackBar.open("Server error!", "", {
           duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
         });
       });
       }
@@ -260,7 +260,7 @@ export class ViewCodebookComponent implements OnInit {
       error => {
         this.snackBar.open("Server error!", "", {
           duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
         });
       });
       }
@@ -278,7 +278,7 @@ export class ViewCodebookComponent implements OnInit {
     if(!this.newFuelType.value) {
       this.snackBar.open("Enter fuel type value!", "", {
         duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
       });
     } else {
       this.catalogueService.addFuelType(this.newFuelType).subscribe(data=> {
@@ -294,7 +294,7 @@ export class ViewCodebookComponent implements OnInit {
     if(!this.newMake.value) {
       this.snackBar.open("Enter vehicle make value!", "", {
         duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
       });
     } else {
       this.catalogueService.addMake(this.newMake).subscribe(data=> {
@@ -311,12 +311,12 @@ export class ViewCodebookComponent implements OnInit {
     if(!this.newModel.value) {
       this.snackBar.open("Enter vehicle model value!", "", {
         duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
       });
     } else if(!this.selectedMake) {
       this.snackBar.open("Select vehicle make value!", "", {
         duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
       });
     } else {
       this.newModel.vehicleMake = this.selectedMake;
@@ -334,7 +334,7 @@ export class ViewCodebookComponent implements OnInit {
     if(!this.newTransmission.value) {
       this.snackBar.open("Enter vehicle transmission type value!", "", {
         duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
       });
     } else {
       this.catalogueService.addTransmission(this.newTransmission).subscribe(data=> {
@@ -350,7 +350,7 @@ export class ViewCodebookComponent implements OnInit {
     if(!this.newStyle.value) {
       this.snackBar.open("Enter vehicle style value!", "", {
         duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
       });
     } else {
       this.catalogueService.addStyle(this.newStyle).subscribe(data=> {
@@ -366,7 +366,7 @@ export class ViewCodebookComponent implements OnInit {
     this.catalogueService.deleteMake(catalogItem).subscribe(data => {
       this.snackBar.open(data.text, "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     }
     );
@@ -376,7 +376,7 @@ export class ViewCodebookComponent implements OnInit {
     this.catalogueService.deleteModel(catalogItem).subscribe(data => {
       this.snackBar.open(data.text, "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     }
     );
@@ -386,7 +386,7 @@ export class ViewCodebookComponent implements OnInit {
     this.catalogueService.deleteFuelType(catalogItem).subscribe(data => {
       this.snackBar.open(data.text, "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     }
     );
@@ -396,7 +396,7 @@ export class ViewCodebookComponent implements OnInit {
     this.catalogueService.deleteTransmissionType(catalogItem).subscribe(data => {
       this.snackBar.open(data.text, "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     }
     );
@@ -406,7 +406,7 @@ export class ViewCodebookComponent implements OnInit {
     this.catalogueService.deleteVehicleStyle(catalogItem).subscribe(data => {
       this.snackBar.open(data.text, "", {
         duration: 2000,
-        verticalPosition: 'top'
+        verticalPosition: 'bottom'
       });
     }
     );

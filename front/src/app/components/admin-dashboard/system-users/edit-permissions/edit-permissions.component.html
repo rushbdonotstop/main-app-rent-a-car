@@ -1,25 +1,56 @@
-<div mat-dialog-content>
-    <h1>User privileges:</h1>
-    <div>
-        <table class="mat-elevation-z8">
-            <thead>
-                <tr>
-                    <th>Rent vehicle</th>
-                    <th>Add discount</th>
-                    <th>Get statistic</th>
-                    <th>Add vehicle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th><mat-checkbox [(ngModel)]="value[0]"></mat-checkbox></th>
-                    <th><mat-checkbox [(ngModel)]="value[1]"></mat-checkbox></th>
-                    <th><mat-checkbox [(ngModel)]="value[2]"></mat-checkbox></th>
-                    <th><mat-checkbox [(ngModel)]="value[3]"></mat-checkbox></th>
-                </tr>   
-            </tbody>
-            
-            <button mat-raised-button (click)="onSaveClick()">Save</button>
-        </table>
+<div style="overflow-y: hidden; overflow-x: hidden;" class="container">
+    <div class="row">
+        <div class="col-10">
+            <h3>Edit permissions</h3>
+        </div>
+    </div>
+    <div mat-dialog-content>
+        <mat-card>
+            <mat-card-content style="margin-top: 20px;">
+                <div class="row">
+                    <div class="col-10">
+                        <table class="mat-elevation-z8">
+                            <thead>
+                                <tr>
+                                    <th>Rent vehicle</th>
+                                    <th>Add discount</th>
+                                    <th>Get statistic</th>
+                                    <th>Add vehicle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <mat-checkbox [(ngModel)]="value[0]"></mat-checkbox>
+                                    </th>
+                                    <th>
+                                        <mat-checkbox [(ngModel)]="value[1]"></mat-checkbox>
+                                    </th>
+                                    <th>
+                                        <mat-checkbox [(ngModel)]="value[2]"></mat-checkbox>
+                                    </th>
+                                    <th>
+                                        <mat-checkbox [(ngModel)]="value[3]"></mat-checkbox>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-2">
+                        
+                    </div>
+                </div>
+                <div style="margin-top: 20px;" class="row">
+                    <div class="col-8">
+
+                    </div>
+                    <div class="col-2">
+                        <button color="primary" mat-raised-button (click)="onSaveClick()">Save</button>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>

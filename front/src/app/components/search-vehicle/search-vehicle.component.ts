@@ -213,7 +213,7 @@ export class SearchVehicleComponent implements OnInit {
         error => {
           this._snackBar.open("Server error!", "", {
             duration: 2000,
-            verticalPosition: 'top'
+            verticalPosition: 'bottom'
           });
         }
       )

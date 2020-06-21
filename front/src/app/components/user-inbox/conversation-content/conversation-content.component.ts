@@ -90,6 +90,12 @@ export class ConversationContentComponent implements OnInit {
           }
       )
 
+      },
+      error => {
+        this._snackBar.open("Users don't have opened requests!", "", {
+          duration: 2000,
+          verticalPosition: 'bottom'
+        });
       }
     )
   }

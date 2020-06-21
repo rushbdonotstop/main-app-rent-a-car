@@ -140,7 +140,7 @@ export class VehicleDetailsComponent implements OnInit {
             error => {
               this._snackBar.open("Error while retreiving vehicle make!", "", {
                 duration: 2000,
-                verticalPosition: 'top'
+                verticalPosition: 'bottom'
               });
             })
 
@@ -151,7 +151,7 @@ export class VehicleDetailsComponent implements OnInit {
             error => {
               this._snackBar.open("Error while retreiving vehicle model!", "", {
                 duration: 2000,
-                verticalPosition: 'top'
+                verticalPosition: 'bottom'
               });
             })
 
@@ -163,7 +163,7 @@ export class VehicleDetailsComponent implements OnInit {
             error => {
               this._snackBar.open("Error while retreiving vehicle fuel type!", "", {
                 duration: 2000,
-                verticalPosition: 'top'
+                verticalPosition: 'bottom'
               });
             })
 
@@ -175,7 +175,7 @@ export class VehicleDetailsComponent implements OnInit {
             error => {
               this._snackBar.open("Error while retreiving vehicle style!", "", {
                 duration: 2000,
-                verticalPosition: 'top'
+                verticalPosition: 'bottom'
               });
             })
 
@@ -187,7 +187,7 @@ export class VehicleDetailsComponent implements OnInit {
             error => {
               this._snackBar.open("Error while retreiving vehicle transmission!", "", {
                 duration: 2000,
-                verticalPosition: 'top'
+                verticalPosition: 'bottom'
               });
             })
 
@@ -198,7 +198,7 @@ export class VehicleDetailsComponent implements OnInit {
             error => {
               this._snackBar.open("Error while retreiving vehicle location!", "", {
                 duration: 2000,
-                verticalPosition: 'top'
+                verticalPosition: 'bottom'
               });
             })
 
@@ -209,14 +209,14 @@ export class VehicleDetailsComponent implements OnInit {
             error => {
               this._snackBar.open("Error while retreiving vehicle owner username!", "", {
                 duration: 2000,
-                verticalPosition: 'top'
+                verticalPosition: 'bottom'
               });
             })
       },
         error => {
           this._snackBar.open("Error while retreiving vehicle!", "", {
             duration: 2000,
-            verticalPosition: 'top'
+            verticalPosition: 'bottom'
           });
         })
   }

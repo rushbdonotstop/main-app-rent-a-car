@@ -6,6 +6,7 @@ import { RequestDetailsComponent } from './request-details/request-details.compo
 import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
 import { User } from 'src/app/shared/models/user/User';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+import { VehicleStatisticComponent } from './vehicle-statistic/vehicle-statistic.component';
 
 
 @Component({
@@ -94,6 +95,13 @@ export class RequestHistoryComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.onChange();
 
+    });
+  }
+
+  openStatistic(){
+    const dialogRef = this.dialog.open(VehicleStatisticComponent, {
+      width: '600px',
+      height: '400px'
     });
   }
 

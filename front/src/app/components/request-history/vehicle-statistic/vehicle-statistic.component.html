@@ -1,7 +1,7 @@
 <div style="overflow-y: hidden; overflow-x: hidden;" class="container">
     <div class="row">
         <div class="col-10">
-            <h3>User details</h3>
+            <h3>User statistics</h3>
         </div>
         <div class="col-2">
             <button mat-raised-button color="warn" class="pull-right" (click)="onNoClick()">X</button>
@@ -13,27 +13,22 @@
                 <form>
                     <div class="row">
                         <mat-form-field style="width: 400px;" [style.fontSize]="16">
-                            <mat-label>Full name</mat-label>
-                            <input disabled matInput value="{{value.fullName}}">
+                            <mat-label>Vehicle with most mileage</mat-label>
+                            <input disabled matInput value="{{value.makeModelForMileage}}">
+                            <input disabled matInput value="{{value.mostMileage}}">
                         </mat-form-field>
                     </div>
                     <div class="row">
                         <mat-form-field style="width: 400px;" [style.fontSize]="16">
-                            <mat-label>Address</mat-label>
-                            <input disabled matInput value="{{value.address}}">
-                        </mat-form-field>
+                            <mat-label>Vehicle with most reviews</mat-label>
+                            <input disabled matInput value="{{value.makeModelForMostReviews}}">
+                            <input disabled matInput value="{{value.mostReviews}}">                        </mat-form-field>
                     </div>
                     <div class="row">
                         <mat-form-field style="width: 400px;" [style.fontSize]="16">
-                            <mat-label>Business Number</mat-label>
-                            <input disabled matInput value="{{value.businessNum}}">
-                        </mat-form-field>
-                    </div>
-                    <div class="row">
-                        <mat-form-field style="width: 400px;" [style.fontSize]="16">
-                            <mat-label>Vehicle Number</mat-label>
-                            <input disabled matInput value="{{value.vehicleNum}}">
-                        </mat-form-field>
+                            <mat-label>Vehicle with best rating</mat-label>
+                            <input disabled matInput value="{{value.makeModelForBestRating}}">
+                            <input disabled matInput value="{{value.bestRating}}">                           </mat-form-field>
                     </div>
                 </form>
             </mat-card-content>

@@ -13,7 +13,6 @@ import { CreateVehicleComponent } from '../components/create-vehicle/create-vehi
 import { CreateReviewComponent } from '../components/vehicle-review/create-review/create-review.component';
 import { ViewVehicleReviewsComponent } from '../components/vehicle-review/view-vehicle-reviews/view-vehicle-reviews.component';
 import { CreateReportComponent } from '../components/create-report/create-report.component';
-import { VehicleStatisticComponent } from '../components/agent-specific-components/vehicle-statistic/vehicle-statistic.component';
 import { CreatePriceListComponent } from '../components/price-list/create-price-list/create-price-list.component';
 import { ViewPriceListComponent } from '../components/price-list/view-price-list/view-price-list.component';
 import { VehicleMapComponent } from '../components/vehicle-map/vehicle-map.component';
@@ -24,7 +23,6 @@ import { CommentRequestsComponent } from '../components/admin-dashboard/comment-
 import { ViewUsersComponent, UserDetailsDialog } from '../components/admin-dashboard/system-users/view-users/view-users.component';
 import { RegisterAgentComponent } from '../components/admin-dashboard/system-users/register-agent/register-agent.component';
 import { EditPermissionsComponent } from '../components/admin-dashboard/system-users/edit-permissions/edit-permissions.component';
-import { CreateDiscountComponent } from '../components/agent-specific-components/create-discount/create-discount.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule } from '../core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,6 +38,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header/admin-header.component';
 import { RequestDetailsComponent } from '../components/request-history/request-details/request-details.component';
 import { ConversationContentComponent } from '../components/user-inbox/conversation-content/conversation-content.component';
+import { VehicleStatisticComponent } from '../components/request-history/vehicle-statistic/vehicle-statistic.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +58,6 @@ import { ConversationContentComponent } from '../components/user-inbox/conversat
     VehicleStatisticComponent,
     CreatePriceListComponent,
     ViewPriceListComponent,
-    CreateDiscountComponent,
     VehicleMapComponent,
     AdminDashboardComponent,
     EditCodebookComponent,
@@ -71,7 +69,14 @@ import { ConversationContentComponent } from '../components/user-inbox/conversat
     AutocompleteComponent,
     AdminHeaderComponent,
     RequestDetailsComponent,
-    ConversationContentComponent
+    ConversationContentComponent,
+    EditFuelTypeDialog,
+    EditMakeDialog,
+    EditModelDialog,
+    EditStyleDialog,
+    EditTransmissionlDialog,
+    UserDetailsDialog,
+    EditPermissionsComponent
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent,
@@ -82,6 +87,8 @@ import { ConversationContentComponent } from '../components/user-inbox/conversat
     EditTransmissionlDialog,
     UserDetailsDialog,
     RequestDetailsComponent,
+    EditPermissionsComponent,
+    VehicleStatisticComponent
   ],
   imports: [
     BrowserModule,

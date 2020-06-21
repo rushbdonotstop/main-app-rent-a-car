@@ -17,14 +17,7 @@ import { User } from 'src/app/shared/models/user/User';
 
 @Component({
   templateUrl: './view-vehicles.component.html',
-  styleUrls: ['./view-vehicles.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ['./view-vehicles.component.css']
 })
 export class ViewVehiclesComponent implements OnInit {
 
@@ -62,7 +55,7 @@ export class ViewVehiclesComponent implements OnInit {
         error => {
           this._snackBar.open("Server error!", "", {
             duration: 2000,
-            verticalPosition: 'top'
+            verticalPosition: 'bottom'
           });
         }
       )
@@ -93,7 +86,7 @@ export class ViewVehiclesComponent implements OnInit {
   openDetails(vehicleId: number) {
     const dialogRef = this.dialog.open(VehicleDetailsComponent, {
       width: '1200px',
-      height: '600px',
+      height: '700px',
       data: { id: vehicleId }
     });
 
@@ -137,7 +130,7 @@ export class ViewVehiclesComponent implements OnInit {
         else {
           this._snackBar.open("Owner mismatch in bundle!", "", {
             duration: 2000,
-            verticalPosition: 'top'
+            verticalPosition: 'bottom'
           });
         }
       }

@@ -35,6 +35,8 @@ export class ViewUsersComponent implements OnInit {
 
   openDetails(user: User) {
     const dialogRef = this.dialog.open(UserDetailsDialog, {
+      width: '600px',
+      height: '400px',
       data: user.userDetails,
     });
   }
@@ -73,6 +75,8 @@ export class ViewUsersComponent implements OnInit {
 
       
       const dialogRef = this.dialog.open(EditPermissionsComponent, {
+        width: '600px',
+        height: '250px',
         data: permissionBoolean
       });
 

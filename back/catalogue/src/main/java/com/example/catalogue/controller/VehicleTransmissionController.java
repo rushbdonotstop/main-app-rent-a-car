@@ -95,8 +95,8 @@ public class VehicleTransmissionController {
     public ResponseEntity<VehicleTransmission> createReturnObject(@RequestBody VehicleTransmission vehicleTransmission) {
         return new ResponseEntity<VehicleTransmission>(vehicleTransmissionService.createTransmission(vehicleTransmission), HttpStatus.OK);
     }
-  
-  
+
+    /**
      * POST server/catalogue/vehicleTransmission
      *
      * @return return status of creating transmission type request

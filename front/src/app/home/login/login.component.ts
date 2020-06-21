@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("userObject", JSON.stringify(user));
             this._snackBar.open("Succesful login!", "", {
               duration: 2000,
-              verticalPosition: 'top'
+              verticalPosition: 'bottom'
             });
             if(user.userDetails.userType.toString() === 'ADMINISTRATOR'){
               this.router.navigate(['dashboard']);
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
           error => {
             this._snackBar.open("Server error!", "", {
               duration: 2000,
-              verticalPosition: 'top'
+              verticalPosition: 'bottom'
             });
           })
     } else {

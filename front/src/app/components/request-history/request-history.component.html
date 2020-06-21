@@ -8,13 +8,23 @@
 </header>
 <section class="page-section">
   <div class="container">
-    <mat-form-field>
-      <mat-label>Select history</mat-label>
-      <mat-select (selectionChange)="onChange()" [(value)]="selectedHistory">
-        <mat-option value="receivedRequests">Recevied Requests</mat-option>
-        <mat-option value="sentRequests">Sent Requests</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label>Select history</mat-label>
+          <mat-select (selectionChange)="onChange()" [(value)]="selectedHistory">
+            <mat-option value="receivedRequests">Recevied Requests</mat-option>
+            <mat-option value="sentRequests">Sent Requests</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-1">
+        <button style="margin-top: 20px;" (click)="openStatistic()" mat-raised-button
+        color="accent">Show statistics</button>
+      </div>
+      <div class="col-4">
+      </div>
+    </div>
 
     <div class="row" style="justify-content: left;">
       <mat-card style="width: 70%; box-sizing: border-box;">
