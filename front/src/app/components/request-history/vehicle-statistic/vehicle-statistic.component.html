@@ -3,32 +3,67 @@
         <div class="col-10">
             <h3>User statistics</h3>
         </div>
-        <div class="col-2">
-            <button mat-raised-button color="warn" class="pull-right" (click)="onNoClick()">X</button>
-        </div>
     </div>
     <div mat-dialog-content>
         <mat-card>
             <mat-card-content style="margin-top: 20px;">
                 <form>
                     <div class="row">
-                        <mat-form-field style="width: 400px;" [style.fontSize]="16">
-                            <mat-label>Vehicle with most mileage</mat-label>
-                            <input disabled matInput value="{{value.makeModelForMileage}}">
-                            <input disabled matInput value="{{value.mostMileage}}">
-                        </mat-form-field>
+                        <div class="col-5">
+                            <h6>Vehicle with most mileage : </h6>
+                        </div>
+                        <div class="col-5">
+                            <mat-label><span style="text-decoration: underline;">Vehicle model/make</span> : {{statistic.makeModelForMileage}}</mat-label>
+                        </div>
+                        <div class="col-2">
+                        </div>
                     </div>
                     <div class="row">
-                        <mat-form-field style="width: 400px;" [style.fontSize]="16">
-                            <mat-label>Vehicle with most reviews</mat-label>
-                            <input disabled matInput value="{{value.makeModelForMostReviews}}">
-                            <input disabled matInput value="{{value.mostReviews}}">                        </mat-form-field>
+                        <div class="col-5">
+                        </div>
+                        <div class="col-5">
+                            <mat-label><span style="text-decoration: underline;">Mileage</span> : {{statistic.mostMileage}}</mat-label> 
+                        </div>
+                        <div class="col-2">
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-5">
+                            <h6>Vehicle with most reviews : </h6>
+                        </div>
+                        <div class="col-5">
+                            <mat-label><span style="text-decoration: underline;">Vehicle model/make</span> : {{statistic.makeModelForMostReviews}}</mat-label>
+                        </div>
+                        <div class="col-2">
+                        </div>
                     </div>
                     <div class="row">
-                        <mat-form-field style="width: 400px;" [style.fontSize]="16">
-                            <mat-label>Vehicle with best rating</mat-label>
-                            <input disabled matInput value="{{value.makeModelForBestRating}}">
-                            <input disabled matInput value="{{value.bestRating}}">                           </mat-form-field>
+                        <div class="col-5">
+                        </div>
+                        <div class="col-5">
+                            <mat-label><span style="text-decoration: underline;">Number of reviews</span> : {{statistic.mostReviews}}</mat-label> 
+                        </div>
+                        <div class="col-2">
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px;" class="row">
+                        <div class="col-5">
+                            <h6>Vehicle with best rating : </h6>
+                        </div>
+                        <div class="col-5">
+                            <mat-label><span style="text-decoration: underline;">Vehicle model/make</span> : {{statistic.makeModelForBestRating}}</mat-label>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                        </div>
+                        <div class="col-5">
+                            <mat-label><span style="text-decoration: underline;">Rating</span> : {{statistic.bestRating}}</mat-label> 
+                        </div>
+                        <div class="col-2">
+                        </div>
                     </div>
                 </form>
             </mat-card-content>

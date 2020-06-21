@@ -100,8 +100,8 @@ export class RequestHistoryComponent implements OnInit {
 
   openStatistic(){
     const dialogRef = this.dialog.open(VehicleStatisticComponent, {
-      width: '600px',
-      height: '400px'
+      width: '750px',
+      height: '350px'
     });
   }
 
