@@ -75,6 +75,7 @@ import { RequestDetailsComponent } from '../components/request-history/request-d
     EditStyleDialog,
     EditTransmissionlDialog,
     UserDetailsDialog,
+    RequestDetailsComponent,
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent, EditFuelTypeDialog, EditMakeDialog, EditModelDialog, EditTransmissionlDialog, UserDetailsDialog, EditPermissionsComponent,
