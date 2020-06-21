@@ -34,6 +34,7 @@ public class MessageService {
             if (((request.getOwnerId().equals(message.getSenderId()) && request.getUserId().equals(message.getReceiverId())) || (request.getOwnerId().equals(message.getReceiverId()) && request.getUserId().equals(message.getSenderId()))) && (request.getStatus().equals(Status.RESERVED) || request.getStatus().equals(Status.PAID))  ) {
                 Message mess = new Message(message);
                 if (getConversationId(message) != null) {
+                    System.out.println("USAO U IF");
                     Long id = getConversationId(message);
                     mess.setConversationId(id);
                     Conversation conversation = conversationRepository.findOneById(id);
@@ -41,6 +42,7 @@ public class MessageService {
                     conversation.setTimeOfLastMessage(mess.getDateAndTime());
                     conversationRepository.save(conversation);
                 } else {
+                    System.out.println("USAO U ELSE");
                     Conversation conv = new Conversation();
                     conv.setId((long)(conversationRepository.findAll().size() + 1));
                     System.out.println("ID CONVERZACIJE JE: " + conv.getId());
@@ -73,12 +75,9 @@ public class MessageService {
 
     public MessageDTO convertMessToDTO(Long userId, Message mess) {
         MessageDTO messDTO = new MessageDTO(mess);
-        System.out.println("Ovo je RECEIVER ID: " + messDTO.getReceiverId() + "    OVO JE USERID PROSLEDJEN: " + userId);
         if (messDTO.getReceiverId().equals(userId)) {
-            System.out.println("USAO U IF");
             messDTO.setMessageType(MessageType.RECEIVED_MESSAGE);
         } else {
-            System.out.println("USAO U ELSE");
             messDTO.setMessageType(MessageType.SENT_MESSAGE);
         }
         return messDTO;

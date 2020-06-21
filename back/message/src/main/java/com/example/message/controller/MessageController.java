@@ -36,7 +36,7 @@ public class MessageController {
         return new ResponseEntity<List<Message>>(this.messageService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "inbox", produces = "application/json")
+    @GetMapping(value = "/inbox", produces = "application/json")
     public ResponseEntity<List<MessageDTO>> getAllMessagesFromConversation(@RequestParam(value = "userId") Long userId, @RequestParam(value = "conversationId") Long conversationId) {
 
         return new ResponseEntity<List<MessageDTO>>(this.messageService.getAllMessagesForUser(userId, conversationId), HttpStatus.OK);
@@ -48,7 +48,7 @@ public class MessageController {
      * @return returns status of new request creation
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> newRequest(@RequestBody MessageDTO message) throws Exception {
+    public ResponseEntity<Notification> newMessage(@RequestBody MessageDTO message) throws Exception {
         List<RequestDTO>  requestList = (this.getRequests()).getBody();
         boolean status = this.messageService.sendMessage(message, requestList);
         Notification not = new Notification();
