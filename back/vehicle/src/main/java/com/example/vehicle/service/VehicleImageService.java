@@ -100,4 +100,8 @@ public class VehicleImageService {
         }
         return outputStream.toByteArray();
     }
+
+    public VehicleImage save(VehicleImage vehicleImage){
+        return imageRepository.save(vehicleImage);
+    }
 }

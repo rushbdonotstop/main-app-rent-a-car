@@ -3,7 +3,6 @@ package com.example.catalogue.controller;
 import com.example.catalogue.model.Notification;
 import com.example.catalogue.model.VehicleFuelType;
 import com.example.catalogue.service.VehicleFuelTypeService;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ public class VehicleFuelTypeController {
      * @return return a vehicle fuel types
      */
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleFuelType> getOneVehicleFuelType(@PathVariable String id) {
+    public ResponseEntity<VehicleFuelType> getOneVehicleFuelType(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(vehicleFuelTypeService.findOneFuelType(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -43,7 +42,7 @@ public class VehicleFuelTypeController {
      * @return return notification
      */
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> deleteVehicleFuelType(@PathVariable String id) {
+    public ResponseEntity<Notification> deleteVehicleFuelType(@PathVariable Long id) {
         try {
             ResponseEntity<List> response = restTemplate
                     .exchange("http://vehicle/search/fuelType/" + id, HttpMethod.GET, null, List.class);
@@ -65,7 +64,7 @@ public class VehicleFuelTypeController {
      * @return return status of creating vehicle request
      */
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> putVehicleFuelType(@PathVariable String id, @RequestBody VehicleFuelType vehicleFuelType) {
+    public ResponseEntity<Notification> putVehicleFuelType(@PathVariable Long id, @RequestBody VehicleFuelType vehicleFuelType) {
         try {
             vehicleFuelTypeService.changeFuelType(id, vehicleFuelType);
 
@@ -104,5 +103,15 @@ public class VehicleFuelTypeController {
         } catch (Exception e) {
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
+    }
+
+    /**
+     * POST server/catalogue/vehicleFuelType/createReturnObject
+     *
+     * @return return object of creating vehicle fuel type request
+     */
+    @PostMapping(value="/createReturnObject", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VehicleFuelType> createReturnObject(@RequestBody VehicleFuelType vehicleFuelType) {
+        return new ResponseEntity<VehicleFuelType>(vehicleFuelTypeService.createFuelType(vehicleFuelType), HttpStatus.OK);
     }
 }

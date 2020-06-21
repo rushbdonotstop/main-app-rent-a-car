@@ -1,9 +1,8 @@
 package com.example.location.service;
 
 import com.example.location.model.Notification;
-import com.example.location.model.State;
-import com.example.location.model.Street;
 import com.example.location.repository.StreetRepository;
+import com.example.location.model.Street;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,15 +1,21 @@
 package com.example.vehicle.dto.pricelist;
 
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.GregorianCalendar;
 
 public class Pricelist implements Comparable<Pricelist>{
 
     private Long id;
 
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
-    private LocalDate  endDate;
+    private LocalDateTime  endDate;
 
     private float price;
 
@@ -24,7 +30,7 @@ public class Pricelist implements Comparable<Pricelist>{
     public Pricelist() {
     }
 
-    public Pricelist(Long id, LocalDate startDate, LocalDate endDate, float price, float priceByMile, float priceCollision, Long vehicleId, VehicleDiscount vehicleDiscount) {
+    public Pricelist(Long id, LocalDateTime startDate, LocalDateTime endDate, float price, float priceByMile, float priceCollision, Long vehicleId, VehicleDiscount vehicleDiscount) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -43,19 +49,19 @@ public class Pricelist implements Comparable<Pricelist>{
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -91,12 +97,12 @@ public class Pricelist implements Comparable<Pricelist>{
         this.vehicleId = vehicleId;
     }
 
-    public VehicleDiscount getVehicleDiscountId() {
+    public VehicleDiscount getVehicleDiscount() {
         return vehicleDiscount;
     }
 
-    public void setVehicleDiscountId(VehicleDiscount vehicleDiscountId) {
-        this.vehicleDiscount = vehicleDiscountId;
+    public void setVehicleDiscount(VehicleDiscount vehicleDiscount) {
+        this.vehicleDiscount = vehicleDiscount;
     }
 
     @Override
@@ -116,5 +122,35 @@ public class Pricelist implements Comparable<Pricelist>{
     @Override
     public int compareTo(Pricelist o) {
         return this.startDate.compareTo(o.startDate);
+    }
+
+    public com.example.vehicle.xmlmodel.pricelist.Pricelist toXML(Pricelist pricelist) throws DatatypeConfigurationException {
+        com.example.vehicle.xmlmodel.pricelist.Pricelist pricelistXML = new com.example.vehicle.xmlmodel.pricelist.Pricelist();
+        pricelistXML.setId(pricelist.getId());
+        pricelistXML.setPrice(pricelist.getPrice());
+        pricelistXML.setPriceByMile(pricelist.getPriceByMile());
+        pricelistXML.setPriceCollision(pricelist.getPriceCollision());
+
+        LocalDate date = pricelist.getStartDate().toLocalDate();
+        GregorianCalendar gcal = GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
+        XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+
+        pricelistXML.setStartDate(xcal);
+
+        date = pricelist.getEndDate().toLocalDate();
+        gcal = GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
+        xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+
+        pricelistXML.setEndDate(xcal);
+
+        com.example.vehicle.xmlmodel.pricelist.vehicle_discount.VehicleDiscount vehicleDiscountXML = new com.example.vehicle.xmlmodel.pricelist.vehicle_discount.VehicleDiscount();
+
+        vehicleDiscountXML.setDiscount(pricelist.getVehicleDiscount().getDiscount());
+        vehicleDiscountXML.setId(pricelist.getVehicleDiscount().getId());
+        vehicleDiscountXML.setNumDays(pricelist.getVehicleDiscount().getNumDays());
+
+        pricelistXML.setVehicleDiscount(vehicleDiscountXML);
+
+        return pricelistXML;
     }
 }

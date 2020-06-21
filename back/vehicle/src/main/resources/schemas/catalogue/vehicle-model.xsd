@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/vehicle-model"
+           targetNamespace="http://rentacar.com/vehicle-model" elementFormDefault="qualified"
+           xmlns:vehicle-make="http://rentacar.com/vehicle-make">
+
+    <xs:import namespace="http://rentacar.com/vehicle-make" schemaLocation="vehicle-make.xsd"/>
+
+    <xs:element name="vehicleModel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="value" type="xs:string"/>
+                <xs:element ref="vehicle-make:vehicleMake"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleModelById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="make_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllVehicleModel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleModel" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleModel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleModel"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createVehicleModel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleModel"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateVehicleModel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleModel"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteVehicleModelById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="make_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

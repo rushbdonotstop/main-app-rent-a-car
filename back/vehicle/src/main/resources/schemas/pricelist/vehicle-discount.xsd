@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/vehicle-discount"
+           targetNamespace="http://rentacar.com/vehicle-discount" elementFormDefault="qualified">
+
+    <xs:element name="vehicleDiscount">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="num_days" type="xs:int"/>
+                <xs:element name="discount" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleDiscountById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="discount_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllVehicleDiscount">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleDiscount" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleDiscount">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleDiscount"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

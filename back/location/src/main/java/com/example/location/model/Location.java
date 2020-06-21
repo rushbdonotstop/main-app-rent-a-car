@@ -71,4 +71,5 @@ public class Location {
                 ", street=" + street +
                 '}';
     }
+
 }

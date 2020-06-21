@@ -37,17 +37,17 @@ public class VehicleFuelTypeService {
         return false;
     }
 
-    public VehicleFuelType findOneFuelType(String id) throws Exception{
+    public VehicleFuelType findOneFuelType(Long id) throws Exception{
         VehicleFuelType vehicleFuelType = null;
         try {
-            vehicleFuelType = vehicleFuelTypeRepository.findOneById(Long.parseLong(id));
+            vehicleFuelType = vehicleFuelTypeRepository.findOneById(id);
         } catch (EntityNotFoundException e) {
             throw new Exception("Can't find fuel type with id = " + id);
         }
         return vehicleFuelType;
     }
 
-    public void deleteOneFuelType(String id) throws Exception {
+    public void deleteOneFuelType(Long id) throws Exception {
         try {
             findOneFuelType(id);
         } catch (EntityNotFoundException e) {
@@ -56,13 +56,21 @@ public class VehicleFuelTypeService {
         vehicleFuelTypeRepository.delete(findOneFuelType(id));
     }
 
-    public void changeFuelType(String id, VehicleFuelType vehicleFuelType1) throws Exception{
+    public void changeFuelType(Long id, VehicleFuelType vehicleFuelType1) throws Exception{
         try {
             VehicleFuelType vehicleFuelType = findOneFuelType(id);
             vehicleFuelType.setValue(vehicleFuelType1.getValue());
             vehicleFuelTypeRepository.save(vehicleFuelType);
         } catch (EntityNotFoundException e) {
             throw new Exception("Can't find fuel type with id = " + id);
+        }
+    }
+
+    public VehicleFuelType createFuelType(VehicleFuelType vehicleFuelType) {
+        if(exist(vehicleFuelType)) {
+            return vehicleFuelTypeRepository.findByValue(vehicleFuelType.getValue());
+        } else {
+            return vehicleFuelTypeRepository.save(vehicleFuelType);
         }
     }
 }

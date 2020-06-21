@@ -14,4 +14,6 @@ public interface VehicleModelRepository extends JpaRepository<VehicleModel, Long
     List<VehicleModel> findAll();
 
     List<VehicleModel> findByVehicleMake(VehicleMake vehicleMake);
+
+    VehicleModel findByValue(String value);
 }
