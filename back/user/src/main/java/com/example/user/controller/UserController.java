@@ -76,22 +76,22 @@ public class UserController {
     }
 
     /**
-     * GET /user/all
+     * GET /user
      *
      * @return returns object of type UserDTO with user id and username
      */
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List> getAllUsers() throws Exception {
         return new ResponseEntity<List>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     /**
-     * GET /user?id={id}
+     * GET /user/{id}
      *
      * @return returns object of type UserDTO with user id and username
      */
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> getOneUser(@RequestParam(value="id", required = true) String id) throws Exception {
+    @GetMapping(value= "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> getOneUser(@PathVariable String id) throws Exception {
         try {
             return new ResponseEntity<UserDTO>(userService.getOneUser(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -130,12 +130,12 @@ public class UserController {
     }
 
     /**
-     * DELETE /user?id={id}
+     * DELETE /user/{id}
      *
      * @return returns notification
      */
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> putUser(@RequestParam(value="id", required = true) String id) throws Exception {
+    @DeleteMapping(value="/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> putUser(@PathVariable String id) throws Exception {
         try {
             userService.deleteUser(id);
             return new ResponseEntity<Notification>(new Notification("User with id " + id + " deleted.", true), HttpStatus.OK);

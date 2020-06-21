@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -20,9 +19,9 @@ import { ViewPriceListComponent } from '../components/price-list/view-price-list
 import { VehicleMapComponent } from '../components/vehicle-map/vehicle-map.component';
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { EditCodebookComponent } from '../components/admin-dashboard/vehicles-codebook/edit-codebook/edit-codebook.component';
-import { ViewCodebookComponent } from '../components/admin-dashboard/vehicles-codebook/view-codebook/view-codebook.component';
+import { ViewCodebookComponent, EditFuelTypeDialog, EditMakeDialog, EditModelDialog, EditStyleDialog, EditTransmissionlDialog } from '../components/admin-dashboard/vehicles-codebook/view-codebook/view-codebook.component';
 import { CommentRequestsComponent } from '../components/admin-dashboard/comment-requests/comment-requests.component';
-import { ViewUsersComponent } from '../components/admin-dashboard/system-users/view-users/view-users.component';
+import { ViewUsersComponent, UserDetailsDialog } from '../components/admin-dashboard/system-users/view-users/view-users.component';
 import { RegisterAgentComponent } from '../components/admin-dashboard/system-users/register-agent/register-agent.component';
 import { EditPermissionsComponent } from '../components/admin-dashboard/system-users/edit-permissions/edit-permissions.component';
 import { CreateDiscountComponent } from '../components/agent-specific-components/create-discount/create-discount.component';
@@ -31,13 +30,13 @@ import { CoreModule } from '../core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatSliderModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatSortModule, MatPaginatorModule } from '@angular/material';
+import { MatTable, MatToolbarModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatTableModule, MatDividerModule, MatSlideToggleModule, MatSelectModule, MatOptionModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatSliderModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatSortModule, MatPaginatorModule, MatTabsModule } from '@angular/material';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutocompleteComponent } from '../components/create-vehicle/autocomplete/autocomplete.component';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTooltipModule} from '@angular/material/tooltip'
-import {TextFieldModule} from '@angular/cdk/text-field';
+import { MatTooltipModule} from '@angular/material/tooltip';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header/admin-header.component';
 import { RequestDetailsComponent } from '../components/request-history/request-details/request-details.component';
 import { ConversationContentComponent } from '../components/user-inbox/conversation-content/conversation-content.component';
@@ -75,9 +74,15 @@ import { ConversationContentComponent } from '../components/user-inbox/conversat
     ConversationContentComponent
   ],
   entryComponents: [
-    VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent
+    VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent,
+    EditFuelTypeDialog,
+    EditMakeDialog,
+    EditModelDialog,
+    EditStyleDialog,
+    EditTransmissionlDialog,
+    UserDetailsDialog,
+    RequestDetailsComponent,
   ],
-
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -112,7 +117,9 @@ import { ConversationContentComponent } from '../components/user-inbox/conversat
     MatSortModule,
     MatPaginatorModule,
     MatTooltipModule,
-    TextFieldModule
+    TextFieldModule,
+    MatTabsModule,
+    MatTableModule
   ],
   exports: [HomeComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

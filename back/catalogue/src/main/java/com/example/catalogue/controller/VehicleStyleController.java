@@ -4,10 +4,12 @@ import com.example.catalogue.model.Notification;
 import com.example.catalogue.model.VehicleStyle;
 import com.example.catalogue.service.VehicleStyleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ import java.util.List;
 public class VehicleStyleController {
     @Autowired
     private VehicleStyleService vehicleStyleService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      * GET server/catalogue/vehicleStyle/{id}
@@ -39,6 +44,13 @@ public class VehicleStyleController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> deleteVehicleStyle(@PathVariable String id) {
         try {
+            ResponseEntity<List> response = restTemplate
+                    .exchange("http://vehicle/search/vehicleStyle/" + id, HttpMethod.GET, null, List.class);
+            List<Long> vehicleList = response.getBody();
+            if(vehicleList.size() != 0) {
+                return new ResponseEntity<>(new Notification("There is a vehicle registered with vehicle style id " + id + "\nVehicle style wasn't deleted.", false), HttpStatus.CONFLICT);
+            }
+
             vehicleStyleService.deleteOneStyle(id);
             return new ResponseEntity<>(new Notification("Successfully deleted vehicle style id = " + id, true), HttpStatus.OK);
         } catch (Exception e) {

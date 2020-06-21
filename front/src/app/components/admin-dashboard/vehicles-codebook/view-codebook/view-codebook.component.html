@@ -1,1 +1,195 @@
-<p>view-codebook works!</p>
+<pm-admin-header></pm-admin-header>
+<!-- Masthead-->
+<header class="masthead" style="background-image: url('assets/css/img/admin-bg-3.jpg');">
+    <div class="container">
+        <div class="masthead-subheading">Hello our dear administrator!</div>
+        <div class="masthead-heading text-uppercase">Ready to cleanup our trash?</div>
+    </div>
+</header>
+<section class = "page-section">
+    <div class="container">
+        <mat-card-content>
+            <mat-tab-group>
+                <mat-tab label="Fuel types">
+                    <mat-label>Add new fuel type: </mat-label>
+                    <div>
+                        <mat-form-field>
+                          <mat-label>Value</mat-label>
+                          <input matInput [(ngModel)]="newFuelType.value">
+                        </mat-form-field>
+                        <button mat-raised-button (click)="addFuelType()">Add</button>
+                    </div>
+                    <table mat-table [dataSource]="dataSourceFuelTypes" class="mat-elevation-z8">
+                        <ng-container matColumnDef = "id">
+                            <th mat-header-cell *matHeaderCellDef>Id</th>
+                            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "value">
+                            <th mat-header-cell *matHeaderCellDef>Value</th>
+                            <td mat-cell *matCellDef="let element">{{element.value}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "action">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editFuelType(element)">
+                                Edit
+                            </button>
+                            <button mat-raised-button (click)="deleteFuelType(element)">
+                                Delete
+                            </button></td> 
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsFuelTypes"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsFuelTypes;"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]"></mat-paginator>
+                </mat-tab>
+                <mat-tab label="Vehicle Makes"> 
+                    <mat-label>Add new vehicle make: </mat-label>
+                    <div>
+                        <mat-form-field>
+                          <mat-label>Value</mat-label>
+                          <input matInput [(ngModel)]="newMake.value">
+                        </mat-form-field>
+                        <button mat-raised-button (click)="addMake()">Add</button>
+                    </div>
+                    <table mat-table [dataSource]="dataSourceMakes" class="mat-elevation-z8">
+                        <ng-container matColumnDef = "id">
+                            <th mat-header-cell *matHeaderCellDef>Id</th>
+                            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "value">
+                            <th mat-header-cell *matHeaderCellDef>Value</th>
+                            <td mat-cell *matCellDef="let element">{{element.value}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "action">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editMake(element)">
+                                Edit
+                            </button>  
+                            <button mat-raised-button (click)="deleteMake(element)">
+                                Delete
+                            </button></td> 
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsMakes"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsMakes;"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]"></mat-paginator>
+                </mat-tab>
+                <mat-tab label="Vehicle Model"> 
+                    <mat-label>Add new vehicle model: </mat-label>
+                    <div>
+                        <mat-form-field>
+                          <mat-label>Value</mat-label>
+                          <input matInput [(ngModel)]="newModel.value">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-label>
+                            Select make value:
+                        </mat-label>
+                        <mat-form-field>
+                        <mat-select [(ngModel)]="selectedMake">
+                            <mat-option *ngFor="let make of makeList" [value]="make">
+                                {{make.value}}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                        <button mat-raised-button (click)="addModel()">Add</button>
+                    </div>
+                    <table mat-table [dataSource]="dataSourceModels" class="mat-elevation-z8">
+                        <ng-container matColumnDef = "id">
+                            <th mat-header-cell *matHeaderCellDef>Id</th>
+                            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "value">
+                            <th mat-header-cell *matHeaderCellDef>Value</th>
+                            <td mat-cell *matCellDef="let element">{{element.value}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "makeId">
+                            <th mat-header-cell *matHeaderCellDef>Make Id</th>
+                            <td mat-cell *matCellDef="let element">{{element.vehicleMake.id}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "makeValue">
+                            <th mat-header-cell *matHeaderCellDef>Make Value</th>
+                            <td mat-cell *matCellDef="let element">{{element.vehicleMake.value}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "action">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editModel(element)">
+                                Edit
+                            </button> 
+                            <button mat-raised-button (click)="deleteModel(element)">
+                                Delete
+                            </button></td> 
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsModels"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsModels;"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]"></mat-paginator>
+                </mat-tab>
+                <mat-tab label="Vehicle Styles"> 
+                    <mat-label>Add new vehicle style: </mat-label>
+                    <div>
+                        <mat-form-field>
+                          <mat-label>Value</mat-label>
+                          <input matInput [(ngModel)]="newStyle.value">
+                        </mat-form-field>
+                        <button mat-raised-button (click)="addStyle()">Add</button>
+                    </div>
+                    <table mat-table [dataSource]="dataSourceStyles" class="mat-elevation-z8">
+                        <ng-container matColumnDef = "id">
+                            <th mat-header-cell *matHeaderCellDef>Id</th>
+                            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "value">
+                            <th mat-header-cell *matHeaderCellDef>Value</th>
+                            <td mat-cell *matCellDef="let element">{{element.value}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "action">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editStyle(element)">
+                                Edit
+                            </button>
+                            <button mat-raised-button (click)="deleteStyle(element)">
+                                Delete
+                            </button></td> 
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsStyles"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsStyles;"></tr>
+                    </table>
+                </mat-tab>
+                <mat-tab label="Transmission types"> 
+                    <mat-label>Add new vehicle transmission type: </mat-label>
+                    <div>
+                        <mat-form-field>
+                          <mat-label>Value</mat-label>
+                          <input matInput [(ngModel)]="newTransmission.value">
+                        </mat-form-field>
+                        <button mat-raised-button (click)="addTransmission()">Add</button>
+                    </div>
+                    <table mat-table [dataSource]="dataSourceTransmissionTypes" class="mat-elevation-z8">
+                        <ng-container matColumnDef = "id">
+                            <th mat-header-cell *matHeaderCellDef>Id</th>
+                            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "value">
+                            <th mat-header-cell *matHeaderCellDef>Value</th>
+                            <td mat-cell *matCellDef="let element">{{element.value}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef = "action">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editTransmission(element)">
+                                Edit
+                            </button>
+                            <button mat-raised-button (click)="deleteTransmission(element)">
+                                Delete
+                            </button>
+                            </td>  
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsTransmissionTypes"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsTransmissionTypes;"></tr>
+                    </table>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </div>
+</section>
