@@ -97,5 +97,23 @@ export class RequestHistoryComponent implements OnInit {
     });
   }
 
+  createReport(element: RequestDTO) {
+    const dialogRef = this.dialog.open(ReportDialogComponent, {
+      width: '400px',
+      data: element
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  isRentingFinished(request: RequestDTO) {
+    if (new Date(request.endDate) < new Date()){
+      return true;
+    }
+    else{
+      return false;
+    };
+  }
 
 }

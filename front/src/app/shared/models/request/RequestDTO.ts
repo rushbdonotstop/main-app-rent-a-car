@@ -8,5 +8,6 @@ export class RequestDTO {
     status : RequestStatus;
     username : String;
     makePlusModel : String;
+    vehicleId : number;
     bundleId : number;
 }
