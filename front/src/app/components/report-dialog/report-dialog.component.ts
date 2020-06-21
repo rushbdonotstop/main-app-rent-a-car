@@ -28,7 +28,7 @@ export class ReportDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.vehicleId = 1
+    this.vehicleId = this.data.vehicleId
     var loggedInUser = new User()
     loggedInUser = JSON.parse(localStorage.getItem('userObject'))
     this.userId = loggedInUser.id
