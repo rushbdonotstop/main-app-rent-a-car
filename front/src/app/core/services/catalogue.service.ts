@@ -97,4 +97,24 @@ export class CatalogueService {
   addTransmission(newTransmission: CatalogueItem) {
     return this.http.post<NotificationFromServer>('server/catalogue/catalogue/vehicleTransmission/', JSON.stringify(newTransmission), httpOptions);
   }
+
+  deleteMake(catalogueItem: CatalogueItem) {
+    return this.http.delete<NotificationFromServer>('server/catalogue/catalogue/vehicleMake/' + catalogueItem.id, httpOptions);
+  }
+
+  deleteModel(model: VehicleModel) {
+    return this.http.delete<NotificationFromServer>('server/catalogue/catalogue/vehicleModel/' + model.id, httpOptions);
+  }
+
+  deleteFuelType(catalogueItem: CatalogueItem) {
+    return this.http.delete<NotificationFromServer>('server/catalogue/catalogue/vehicleFuelType/' + catalogueItem.id, httpOptions);
+  }
+
+  deleteTransmissionType(catalogueItem: CatalogueItem) {
+    return this.http.delete<NotificationFromServer>('server/catalogue/catalogue/vehicleTransmission/' + catalogueItem.id, httpOptions);
+  }
+
+  deleteVehicleStyle(catalogueItem: CatalogueItem) {
+    return this.http.delete<NotificationFromServer>('server/catalogue/catalogue/vehicleStyle/' + catalogueItem.id, httpOptions);
+  }
 }

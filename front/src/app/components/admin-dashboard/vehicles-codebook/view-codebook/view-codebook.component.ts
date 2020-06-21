@@ -361,6 +361,56 @@ export class ViewCodebookComponent implements OnInit {
       this.newStyle.value = "";
     }
   }
+
+  deleteMake(catalogItem: CatalogueItem) {
+    this.catalogueService.deleteMake(catalogItem).subscribe(data => {
+      this.snackBar.open(data.text, "", {
+        duration: 2000,
+        verticalPosition: 'top'
+      });
+    }
+    );
+  }
+
+  deleteModel(catalogItem: VehicleModel) {
+    this.catalogueService.deleteModel(catalogItem).subscribe(data => {
+      this.snackBar.open(data.text, "", {
+        duration: 2000,
+        verticalPosition: 'top'
+      });
+    }
+    );
+  }
+
+  deleteFuelType(catalogItem: CatalogueItem) {
+    this.catalogueService.deleteFuelType(catalogItem).subscribe(data => {
+      this.snackBar.open(data.text, "", {
+        duration: 2000,
+        verticalPosition: 'top'
+      });
+    }
+    );
+  }
+
+  deleteTransmission(catalogItem: CatalogueItem) {
+    this.catalogueService.deleteTransmissionType(catalogItem).subscribe(data => {
+      this.snackBar.open(data.text, "", {
+        duration: 2000,
+        verticalPosition: 'top'
+      });
+    }
+    );
+  }
+
+  deleteStyle(catalogItem: CatalogueItem) {
+    this.catalogueService.deleteVehicleStyle(catalogItem).subscribe(data => {
+      this.snackBar.open(data.text, "", {
+        duration: 2000,
+        verticalPosition: 'top'
+      });
+    }
+    );
+  }
 }
 
 @Component({

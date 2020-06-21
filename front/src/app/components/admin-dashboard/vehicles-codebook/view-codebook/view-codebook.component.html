@@ -32,7 +32,10 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editFuelType(element)">
                                 Edit
-                            </button></td>  
+                            </button>
+                            <button mat-raised-button (click)="deleteFuelType(element)">
+                                Delete
+                            </button></td> 
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsFuelTypes"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsFuelTypes;"></tr>
@@ -61,7 +64,10 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editMake(element)">
                                 Edit
-                            </button></td>  
+                            </button>  
+                            <button mat-raised-button (click)="deleteMake(element)">
+                                Delete
+                            </button></td> 
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsMakes"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsMakes;"></tr>
@@ -110,7 +116,10 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editModel(element)">
                                 Edit
-                            </button></td>  
+                            </button> 
+                            <button mat-raised-button (click)="deleteModel(element)">
+                                Delete
+                            </button></td> 
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsModels"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsModels;"></tr>
@@ -139,7 +148,10 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editStyle(element)">
                                 Edit
-                            </button></td>  
+                            </button>
+                            <button mat-raised-button (click)="deleteStyle(element)">
+                                Delete
+                            </button></td> 
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsStyles"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsStyles;"></tr>
@@ -167,7 +179,11 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="editTransmission(element)">
                                 Edit
-                            </button></td>  
+                            </button>
+                            <button mat-raised-button (click)="deleteTransmission(element)">
+                                Delete
+                            </button>
+                            </td>  
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsTransmissionTypes"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsTransmissionTypes;"></tr>

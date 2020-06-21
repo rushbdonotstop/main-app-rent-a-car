@@ -4,16 +4,21 @@ import com.example.catalogue.model.Notification;
 import com.example.catalogue.model.VehicleTransmission;
 import com.example.catalogue.service.VehicleTransmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("catalogue/vehicleTransmission")
 public class VehicleTransmissionController {
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Autowired
     private VehicleTransmissionService vehicleTransmissionService;
 
@@ -48,6 +53,14 @@ public class VehicleTransmissionController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> deleteVehicleTransmission(@PathVariable String id) {
         try {
+            ResponseEntity<List> response = restTemplate
+                    .exchange("http://vehicle/search/transmissionType/" + id, HttpMethod.GET, null, List.class);
+            List<Long> vehicleList = response.getBody();
+            System.out.println("OVDE JE DUZINA LISTE " + vehicleList.size());
+            if(vehicleList.size() != 0) {
+                return new ResponseEntity<>(new Notification("There is a vehicle registered with transmission type id " + id + "\nTransmission type wasn't deleted.", false), HttpStatus.CONFLICT);
+            }
+
             vehicleTransmissionService.deleteOne(id);
             return new ResponseEntity<>(new Notification("Successfully deleted vehicle transmission id = " + id, true), HttpStatus.OK);
         } catch (Exception e) {
@@ -86,4 +99,5 @@ public class VehicleTransmissionController {
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
     }
+
 }
