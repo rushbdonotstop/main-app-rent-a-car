@@ -1,66 +1,124 @@
 <pm-header></pm-header>
 <!-- Masthead-->
 <header class="masthead">
-    <div class="container">
-        <div class="masthead-subheading">Keep track of all your requests</div>
-        <div class="masthead-heading text-uppercase">We keep you updated</div>
-    </div>
+  <div class="container">
+    <div class="masthead-subheading">Keep track of all your requests</div>
+    <div class="masthead-heading text-uppercase">We keep you updated</div>
+  </div>
 </header>
 <section class="page-section">
-    <div class="container">
-        <mat-form-field>
-            <mat-label>Select history</mat-label>
-            <mat-select (selectionChange)="onChange()" [(value)]="selectedHistory">
-              <mat-option value="receivedRequests">Recevied Requests</mat-option>
-              <mat-option value="sentRequests">Sent Requests</mat-option>
-            </mat-select>
-          </mat-form-field>
+  <div class="container">
+    <mat-form-field>
+      <mat-label>Select history</mat-label>
+      <mat-select (selectionChange)="onChange()" [(value)]="selectedHistory">
+        <mat-option value="receivedRequests">Recevied Requests</mat-option>
+        <mat-option value="sentRequests">Sent Requests</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-          <div class="row" style="justify-content: left;">
-            <mat-card style="width: 70%; box-sizing: border-box;">
-              <mat-card-title>
-                <label> {{showSelectedHistory}} </label>
-              </mat-card-title>
-              <mat-card-content>
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                  <!--- Note that these columns can be defined in any order.
+    <div class="row" style="justify-content: left;">
+      <mat-card style="width: 70%; box-sizing: border-box;">
+        <mat-card-title>
+          <label> {{showSelectedHistory}} </label>
+        </mat-card-title>
+        <mat-card-content>
+          <h6>Requests in bundles</h6>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
-      
-                  <!-- Position Column -->
-                  <ng-container matColumnDef="username">
-                    <th mat-header-cell *matHeaderCellDef> Username </th>
-                    <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-                  </ng-container>
-      
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="totalCost">
-                    <th mat-header-cell *matHeaderCellDef> Total cost </th>
-                    <td mat-cell *matCellDef="let element"> {{element.totalCost}}€ </td>
-                  </ng-container>
-      
-                  <!-- Weight Column -->
-                  <ng-container matColumnDef="numberOfRequests">
-                    <th mat-header-cell *matHeaderCellDef> Number of requests </th>
-                    <td mat-cell *matCellDef="let element"> {{element.requestsList?.length || '0' }} </td>
-                  </ng-container>
 
-                  <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
-                    <td mat-cell *matCellDef="let element"> {{element.requestsList[0].status}} </td>
-                  </ng-container>
-      
-                  <ng-container matColumnDef="details">
+            <!-- Position Column -->
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef> Username </th>
+              <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="totalCost">
+              <th mat-header-cell *matHeaderCellDef> Total cost </th>
+              <td mat-cell *matCellDef="let element"> {{element.totalCost}}€ </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="numberOfRequests">
+              <th mat-header-cell *matHeaderCellDef> Number of requests </th>
+              <td mat-cell *matCellDef="let element"> {{element.requestsList?.length || '0' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element"> {{element.requestsList[0].status}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="details">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element"> <button (click)="openDetails(element)" mat-raised-button
+                  color="warn">Details</button> </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </mat-card-content>
+
+        <mat-card-content>
+          <h6>Single requests</h6>
+          <table mat-table [dataSource]="dataSourceRequests" class="mat-elevation-z8">
+            <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef> Username </th>
+              <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+            </ng-container>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="makePlusModel">
+              <th mat-header-cell *matHeaderCellDef> Vehicle </th>
+              <td mat-cell *matCellDef="let element"> {{element.makePlusModel}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="startDate">
+              <th mat-header-cell *matHeaderCellDef> Start date </th>
+              <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="endDate">
+              <th mat-header-cell *matHeaderCellDef> End date </th>
+              <td mat-cell *matCellDef="let element"> {{element.endDate }} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="totalCost">
+              <th mat-header-cell *matHeaderCellDef> Cost </th>
+              <td mat-cell *matCellDef="let element"> {{element.totalCost}}€ </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="report">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary">Report</button> </td>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="details">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element"> <button (click)="openDetails(element)" mat-raised-button color="warn"
                         >Details</button> </td>
-                  </ng-container>
-      
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-              </mat-card-content>
-            </mat-card>
-          </div>
+                  </ng-container> -->
 
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
     </div>
+
+  </div>
 </section>

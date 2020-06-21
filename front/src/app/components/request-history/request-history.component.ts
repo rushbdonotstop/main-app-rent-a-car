@@ -3,6 +3,10 @@ import { BundleDTO } from 'src/app/shared/models/request/bundleDTO';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { RequestService } from 'src/app/core/services/request.service';
 import { RequestDetailsComponent } from './request-details/request-details.component';
+import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
+import { User } from 'src/app/shared/models/user/User';
+import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+
 
 @Component({
   templateUrl: './request-history.component.html',
@@ -13,37 +17,67 @@ export class RequestHistoryComponent implements OnInit {
   selectedHistory = 'receivedRequests';
   showSelectedHistory = 'Received Requests'
   displayedColumns: string[] = ['username', 'totalCost', 'numberOfRequests', 'status', 'details'];
+  displayedColumns2: string[] = ['username', 'makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report'];
   bundleList : BundleDTO[];
+  requestList : RequestDTO[];
   dataSource: MatTableDataSource<BundleDTO>;
+  dataSourceRequests : MatTableDataSource<RequestDTO>
+
+
   constructor(private requestService : RequestService, public dialog: MatDialog)  { 
     
   }
 
   ngOnInit() {
+
     this.requestService.getOwnerRequestHistory().subscribe(
       bundleList => {
         
         this.bundleList = bundleList;
         this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+        console.log(bundleList)
+      }
+    );
+
+    this.requestService.getOwnerSingleRequests().subscribe(
+      requestList => {
+        this.requestList = requestList;
+        this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
       }
     )
   }
   
   onChange() {
     if(this.selectedHistory == 'sentRequests') {
+      this.showSelectedHistory = 'Sent Requests';
       this.requestService.getBuyerRequestHistory().subscribe(
         bundleList => {
           this.bundleList = bundleList;
           this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
         }
       )
+
+      this.requestService.getBuyerSingleRequests().subscribe(
+        requestList => {
+          this.requestList = requestList;
+          this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+        }
+      )
     }
 
     if(this.selectedHistory == 'receivedRequests') {
+      this.showSelectedHistory = 'Received Requests'
       this.requestService.getOwnerRequestHistory().subscribe(
         bundleList => {
           this.bundleList = bundleList;
           this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+        }
+      )
+
+      this.requestService.getOwnerSingleRequests().subscribe(
+        requestList => {
+          this.requestList = requestList;
+          this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
         }
       )
     }
@@ -62,4 +96,6 @@ export class RequestHistoryComponent implements OnInit {
 
     });
   }
+
+
 }
