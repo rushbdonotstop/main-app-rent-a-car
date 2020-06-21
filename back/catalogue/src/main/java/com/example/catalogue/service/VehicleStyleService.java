@@ -37,17 +37,17 @@ public class VehicleStyleService {
         return false;
     }
 
-    public VehicleStyle findOneStyle(String id) throws Exception{
+    public VehicleStyle findOneStyle(Long id) throws Exception{
         VehicleStyle vehicleStyle = null;
         try {
-            vehicleStyle = vehicleStyleRepository.findOneById(Long.parseLong(id));
+            vehicleStyle = vehicleStyleRepository.findOneById(id);
         } catch (EntityNotFoundException e) {
             throw new Exception("Can't find vehicle style with id = " + id);
         }
         return vehicleStyle;
     }
 
-    public void deleteOneStyle(String id) throws Exception {
+    public void deleteOneStyle(Long id) throws Exception {
         try {
             findOneStyle(id);
         } catch (EntityNotFoundException e) {
@@ -56,13 +56,21 @@ public class VehicleStyleService {
         vehicleStyleRepository.delete(findOneStyle(id));
     }
 
-    public void changeStyle(String id, VehicleStyle vehicleStyle1) throws Exception{
+    public void changeStyle(Long id, VehicleStyle vehicleStyle1) throws Exception{
         try {
             VehicleStyle vehicleStyle = findOneStyle(id);
             vehicleStyle.setValue(vehicleStyle1.getValue());
             vehicleStyleRepository.save(vehicleStyle1);
         } catch (EntityNotFoundException e) {
             throw new Exception("Can't find vehicle style with id = " + id);
+        }
+    }
+
+    public VehicleStyle createStyle(VehicleStyle vehicleStyle) {
+        if(exist(vehicleStyle)) {
+            return vehicleStyleRepository.findByValue(vehicleStyle.getValue());
+        } else {
+            return  vehicleStyleRepository.save(vehicleStyle);
         }
     }
 }

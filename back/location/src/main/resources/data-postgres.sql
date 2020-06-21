@@ -5,7 +5,6 @@ insert into city(city) values ('Novi Sad');
 insert into city(city) values ('Beograd');
 insert into city(city) values ('Indjija');
 
-
 insert into street(street) values ('Save Kovacevica 21');
 insert into street(street) values ('Alekse Santica 31');
 insert into street(street) values ('Mise Dimitrijevica 25');

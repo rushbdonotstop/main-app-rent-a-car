@@ -11,4 +11,6 @@ public interface VehicleTransmissionRepository extends JpaRepository<VehicleTran
     VehicleTransmission findOneById(long parseLong);
 
     List<VehicleTransmission> findAll();
+
+    VehicleTransmission findByValue(String value);
 }

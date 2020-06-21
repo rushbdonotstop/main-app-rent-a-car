@@ -2,6 +2,7 @@ package com.example.vehicle.service;
 
 import com.example.vehicle.model.Notification;
 import com.example.vehicle.model.Vehicle;
+import com.example.vehicle.model.VehicleImage;
 import com.example.vehicle.repository.VehicleImageRepository;
 import com.example.vehicle.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,4 +111,18 @@ public class VehicleService {
         return false;
     }
 
+    public Vehicle addAgentVehicle(Vehicle toModel) {
+        Vehicle newVehicle = new Vehicle();
+        try{
+            VehicleImage vi = imageRepository.save(toModel.getImage());
+            toModel.setImage(imageRepository.findByName(vi.getName()).get());
+            newVehicle = vehicleRepository.save(toModel);
+            newVehicle.setAgentAppId(toModel.getId());
+            vehicleRepository.save(newVehicle);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return newVehicle;
+    }
 }

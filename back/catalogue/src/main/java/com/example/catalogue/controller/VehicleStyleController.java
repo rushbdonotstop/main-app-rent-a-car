@@ -1,6 +1,7 @@
 package com.example.catalogue.controller;
 
 import com.example.catalogue.model.Notification;
+import com.example.catalogue.model.VehicleModel;
 import com.example.catalogue.model.VehicleStyle;
 import com.example.catalogue.service.VehicleStyleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class VehicleStyleController {
      * @return return a vehicle style
      */
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleStyle> getOneVehicleStyle(@PathVariable String id) {
+    public ResponseEntity<VehicleStyle> getOneVehicleStyle(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(vehicleStyleService.findOneStyle(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -42,7 +43,7 @@ public class VehicleStyleController {
      * @return return notification
      */
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> deleteVehicleStyle(@PathVariable String id) {
+    public ResponseEntity<Notification> deleteVehicleStyle(@PathVariable Long id) {
         try {
             ResponseEntity<List> response = restTemplate
                     .exchange("http://vehicle/search/vehicleStyle/" + id, HttpMethod.GET, null, List.class);
@@ -64,7 +65,7 @@ public class VehicleStyleController {
      * @return return status of creating a vehicle style request
      */
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> putVehicleStyle(@PathVariable String id, @RequestBody VehicleStyle vehicleStyle) {
+    public ResponseEntity<Notification> putVehicleStyle(@PathVariable Long id, @RequestBody VehicleStyle vehicleStyle) {
         try {
             vehicleStyleService.changeStyle(id, vehicleStyle);
 
@@ -102,5 +103,15 @@ public class VehicleStyleController {
         } catch (Exception e) {
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
+    }
+
+    /**
+     * POST server/catalogue/vehicleStyle/createReturnObject
+     *
+     * @return return object of creating vehicle fuel type request
+     */
+    @PostMapping(value="/createReturnObject", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VehicleStyle> createReturnObject(@RequestBody VehicleStyle vehicleStyle) {
+        return new ResponseEntity<VehicleStyle>(vehicleStyleService.createStyle(vehicleStyle), HttpStatus.OK);
     }
 }

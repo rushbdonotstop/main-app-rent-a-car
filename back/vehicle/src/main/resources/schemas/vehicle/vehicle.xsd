@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/vehicle"
+           targetNamespace="http://rentacar.com/vehicle" elementFormDefault="qualified"
+           xmlns:vehicle-image="http://rentacar.com/vehicle-image"
+           xmlns:vehicle-make="http://rentacar.com/vehicle-make"
+           xmlns:vehicle-model="http://rentacar.com/vehicle-model"
+           xmlns:vehicle-style="http://rentacar.com/vehicle-style"
+           xmlns:vehicle-transmission="http://rentacar.com/vehicle-transmission"
+           xmlns:vehicle-fuel-type="http://rentacar.com/vehicle-fuel-type"
+           xmlns:location="http://rentacar.com/location"
+           xmlns:pricelist="http://rentacar.com/pricelist">
+
+    <xs:import namespace="http://rentacar.com/vehicle-image" schemaLocation="vehicle-image.xsd"/>
+    <xs:import namespace="http://rentacar.com/vehicle-make" schemaLocation="../catalogue/vehicle-make.xsd"/>
+    <xs:import namespace="http://rentacar.com/vehicle-model" schemaLocation="../catalogue/vehicle-model.xsd"/>
+    <xs:import namespace="http://rentacar.com/vehicle-style" schemaLocation="../catalogue/vehicle-style.xsd"/>
+    <xs:import namespace="http://rentacar.com/vehicle-fuel-type" schemaLocation="../catalogue/vehicle-fuel-type.xsd"/>
+    <xs:import namespace="http://rentacar.com/vehicle-transmission" schemaLocation="../catalogue/vehicle-transmission.xsd"/>
+    <xs:import namespace="http://rentacar.com/location" schemaLocation="../location/location.xsd"/>
+    <xs:import namespace="http://rentacar.com/pricelist" schemaLocation="../pricelist/pricelist.xsd"/>
+
+
+    <xs:element name="vehicle">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="mileage" type="xs:int"/>
+                <xs:element name="mileageLimit" type="xs:int"/>
+                <xs:element name="collisionProtection" type="xs:boolean"/>
+                <xs:element name="childrenSeats" type="xs:int"/>
+                <xs:element ref="vehicle-image:vehicleImage"/>
+                <xs:element name="startDate" type="xs:dateTime"/>
+                <xs:element name="endDate" type="xs:dateTime"/>
+                <xs:element name="fuelTypeId" type="xs:long"/>
+                <xs:element name="makeId" type="xs:long"/>
+                <xs:element name="modelId" type="xs:long"/>
+                <xs:element name="styleId" type="xs:long"/>
+                <xs:element name="transmissionId" type="xs:long"/>
+                <xs:element name="locationId" type="xs:long"/>
+                <xs:element name="userId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteVehicleById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllVehicle">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicle" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicle">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicle"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createVehicle">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicle"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateVehicle">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicle"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createEverythingVehicle">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicle"/>
+                <xs:element name="catalogue">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="vehicle-fuel-type:vehicleFuelType"/>
+                            <xs:element ref="vehicle-make:vehicleMake"/>
+                            <xs:element ref="vehicle-model:vehicleModel"/>
+                            <xs:element ref="vehicle-style:vehicleStyle"/>
+                            <xs:element ref="vehicle-transmission:vehicleTransmission"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="pricelist:pricelist"/>
+                <xs:element ref="location:location"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

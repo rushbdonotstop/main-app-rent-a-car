@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/vehicle-transmission"
+           targetNamespace="http://rentacar.com/vehicle-transmission" elementFormDefault="qualified">
+
+    <xs:element name="vehicleTransmission">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleTransmissionById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="transmission_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllVehicleTransmission">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleTransmission" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleTransmission">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleTransmission"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createVehicleTransmission">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleTransmission"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateVehicleTransmission">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleTransmission"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteVehicleTransmissionById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="transmission_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

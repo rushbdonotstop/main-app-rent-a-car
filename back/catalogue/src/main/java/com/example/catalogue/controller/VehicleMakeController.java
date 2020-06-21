@@ -1,8 +1,8 @@
 package com.example.catalogue.controller;
 
 import com.example.catalogue.model.Notification;
+import com.example.catalogue.model.VehicleFuelType;
 import com.example.catalogue.model.VehicleMake;
-import com.example.catalogue.repository.VehicleMakeRepository;
 import com.example.catalogue.service.VehicleMakeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -43,7 +43,7 @@ public class VehicleMakeController {
      * @return return a vehicle make
      */
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleMake> getOneVehicleMake(@PathVariable String id) {
+    public ResponseEntity<VehicleMake> getOneVehicleMake(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(vehicleMakeService.findOneMake(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class VehicleMakeController {
      * @return return notification
      */
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> deleteVehicleMake(@PathVariable String id) {
+    public ResponseEntity<Notification> deleteVehicleMake(@PathVariable Long id) {
         try {
             ResponseEntity<List> response = restTemplate
                     .exchange("http://vehicle/search/make/" + id, HttpMethod.GET, null, List.class);
@@ -79,7 +79,7 @@ public class VehicleMakeController {
      * @return return status of creating vehicle request
      */
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> putVehicleMake(@PathVariable String id, @RequestBody VehicleMake vehicleMake) {
+    public ResponseEntity<Notification> putVehicleMake(@PathVariable Long id, @RequestBody VehicleMake vehicleMake) {
         try {
             vehicleMakeService.changeMake(id, vehicleMake);
 
@@ -118,5 +118,15 @@ public class VehicleMakeController {
         } catch (Exception e) {
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
+    }
+
+    /**
+     * POST server/catalogue/vehicleMake/createReturnObject
+     *
+     * @return return object of creating vehicle fuel type request
+     */
+    @PostMapping(value="/createReturnObject", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VehicleMake> createReturnObject(@RequestBody VehicleMake vehicleMake) {
+        return new ResponseEntity<VehicleMake>(vehicleMakeService.createMake(vehicleMake), HttpStatus.OK);
     }
 }

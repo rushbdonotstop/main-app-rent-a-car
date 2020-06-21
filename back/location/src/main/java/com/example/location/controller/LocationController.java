@@ -1,10 +1,10 @@
 package com.example.location.controller;
 
-import com.example.location.model.City;
-import com.example.location.model.Location;
 import com.example.location.model.Notification;
 import com.example.location.service.LocationService;
 import com.example.location.service.StateService;
+import com.example.location.model.City;
+import com.example.location.model.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 @RestController
 @RequestMapping("location")
@@ -22,9 +20,6 @@ public class LocationController {
 
     @Autowired
     private LocationService locationService;
-
-    @Autowired
-    private StateService stateService;
 
 
     /**
@@ -86,6 +81,7 @@ public class LocationController {
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Location> create(@RequestBody Location location) throws Exception {
         Location locationNew = locationService.create(location);
+
         return new ResponseEntity<Location>(locationNew, HttpStatus.OK);
     }
 }

@@ -1,12 +1,8 @@
 package com.example.location.controller;
 
-import com.example.location.model.City;
 import com.example.location.model.Notification;
-import com.example.location.model.State;
-import com.example.location.model.Street;
-import com.example.location.service.CityService;
-import com.example.location.service.StateService;
 import com.example.location.service.StreetService;
+import com.example.location.model.Street;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
