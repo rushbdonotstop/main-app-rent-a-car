@@ -3,8 +3,8 @@ import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { RequestService } from 'src/app/core/services/request.service';
 import { BundleDTO } from 'src/app/shared/models/request/bundleDTO';
-import { ReportDialogComponent } from '../../report-dialog/report-dialog.component';
 import { User } from 'src/app/shared/models/user/User';
+import { ReportDialogComponent } from '../../report-dialog/report-dialog.component';
 
 @Component({
   selector: 'pm-request-details',
@@ -20,7 +20,7 @@ export class RequestDetailsComponent implements OnInit {
   userId: number;
   selectedHistory: String;
   dataSource: MatTableDataSource<RequestDTO>;
-  displayedColumns: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status'];
+  displayedColumns: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'stsatus'];
   isUserAgent: boolean;
 
   constructor(public dialogRef: MatDialogRef<RequestDetailsComponent>,

@@ -16,6 +16,7 @@ import { CartDialogComponent } from './components/cart-dialog/cart-dialog.compon
 import { MatListModule, MatListItem } from '@angular/material/list';
 import { RequestDetailsComponent } from './components/request-history/request-details/request-details.component';
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
+import { ConversationContentComponent } from './components/user-inbox/conversation-content/conversation-content.component';
 
 @NgModule({
   declarations: [

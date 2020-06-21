@@ -10,12 +10,14 @@ import { RequestHistoryComponent } from './components/request-history/request-hi
 import { UserCartComponent } from './components/user-cart/user-cart.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { CommentRequestsComponent } from './components/admin-dashboard/comment-requests/comment-requests.component';
+import { UserInboxComponent } from './components/user-inbox/user-inbox.component';
 
 const routes: Routes = [{ path: 'login', component: LoginComponent},
 { path: 'register', component: RegisterComponent},
 { path: 'search', component: ViewVehiclesComponent},
 { path: 'add', component: CreateVehicleComponent },
 { path: 'history', component: RequestHistoryComponent },
+{ path: 'inbox', component: UserInboxComponent},
 { path: 'cart', component: UserCartComponent },
 { path: 'home', component: HomeComponent },
 { path: 'dashboard', component : AdminDashboardComponent},

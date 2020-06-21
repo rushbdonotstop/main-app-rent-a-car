@@ -40,6 +40,7 @@ import { MatTooltipModule} from '@angular/material/tooltip'
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header/admin-header.component';
 import { RequestDetailsComponent } from '../components/request-history/request-details/request-details.component';
+import { ConversationContentComponent } from '../components/user-inbox/conversation-content/conversation-content.component';
 
 @NgModule({
   declarations: [
@@ -70,10 +71,11 @@ import { RequestDetailsComponent } from '../components/request-history/request-d
     EditPermissionsComponent,
     AutocompleteComponent,
     AdminHeaderComponent,
-    RequestDetailsComponent
+    RequestDetailsComponent,
+    ConversationContentComponent
   ],
   entryComponents: [
-    VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent
+    VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent
   ],
 
   imports: [
