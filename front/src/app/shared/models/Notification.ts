@@ -1,4 +1,4 @@
 export class NotificationFromServer{
-    text:String;
+    text:string;
     success:boolean;
 }

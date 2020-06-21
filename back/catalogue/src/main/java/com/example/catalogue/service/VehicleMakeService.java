@@ -65,4 +65,18 @@ public class VehicleMakeService {
             throw new Exception("Can't find vehicle make with id = " + id);
         }
     }
+
+//    public VehicleMake findOneMakeByModel(String id) throws Exception{
+//        VehicleMake vehicleMake = null;
+//        try {
+//            List<VehicleMake> vehicleMakeList = getAllMakes();
+//            for (VehicleMake vm:
+//                 vehicleMakeList) {
+//                if(vm.getId() == )
+//            }
+//        } catch (EntityNotFoundException e) {
+//            throw new Exception("Can't find vehicle make with model id = " + id);
+//        }
+//        return vehicleMake;
+//    }
 }

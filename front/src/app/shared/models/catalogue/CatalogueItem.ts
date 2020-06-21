@@ -1,4 +1,4 @@
 export class CatalogueItem {
     id : number;
-    value : String;
+    value : string;
 }

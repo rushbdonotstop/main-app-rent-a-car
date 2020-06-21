@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -145,5 +146,60 @@ public class SearchVehicleController {
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Review>>() {}).getBody();
 
         return new ResponseEntity<List<Review>>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "make/{makeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Long>> getVehiclesByMake(@PathVariable Long makeId) {
+        List<Vehicle> vehiclesList = searchVehicleService.findByVehicleMake(makeId);
+        List<Long> idList = new ArrayList<>();
+        for (Vehicle vehicle:
+                vehiclesList) {
+            idList.add(vehicle.getId());
+        }
+        return new ResponseEntity<>(idList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "model/{modelId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Long>> getVehiclesByModel(@PathVariable Long modelId) {
+        List<Vehicle> vehiclesList = searchVehicleService.findByVehicleModel(modelId);
+        List<Long> idList = new ArrayList<>();
+        for (Vehicle vehicle:
+                vehiclesList) {
+            idList.add(vehicle.getId());
+        }
+        return new ResponseEntity<>(idList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "fuelType/{fuelId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Long>> getVehiclesByFuelType(@PathVariable Long fuelId) {
+        List<Vehicle> vehiclesList = searchVehicleService.findByVehicleFuelType(fuelId);
+        List<Long> idList = new ArrayList<Long>();
+        for (Vehicle vehicle:
+                vehiclesList) {
+            idList.add(vehicle.getId());
+        }
+        return new ResponseEntity<>(idList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "vehicleStyle/{styleId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Long>> getVehicleByStyle(@PathVariable Long styleId) {
+        List<Vehicle> vehiclesList = searchVehicleService.findByVehicleStyle(styleId);
+        List<Long> idList = new ArrayList<Long>();
+        for (Vehicle vehicle:
+                vehiclesList) {
+            idList.add(vehicle.getId());
+        }
+        return new ResponseEntity<>(idList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "transmissionType/{transmissionId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Long>> getVehicleByTransmissionType(@PathVariable Long transmissionId) {
+        List<Vehicle> vehiclesList = searchVehicleService.findByVehicleTransmission(transmissionId);
+        List<Long> idList = new ArrayList<Long>();
+        for (Vehicle vehicle:
+                vehiclesList) {
+            idList.add(vehicle.getId());
+        }
+        return new ResponseEntity<>(idList, HttpStatus.OK);
     }
 }

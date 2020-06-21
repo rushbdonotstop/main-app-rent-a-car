@@ -76,7 +76,7 @@ public class SearchVehicleService {
     }
 
     public List<Vehicle> findByVehicleTransmission(Long Id) {
-        return vehicleRepository.findByStyleId(Id);
+        return vehicleRepository.findByTransmissionId(Id);
     }
 
     public List<VehicleMainViewDTO> getAllVehicleMainViewDTO(List<Vehicle> vehicleList, List<VehicleMake> vehicleMakeList, List<Pricelist> pricelist, List<VehicleModel> vehicleModelList, List<UserDTO> ownerList, List<Review> reviewList) {
