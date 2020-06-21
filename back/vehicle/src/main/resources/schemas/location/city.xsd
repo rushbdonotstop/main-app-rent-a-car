@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/city"
+           targetNamespace="http://rentacar.com/city" elementFormDefault="qualified">
+
+    <xs:element name="city">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCityById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="city_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllCity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="city" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="city"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

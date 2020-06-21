@@ -3,7 +3,13 @@ package com.example.vehicle.model;
 import com.example.vehicle.model.builder.VehicleBuilder;
 
 import javax.persistence.*;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.GregorianCalendar;
 
 @Entity
 public class Vehicle {
@@ -24,7 +30,7 @@ public class Vehicle {
     @Column(name="children_seats", nullable = false)
     private int childrenSeats;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="image", referencedColumnName = "id", nullable = true)
     private VehicleImage image;
 
@@ -54,6 +60,9 @@ public class Vehicle {
 
     @Column(name="user_id", nullable = false)
     private Long userId;
+
+    @Column(name="agent_app_id")
+    private Long agentAppId;
 
     public Vehicle(Long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, LocalDateTime startDate, LocalDateTime endDate, Long fuelTypeId, Long makeId, Long modelId, Long styleId, Long transmissionId, Long locationId, Long userId, VehicleImage vehicleImage) {
         this.id = id;
@@ -200,6 +209,14 @@ public class Vehicle {
         this.userId = userId;
     }
 
+    public Long getAgentAppId() {
+        return agentAppId;
+    }
+
+    public void setAgentAppId(Long agentAppId) {
+        this.agentAppId = agentAppId;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -220,4 +237,46 @@ public class Vehicle {
                 ", userId=" + userId +
                 '}';
     }
+
+    public com.example.vehicle.xmlmodel.vehicle.Vehicle toXML(Vehicle vehicle) throws DatatypeConfigurationException {
+
+        com.example.vehicle.xmlmodel.vehicle.Vehicle xmlModel = new com.example.vehicle.xmlmodel.vehicle.Vehicle();
+
+        com.example.vehicle.xmlmodel.vehicle.vehicle_image.VehicleImage image = new com.example.vehicle.xmlmodel.vehicle.vehicle_image.VehicleImage();
+        image.setId(vehicle.getImage().getId());
+        image.setName(vehicle.getImage().getName());
+        image.setType(vehicle.getImage().getType());
+        image.setPicByte(vehicle.getImage().getPicByte());
+
+        xmlModel.setId(vehicle.getId());
+        xmlModel.setChildrenSeats(vehicle.getChildrenSeats());
+        xmlModel.setMileage(vehicle.getMileage());
+        xmlModel.setMileageLimit(vehicle.getMileageLimit());
+
+        LocalDate date = vehicle.getStartDate().toLocalDate();
+        GregorianCalendar gcal = GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
+        XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+
+        xmlModel.setStartDate(xcal);
+
+        date = vehicle.getEndDate().toLocalDate();
+        gcal = GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
+        xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+
+        xmlModel.setEndDate(xcal);
+
+        xmlModel.setVehicleImage(image);
+        xmlModel.setCollisionProtection(vehicle.collisionProtection);
+
+        xmlModel.setLocationId(vehicle.getLocationId());
+        xmlModel.setMakeId(vehicle.getMakeId());
+        xmlModel.setStyleId(vehicle.getStyleId());
+        xmlModel.setFuelTypeId(vehicle.getFuelTypeId());
+        xmlModel.setModelId(vehicle.getModelId());
+        xmlModel.setUserId(vehicle.getUserId());
+        xmlModel.setTransmissionId(vehicle.getTransmissionId());
+
+        return xmlModel;
+    }
+
 }

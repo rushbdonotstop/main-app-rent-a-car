@@ -58,10 +58,13 @@ public class PricelistController {
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> update(@RequestBody List<Pricelist> pricelists, @RequestParam(value="startDate", required = true)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, @RequestParam(value="endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) throws Exception {
+        System.err.println("PRICELIST CONTROLLER  " + pricelists.get(0).getVehicleId());
         Boolean exists = restTemplate.exchange("http://vehicle/vehicle/exists/" + pricelists.get(0).getVehicleId(),
                 HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
         Notification notification = new Notification("Vehicle id does not exist.");
         if (exists){
+            System.err.println(startDate);
+            System.err.println(endDate);
             notification = priceListService.savePricelists(pricelists, startDate, endDate);
         }
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);

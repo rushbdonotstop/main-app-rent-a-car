@@ -158,6 +158,10 @@ public class PricelistService {
                 if(dateRangeOutdated(pricelists.get(0)) || dateRangeInvalid(pricelists.get(0))
                         || (!pricelists.get(0).getStartDate().equals(startDate) && !pricelists.get(0).getEndDate().equals(endDate))
                         || carDays != pricelistDays){
+                    System.err.println("Pricelist size == 1 == null");
+                    System.err.println(pricelists.get(0).getStartDate());
+                    System.err.println(pricelists.get(0).getEndDate());
+                    System.err.println(carDays + " ==? " + pricelistDays);
                     return null;
                 }
                 return pricelists;

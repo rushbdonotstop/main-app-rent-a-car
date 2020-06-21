@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/vehicle-make"
+           targetNamespace="http://rentacar.com/vehicle-make" elementFormDefault="qualified">
+
+    <xs:element name="vehicleMake">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleMakeById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="make_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllVehicleMake">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleMake" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleMake">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleMake"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createVehicleMake">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleMake"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateVehicleMake">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleMake"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteVehicleMakeById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="make_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -16,6 +16,9 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "agent_app_id")
+    private Long agentAppId;
+
     @OneToOne
     @JoinColumn(name = "user_details_id", referencedColumnName = "id", nullable = true, unique = true)
     private UserDetails userDetails;
@@ -59,6 +62,14 @@ public class User {
 
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
+    }
+
+    public Long getAgentAppId() {
+        return agentAppId;
+    }
+
+    public void setAgentAppId(Long agentAppId) {
+        this.agentAppId = agentAppId;
     }
 
     @Override

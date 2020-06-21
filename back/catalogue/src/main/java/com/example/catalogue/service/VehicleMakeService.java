@@ -1,6 +1,7 @@
 package com.example.catalogue.service;
 
 import com.example.catalogue.model.VehicleMake;
+import com.example.catalogue.model.VehicleModel;
 import com.example.catalogue.repository.VehicleMakeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,17 +38,17 @@ public class VehicleMakeService {
         return false;
     }
 
-    public VehicleMake findOneMake(String id) throws Exception{
+    public VehicleMake findOneMake(Long id) throws Exception{
         VehicleMake vehicleMake = null;
         try {
-            vehicleMake = vehicleMakeRepository.findOneById(Long.parseLong(id));
+            vehicleMake = vehicleMakeRepository.findOneById(id);
         } catch (EntityNotFoundException e) {
             throw new Exception("Can't find vehicle make with id = " + id);
         }
         return vehicleMake;
     }
 
-    public void deleteOneMake(String id) throws Exception {
+    public void deleteOneMake(Long id) throws Exception {
         try {
             findOneMake(id);
         } catch (EntityNotFoundException e) {
@@ -56,13 +57,21 @@ public class VehicleMakeService {
         vehicleMakeRepository.delete(findOneMake(id));
     }
 
-    public void changeMake(String id, VehicleMake vehicleMake1) throws Exception{
+    public void changeMake(Long id, VehicleMake vehicleMake1) throws Exception{
         try {
             VehicleMake vehicleMake = findOneMake(id);
             vehicleMake.setValue(vehicleMake1.getValue());
             vehicleMakeRepository.save(vehicleMake);
         } catch (EntityNotFoundException e) {
             throw new Exception("Can't find vehicle make with id = " + id);
+        }
+    }
+
+    public VehicleMake createMake(VehicleMake vehicleMake) {
+        if(exist(vehicleMake)) {
+           return vehicleMakeRepository.findByValue(vehicleMake.getValue());
+        } else {
+            return vehicleMakeRepository.save(vehicleMake);
         }
     }
 }
