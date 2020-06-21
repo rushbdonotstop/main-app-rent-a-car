@@ -87,10 +87,10 @@ export class RequestDetailsComponent implements OnInit {
     )
   }
 
-  createReport(element: BundleDTO) {
+  createReport(element: RequestDTO) {
     const dialogRef = this.dialog.open(ReportDialogComponent, {
       width: '400px',
-      data: {}
+      data: element
     });
 
     dialogRef.afterClosed().subscribe(result => {
