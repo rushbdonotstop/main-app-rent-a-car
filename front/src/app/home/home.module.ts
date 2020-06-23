@@ -39,6 +39,7 @@ import { MatTooltipModule} from '@angular/material/tooltip';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header/admin-header.component';
 import { RequestDetailsComponent } from '../components/request-history/request-details/request-details.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,11 @@ import { RequestDetailsComponent } from '../components/request-history/request-d
     MatTooltipModule,
     TextFieldModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBcBUQxfS6JldNG0Ltoju5YxE_0-CKJsu4',
+      libraries: ['places']
+    })
   ],
   exports: [HomeComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
