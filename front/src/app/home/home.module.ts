@@ -39,6 +39,7 @@ import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header
 import { RequestDetailsComponent } from '../components/request-history/request-details/request-details.component';
 import { ConversationContentComponent } from '../components/user-inbox/conversation-content/conversation-content.component';
 import { VehicleStatisticComponent } from '../components/request-history/vehicle-statistic/vehicle-statistic.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -126,7 +127,11 @@ import { VehicleStatisticComponent } from '../components/request-history/vehicle
     MatTooltipModule,
     TextFieldModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBcBUQxfS6JldNG0Ltoju5YxE_0-CKJsu4',
+      libraries: ['places']
+    })
   ],
   exports: [HomeComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
