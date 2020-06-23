@@ -20,9 +20,6 @@ import java.util.Map;
 public class CoordinateController {
 
     @Autowired
-    CoordinateService service;
-
-    @Autowired
     CoordinateService secretService;
 
     @MessageMapping("/send/message")
@@ -32,7 +29,7 @@ public class CoordinateController {
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> generateToken(@RequestBody Map<String, Object> claims) {
-
+        System.out.println("Token request recieved");
         //boolean valid = service.testAuthenticate(vehicleId);
         String jws = Jwts.builder()
                 .setClaims(claims)

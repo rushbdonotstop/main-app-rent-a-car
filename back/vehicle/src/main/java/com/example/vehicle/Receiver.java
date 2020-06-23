@@ -16,9 +16,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Receiver {
 
-    @Autowired
-    CoordinateService coordinateService;
-
     private final SimpMessagingTemplate template;
 
     // lets it signal that the message has been received
@@ -30,7 +27,7 @@ public class Receiver {
     }
 
     public void receiveMessage(byte[] messageByte) throws UnsupportedEncodingException, JsonProcessingException {
-
+            System.out.println("coordinates recieved:");
             String messageStringJSON = new String(messageByte, "UTF-8");
             ObjectMapper mapper = new ObjectMapper();
             Message message = mapper.readValue(messageStringJSON, new TypeReference<Message>() {
