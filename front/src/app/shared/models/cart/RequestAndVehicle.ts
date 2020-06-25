@@ -25,5 +25,7 @@ export class RequestAndVehicle{
         this.vehicleId = vehicle.id
         this.startDate=vehicle.startDate
         this.endDate=vehicle.endDate
+        this.ownerId=vehicle.ownerId
+        this.totalCost=vehicle.price
     }
 }
