@@ -16,6 +16,8 @@ import com.example.user.model.enums.UserType;
 import com.example.user.repository.UserDetailsRepository;
 import com.example.user.repository.UserPrivilegeRepository;
 import com.example.user.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
@@ -32,6 +34,8 @@ public class UserService {
 
     @Autowired
     UserPrivilegeRepository userPrivilegeRepository;
+
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public User save(User user) { return userRepository.save(user); }
 
@@ -190,7 +194,7 @@ public class UserService {
             return userRepository.findByUsernameAndPassword(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
         }
         catch(Exception e){
-
+            logger.error("Exception occured while user tried to login: {}", e.toString());
         }
         return null;
     }

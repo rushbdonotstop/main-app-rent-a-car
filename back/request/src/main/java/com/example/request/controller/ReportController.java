@@ -4,6 +4,8 @@ import com.example.request.DTO.user.PenaltyDTO;
 import com.example.request.DTO.vehicle.Vehicle;
 import com.example.request.model.Report;
 import com.example.request.service.ReportService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -21,6 +23,8 @@ public class ReportController {
 
     @Autowired
     RestTemplate restTemplate;
+
+    Logger logger = LoggerFactory.getLogger(ReportController.class);
 
     /**
      * GET /server/report
@@ -47,6 +51,7 @@ public class ReportController {
                 sendMileage(vehicle);
             }
             if (report.getMileage() > vehicle.getMileageLimit()) {
+                logger.warn("User with id - {} exceeded mileage limit, penalty added", report.getUserId());
                 System.out.println("Mileage limit exceded.");
                 PenaltyDTO penalty = new PenaltyDTO();
                 penalty.setUserId(report.getUserId());
@@ -55,6 +60,7 @@ public class ReportController {
             }
             return new ResponseEntity<>(newReport, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Exception ocurred while creating report, exception: {}", e.toString());
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

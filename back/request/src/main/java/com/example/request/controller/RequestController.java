@@ -7,6 +7,8 @@ import com.example.request.DTO.VehicleMainViewDTO;
 import com.example.request.DTO.user.UserDTO;
 import com.example.request.model.Request;
 import com.example.request.service.RequestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -27,6 +29,8 @@ public class RequestController {
 
     @Autowired
     RestTemplate restTemplate;
+
+    Logger logger = LoggerFactory.getLogger(RequestController.class);
 
     /**
      * GET /server/request
@@ -62,8 +66,10 @@ public class RequestController {
         System.out.println(requests);
         boolean status = this.requestService.addRequest(requests);
         if (status) {
+            logger.warn("New requests added by user - {}, number of requests - {}", requests.getRequests().get(0).getUserId(), requests.getRequests().size());
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
+            logger.error("New requests couldn't be added by user with id - {}", requests.getRequests().get(0).getUserId();
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
 

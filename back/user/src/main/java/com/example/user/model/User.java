@@ -23,10 +23,10 @@ public class User {
     @JoinColumn(name = "user_details_id", referencedColumnName = "id", nullable = true, unique = true)
     private UserDetails userDetails;
 
-    @Column(name = "salt")
+    @Column(name = "salt", nullable = true)
     private String salt;
 
-    @Column(name = "verified")
+    @Column(name = "verified", nullable = true)
     private boolean verified;
 
     public User() {
