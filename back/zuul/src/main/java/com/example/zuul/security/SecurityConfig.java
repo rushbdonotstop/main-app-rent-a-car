@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/catalogue/**").hasAnyRole("ADMINISTRATOR", "AGENT", "END_USER")
                 .antMatchers(HttpMethod.DELETE, "/catalogue/**").hasRole("ADMINISTRATOR")
                 .antMatchers(HttpMethod.GET, "/catalogue/**").hasAnyRole("ADMINISTRATOR", "AGENT", "END_USER")
+                .antMatchers(HttpMethod.GET, "/vehicle/statistics/**").hasAnyAuthority("GET_STATISTIC")
                 .anyRequest().authenticated()
             .and()
                 .addFilterAfter(new JwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
