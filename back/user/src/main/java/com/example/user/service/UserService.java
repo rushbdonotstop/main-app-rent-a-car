@@ -33,6 +33,12 @@ public class UserService {
     @Autowired
     UserPrivilegeRepository userPrivilegeRepository;
 
+    @Autowired
+    JwtService jwtService;
+
+    @Autowired
+    UserDetailsTokenService userDetailsTokenService;
+
     public Boolean userExists(String username) {
         return userRepository.findOneByUsername(username) != null;
     }
@@ -210,5 +216,17 @@ public class UserService {
             }
         }
         return newList;
+    }
+
+    public String login(LoginRequestDTO loginRequestDTO) throws Exception{
+        //TODO HASHIRAJ SVE SA SALTOM
+        User user = userRepository.findOneByUsername(loginRequestDTO.getUsername());
+        if (!user.getPassword().equals(loginRequestDTO.getPassword())) {
+            throw new Exception("Bad Credential");
+        }
+
+        String jwt = jwtService.generateToken(userDetailsTokenService.getUserDetails(user));
+
+        return jwt;
     }
 }
