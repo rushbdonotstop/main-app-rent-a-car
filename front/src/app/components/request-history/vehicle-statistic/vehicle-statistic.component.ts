@@ -3,6 +3,7 @@ import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { VehicleService } from 'src/app/core/services/vehicle.service';
 import { User } from 'src/app/shared/models/user/User';
 import { Statistics } from 'src/app/shared/models/statistic/Statistics';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   templateUrl: './vehicle-statistic.component.html',
@@ -13,14 +14,14 @@ export class VehicleStatisticComponent implements OnInit {
   statistic : Statistics;
 
   constructor(public dialogRef: MatDialogRef<VehicleStatisticComponent>,
-    public dialog: MatDialog, private vehicleService : VehicleService, private _snackBar: MatSnackBar) { }
+    public dialog: MatDialog, private vehicleService : VehicleService, private _snackBar: MatSnackBar
+    ,private authService: AuthService) { }
 
   ngOnInit() {
-    var user = new User()
-    user = JSON.parse(localStorage.getItem('userObject'))
+    var role = this.authService.getRole();
     
-    if(user.userDetails.userType.toString() == 'AGENT'){
-      this.vehicleService.getStatistics(user.id).subscribe(
+    if(role.toString() == 'ROLE_AGENT'){
+      this.vehicleService.getStatistics(this.authService.getUserId()).subscribe(
         statistic => {
           this.statistic = statistic;
         }

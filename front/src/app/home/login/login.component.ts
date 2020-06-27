@@ -27,7 +27,33 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       this.authService.login(this.form.value)
-        .subscribe();
+        .subscribe(token => {
+          if (token != null) {
+            this._snackBar.open("Succesful login!", "", {
+              duration: 2000,
+              verticalPosition: 'bottom'
+            });
+            alert(this.authService.getRole().toString());
+            if(this.authService.getRole().toString() === 'ROLE_ADMINISTRATOR'){
+              this.router.navigate(['dashboard']);
+            }
+            else{
+              this.router.navigate(['home']);
+            }
+          }
+          else {
+            this.loginInvalid = true;
+          }
+        },
+          error => {
+            this._snackBar.open("Server error!", "", {
+              duration: 2000,
+              verticalPosition: 'bottom'
+            });
+          })
+    } else {
+      this.loginInvalid = true;
     }
   }
+
 }

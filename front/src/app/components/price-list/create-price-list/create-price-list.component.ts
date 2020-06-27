@@ -6,6 +6,7 @@ import { VehicleInfoPricelists } from '../../create-vehicle/create-vehicle.compo
 import { User } from 'src/app/shared/models/user/User';
 import { UserType } from 'src/app/shared/models/user/UserType';
 import { VehicleDiscount } from 'src/app/shared/models/pricelist/VehicleDiscount';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'pm-pricelist-create',
@@ -33,13 +34,13 @@ export class CreatePriceListComponent implements OnInit {
 
   tempPrices: Pricelist[]
 
-  constructor(private _snackBar: MatSnackBar, private pricelistService: PricelistService) { }
+  constructor(private authService: AuthService, private _snackBar: MatSnackBar, private pricelistService: PricelistService) { }
 
   ngOnInit() {
 
-    var user = new User()
-    user = JSON.parse(localStorage.getItem('userObject'))
-    if (user.userDetails.userType.toString() == "AGENT") {
+    
+    var role = JSON.stringify(this.authService.getRole())
+    if (role == "ROLE_AGENT") {
       this.agentTrue = true;
     }
     else {

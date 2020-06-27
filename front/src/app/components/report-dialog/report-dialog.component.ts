@@ -5,6 +5,7 @@ import { BundleDTO } from 'src/app/shared/models/request/bundleDTO';
 import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
 import { User } from 'src/app/shared/models/user/User';
 import { Report } from 'src/app/shared/models/report/Report';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'pm-report-dialog',
@@ -24,14 +25,12 @@ export class ReportDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ReportDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: RequestDTO, private reportService: ReportService, private _snackBar: MatSnackBar) {
+    @Inject(MAT_DIALOG_DATA) public data: RequestDTO, private reportService: ReportService, private _snackBar: MatSnackBar, private authService: AuthService) {
   }
 
   ngOnInit() {
     this.vehicleId = this.data.vehicleId
-    var loggedInUser = new User()
-    loggedInUser = JSON.parse(localStorage.getItem('userObject'))
-    this.userId = loggedInUser.id
+    this.userId = this.authService.getUserId();
     this.valid = true
   }
 

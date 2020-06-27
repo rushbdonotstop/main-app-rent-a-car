@@ -83,4 +83,8 @@ export class AuthService {
   registerVerification(token : String) {
     return this.http.get<NotificationFromServer>('server/user/verification/' +  token, httpOptions);
   }
+
+  getUserId() {
+    return jwt(this.getToken()).userId;
+  }
 }

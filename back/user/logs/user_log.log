@@ -82,4 +82,6 @@
 27-06-2020 12:44:55.105 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 16.226 seconds (JVM running for 17.918)
 27-06-2020 14:27:46.542 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
 27-06-2020 14:27:55.026 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.675 seconds (JVM running for 11.365)
+27-06-2020 15:01:37.996 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 15:01:48.157 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 11.804 seconds (JVM running for 14.083)
 
