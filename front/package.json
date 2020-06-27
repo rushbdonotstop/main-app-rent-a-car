@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o --proxy-config proxy.conf.json --port 4201",
+    "start": "ng serve -o --proxy-config proxy.conf.json --port 4201 --ssl true --ssl-cert main-front.crt --ssl-key main-front.key",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

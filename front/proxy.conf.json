@@ -1,6 +1,10 @@
 {
     "/server": {
+<<<<<<< HEAD
       "target": "https://localhost:8081",
+=======
+      "target": "https://192.168.0.114:8081",
+>>>>>>> 92db0a47c176e10ba9d119f0f1657e7f1fe915f7
       "secure": false,
       "changeOrigin": true,
       "logLevel": "debug",

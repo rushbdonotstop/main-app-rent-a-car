@@ -6,6 +6,7 @@ import { TokenDTO } from 'src/app/shared/models/token/TokenDTO';
 import {Observable, of} from "rxjs";
 import {catchError, mapTo, tap} from 'rxjs/operators';
 import * as jwt from 'jwt-decode';
+import { NotificationFromServer } from 'src/app/shared/models/Notification';
 
 const httpOptions = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
 
@@ -73,5 +74,13 @@ export class AuthService {
 
   getRole() {
     return jwt(this.getToken()).authorities[0];
+  }
+
+  register(user: User) {
+    return this.http.post<NotificationFromServer>(`server/user/registration`,  JSON.stringify(user), httpOptions);
+  }
+
+  registerVerification(token : String) {
+    return this.http.get<NotificationFromServer>('server/user/verification/' +  token, httpOptions);
   }
 }
