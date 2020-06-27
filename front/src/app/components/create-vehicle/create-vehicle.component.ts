@@ -17,6 +17,7 @@ import { Image } from 'src/app/shared/models/vehicle/Image';
 import { User } from 'src/app/shared/models/user/User';
 import { UserService } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   templateUrl: './create-vehicle.component.html',
@@ -99,7 +100,7 @@ export class CreateVehicleComponent implements OnInit {
   vehicleInfoValid: boolean
   vehicleInfoShow: boolean
 
-  constructor(private router: Router, private httpClient: HttpClient, public zone: NgZone, private userService:UserService, private vehicleService: VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
+  constructor(private authService : AuthService, private router: Router, private httpClient: HttpClient, public zone: NgZone, private userService:UserService, private vehicleService: VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
