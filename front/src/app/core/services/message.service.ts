@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/models/user/User';
 import { Conversation } from 'src/app/shared/models/message/Conversation';
 import { Message } from 'src/app/shared/models/message/Message';
 import { NotificationFromServer } from 'src/app/shared/models/Notification';
+import { AuthService } from './auth.service';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
@@ -14,17 +15,15 @@ export class MessageService {
 
   user: User;
 
-  constructor(private http: HttpClient) { }
+  constructor(private authService: AuthService, private http: HttpClient) { }
 
   getUserConversations() {
-    this.user = JSON.parse(localStorage.getItem('userObject'));
-    let userId = this.user.id;
+    let userId = this
     return this.http.get<Array<Conversation>>('server/message/conversation/' + userId, httpOptions);
   }
 
   getMessagesFromConversation(conversationId : number) {
-    this.user = JSON.parse(localStorage.getItem('userObject'));
-    let userId = this.user.id;
+    let userId = this.authService.getUserId();
     return this.http.get<Array<Message>>('server/message/message/inbox?userId=' + userId + '&conversationId=' + conversationId, httpOptions);
   }
 

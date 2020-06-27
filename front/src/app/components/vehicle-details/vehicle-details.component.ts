@@ -12,6 +12,7 @@ import { ReviewService } from 'src/app/core/services/review.service';
 import { Review } from 'src/app/shared/models/review/Review';
 import { User } from 'src/app/shared/models/user/User';
 import { RequestService } from 'src/app/core/services/request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   templateUrl: './vehicle-details.component.html',
@@ -88,7 +89,7 @@ export class VehicleDetailsComponent implements OnInit {
     this.rating = rating;
   }
 
-  constructor(public dialogRef: MatDialogRef<VehicleDetailsComponent>,
+  constructor(private authService: AuthService, public dialogRef: MatDialogRef<VehicleDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private vehicleService: VehicleService,
     private catalogueService: CatalogueService,
@@ -96,9 +97,7 @@ export class VehicleDetailsComponent implements OnInit {
     private userService: UserService,
     private _snackBar: MatSnackBar, private reviewService : ReviewService, private requestService : RequestService) {
     this.vehicleId = data.id;
-    var user = new User()
-    user = JSON.parse(localStorage.getItem('userObject'))
-    this.userId = user.id
+    this.userId = 
   }
 
   ngOnInit() {

@@ -11,6 +11,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
 import { User } from 'src/app/shared/models/user/User';
 import { manualRequest } from 'src/app/shared/models/cart/manualRequest';
+import { AuthService } from './auth.service';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
@@ -20,7 +21,7 @@ const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/js
 //TODO : get owner id
 export class CartService {
 
-  constructor(private http: HttpClient, private loginService: UserService) { }
+  constructor(private authService: AuthService, private http: HttpClient, private loginService: UserService) { }
 
   addItemToCart(vehicle: VehicleMainViewDTO, startDate: Date, endDate: Date) {
     var cart = localStorage.getItem('cart')
@@ -89,8 +90,7 @@ export class CartService {
 
   buy() {
     var detailedCart = this.getCart()
-    var userId = JSON.parse(localStorage.getItem('userObject')).id;
-    var cart = new Cart(detailedCart, userId)
+    var cart = new Cart(detailedCart, this.authService.getUserId())
     console.log(detailedCart)
     console.log(cart)
     return this.http.post<boolean>('server/request/request', JSON.stringify(cart), httpOptions);

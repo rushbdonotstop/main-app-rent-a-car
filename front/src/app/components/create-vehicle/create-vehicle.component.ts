@@ -104,9 +104,8 @@ export class CreateVehicleComponent implements OnInit {
 
   ngOnInit() {
 
-    var user = new User()
-    user = JSON.parse(localStorage.getItem('userObject'))
-    this.userService.canUserCreate(user.id).subscribe(result =>{
+   
+    this.userService.canUserCreate(this.authService.getUserId()).subscribe(result =>{
         if(result){
           this.imgURL = 'assets/vehicles/nopicture.jpg'
           this.minDate = new Date();
@@ -413,9 +412,7 @@ export class CreateVehicleComponent implements OnInit {
               vehicle.collisionProtection = this.collisionProtection
               vehicle.childrenSeats = this.childrenSeats
               vehicle.image = response.body as Image
-              var user = new User()
-              user = JSON.parse(localStorage.getItem('userObject'))
-              vehicle.userId = user.id;
+              vehicle.userId = this.authService.getUserId();
               this.vehicleService.create(vehicle).subscribe(resultedVehicle => {
                 var itemsProcessed = 0;
                 this.results.pricelists.forEach(element => {
@@ -462,9 +459,7 @@ export class CreateVehicleComponent implements OnInit {
           vehicle.collisionProtection = this.collisionProtection
           vehicle.childrenSeats = this.childrenSeats
           vehicle.image = null
-          var user = new User()
-          user = JSON.parse(localStorage.getItem('userObject'))
-          vehicle.userId = user.id;
+          vehicle.userId = this.authService.getUserId();
           this.vehicleService.create(vehicle).subscribe(resultedVehicle => {
             var itemsProcessed = 0;
             this.results.pricelists.forEach(element => {
@@ -513,9 +508,7 @@ export class CreateVehicleComponent implements OnInit {
   }
 
   updateUser(){
-    var user = new User()
-    user = JSON.parse(localStorage.getItem('userObject'))
-    this.userService.updateUserVehicleNum(user.id).subscribe(result => {
+    this.userService.updateUserVehicleNum(this.authService.getUserId()).subscribe(result => {
       this._snackBar.open(result.text.toString(), "", {
         duration: 2000,
         verticalPosition: 'bottom'

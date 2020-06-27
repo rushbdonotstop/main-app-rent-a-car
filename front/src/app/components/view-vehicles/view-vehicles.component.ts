@@ -193,12 +193,10 @@ export class ViewVehiclesComponent implements OnInit {
   }
 
   isRentingAllowed(car: VehicleMainViewDTO) {
-    var loggedInUser = new User()
-    loggedInUser = JSON.parse(localStorage.getItem('userObject'))
 
     //agent cant rent his own car
-    if (loggedInUser.userDetails.userType.toString() == "AGENT")
-      if (car.ownerId == loggedInUser.id)
+    if (this.authService.getRole().toString() == "ROLE_AGENT")
+      if (car.ownerId == this.authService.getUserId())
         return false;
       else
         return true

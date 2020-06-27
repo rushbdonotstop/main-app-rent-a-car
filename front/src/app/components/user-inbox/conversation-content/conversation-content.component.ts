@@ -5,6 +5,7 @@ import { MessageService } from 'src/app/core/services/message.service';
 import { MessageType } from 'src/app/shared/models/message/MessageType';
 import { User } from 'src/app/shared/models/user/User';
 import { NotificationFromServer } from 'src/app/shared/models/Notification';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'pm-conversation-content',
@@ -22,7 +23,7 @@ export class ConversationContentComponent implements OnInit {
   user : User;
   otherUserId : number;
 
-  constructor(public dialogRef: MatDialogRef<ConversationContentComponent>,
+  constructor(private authService : AuthService, public dialogRef: MatDialogRef<ConversationContentComponent>,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar, private messageService : MessageService) { 
       this. conversationWithUser = data.conversation.username;
@@ -62,8 +63,7 @@ export class ConversationContentComponent implements OnInit {
   }
 
   sendMessage() {
-    this.user = JSON.parse(localStorage.getItem('userObject'));
-    let userId = this.user.id;
+    let userId = this.authService.getUserId();
     let messageToSend = new Message()
     messageToSend.conversationId = this.conversationId;
     messageToSend.senderId = userId;
