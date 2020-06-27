@@ -20,7 +20,7 @@ export class RequestDetailsComponent implements OnInit {
   userId: number;
   selectedHistory: String;
   dataSource: MatTableDataSource<RequestDTO>;
-  displayedColumns: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'stsatus'];
+  displayedColumns: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status'];
   isUserAgent: boolean;
 
   constructor(public dialogRef: MatDialogRef<RequestDetailsComponent>,
@@ -50,6 +50,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   accept() {
+    alert(this.bundleId)
     this.requestService.changeStatusOfRequest(this.bundleId, 1).subscribe(
       data => {
         if (data) {

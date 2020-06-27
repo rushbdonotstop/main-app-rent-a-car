@@ -3,6 +3,8 @@ package com.example.catalogue.service;
 import com.example.catalogue.model.VehicleMake;
 import com.example.catalogue.model.VehicleModel;
 import com.example.catalogue.repository.VehicleMakeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ public class VehicleMakeService {
     @Autowired
     private VehicleMakeRepository vehicleMakeRepository;
 
+    Logger logger = LoggerFactory.getLogger(VehicleMakeService.class);
+
     public void addNewMake(VehicleMake vehicleMake) throws Exception {
         if(exist(vehicleMake)) {
             throw new Exception("Already exist");
@@ -23,6 +27,7 @@ public class VehicleMakeService {
     }
 
     public List<VehicleMake> getAllMakes() {
+        logger.trace("Getting all vehicle makes");
         return vehicleMakeRepository.findAll();
     }
 

@@ -39,6 +39,8 @@ public class UserService {
     @Autowired
     UserDetailsTokenService userDetailsTokenService;
 
+    public User save(User user) { return userRepository.save(user); }
+
     public Boolean userExists(String username) {
         return userRepository.findOneByUsername(username) != null;
     }

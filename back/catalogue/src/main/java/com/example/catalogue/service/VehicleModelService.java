@@ -3,6 +3,8 @@ package com.example.catalogue.service;
 import com.example.catalogue.model.VehicleMake;
 import com.example.catalogue.model.VehicleModel;
 import com.example.catalogue.repository.VehicleModelRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 public class VehicleModelService {
     @Autowired
     private VehicleModelRepository vehicleModelRepository;
+
+    Logger logger = LoggerFactory.getLogger(VehicleModelService.class);
 
     public void addNewModel(VehicleModel vehicleModel) throws Exception {
         if(exist(vehicleModel)) {
@@ -25,6 +29,7 @@ public class VehicleModelService {
     public List<VehicleModel> getModelsByMake(VehicleMake vehicleMake) {return vehicleModelRepository.findByVehicleMake(vehicleMake);}
 
     public List<VehicleModel> getAllModels() {
+        logger.trace("Getting all vehicle models");
         return vehicleModelRepository.findAll();
     }
 

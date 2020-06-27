@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
+    Logger logger = LoggerFactory.getLogger(CityController.class);
     /**
      * GET /server/location/city
      *
@@ -58,7 +61,13 @@ public class CityController {
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> create(@RequestBody City city) throws Exception {
-        Notification notification = cityService.create(city);
-        return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+        try {
+            Notification notification = cityService.create(city);
+            logger.warn("New city added with name - {}. Action successful.", city.getValue());
+            return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+        } catch(Exception e) {
+            logger.error("New city with name - {} couldn't be added, exception occured: {} ", city.getValue(), e.toString());
+            return new ResponseEntity<Notification>(new Notification("Server error!"),HttpStatus.BAD_REQUEST);
+        }
     }
 }

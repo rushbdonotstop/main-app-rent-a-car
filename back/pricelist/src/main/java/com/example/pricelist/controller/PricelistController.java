@@ -4,6 +4,8 @@ import com.example.pricelist.dto.MinAndMaxPricesDTO;
 import com.example.pricelist.model.Notification;
 import com.example.pricelist.model.Pricelist;
 import com.example.pricelist.service.PricelistService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +30,7 @@ public class PricelistController {
     @Autowired
     private RestTemplate restTemplate;
 
+    Logger logger = LoggerFactory.getLogger(PricelistController.class);
     /**
      * GET /server/pricelist
      *
@@ -62,10 +65,12 @@ public class PricelistController {
         Boolean exists = restTemplate.exchange("http://vehicle/vehicle/exists/" + pricelists.get(0).getVehicleId(),
                 HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
         Notification notification = new Notification("Vehicle id does not exist.");
+        logger.info("Agent tried to create pricelist for vehicle that doesn't exist. Action unsuccessful.");
         if (exists){
             System.err.println(startDate);
             System.err.println(endDate);
             notification = priceListService.savePricelists(pricelists, startDate, endDate);
+            logger.info("Pricelists for vehicle with id - {} added. Action successful.", pricelists.get(0).getVehicleId());
         }
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);
     }

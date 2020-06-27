@@ -1,0 +1,77 @@
+2020-06-26 00:01:19.429  INFO 17104 --- [restartedMain] c.e.catalogue.CatalogueApplication       : No active profile set, falling back to default profiles: default
+2020-06-26 00:01:20.903  INFO 17104 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-06-26 00:01:20.904  INFO 17104 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2020-06-26 00:01:20.928  INFO 17104 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.catalogue.repository.VehicleFuelTypeRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2020-06-26 00:01:20.932  INFO 17104 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.catalogue.repository.VehicleMakeRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2020-06-26 00:01:20.934  INFO 17104 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.catalogue.repository.VehicleModelRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2020-06-26 00:01:20.935  INFO 17104 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.catalogue.repository.VehicleStyleRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2020-06-26 00:01:20.936  INFO 17104 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.catalogue.repository.VehicleTransmissionRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2020-06-26 00:01:20.937  INFO 17104 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29ms. Found 0 JDBC repository interfaces.
+2020-06-26 00:01:20.946  INFO 17104 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-06-26 00:01:20.947  INFO 17104 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2020-06-26 00:01:21.000  INFO 17104 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50ms. Found 5 JPA repository interfaces.
+2020-06-26 00:01:21.192  WARN 17104 --- [restartedMain] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2020-06-26 00:01:21.391  INFO 17104 --- [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=281009b0-46d6-3ede-a842-65afd697aed0
+2020-06-26 00:01:21.490  INFO 17104 --- [restartedMain] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2020-06-26 00:01:21.500  INFO 17104 --- [restartedMain] faultConfiguringBeanFactoryPostProcessor : No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
+2020-06-26 00:01:21.506  INFO 17104 --- [restartedMain] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2020-06-26 00:01:21.643  INFO 17104 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-06-26 00:01:21.654  INFO 17104 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-06-26 00:01:21.658  INFO 17104 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'integrationDisposableAutoCreatedBeans' of type [org.springframework.integration.config.annotation.Disposables] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-06-26 00:01:22.220  INFO 17104 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8086 (http)
+2020-06-26 00:01:22.229  INFO 17104 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-06-26 00:01:22.229  INFO 17104 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.35]
+2020-06-26 00:01:22.402  INFO 17104 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-06-26 00:01:22.402  INFO 17104 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2950 ms
+2020-06-26 00:01:22.618  WARN 17104 --- [restartedMain] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2020-06-26 00:01:22.618  INFO 17104 --- [restartedMain] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-06-26 00:01:22.630  INFO 17104 --- [restartedMain] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@b301cbd
+2020-06-26 00:01:23.102  INFO 17104 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-06-26 00:01:23.147  INFO 17104 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2020-06-26 00:01:23.198  INFO 17104 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-06-26 00:01:23.294  INFO 17104 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.15.Final
+2020-06-26 00:01:23.463  INFO 17104 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-06-26 00:01:23.587  INFO 17104 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-06-26 00:01:23.751  INFO 17104 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-06-26 00:01:23.772  INFO 17104 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2020-06-26 00:01:25.036  INFO 17104 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-06-26 00:01:25.042  INFO 17104 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-06-26 00:01:25.388  WARN 17104 --- [task-2] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2020-06-26 00:01:25.630  WARN 17104 --- [restartedMain] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2020-06-26 00:01:25.630  INFO 17104 --- [restartedMain] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-06-26 00:01:25.730  WARN 17104 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-06-26 00:01:27.490  WARN 17104 --- [restartedMain] ockingLoadBalancerClientRibbonWarnLogger : You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2020-06-26 00:01:27.581  INFO 17104 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-06-26 00:01:27.917  INFO 17104 --- [restartedMain] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2020-06-26 00:01:27.918  INFO 17104 --- [restartedMain] o.s.i.channel.PublishSubscribeChannel    : Channel 'application-1.errorChannel' has 1 subscriber(s).
+2020-06-26 00:01:27.918  INFO 17104 --- [restartedMain] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2020-06-26 00:01:27.930  INFO 17104 --- [restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2020-06-26 00:01:27.978  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2020-06-26 00:01:28.123  INFO 17104 --- [restartedMain] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2020-06-26 00:01:28.123  INFO 17104 --- [restartedMain] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2020-06-26 00:01:28.258  INFO 17104 --- [restartedMain] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2020-06-26 00:01:28.258  INFO 17104 --- [restartedMain] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2020-06-26 00:01:28.433  INFO 17104 --- [restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2020-06-26 00:01:28.461  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2020-06-26 00:01:28.462  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2020-06-26 00:01:28.462  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2020-06-26 00:01:28.462  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2020-06-26 00:01:28.462  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2020-06-26 00:01:28.462  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2020-06-26 00:01:28.462  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2020-06-26 00:01:28.680  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2020-06-26 00:01:28.684  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2020-06-26 00:01:28.688  INFO 17104 --- [restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2020-06-26 00:01:28.692  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1593122488691 with initial instances count: 10
+2020-06-26 00:01:28.699  INFO 17104 --- [restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application CATALOGUE with eureka with status UP
+2020-06-26 00:01:28.700  INFO 17104 --- [restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1593122488700, current=UP, previous=STARTING]
+2020-06-26 00:01:28.702  INFO 17104 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_CATALOGUE/DESKTOP-5SVP8H0:catalogue:8086: registering service...
+2020-06-26 00:01:28.739  INFO 17104 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_CATALOGUE/DESKTOP-5SVP8H0:catalogue:8086 - registration status: 204
+2020-06-26 00:01:28.741  INFO 17104 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8086 (http) with context path ''
+2020-06-26 00:01:28.742  INFO 17104 --- [restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8086
+2020-06-26 00:01:28.864  INFO 17104 --- [restartedMain] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2020-06-26 00:01:29.047  INFO 17104 --- [restartedMain] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2020-06-26 00:01:29.079  INFO 17104 --- [restartedMain] c.e.catalogue.CatalogueApplication       : Started CatalogueApplication in 11.917 seconds (JVM running for 13.501)
+2020-06-26 00:01:29.566  INFO 17104 --- [RMI TCP Connection(5)-192.168.0.114] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-06-26 00:01:29.566  INFO 17104 --- [RMI TCP Connection(5)-192.168.0.114] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-06-26 00:01:29.584  INFO 17104 --- [RMI TCP Connection(5)-192.168.0.114] o.s.web.servlet.DispatcherServlet        : Completed initialization in 18 ms

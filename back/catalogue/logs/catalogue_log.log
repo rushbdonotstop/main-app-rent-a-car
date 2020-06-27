@@ -1,0 +1,2 @@
+27-06-2020 02:28:27.042 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 02:28:43.118 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStarted - Started CatalogueApplication in 17.82 seconds (JVM running for 20.075)

@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class VehicleModelController {
     @Autowired
     private RestTemplate restTemplate;
 
+    Logger logger = LoggerFactory.getLogger(VehicleModelController.class);
 
     /**
      * GET server/catalogue/vehicleModel/{id}
@@ -65,11 +68,14 @@ public class VehicleModelController {
                     .exchange("http://vehicle/search/model/" + id, HttpMethod.GET, null, List.class);
             List<Long> vehicleList = response.getBody();
             if(vehicleList.size() != 0) {
+                logger.info("Admin requested to delete vehicle model with id - {} - but there is vehicle registered with that model. Action unsuccessful.", id);
                 return new ResponseEntity<>(new Notification("There is a vehicle registered with model id " + id + "\nModel wasn't deleted.", false), HttpStatus.CONFLICT);
             }
             vehicleModelService.deleteOneModel(id);
+            logger.warn("Admin requested to delete vehicle model with id - {}. Action successful.", id);
             return new ResponseEntity<>(new Notification("Successfully deleted vehicle model id = " + id, true), HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Admin requested to delete vehicle model with id - {} - exception occured: {} ", id, e.toString());
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.NO_CONTENT);
         }
     }
@@ -82,10 +88,12 @@ public class VehicleModelController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> putVehicleModel(@PathVariable Long id, @RequestBody VehicleModel vehicleModel) {
         try {
+            String modelBefore = vehicleModelService.findOneModel(id).getValue();
             vehicleModelService.changeModel(id, vehicleModel);
-
+            logger.warn("Admin updated vehicle model with id {}, from {} to {}. Action successful.", id, modelBefore, vehicleModel.getValue());
             return new ResponseEntity<>(new Notification("Vehicle model changed to " + vehicleModel.getValue(), true), HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Admin requested to update vehicle model with id - {} - exception occured: {} ", id, e.toString());
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
     }
@@ -113,9 +121,10 @@ public class VehicleModelController {
     public ResponseEntity<Notification> postVehicleModel(@RequestBody VehicleModel vehicleModel) {
         try {
             vehicleModelService.addNewModel(vehicleModel);
-
+            logger.warn("Admin requested to create vehicle model with name - {}. Action successful.", vehicleModel.getValue());
             return new ResponseEntity<>(new Notification("Successfully added vehicle model " + vehicleModel.getValue(), true), HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Admin requested to create vehicle model with name - {} - exception occured: {} ", vehicleModel.getValue(), e.toString());
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
     }
@@ -127,6 +136,7 @@ public class VehicleModelController {
      */
     @PostMapping(value="/createReturnObject", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleModel> createReturnObject(@RequestBody VehicleModel vehicleModel) {
+        logger.warn("Admin requested to create vehicle model with name - {}. Action successful.", vehicleModel.getValue());
         return new ResponseEntity<VehicleModel>(vehicleModelService.createModel(vehicleModel), HttpStatus.OK);
     }
 }

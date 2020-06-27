@@ -8,6 +8,6 @@ export class manualRequest{
     status:Status
     userId:number
     vehicleId:number
-    ownerId:number = 1
+    ownerId:number
     constructor(){}
 }

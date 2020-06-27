@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -21,6 +23,7 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
+    Logger logger = LoggerFactory.getLogger(LocationController.class);
 
     /**
      * GET /server/location/
@@ -80,8 +83,13 @@ public class LocationController {
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Location> create(@RequestBody Location location) throws Exception {
-        Location locationNew = locationService.create(location);
-
-        return new ResponseEntity<Location>(locationNew, HttpStatus.OK);
+        try {
+            Location locationNew = locationService.create(location);
+            logger.warn("New location added with parameters - {} - {} - {}. Action successful.", location.getState().getValue(), location.getCity().getValue(), location.getStreet().getValue());
+            return new ResponseEntity<Location>(locationNew, HttpStatus.OK);
+        } catch(Exception e) {
+            logger.warn("New location with parameters - {} - {} - {}, couldn't be added, exception occured: {}.", location.getState().getValue(), location.getCity().getValue(), location.getStreet().getValue(), e.toString());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 }

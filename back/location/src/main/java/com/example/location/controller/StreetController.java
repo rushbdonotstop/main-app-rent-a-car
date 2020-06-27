@@ -3,6 +3,8 @@ package com.example.location.controller;
 import com.example.location.model.Notification;
 import com.example.location.service.StreetService;
 import com.example.location.model.Street;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,7 @@ public class StreetController {
     @Autowired
     private StreetService streetService;
 
+    Logger logger = LoggerFactory.getLogger(StreetController.class);
     /**
      * GET /server/location/street
      *
@@ -58,7 +61,13 @@ public class StreetController {
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> create(@RequestBody Street street) throws Exception {
-        Notification notification = streetService.create(street);
-        return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+        try {
+            Notification notification = streetService.create(street);
+            logger.warn("New street added with name - {}. Action successful.", street.getValue());
+            return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+        } catch(Exception e) {
+            logger.error("New street with name - {} couldn't be added, exception occured: {} ", street.getValue(), e.toString());
+            return new ResponseEntity<Notification>(new Notification("Server error!"), HttpStatus.BAD_REQUEST);
+        }
     }
 }

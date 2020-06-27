@@ -20,6 +20,9 @@ public class UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+
+    public UserDetails save(UserDetails userDetails) { return userDetailsRepository.save(userDetails); }
+
     public List getAllUserDetails() {
         return userDetailsRepository.findAll();
     }

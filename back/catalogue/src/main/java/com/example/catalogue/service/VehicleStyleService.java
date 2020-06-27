@@ -2,6 +2,8 @@ package com.example.catalogue.service;
 
 import com.example.catalogue.model.VehicleStyle;
 import com.example.catalogue.repository.VehicleStyleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class VehicleStyleService {
     @Autowired
     private VehicleStyleRepository vehicleStyleRepository;
 
+    Logger logger = LoggerFactory.getLogger(VehicleStyleService.class);
+
     public void addNewStyle(VehicleStyle vehicleStyle) throws Exception {
         if(exist(vehicleStyle)) {
             throw new Exception("Already exist");
@@ -22,6 +26,8 @@ public class VehicleStyleService {
     }
 
     public List<VehicleStyle> getAllStyles() {
+
+        logger.trace("Getting all vehicle styles");
         return vehicleStyleRepository.findAll();
     }
 
