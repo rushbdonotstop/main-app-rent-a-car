@@ -13,6 +13,8 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="row" style="justify-content: center">
             <h2>Log In</h2>
+          </div>
+          <div class="row" style="justify-content: center">
             <mat-error *ngIf="loginInvalid">
               The username and password were not recognised
             </mat-error>
@@ -27,7 +29,10 @@
           </div>
           <div class="row" style="justify-content: center">
             <mat-form-field style="width:20vw" class="full-width-input">
-              <input matInput type="password" placeholder="Password" formControlName="password" required>
+              <input matInput type="password" placeholder="Password" formControlName="password" required
+                [type]="hide1 ? 'password' : 'text'">
+              <mat-icon style="cursor: pointer;" matSuffix (click)="hide1 = !hide1">
+                {{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
               <mat-error>
                 Please provide a valid password
               </mat-error>
@@ -37,7 +42,8 @@
             <button mat-raised-button color="primary">Login</button>
           </div>
         </form>
-        <div class="text-lg-center" style="margin-top:20px;"><a class="mr-3" href="" [routerLink]="['/register']">Don't have an account? Register today!</a></div>
+        <div class="text-lg-center" style="margin-top:20px;"><a class="mr-3" href="" [routerLink]="['/register']">Don't
+            have an account? Register today!</a></div>
       </mat-card-content>
     </mat-card>
   </div>
