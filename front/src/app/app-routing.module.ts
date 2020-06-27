@@ -14,9 +14,10 @@ import { UserInboxComponent } from './components/user-inbox/user-inbox.component
 import { ViewCodebookComponent } from './components/admin-dashboard/vehicles-codebook/view-codebook/view-codebook.component';
 import { ViewUsersComponent } from './components/admin-dashboard/system-users/view-users/view-users.component';
 import { RegisterVerificationComponent } from './home/register/register-verification/register-verification.component';
+import { AuthGuard } from './shared/security/AuthGuard';
 
 
-const routes: Routes = [{ path: 'login', component: LoginComponent},
+const routes: Routes = [{ path: 'login', component: LoginComponent,},
 { path: 'register', component: RegisterComponent},
 { path: 'search', component: ViewVehiclesComponent},
 { path: 'add', component: CreateVehicleComponent },
@@ -24,7 +25,13 @@ const routes: Routes = [{ path: 'login', component: LoginComponent},
 { path: 'inbox', component: UserInboxComponent},
 { path: 'cart', component: UserCartComponent },
 { path: 'home', component: HomeComponent },
-{ path: 'dashboard', component : AdminDashboardComponent},
+{ 
+  path: 'dashboard', 
+  component : AdminDashboardComponent,
+  canActivate: [AuthGuard],
+  data: { 
+    expectedRole: 'ROLE_ADMINISTRATOR'
+  }  },
 { path: 'reviews', component : CommentRequestsComponent},
 { path: 'catalogue', component: ViewCodebookComponent},
 { path: 'users', component: ViewUsersComponent},

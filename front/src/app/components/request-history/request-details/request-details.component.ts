@@ -5,6 +5,7 @@ import { RequestService } from 'src/app/core/services/request.service';
 import { BundleDTO } from 'src/app/shared/models/request/bundleDTO';
 import { User } from 'src/app/shared/models/user/User';
 import { ReportDialogComponent } from '../../report-dialog/report-dialog.component';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'pm-request-details',
@@ -26,7 +27,7 @@ export class RequestDetailsComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<RequestDetailsComponent>,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private requestService: RequestService, private _snackBar: MatSnackBar) {
+    private requestService: RequestService, private _snackBar: MatSnackBar, private authService: AuthService) {
     this.bundleId = data.bundle.id;
     this.totalCost = data.bundle.totalCost;
     this.username = data.bundle.username;
@@ -36,9 +37,8 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    var loggedInUser = new User()
-    loggedInUser = JSON.parse(localStorage.getItem('userObject'))
-    if (loggedInUser.userDetails.userType.toString() == "AGENT") {
+    var role = this.authService.getRole();
+    if (role.toString() == "ROLE_AGENT") {
       this.isUserAgent = true;
       this.displayedColumns = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report'];
     }

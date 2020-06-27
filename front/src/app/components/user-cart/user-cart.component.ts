@@ -16,6 +16,7 @@ import { PrivilegeService } from 'src/app/core/services/privilege.service';
 import { User } from 'src/app/shared/models/user/User';
 import { PenaltyStatus } from 'src/app/shared/models/user/PenaltyStatus';
 import { PenaltyService } from 'src/app/core/services/penalty.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   templateUrl: './user-cart.component.html',
@@ -36,7 +37,8 @@ export class UserCartComponent implements OnInit {
   hasPenalties: boolean = false
 
   constructor(private cartService: CartService, public dialog: MatDialog, private _snackBar: MatSnackBar,
-    private pricelistService: PricelistService, private privilegeService: PrivilegeService, private penaltyService: PenaltyService) { }
+    private pricelistService: PricelistService, private privilegeService: PrivilegeService, private penaltyService: PenaltyService
+    ,private authService: AuthService) { }
 
   ngOnInit() {
     this.cart = this.cartService.getCart()
@@ -51,15 +53,14 @@ export class UserCartComponent implements OnInit {
       this.emptyCart = false
       this.calculateTotalPrice()
       //Check privileges
-      this.privilegeService.getPrivileges(JSON.parse(localStorage.getItem('userObject')).id).subscribe(data => {
+      this.privilegeService.getPrivileges(this.authService.getUserId()).subscribe(data => {
         for (let privilege of data.userPrivileges) {
           if (privilege.toString() == "RENT_VEHICLE") {
             this.rentingPrivilege = true;
           }
           //Check penalties
-          var loggedInUser = new User()
-          loggedInUser = JSON.parse(localStorage.getItem('userObject'))
-          this.penaltyService.getPenalties(loggedInUser.id).subscribe(
+          alert(this.authService.getUserId())
+          this.penaltyService.getPenalties(this.authService.getUserId()).subscribe(
             data => {
               if (data.length > 0) {
                 this.hasPenalties = true;

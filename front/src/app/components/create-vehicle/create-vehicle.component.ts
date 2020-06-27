@@ -17,6 +17,7 @@ import { Image } from 'src/app/shared/models/vehicle/Image';
 import { User } from 'src/app/shared/models/user/User';
 import { UserService } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   templateUrl: './create-vehicle.component.html',
@@ -99,13 +100,12 @@ export class CreateVehicleComponent implements OnInit {
   vehicleInfoValid: boolean
   vehicleInfoShow: boolean
 
-  constructor(private router: Router, private httpClient: HttpClient, public zone: NgZone, private userService:UserService, private vehicleService: VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private router: Router, private httpClient: HttpClient, public zone: NgZone, private userService:UserService, private vehicleService: VehicleService, private pricelistService: PricelistService, private locationService: LocationService, private catalogueService: CatalogueService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
-    var user = new User()
-    user = JSON.parse(localStorage.getItem('userObject'))
-    this.userService.canUserCreate(user.id).subscribe(result =>{
+    this.userService.getUsername
+    this.userService.canUserCreate(this.authService.getUserId()).subscribe(result =>{
         if(result){
           this.imgURL = 'assets/vehicles/nopicture.jpg'
           this.minDate = new Date();
@@ -412,9 +412,8 @@ export class CreateVehicleComponent implements OnInit {
               vehicle.collisionProtection = this.collisionProtection
               vehicle.childrenSeats = this.childrenSeats
               vehicle.image = response.body as Image
-              var user = new User()
-              user = JSON.parse(localStorage.getItem('userObject'))
-              vehicle.userId = user.id;
+
+              vehicle.userId = this.authService.getUserId();
               this.vehicleService.create(vehicle).subscribe(resultedVehicle => {
                 var itemsProcessed = 0;
                 this.results.pricelists.forEach(element => {
@@ -461,9 +460,8 @@ export class CreateVehicleComponent implements OnInit {
           vehicle.collisionProtection = this.collisionProtection
           vehicle.childrenSeats = this.childrenSeats
           vehicle.image = null
-          var user = new User()
-          user = JSON.parse(localStorage.getItem('userObject'))
-          vehicle.userId = user.id;
+        
+          vehicle.userId = this.authService.getUserId();
           this.vehicleService.create(vehicle).subscribe(resultedVehicle => {
             var itemsProcessed = 0;
             this.results.pricelists.forEach(element => {
@@ -512,9 +510,7 @@ export class CreateVehicleComponent implements OnInit {
   }
 
   updateUser(){
-    var user = new User()
-    user = JSON.parse(localStorage.getItem('userObject'))
-    this.userService.updateUserVehicleNum(user.id).subscribe(result => {
+    this.userService.updateUserVehicleNum(this.authService.getUserId()).subscribe(result => {
       this._snackBar.open(result.text.toString(), "", {
         duration: 2000,
         verticalPosition: 'bottom'
