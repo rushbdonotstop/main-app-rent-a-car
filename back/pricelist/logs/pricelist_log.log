@@ -1,0 +1,2 @@
+27-06-2020 05:06:56.891 [restartedMain] INFO  c.e.pricelist.PricelistApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:07:22.927 [restartedMain] INFO  c.e.pricelist.PricelistApplication.logStarted - Started PricelistApplication in 29.375 seconds (JVM running for 31.922)

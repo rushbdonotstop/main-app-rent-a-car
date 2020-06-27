@@ -1,0 +1,2 @@
+27-06-2020 05:05:52.287 [restartedMain] INFO  c.e.location.LocationApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:06:27.058 [restartedMain] INFO  c.e.location.LocationApplication.logStarted - Started LocationApplication in 37.864 seconds (JVM running for 40.356)

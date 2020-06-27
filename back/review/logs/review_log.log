@@ -1,0 +1,2 @@
+27-06-2020 05:07:14.025 [restartedMain] INFO  com.example.review.ReviewApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:07:36.968 [restartedMain] INFO  com.example.review.ReviewApplication.logStarted - Started ReviewApplication in 25.614 seconds (JVM running for 29.199)

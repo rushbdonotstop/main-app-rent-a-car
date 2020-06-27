@@ -4,3 +4,8 @@
 27-06-2020 05:06:07.019 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStarted - Started CatalogueApplication in 24.549 seconds (JVM running for 26.719)
 27-06-2020 05:25:27.673 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
 27-06-2020 05:25:36.444 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStarted - Started CatalogueApplication in 10.668 seconds (JVM running for 12.242)
+27-06-2020 07:04:50.077 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 07:05:01.288 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStarted - Started CatalogueApplication in 12.641 seconds (JVM running for 14.602)
+27-06-2020 12:45:03.961 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 12:45:13.120 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStarted - Started CatalogueApplication in 10.794 seconds (JVM running for 12.55)
+

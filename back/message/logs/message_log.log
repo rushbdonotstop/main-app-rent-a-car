@@ -1,0 +1,2 @@
+27-06-2020 05:06:46.759 [restartedMain] INFO  c.example.message.MessageApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:07:18.518 [restartedMain] INFO  c.example.message.MessageApplication.logStarted - Started MessageApplication in 35.153 seconds (JVM running for 37.254)

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { User } from 'src/app/shared/models/user/User';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'pm-admin-header',
@@ -10,9 +12,13 @@ export class AdminHeaderComponent implements OnInit {
 
   faHome = faHome
 
-  loggedUser = localStorage.getItem("userObject")
+  loggedUser: User;
 
-  constructor() { }
+  constructor(private authService: AuthService) { 
+    if(this.authService.isLoggedIn) {
+      this.loggedUser = new User();
+    }
+  }
 
   ngOnInit() {
   }

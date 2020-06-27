@@ -19,6 +19,7 @@ import com.example.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
@@ -36,6 +37,13 @@ public class UserService {
     UserPrivilegeRepository userPrivilegeRepository;
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    @Autowired
+    JwtService jwtService;
+
+    @Autowired
+    UserDetailsTokenService userDetailsTokenService;
+
 
     public User save(User user) { return userRepository.save(user); }
 
@@ -216,5 +224,21 @@ public class UserService {
             }
         }
         return newList;
+    }
+
+    public String login(LoginRequestDTO loginRequestDTO) throws Exception{
+        User user = userRepository.findOneByUsername(loginRequestDTO.getUsername());
+        String salt = "";
+        if(user.getSalt()!=null) {
+            salt = user.getSalt();
+        }
+
+        if (!BCrypt.checkpw(loginRequestDTO.getPassword()+salt, user.getPassword())) {
+            throw new Exception("Bad Credential");
+        }
+
+        String jwt = jwtService.generateToken(userDetailsTokenService.getUserDetails(user), user.getId());
+
+        return jwt;
     }
 }
