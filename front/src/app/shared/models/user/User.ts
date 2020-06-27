@@ -4,8 +4,8 @@ export class User{
 
     id : number;
 
-    username : String;
-    password : String;
+    username : string;
+    password : string;
 
     userDetails : UserDetails;
 

@@ -15,9 +15,10 @@ import java.util.stream.Collectors;
 public class JwtService {
     private static final String SECRET_KEY = "random_secret_key";
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, long userId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("authorities", userDetails.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).collect(Collectors.toList()));
+        claims.put("userId", userId);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())

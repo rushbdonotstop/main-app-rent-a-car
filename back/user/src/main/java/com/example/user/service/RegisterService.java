@@ -7,6 +7,7 @@ import com.example.user.model.enums.UserType;
 import com.example.user.repository.UserDetailsRepository;
 import com.example.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,7 +28,12 @@ public class RegisterService {
         newUserDetails.setVehicleNum(0);
         UserDetails udFromBase = userDetailsRepository.save(newUserDetails);
 
+        String salt = BCrypt.gensalt(12);
+        String saltedPassword = BCrypt.hashpw(user.getPassword(), salt);
+
         User newUser = user;
+        newUser.setSalt(salt);
+        newUser.setPassword(saltedPassword);
         newUser.setUserDetails(udFromBase);
         newUser.setVerified(false);
         newUser = userRepository.save(user);

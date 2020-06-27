@@ -1,5 +1,5 @@
 export enum UserType{
-    ADMINISTRATOR,
-    AGENT,
-    END_USER
+    ADMINISTRATOR = 'ROLE_ADMINISTRATOR',
+    AGENT = 'ROLE_AGENT',
+    END_USER = 'ROLE_END_USER'
 }

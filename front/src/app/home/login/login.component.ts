@@ -27,33 +27,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       this.authService.login(this.form.value)
-        .subscribe(user => {
-          if (user != null) {
-            localStorage.setItem("userObject", JSON.stringify(user));
-            this._snackBar.open("Succesful login!", "", {
-              duration: 2000,
-              verticalPosition: 'bottom'
-            });
-            if(user.userDetails.userType.toString() === 'ADMINISTRATOR'){
-              this.router.navigate(['dashboard']);
-            }
-            else{
-              this.router.navigate(['home']);
-            }
-          }
-          else {
-            this.loginInvalid = true;
-          }
-        },
-          error => {
-            this._snackBar.open("Server error!", "", {
-              duration: 2000,
-              verticalPosition: 'bottom'
-            });
-          })
-    } else {
-      this.loginInvalid = true;
+        .subscribe();
     }
   }
-
 }

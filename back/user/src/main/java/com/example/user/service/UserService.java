@@ -17,6 +17,7 @@ import com.example.user.repository.UserDetailsRepository;
 import com.example.user.repository.UserPrivilegeRepository;
 import com.example.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
@@ -221,13 +222,17 @@ public class UserService {
     }
 
     public String login(LoginRequestDTO loginRequestDTO) throws Exception{
-        //TODO HASHIRAJ SVE SA SALTOM
         User user = userRepository.findOneByUsername(loginRequestDTO.getUsername());
-        if (!user.getPassword().equals(loginRequestDTO.getPassword())) {
+        String salt = "";
+        if(user.getSalt()!=null) {
+            salt = user.getSalt();
+        }
+
+        if (!BCrypt.checkpw(loginRequestDTO.getPassword()+salt, user.getPassword())) {
             throw new Exception("Bad Credential");
         }
 
-        String jwt = jwtService.generateToken(userDetailsTokenService.getUserDetails(user));
+        String jwt = jwtService.generateToken(userDetailsTokenService.getUserDetails(user), user.getId());
 
         return jwt;
     }

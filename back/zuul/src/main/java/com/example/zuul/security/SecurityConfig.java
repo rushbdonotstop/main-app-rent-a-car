@@ -16,8 +16,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private MyUserDetailsService myUserDetailsService;
+//    @Autowired
+//    private MyUserDetailsService myUserDetailsService;
 
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeRequests()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/user/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/user/penalty").hasAnyRole("ADMINISTRATOR", "AGENT", "END_USER")
                 .antMatchers("/user/userPrivileges").hasRole("ADMINISTRATOR")

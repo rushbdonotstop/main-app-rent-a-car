@@ -16,3 +16,50 @@
 27-06-2020 03:26:29.825 [http-nio-8083-exec-1] WARN  c.e.u.c.RegistrationController.sendVerificationMail - Verification email successfully sent to: ivanabrkic192@gmail.com.
 27-06-2020 03:26:29.828 [http-nio-8083-exec-1] WARN  c.e.u.c.RegistrationController.register - Registered new user with username - Ivana192
 27-06-2020 03:28:16.944 [http-nio-8083-exec-4] INFO  c.e.u.c.VerificationController.confirmVerification - User with username - Ivana192 successfully verified.
+27-06-2020 04:56:51.831 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 04:57:04.179 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 13.571 seconds (JVM running for 15.132)
+27-06-2020 04:59:43.402 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 04:59:52.759 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.689 seconds (JVM running for 12.201)
+27-06-2020 05:02:59.502 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:03:08.236 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.997 seconds (JVM running for 11.413)
+27-06-2020 05:04:24.305 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:04:32.414 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.336 seconds (JVM running for 10.699)
+27-06-2020 05:06:18.417 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:06:27.548 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.461 seconds (JVM running for 12.27)
+27-06-2020 05:07:59.299 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:08:07.865 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.898 seconds (JVM running for 11.481)
+27-06-2020 05:09:15.835 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:09:25.073 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.562 seconds (JVM running for 12.377)
+27-06-2020 05:09:58.316 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:10:08.266 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 11.3 seconds (JVM running for 13.077)
+27-06-2020 05:11:34.360 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:11:43.451 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.382 seconds (JVM running for 12.155)
+27-06-2020 05:13:17.510 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:13:26.795 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.455 seconds (JVM running for 12.175)
+27-06-2020 05:14:43.695 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:14:53.046 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.753 seconds (JVM running for 12.401)
+27-06-2020 05:19:18.629 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:19:27.157 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.945 seconds (JVM running for 11.324)
+27-06-2020 05:22:47.192 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:22:55.637 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.815 seconds (JVM running for 11.479)
+27-06-2020 05:25:06.207 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:25:14.774 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.883 seconds (JVM running for 11.298)
+27-06-2020 05:28:16.798 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:28:25.711 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.235 seconds (JVM running for 11.978)
+27-06-2020 05:29:41.076 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:29:49.783 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.932 seconds (JVM running for 11.523)
+27-06-2020 05:32:32.238 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:32:41.039 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.252 seconds (JVM running for 11.788)
+27-06-2020 05:55:20.256 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:55:28.968 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.037 seconds (JVM running for 11.639)
+27-06-2020 05:59:54.741 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:00:03.713 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.383 seconds (JVM running for 11.921)
+27-06-2020 06:01:01.834 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:01:10.686 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.096 seconds (JVM running for 11.454)
+27-06-2020 06:12:02.066 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:12:10.385 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.565 seconds (JVM running for 10.875)
+27-06-2020 06:15:48.063 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:15:56.087 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 9.207 seconds (JVM running for 10.531)
+27-06-2020 12:44:40.224 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 12:44:55.105 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 16.226 seconds (JVM running for 17.918)
+27-06-2020 14:27:46.542 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
