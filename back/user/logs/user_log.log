@@ -31,3 +31,6 @@
 27-06-2020 05:23:13.332 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
 27-06-2020 05:23:22.777 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 11.374 seconds (JVM running for 13.324)
 27-06-2020 05:23:41.299 [http-nio-8083-exec-1] ERROR com.example.user.service.UserService.loginTest - User is not null User{id=4, username='user', password='user', userDetails=UserDetails{fullName='Milan Lukic', address='Adresa 4', businessNum='null', vehicleNum='2', userType=END_USER, privilegeList=null}}
+27-06-2020 06:09:50.252 [http-nio-8083-exec-6] ERROR com.example.user.service.UserService.loginTest - User is not null User{id=2, username='agent1', password='agent1', userDetails=UserDetails{fullName='Tamara Lazarevic', address='Adresa 2', businessNum='12A', vehicleNum='1', userType=AGENT, privilegeList=null}}
+27-06-2020 14:36:07.229 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 14:36:14.363 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 8.396 seconds (JVM running for 33184.911)

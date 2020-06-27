@@ -1,0 +1,14 @@
+27-06-2020 05:06:17.144 [restartedMain] INFO  c.example.request.RequestApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:06:41.153 [restartedMain] INFO  c.example.request.RequestApplication.logStarted - Started RequestApplication in 27.528 seconds (JVM running for 29.977)
+27-06-2020 05:56:45.109 [restartedMain] INFO  c.example.request.RequestApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 05:56:53.674 [restartedMain] INFO  c.example.request.RequestApplication.logStarted - Started RequestApplication in 10.316 seconds (JVM running for 12.151)
+27-06-2020 05:59:57.260 [restartedMain] INFO  c.example.request.RequestApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:00:05.515 [restartedMain] INFO  c.example.request.RequestApplication.logStarted - Started RequestApplication in 10.414 seconds (JVM running for 12.375)
+27-06-2020 06:04:42.624 [restartedMain] INFO  c.example.request.RequestApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:04:50.957 [restartedMain] INFO  c.example.request.RequestApplication.logStarted - Started RequestApplication in 10.18 seconds (JVM running for 11.918)
+27-06-2020 06:07:41.967 [restartedMain] INFO  c.example.request.RequestApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:07:52.434 [restartedMain] INFO  c.example.request.RequestApplication.logStarted - Started RequestApplication in 12.075 seconds (JVM running for 14.321)
+27-06-2020 06:13:01.511 [restartedMain] INFO  c.example.request.RequestApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:13:10.257 [restartedMain] INFO  c.example.request.RequestApplication.logStarted - Started RequestApplication in 10.905 seconds (JVM running for 12.469)
+27-06-2020 06:17:12.274 [restartedMain] INFO  c.example.request.RequestApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 06:17:20.509 [restartedMain] INFO  c.example.request.RequestApplication.logStarted - Started RequestApplication in 9.836 seconds (JVM running for 12.154)

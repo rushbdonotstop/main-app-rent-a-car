@@ -69,7 +69,7 @@ public class RequestController {
             logger.warn("New requests added by user - {}, number of requests - {}", requests.getRequests().get(0).getUserId(), requests.getRequests().size());
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
-            logger.error("New requests couldn't be added by user with id - {}", requests.getRequests().get(0).getUserId();
+            logger.error("New requests couldn't be added by user with id - {}", requests.getRequests().get(0).getUserId());
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
 
@@ -83,10 +83,14 @@ public class RequestController {
     @DeleteMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> deleteRequest(@PathVariable("id") Long id) {
         boolean status = this.requestService.delete(id);
-        if (status)
+        if (status) {
+            logger.warn("Request with id - {} successfully deleted", id);
             return new ResponseEntity<>("Success", HttpStatus.OK);
-        else
+        } else {
+            logger.warn("Coudln't delete request with id - {}, request not found.", id);
             return new ResponseEntity<>("Request not found", HttpStatus.NOT_FOUND);
+        }
+
     }
 
     /**
