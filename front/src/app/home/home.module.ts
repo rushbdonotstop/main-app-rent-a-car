@@ -39,6 +39,7 @@ import { AdminHeaderComponent } from '../components/admin-dashboard/admin-header
 import { RequestDetailsComponent } from '../components/request-history/request-details/request-details.component';
 import { ConversationContentComponent } from '../components/user-inbox/conversation-content/conversation-content.component';
 import { VehicleStatisticComponent } from '../components/request-history/vehicle-statistic/vehicle-statistic.component';
+import { RegisterVerificationComponent } from './register/register-verification/register-verification.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { VehicleStatisticComponent } from '../components/request-history/vehicle
     EditStyleDialog,
     EditTransmissionlDialog,
     UserDetailsDialog,
-    EditPermissionsComponent
+    EditPermissionsComponent,
+    RegisterVerificationComponent
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent,

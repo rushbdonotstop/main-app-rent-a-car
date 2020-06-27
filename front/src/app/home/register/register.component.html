@@ -1,3 +1,4 @@
+<pm-header></pm-header>
 <!-- Masthead-->
 <header class="masthead">
     <div class="container">
@@ -7,5 +8,90 @@
 </header>
 <section class="page-section">
     <div class="container">
+        <mat-card>
+            <mat-card-content>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="row" style="justify-content: center">
+                        <h2>Register</h2>
+                    </div>
+                    <div class="row" style="justify-content: center">
+                        <mat-error *ngIf="usernameInvalid">
+                            Invalid username - username must contain at least 8 characters and no special characters
+                        </mat-error>
+                    </div>
+                    <div class="row" style="justify-content: center">
+                        <mat-error *ngIf="passwordInvalid">
+                            Invalid password - password must be : 
+                            8 characters length
+                            2 letters in Upper Case
+                            1 Special Character (!@#$&*)
+                            2 numerals (0-9)
+                            3 letters in Lower Case
+                        </mat-error>
+                    </div>
+                    <div class="row" style="justify-content: center">
+                        <mat-error *ngIf="emailInvalid">
+                            Invalid email
+                        </mat-error>
+                    </div>
+                    <div class="row" style="justify-content: center">
+                        <mat-error *ngIf="passwordsDontMatch">
+                            Passwords don't match
+                        </mat-error>
+                    </div>
+                    <div class="row" style="justify-content: center; margin-top:30px;">
+                        <div class="col-6">
+                            <div class="row" style="justify-content: center; margin-top:30px;">
+                                <mat-form-field style="width:20vw" class="full-width-input">
+                                    <input matInput placeholder="Username" formControlName="username" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="row" style="justify-content: center">
+                                <mat-form-field style="width:20vw" class="full-width-input">
+                                    <input matInput placeholder="Email" formControlName="email" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="row" style="justify-content: center">
+                                <mat-form-field style="width:20vw" class="full-width-input">
+                                    <input matInput type="password" placeholder="Password" formControlName="password"
+                                        required [type]="hide1 ? 'password' : 'text'">
+                                    <mat-icon style="cursor: pointer;" matSuffix (click)="hide1 = !hide1">
+                                        {{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="row" style="justify-content: center">
+                                <mat-form-field style="width:20vw" class="full-width-input">
+                                    <input matInput type="password" placeholder="Repeat password"
+                                        formControlName="repeatedPassword" required
+                                        [type]="hide2 ? 'repeatedPassword' : 'text'">
+                                    <mat-icon style="cursor: pointer;" matSuffix (click)="hide2 = !hide2">
+                                        {{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row" style="justify-content: center; margin-top:30px;">
+                                <mat-form-field style="width:20vw" class="full-width-input">
+                                    <input matInput placeholder="Full name" formControlName="fullName" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="row" style="justify-content: center">
+                                <mat-form-field style="width:20vw" class="full-width-input">
+                                    <input matInput placeholder="Address" formControlName="address" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="row" style="justify-content: center">
+                                <mat-form-field style="width:20vw" class="full-width-input">
+                                    <input matInput placeholder="Business num" formControlName="businessNum">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="justify-content: center; margin-top:30px;">
+                        <button mat-raised-button color="primary">Register</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
     </div>
 </section>
