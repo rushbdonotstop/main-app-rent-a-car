@@ -2,6 +2,8 @@ package com.example.catalogue.service;
 
 import com.example.catalogue.model.VehicleFuelType;
 import com.example.catalogue.repository.VehicleFuelTypeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class VehicleFuelTypeService {
     @Autowired
     private VehicleFuelTypeRepository vehicleFuelTypeRepository;
 
+    Logger logger = LoggerFactory.getLogger(VehicleFuelTypeService.class);
+
     public void addNewFuelType(VehicleFuelType vehicleFuelType) throws Exception {
         if(exist(vehicleFuelType)) {
             throw new Exception("Already exist");
@@ -22,6 +26,7 @@ public class VehicleFuelTypeService {
     }
 
     public List<VehicleFuelType> getAllFuelType() {
+        logger.trace("Getting all vehicle fuel types");
         return vehicleFuelTypeRepository.findAll();
     }
 

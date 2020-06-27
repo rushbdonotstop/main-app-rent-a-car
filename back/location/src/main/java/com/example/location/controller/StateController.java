@@ -3,6 +3,8 @@ package com.example.location.controller;
 import com.example.location.model.Notification;
 import com.example.location.service.StateService;
 import com.example.location.model.State;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,8 @@ public class StateController {
 
     @Autowired
     private StateService stateService;
+
+    Logger logger = LoggerFactory.getLogger(StateController.class);
 
     /**
      * GET /server/location/state
@@ -59,7 +63,13 @@ public class StateController {
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> create(@RequestBody State state) throws Exception {
-        Notification notification = stateService.create(state);
-        return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+        try {
+            Notification notification = stateService.create(state);
+            logger.warn("New state added with name - {}. Action successful.", state.getValue());
+            return new ResponseEntity<Notification>(notification, HttpStatus.OK);
+        } catch(Exception e) {
+            logger.error("New state with name - {} couldn't be added, exception occured: {} ", state.getValue(), e.toString());
+            return new ResponseEntity<Notification>(new Notification("Server error!"), HttpStatus.BAD_REQUEST);
+        }
     }
 }

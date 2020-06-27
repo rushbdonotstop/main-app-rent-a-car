@@ -23,13 +23,21 @@ public class User {
     @JoinColumn(name = "user_details_id", referencedColumnName = "id", nullable = true, unique = true)
     private UserDetails userDetails;
 
+    @Column(name = "salt")
+    private String salt;
+
+    @Column(name = "verified")
+    private boolean verified;
+
     public User() {
     }
 
-    public User(String username, String password, UserDetails userDetails) {
+    public User(String username, String password, Long agentAppId, UserDetails userDetails, boolean verified) {
         this.username = username;
         this.password = password;
+        this.agentAppId = agentAppId;
         this.userDetails = userDetails;
+        this.verified = verified;
     }
 
     public Long getId() {
@@ -80,5 +88,21 @@ public class User {
                 ", password='" + password + '\'' +
                 ", userDetails=" + userDetails +
                 '}';
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }

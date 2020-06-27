@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<!--  FILE PATHS  -->
+    <property name="LOCATION_LOG_PATH" value="../location/logs"/>
+
+<!--  CONSOLE APPENDER  -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+<!--  FILE APPENDERS  -->
+
+<!--  LOCATION APPENDER  -->
+    <appender name="LOCATION-SAVE-TO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${LOCATION_LOG_PATH}/location_log.log</file>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOCATION_LOG_PATH}/archived/location_log_%d{dd-MM-yyyy}_%i.log
+            </fileNamePattern>
+            <maxFileSize>3MB</maxFileSize>
+            <maxHistory>20</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+
+    </appender>
+
+<!--APPENDER REF FOR EVERY MICROSERVICE-->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <logger name="com.example.location" additivity="false" level="info">
+        <appender-ref ref="LOCATION-SAVE-TO-FILE" />
+    </logger>
+
+
+</configuration>

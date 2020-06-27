@@ -1,0 +1,8 @@
+26-06-2020 01:22:10.166 [http-nio-8086-exec-10] TRACE c.e.c.service.VehicleStyleService.getAllStyles - Getting all vehicle styles
+26-06-2020 01:22:10.178 [http-nio-8086-exec-1] TRACE c.e.c.s.VehicleTransmissionService.getAll - Getting all vehicle transmissions
+26-06-2020 01:22:10.218 [http-nio-8086-exec-2] TRACE c.e.c.service.VehicleFuelTypeService.getAllFuelType - Getting all vehicle fuel types
+26-06-2020 01:22:27.050 [http-nio-8086-exec-5] TRACE c.e.c.service.VehicleFuelTypeService.getAllFuelType - Getting all vehicle fuel types
+26-06-2020 01:22:27.733 [http-nio-8086-exec-3] TRACE c.e.c.service.VehicleModelService.getAllModels - Getting all vehicle models
+26-06-2020 01:22:27.756 [http-nio-8086-exec-4] TRACE c.e.c.service.VehicleMakeService.getAllMakes - Getting all vehicle makes
+26-06-2020 01:22:27.760 [http-nio-8086-exec-6] TRACE c.e.c.s.VehicleTransmissionService.getAll - Getting all vehicle transmissions
+26-06-2020 01:22:27.774 [http-nio-8086-exec-8] TRACE c.e.c.service.VehicleStyleService.getAllStyles - Getting all vehicle styles

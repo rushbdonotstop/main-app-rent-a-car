@@ -5,6 +5,8 @@ import com.example.message.DTO.RequestDTO;
 import com.example.message.model.Message;
 import com.example.message.model.Notification;
 import com.example.message.service.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -26,6 +28,7 @@ public class MessageController {
     @Autowired
     RestTemplate restTemplate;
 
+    Logger logger = LoggerFactory.getLogger(MessageController.class);
     /**
      * GET /server/request
      *
@@ -49,17 +52,24 @@ public class MessageController {
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> newMessage(@RequestBody MessageDTO message) throws Exception {
-        List<RequestDTO>  requestList = (this.getRequests()).getBody();
-        boolean status = this.messageService.sendMessage(message, requestList);
-        Notification not = new Notification();
 
-        if (status){
-            not.setText("Message successfully sent.");
-            return new ResponseEntity<Notification>(not, HttpStatus.OK);
-        }
-        else{
-            not.setText("You dont have any reserved or paid requests from this user.");
-            return new ResponseEntity<Notification>(not, HttpStatus.BAD_REQUEST);
+        try {
+            List<RequestDTO> requestList = (this.getRequests()).getBody();
+            boolean status = this.messageService.sendMessage(message, requestList);
+            Notification not = new Notification();
+
+            if (status) {
+                not.setText("Message successfully sent.");
+                logger.info("User with id - {} sent message to user with id - {}. Action successful.", message.getSenderId(), message.getReceiverId());
+                return new ResponseEntity<Notification>(not, HttpStatus.OK);
+            } else {
+                logger.info("User with id - {} tried to send message to user with id - {} but dont have any mutual requests.", message.getSenderId(), message.getReceiverId());
+                not.setText("You dont have any reserved or paid requests from this user.");
+                return new ResponseEntity<Notification>(not, HttpStatus.BAD_REQUEST);
+            }
+        } catch(Exception e) {
+            logger.info("User with id - {} tried to send message to user with id - {}, exception occured: {}", message.getSenderId(), message.getReceiverId(), e.toString());
+            return new ResponseEntity<Notification>(new Notification("Server error!"), HttpStatus.BAD_REQUEST);
         }
 
     }

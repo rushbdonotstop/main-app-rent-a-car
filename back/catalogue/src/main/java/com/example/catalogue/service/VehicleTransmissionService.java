@@ -2,6 +2,8 @@ package com.example.catalogue.service;
 
 import com.example.catalogue.model.VehicleTransmission;
 import com.example.catalogue.repository.VehicleTransmissionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class VehicleTransmissionService {
     @Autowired
     private VehicleTransmissionRepository vehicleTransmissionRepository;
 
+    Logger logger = LoggerFactory.getLogger(VehicleTransmissionService.class);
+
     public void addNew(VehicleTransmission vehicleTransmission) throws Exception {
         if(exist(vehicleTransmission)) {
             throw new Exception("Already exist");
@@ -22,6 +26,7 @@ public class VehicleTransmissionService {
     }
 
     public List<VehicleTransmission> getAll() {
+        logger.trace("Getting all vehicle transmissions");
         return vehicleTransmissionRepository.findAll();
     }
 

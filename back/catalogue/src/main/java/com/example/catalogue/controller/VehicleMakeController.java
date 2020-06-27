@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class VehicleMakeController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    Logger logger = LoggerFactory.getLogger(VehicleMakeController.class);
 
 //    /**
 //     * GET server/catalogue/vehicleMake/byModel/{id}
@@ -63,12 +67,15 @@ public class VehicleMakeController {
                     .exchange("http://vehicle/search/make/" + id, HttpMethod.GET, null, List.class);
             List<Long> vehicleList = response.getBody();
             if(vehicleList.size() != 0) {
+                logger.info("Admin requested to delete vehicle make with id - {} - but there is vehicle registered with that make. Action unsuccessful.", id);
                 return new ResponseEntity<>(new Notification("There is a vehicle registered with make id " + id + "\nMake wasn't deleted.", false), HttpStatus.CONFLICT);
             }
 
             vehicleMakeService.deleteOneMake(id);
+            logger.warn("Admin requested to delete vehicle make  with id - {}. Action successful.", id);
             return new ResponseEntity<>(new Notification("Successfully deleted vehicle make id = " + id, true), HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Admin requested to delete vehicle make with id - {} - exception occured: {} ", id, e.toString());
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.NO_CONTENT);
         }
     }
@@ -81,10 +88,12 @@ public class VehicleMakeController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> putVehicleMake(@PathVariable Long id, @RequestBody VehicleMake vehicleMake) {
         try {
+            String vehicleMakeBefore = vehicleMakeService.findOneMake(id).getValue();
             vehicleMakeService.changeMake(id, vehicleMake);
-
+            logger.warn("Admin updated vehicle make with id {}, from {} to {}. Action successful.", id, vehicleMakeBefore, vehicleMake.getValue());
             return new ResponseEntity<>(new Notification("Vehicle make changed to " + vehicleMake.getValue(), true), HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Admin requested to update vehicle make with id - {} - exception occured: {} ", id, e.toString());
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
     }
@@ -113,9 +122,10 @@ public class VehicleMakeController {
     public ResponseEntity<Notification> postVehicleMake(@RequestBody VehicleMake vehicleMake) {
         try {
             vehicleMakeService.addNewMake(vehicleMake);
-
+            logger.warn("Admin requested to create vehicle make with name - {}. Action successful.", vehicleMake.getValue());
             return new ResponseEntity<>(new Notification("Successfully added vehicle make " + vehicleMake.getValue(), true), HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Admin requested to create vehicle make with name - {} - exception occured: {} ", vehicleMake.getValue(), e.toString());
             return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
         }
     }
@@ -127,6 +137,7 @@ public class VehicleMakeController {
      */
     @PostMapping(value="/createReturnObject", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleMake> createReturnObject(@RequestBody VehicleMake vehicleMake) {
+        logger.warn("Admin requested to create vehicle make with name - {}. Action successful.", vehicleMake.getValue());
         return new ResponseEntity<VehicleMake>(vehicleMakeService.createMake(vehicleMake), HttpStatus.OK);
     }
 }

@@ -1,0 +1,8 @@
+26-06-2020 01:15:49.810 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+26-06-2020 01:15:58.539 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStarted - Started CatalogueApplication in 10.491 seconds (JVM running for 12.167)
+26-06-2020 01:16:01.412 [http-nio-8086-exec-2] TRACE c.e.c.service.CatalogueService.getAllMakes - Getting all vehicle makes
+26-06-2020 01:16:01.561 [http-nio-8086-exec-4] TRACE c.e.c.service.CatalogueService.getAllMakes - Getting all vehicle makes
+26-06-2020 01:16:34.353 [http-nio-8086-exec-7] TRACE c.e.c.service.CatalogueService.getAllMakes - Getting all vehicle makes
+26-06-2020 01:16:35.030 [http-nio-8086-exec-1] TRACE c.e.c.service.CatalogueService.getAllMakes - Getting all vehicle makes
+26-06-2020 01:21:03.288 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+26-06-2020 01:21:13.135 [restartedMain] INFO  c.e.catalogue.CatalogueApplication.logStarted - Started CatalogueApplication in 11.782 seconds (JVM running for 13.433)

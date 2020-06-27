@@ -1,0 +1,18 @@
+27-06-2020 03:05:51.117 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 03:06:01.050 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 11.549 seconds (JVM running for 13.573)
+27-06-2020 03:06:08.031 [http-nio-8083-exec-1] ERROR c.e.u.c.RegistrationController.sendVerificationMail - Exception occured while trying to send mail via deployed email service, exception: java.lang.IllegalStateException: No instances available for fine-email-service.herokuapp.com
+27-06-2020 03:06:08.032 [http-nio-8083-exec-1] WARN  c.e.u.c.RegistrationController.register - Registered new user with username - Ivana192
+27-06-2020 03:08:48.078 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 03:08:57.151 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.888 seconds (JVM running for 12.773)
+27-06-2020 03:09:07.488 [http-nio-8083-exec-1] ERROR c.e.u.c.RegistrationController.register - Exception occured while registering new user, exception: java.lang.IllegalStateException: No instances available for fine-email-service.herokuapp.com
+27-06-2020 03:10:31.946 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 03:10:41.893 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 11.686 seconds (JVM running for 13.516)
+27-06-2020 03:11:17.449 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 03:11:26.159 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.293 seconds (JVM running for 12.071)
+27-06-2020 03:23:58.564 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 03:24:07.397 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.562 seconds (JVM running for 12.263)
+27-06-2020 03:26:01.558 [restartedMain] INFO  com.example.user.UserApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-06-2020 03:26:10.570 [restartedMain] INFO  com.example.user.UserApplication.logStarted - Started UserApplication in 10.622 seconds (JVM running for 12.32)
+27-06-2020 03:26:29.825 [http-nio-8083-exec-1] WARN  c.e.u.c.RegistrationController.sendVerificationMail - Verification email successfully sent to: ivanabrkic192@gmail.com.
+27-06-2020 03:26:29.828 [http-nio-8083-exec-1] WARN  c.e.u.c.RegistrationController.register - Registered new user with username - Ivana192
+27-06-2020 03:28:16.944 [http-nio-8083-exec-4] INFO  c.e.u.c.VerificationController.confirmVerification - User with username - Ivana192 successfully verified.

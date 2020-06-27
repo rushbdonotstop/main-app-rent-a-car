@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<!--  FILE PATHS  -->
+
+    <property name="REQUEST_LOG_PATH" value="../request/logs"/>
+
+<!--  CONSOLE APPENDER  -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+<!--  FILE APPENDERS  -->
+
+<!--  REQUEST APPENDER  -->
+    <appender name="REQUEST-SAVE-TO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${REQUEST_LOG_PATH}/request_log.log</file>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${REQUEST_LOG_PATH}/archived/request_log_%d{dd-MM-yyyy}_%i.log
+            </fileNamePattern>
+            <maxFileSize>3MB</maxFileSize>
+            <maxHistory>20</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+
+    </appender>
+
+
+<!--APPENDER REF FOR EVERY MICROSERVICE-->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <logger name="com.example.request" additivity="false" level="info">
+        <appender-ref ref="REQUEST-SAVE-TO-FILE" />
+    </logger>
+
+</configuration>

@@ -16,6 +16,7 @@ eureka:
     serviceUrl:
       defaultZone: http://${registry.host:localhost}:${server.port}/eureka/
 
+
 logging:
   level:
     com:
