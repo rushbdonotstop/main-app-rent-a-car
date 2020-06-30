@@ -39,25 +39,30 @@ public class ReportController {
      */
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Report> addReport(@RequestBody Report report) {
+        Report newReport=null;
         try {
-            Report newReport = this.reportService.addReport(report);
-            Vehicle vehicle = (this.getVehicle(report.getVehicleId())).getBody();
-            if ( vehicle!= null ) {
-                vehicle.setMileage((int) (vehicle.getMileage()+report.getMileage()));
-                sendMileage(vehicle);
+            if(report.getStartDate()!=null && report.getEndDate()!=null && report.getVehicleId()!=null)
+                newReport = this.reportService.addReport(report);
+                if(newReport!=null) {
+                    Vehicle vehicle = (this.getVehicle(report.getVehicleId())).getBody();
+                    if (vehicle != null) {
+                        vehicle.setMileage((int) (vehicle.getMileage() + report.getMileage()));
+                        sendMileage(vehicle);
+                    }
+                    if (report.getMileage() > vehicle.getMileageLimit()) {
+                        System.out.println("Mileage limit exceded.");
+                        PenaltyDTO penalty = new PenaltyDTO();
+                        penalty.setUserId(report.getUserId());
+                        penalty.setTotal(report.getMileage() - vehicle.getMileageLimit());
+                        this.addPenalty(penalty);
+                    }
+                    return new ResponseEntity<>(newReport, HttpStatus.OK);
+                }
+                else   return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            if (report.getMileage() > vehicle.getMileageLimit()) {
-                System.out.println("Mileage limit exceded.");
-                PenaltyDTO penalty = new PenaltyDTO();
-                penalty.setUserId(report.getUserId());
-                penalty.setTotal(report.getMileage()-vehicle.getMileageLimit());
-                this.addPenalty(penalty);
-            }
-            return new ResponseEntity<>(newReport, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
     }
 
     /**
