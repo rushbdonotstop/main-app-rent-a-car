@@ -27,7 +27,7 @@ public interface RequestRepository extends JpaRepository<Request,Long> {
 
     List<Request> findAllByVehicleIdAndUserIdAndStatus(Long vehicleId, Long userId, Status paid);
 
-    @Query("select r from Request r where r.endDate <= ?1 and r.status=3")
+    @Query("select r from Request r where r.endDate <= ?1 and r.status=3 and r.bundle is null")
     List<Request> rentingFinishedRequests(LocalDateTime now);
 
     @Query("select r from Request r where r.endDate <= ?1 and r.status=3")

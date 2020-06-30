@@ -76,36 +76,80 @@ export class RequestHistoryComponent implements OnInit {
   onChange() {
     if (this.selectedHistory == 'sentRequests') {
       this.showSelectedHistory = 'Sent Requests';
-      this.requestService.getBuyerRequestHistory().subscribe(
-        bundleList => {
-          this.bundleList = bundleList;
-          this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
-        }
-      )
+      var user = JSON.parse(localStorage.getItem('userObject'));
+      if (user.userDetails.userType == "AGENT") {
+        this.requestService.finishedBundle().subscribe(
+          bundleList => {
 
-      this.requestService.getBuyerSingleRequests().subscribe(
-        requestList => {
-          this.requestList = requestList;
-          this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
-        }
-      )
+            this.bundleList = bundleList;
+            this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+            console.log("bundle:")
+            console.log(bundleList)
+          }
+        );
+
+        this.requestService.finishedRequests().subscribe(
+          requestList => {
+            this.requestList = requestList;
+            this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+            console.log("request:")
+            console.log(requestList)
+          }
+        )
+      } else {
+        this.requestService.getBuyerRequestHistory().subscribe(
+          bundleList => {
+            this.bundleList = bundleList;
+            this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+          }
+        )
+
+        this.requestService.getBuyerSingleRequests().subscribe(
+          requestList => {
+            this.requestList = requestList;
+            this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+          }
+        )
+      }
     }
 
     if (this.selectedHistory == 'receivedRequests') {
       this.showSelectedHistory = 'Received Requests'
-      this.requestService.getOwnerRequestHistory().subscribe(
-        bundleList => {
-          this.bundleList = bundleList;
-          this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
-        }
-      )
+      var user = JSON.parse(localStorage.getItem('userObject'));
+      if (user.userDetails.userType == "AGENT") {
+        this.requestService.finishedBundle().subscribe(
+          bundleList => {
 
-      this.requestService.getOwnerSingleRequests().subscribe(
-        requestList => {
-          this.requestList = requestList;
-          this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
-        }
-      )
+            this.bundleList = bundleList;
+            this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+            console.log("bundle:")
+            console.log(bundleList)
+          }
+        );
+
+        this.requestService.finishedRequests().subscribe(
+          requestList => {
+            this.requestList = requestList;
+            this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+            console.log("request:")
+            console.log(requestList)
+          }
+        )
+      } else {
+        this.requestService.getOwnerRequestHistory().subscribe(
+          bundleList => {
+            this.bundleList = bundleList;
+            this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+          }
+        )
+
+        this.requestService.getOwnerSingleRequests().subscribe(
+          requestList => {
+            this.requestList = requestList;
+            this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+          }
+        )
+      }
     }
   }
 
@@ -139,6 +183,7 @@ export class RequestHistoryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit()
     });
   }
 
@@ -151,4 +196,9 @@ export class RequestHistoryComponent implements OnInit {
     };
   }
 
+  agentLogged() {
+    if (JSON.parse(localStorage.getItem('userObject')).userDetails.userType == "AGENT")
+      return true
+    return false
+  }
 }

@@ -10,6 +10,7 @@ import com.example.request.model.Report;
 import com.example.request.model.Request;
 import com.example.request.model.enums.Status;
 import com.example.request.repository.BundleRepository;
+import com.example.request.repository.ReportRepository;
 import com.example.request.repository.RequestRepository;
 import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class RequestService {
 
     @Autowired
     BundleRepository bundleRepository;
+
+    @Autowired
+    ReportRepository reportRepository;
 
     public boolean areDatesValid(LocalDateTime startDate, LocalDateTime endDate) {
         if (startDate == null || endDate == null)
@@ -192,6 +196,7 @@ public class RequestService {
         }
         return newRequestList;
     }
+
     //RETURNING LIST OF REQUESTS THAT ARE NOT IN THE BUNDLE!!!
     public List<Request> getSingleRequestsForOwner(Long ownerId) {
         List<Request> requestList = requestRepository.findAll();
@@ -383,13 +388,21 @@ public class RequestService {
     }
 
     public List<Request> rentingFinishedRequests() {
-        return this.requestRepository.rentingFinishedRequests(LocalDateTime.now());
+        List<Request> finishedRequests = this.requestRepository.rentingFinishedRequests(LocalDateTime.now());
+        List<Request> nonReviewedRequests = new ArrayList<>();
+        for (Request r : finishedRequests) {
+            System.out.println("request already reviewed here:" + reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size());
+            if (reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size() == 0) {
+                nonReviewedRequests.add(r);
+            }
+        }
+        return nonReviewedRequests;
     }
 
     public List<Request> rentingFinishedRequestsInBundle() {
         List<Request> requestsInBundles = new ArrayList<>();
-        for (Request r : this.requestRepository. rentingFinishedRequestsInBundle(LocalDateTime.now()))
-            if(r.getBundle()!=null){
+        for (Request r : this.requestRepository.rentingFinishedRequestsInBundle(LocalDateTime.now()))
+            if (r.getBundle() != null && reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size() == 0) {
                 requestsInBundles.add(r);
             }
         return requestsInBundles;

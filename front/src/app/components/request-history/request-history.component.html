@@ -10,7 +10,7 @@
   <div class="container">
     <div class="row">
       <div class="col-6">
-        <mat-form-field>
+        <mat-form-field *ngIf="agentLogged()">
           <mat-label>Select history</mat-label>
           <mat-select (selectionChange)="onChange()" [(value)]="selectedHistory">
             <mat-option value="receivedRequests">Recevied Requests</mat-option>
