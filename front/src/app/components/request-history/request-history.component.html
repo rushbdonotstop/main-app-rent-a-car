@@ -19,8 +19,8 @@
         </mat-form-field>
       </div>
       <div class="col-1">
-        <button style="margin-top: 20px;" (click)="openStatistic()" mat-raised-button
-        color="accent">Show statistics</button>
+        <button style="margin-top: 20px;" (click)="openStatistic()" mat-raised-button color="accent">Show
+          statistics</button>
       </div>
       <div class="col-4">
       </div>
@@ -33,44 +33,44 @@
         </mat-card-title>
         <mat-card-content>
           <h6>Requests in bundles</h6>
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <!--- Note that these columns can be defined in any order.
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
 
-            <!-- Position Column -->
-            <ng-container matColumnDef="username">
-              <th mat-header-cell *matHeaderCellDef> Username </th>
-              <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-            </ng-container>
+              <!-- Position Column -->
+              <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef> Username </th>
+                <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+              </ng-container>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="totalCost">
-              <th mat-header-cell *matHeaderCellDef> Total cost </th>
-              <td mat-cell *matCellDef="let element"> {{element.totalCost}}€ </td>
-            </ng-container>
+              <!-- Name Column -->
+              <ng-container matColumnDef="totalCost">
+                <th mat-header-cell *matHeaderCellDef> Total cost </th>
+                <td mat-cell *matCellDef="let element"> {{element.totalCost}}€ </td>
+              </ng-container>
 
-            <!-- Weight Column -->
-            <ng-container matColumnDef="numberOfRequests">
-              <th mat-header-cell *matHeaderCellDef> Number of requests </th>
-              <td mat-cell *matCellDef="let element"> {{element.requestsList?.length || '0' }} </td>
-            </ng-container>
+              <!-- Weight Column -->
+              <ng-container matColumnDef="numberOfRequests">
+                <th mat-header-cell *matHeaderCellDef> Number of requests </th>
+                <td mat-cell *matCellDef="let element"> {{element.requestsList?.length || '0' }} </td>
+              </ng-container>
 
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-cell *matCellDef="let element"> {{element.requestsList[0].status}} </td>
-            </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.requestsList[0].status }} </td>
+              </ng-container>
 
-            <ng-container matColumnDef="details">
-              <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let element"> <button (click)="openDetails(element)" mat-raised-button
-                  color="warn">Details</button> </td>
-            </ng-container>
+              <ng-container matColumnDef="details">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element"> <button (click)="openDetails(element)" mat-raised-button
+                    color="warn">Details</button> </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
         </mat-card-content>
-
         <mat-card-content>
           <h6>Single requests</h6>
           <table mat-table [dataSource]="dataSourceRequests" class="mat-elevation-z8">
@@ -114,7 +114,8 @@
 
             <ng-container matColumnDef="report">
               <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let element"> <button *ngIf="isRentingFinished(element)" (click)="createReport(element)" mat-raised-button color="primary">Report</button> </td>
+              <td mat-cell *matCellDef="let element"> <button *ngIf="isRentingFinished(element)"
+                  (click)="createReport(element)" mat-raised-button color="primary">Report</button> </td>
             </ng-container>
 
             <!-- <ng-container matColumnDef="details">

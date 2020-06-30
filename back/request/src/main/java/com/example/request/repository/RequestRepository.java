@@ -29,4 +29,8 @@ public interface RequestRepository extends JpaRepository<Request,Long> {
 
     @Query("select r from Request r where r.endDate <= ?1 and r.status=3")
     List<Request> rentingFinishedRequests(LocalDateTime now);
+
+    @Query("select r from Request r where r.endDate <= ?1 and r.status=3")
+    List<Request> rentingFinishedRequestsInBundle(LocalDateTime now);
+
 }

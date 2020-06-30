@@ -16,40 +16,46 @@ export class RequestService {
 
     constructor(private http: HttpClient) { }
 
-    canUserPostReview(vehicleId: number, userId : number) {
+    canUserPostReview(vehicleId: number, userId: number) {
         return this.http.get<boolean>('server/request/request/canUserPostReview/' + vehicleId + '+' + userId);
     }
 
     getOwnerRequestHistory() {
-        
-         this.user = JSON.parse(localStorage.getItem('userObject'));
-         let ownerId = this.user.id;
-         return this.http.get<Array<BundleDTO>>('server/request/request/ownerRequestHistory?ownerId=' + ownerId, httpOptions);
+
+        this.user = JSON.parse(localStorage.getItem('userObject'));
+        let ownerId = this.user.id;
+        return this.http.get<Array<BundleDTO>>('server/request/request/ownerRequestHistory?ownerId=' + ownerId, httpOptions);
     }
 
     getBuyerRequestHistory() {
-        
+
         this.user = JSON.parse(localStorage.getItem('userObject'));
         let userId = this.user.id;
         return this.http.get<Array<BundleDTO>>('server/request/request/buyerRequestHistory?userId=' + userId, httpOptions);
-   }
+    }
 
-   getOwnerSingleRequests() {
-       this.user = JSON.parse(localStorage.getItem('userObject'));
-       let ownerId = this.user.id;
-       return this.http.get<Array<RequestDTO>>('server/request/request/ownerSingleRequests?ownerId=' + ownerId, httpOptions);
-   }
+    getOwnerSingleRequests() {
+        this.user = JSON.parse(localStorage.getItem('userObject'));
+        let ownerId = this.user.id;
+        return this.http.get<Array<RequestDTO>>('server/request/request/ownerSingleRequests?ownerId=' + ownerId, httpOptions);
+    }
 
-   getBuyerSingleRequests() {
-    this.user = JSON.parse(localStorage.getItem('userObject'));
-    let userId = this.user.id;
-    return this.http.get<Array<RequestDTO>>('server/request/request/buyerSingleRequests?ownerId=' + userId, httpOptions);
-}
+    getBuyerSingleRequests() {
+        this.user = JSON.parse(localStorage.getItem('userObject'));
+        let userId = this.user.id;
+        return this.http.get<Array<RequestDTO>>('server/request/request/buyerSingleRequests?ownerId=' + userId, httpOptions);
+    }
 
-   changeStatusOfRequest(bundleId: number, changeType: number) {
+    changeStatusOfRequest(bundleId: number, changeType: number) {
 
-    return this.http.get<boolean>('server/request/request/changeStatus?bundleId=' + bundleId + '&changeType=' + changeType, httpOptions);
-   }
+        return this.http.get<boolean>('server/request/request/changeStatus?bundleId=' + bundleId + '&changeType=' + changeType, httpOptions);
+    }
 
+    finishedRequests() {
+        return this.http.get<Array<RequestDTO>>('server/request/request/rentingFinished', httpOptions);
+    }
+    finishedBundle() {
+        return this.http.get<Array<BundleDTO>>('server/request/request/rentingFinishedBundle', httpOptions);
+    }
 
 }

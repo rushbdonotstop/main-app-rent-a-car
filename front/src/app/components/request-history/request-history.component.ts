@@ -7,6 +7,7 @@ import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
 import { User } from 'src/app/shared/models/user/User';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { VehicleStatisticComponent } from './vehicle-statistic/vehicle-statistic.component';
+import { UserType } from 'src/app/shared/models/user/UserType';
 
 
 @Component({
@@ -19,37 +20,61 @@ export class RequestHistoryComponent implements OnInit {
   showSelectedHistory = 'Received Requests'
   displayedColumns: string[] = ['username', 'totalCost', 'numberOfRequests', 'status', 'details'];
   displayedColumns2: string[] = ['username', 'makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report'];
-  bundleList : BundleDTO[];
-  requestList : RequestDTO[];
+  bundleList: BundleDTO[] = [];
+  requestList: RequestDTO[];
   dataSource: MatTableDataSource<BundleDTO>;
-  dataSourceRequests : MatTableDataSource<RequestDTO>
+  dataSourceRequests: MatTableDataSource<RequestDTO>
 
 
-  constructor(private requestService : RequestService, public dialog: MatDialog)  { 
-    
+  constructor(private requestService: RequestService, public dialog: MatDialog) {
+
   }
 
   ngOnInit() {
 
-    this.requestService.getOwnerRequestHistory().subscribe(
-      bundleList => {
-        
-        this.bundleList = bundleList;
-        this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
-        console.log(bundleList)
-      }
-    );
+    var user = JSON.parse(localStorage.getItem('userObject'));
+    if (user.userDetails.userType == "AGENT") {
+      this.requestService.finishedBundle().subscribe(
+        bundleList => {
 
-    this.requestService.getOwnerSingleRequests().subscribe(
-      requestList => {
-        this.requestList = requestList;
-        this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
-      }
-    )
+          this.bundleList = bundleList;
+          this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+          console.log("bundle:")
+          console.log(bundleList)
+        }
+      );
+
+      this.requestService.finishedRequests().subscribe(
+        requestList => {
+          this.requestList = requestList;
+          this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+          console.log("request:")
+          console.log(requestList)
+        }
+      )
+    } else {
+
+      this.requestService.getOwnerRequestHistory().subscribe(
+        bundleList => {
+
+          this.bundleList = bundleList;
+          this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+          console.log(bundleList)
+        }
+      );
+
+      this.requestService.getOwnerSingleRequests().subscribe(
+        requestList => {
+          this.requestList = requestList;
+          this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+          console.log(requestList)
+        }
+      )
+    }
   }
-  
+
   onChange() {
-    if(this.selectedHistory == 'sentRequests') {
+    if (this.selectedHistory == 'sentRequests') {
       this.showSelectedHistory = 'Sent Requests';
       this.requestService.getBuyerRequestHistory().subscribe(
         bundleList => {
@@ -66,7 +91,7 @@ export class RequestHistoryComponent implements OnInit {
       )
     }
 
-    if(this.selectedHistory == 'receivedRequests') {
+    if (this.selectedHistory == 'receivedRequests') {
       this.showSelectedHistory = 'Received Requests'
       this.requestService.getOwnerRequestHistory().subscribe(
         bundleList => {
@@ -88,17 +113,19 @@ export class RequestHistoryComponent implements OnInit {
     const dialogRef = this.dialog.open(RequestDetailsComponent, {
       width: '1200px',
       height: '600px',
-      data: { bundle: bundle,
-              selectedHistory : this.selectedHistory }
+      data: {
+        bundle: bundle,
+        selectedHistory: this.selectedHistory
+      }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       this.onChange();
 
     });
   }
 
-  openStatistic(){
+  openStatistic() {
     const dialogRef = this.dialog.open(VehicleStatisticComponent, {
       width: '750px',
       height: '350px'
@@ -116,10 +143,10 @@ export class RequestHistoryComponent implements OnInit {
   }
 
   isRentingFinished(request: RequestDTO) {
-    if (new Date(request.endDate) < new Date()){
+    if (new Date(request.endDate) < new Date()) {
       return true;
     }
-    else{
+    else {
       return false;
     };
   }
