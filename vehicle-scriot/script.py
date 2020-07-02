@@ -15,12 +15,13 @@ timeout = 5.0  # 5 seconds
 # send request for jwt token to mainapp
 def sendTokenRequest():
     headers = {'Content-type': 'application/json'}
-    url = 'http://localhost:8081/vehicle/token'
+    urlMain = 'http://localhost:8081/vehicle/token'
+    urlAgent = 'http://localhost:8080/token'
     data = '''{
 	            "id":1
                 }
             '''
-    response = requests.post(url, data=data, headers=headers)
+    response = requests.post(urlMain, data=data, headers=headers)
     global token
     response_data = json.loads(response.text)
     print(response_data)

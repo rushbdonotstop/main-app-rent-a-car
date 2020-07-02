@@ -17,6 +17,7 @@ import { MatListModule, MatListItem } from '@angular/material/list';
 import { RequestDetailsComponent } from './components/request-history/request-details/request-details.component';
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 import { ConversationContentComponent } from './components/user-inbox/conversation-content/conversation-content.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ConversationContentComponent } from './components/user-inbox/conversati
     FormsModule,
     MatListModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    AgmCoreModule
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
   bootstrap: [AppComponent],
