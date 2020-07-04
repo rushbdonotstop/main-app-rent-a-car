@@ -125,10 +125,18 @@ public class UserService {
         try {
             User user = userRepository.findOneById(Long.parseLong(id));
 
+            if(!canDeleteUser(id)) {
+                throw new Exception("Can't delete user.");
+            }
+
             userRepository.delete(user);
         } catch (EntityNotFoundException e) {
             throw new Exception("Id doesn't exists.");
         }
+    }
+
+    private boolean canDeleteUser(String id) {
+
     }
 
     public boolean canUserCreate(Long userId) {

@@ -105,4 +105,13 @@ public class VehicleController {
 //        return new ResponseEntity<List<PriceListDTO>>(response, HttpStatus.OK);
 //    }
 
+    /**
+     * GET /server/vehicle/canUserDelete/{userId}
+     *
+     * @return return true if user can be deleted
+     */
+    @GetMapping(value="canUserDelete/{userId}")
+    public ResponseEntity<Boolean> canUserDelete(@PathVariable Long userId) {
+        return new ResponseEntity<>(this.vehicleService.canUserDelete(userId), HttpStatus.OK);
+    }
 }

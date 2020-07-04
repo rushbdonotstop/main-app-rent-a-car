@@ -385,4 +385,13 @@ public class RequestService {
     public List<Request> rentingFinishedReports() {
         return this.requestRepository.rentingFinishedRequests(LocalDateTime.now());
     }
+
+    public Boolean canUserDelete(Long userId) {
+        try {
+            this.requestRepository.findByStatus(Status.PENDING);
+        } catch (Exception e) {
+            return true;
+        }
+        return false;
+    }
 }

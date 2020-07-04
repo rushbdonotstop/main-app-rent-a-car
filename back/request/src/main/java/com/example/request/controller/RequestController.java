@@ -200,4 +200,14 @@ public class RequestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * GET /server/request/canUserDelete/{userId}
+     *
+     * @return return true if user can can be deleted
+     */
+    @GetMapping(value = "/canUserDelete/{userId}")
+    ResponseEntity<Boolean> canUserDelete(@PathVariable Long userId) {
+        return new ResponseEntity<Boolean>(this.requestService.canUserDelete(userId), HttpStatus.OK);
+    }
 }

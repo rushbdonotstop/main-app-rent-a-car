@@ -9,11 +9,14 @@ import com.example.user.model.Notification;
 import com.example.user.model.User;
 import com.example.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      * GET /user/login
@@ -135,8 +141,15 @@ public class UserController {
      * @return returns notification
      */
     @DeleteMapping(value="/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> putUser(@PathVariable String id) throws Exception {
+    public ResponseEntity<Notification> deleteUser(@PathVariable String id) throws Exception {
         try {
+            Boolean userHasVehicle = restTemplate.exchange("http://vehicle/vehicle/canUserDelete/" + id, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
+            Boolean userHasRequest = restTemplate.exchange("http://request/request/canUserDelete/" + id, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
+
+            if(userHasRequest || userHasVehicle) {
+                return new ResponseEntity<>(new Notification("User id: "+id+"cant be deleted.", false), HttpStatus.CONFLICT);
+            }
+
             userService.deleteUser(id);
             return new ResponseEntity<Notification>(new Notification("User with id " + id + " deleted.", true), HttpStatus.OK);
         } catch (Exception e) {
