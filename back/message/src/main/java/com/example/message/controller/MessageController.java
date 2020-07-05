@@ -1,7 +1,9 @@
 package com.example.message.controller;
 
 import com.example.message.DTO.MessageDTO;
+import com.example.message.DTO.NewMessageDTO;
 import com.example.message.DTO.RequestDTO;
+import com.example.message.DTO.UserDTO;
 import com.example.message.model.Message;
 import com.example.message.model.Notification;
 import com.example.message.service.MessageService;
@@ -48,7 +50,7 @@ public class MessageController {
      * @return returns status of new request creation
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> newMessage(@RequestBody MessageDTO message) throws Exception {
+    public ResponseEntity<Notification> sendMessage(@RequestBody MessageDTO message) throws Exception {
         List<RequestDTO>  requestList = (this.getRequests()).getBody();
         boolean status = this.messageService.sendMessage(message, requestList);
         Notification not = new Notification();
@@ -64,6 +66,23 @@ public class MessageController {
 
     }
 
+    @PostMapping(value = "/newMessage", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Notification> newMessage(@RequestBody NewMessageDTO message) throws Exception {
+        List<UserDTO> userList = (this.getUsernames()).getBody();
+        List<RequestDTO>  requestList = (this.getRequests()).getBody();
+        boolean status = this.messageService.sendMessage(this.messageService.convertMessage(message, userList), requestList);
+
+        Notification not = new Notification();
+
+        if (status){
+            not.setText("Message successfully sent.");
+            return new ResponseEntity<Notification>(not, HttpStatus.OK);
+        }
+        else{
+            not.setText("You dont have any reserved or paid requests from this user.");
+            return new ResponseEntity<Notification>(not, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     public ResponseEntity<List<RequestDTO>> getRequests() throws Exception {
         System.out.println("Getting all requests");
@@ -71,5 +90,13 @@ public class MessageController {
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<RequestDTO>>() {}).getBody();
 
         return new ResponseEntity<List<RequestDTO>>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<UserDTO>> getUsernames() throws Exception {
+        System.out.println("Getting all usernames");
+        List<UserDTO> response = restTemplate.exchange("http://user/user/usernames/",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<UserDTO>>() {}).getBody();
+
+        return new ResponseEntity<List<UserDTO>>(response, HttpStatus.OK);
     }
 }

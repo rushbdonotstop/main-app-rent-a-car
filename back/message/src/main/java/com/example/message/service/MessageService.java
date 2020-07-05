@@ -1,8 +1,6 @@
 package com.example.message.service;
 
-import com.example.message.DTO.MessageDTO;
-import com.example.message.DTO.RequestDTO;
-import com.example.message.DTO.Status;
+import com.example.message.DTO.*;
 import com.example.message.model.Conversation;
 import com.example.message.model.Message;
 import com.example.message.model.enums.MessageType;
@@ -92,5 +90,22 @@ public class MessageService {
 
         Collections.sort(listToSend, Collections.reverseOrder());
         return listToSend;
+    }
+
+    public MessageDTO convertMessage(NewMessageDTO message, List<UserDTO> userList) {
+        MessageDTO convertedMessage = new MessageDTO();
+
+        for (UserDTO user : userList) {
+            if (user.getUsername().equals(message.getReceiverUsername())) {
+                convertedMessage.setReceiverId(user.getId());
+                break;
+            }
+        }
+        convertedMessage.setSenderId(message.getSenderId());
+        convertedMessage.setMessageType(message.getMessageType());
+        convertedMessage.setDateAndTime(message.getDateAndTime());
+        convertedMessage.setText(message.getText());
+
+        return convertedMessage;
     }
 }

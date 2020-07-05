@@ -73,7 +73,15 @@ export class ConversationContentComponent implements OnInit {
 
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var hours = today.getHours();
+    if (hours == 23) {
+      let properHours = '01';
+    } else if (hours == 24) {
+      var properHours = '02'
+    } else {
+      var properHourse = today.getHours()+2;
+    }
+    var time = properHours + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date+' '+time;
 
     messageToSend.dateAndTime = new Date(dateTime);

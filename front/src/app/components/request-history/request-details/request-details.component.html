@@ -62,7 +62,7 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </mat-card-content>
-                <mat-card-content *ngIf="requestList[0].status == 'PENDING'">
+                <mat-card-content *ngIf="shouldButtonsBeShownAcceptDecline(requestList[0].status)">
                     <button (click)="accept()" mat-raised-button color="primary">Accept reservation </button>
                     <button (click)="decline()" style="margin-left: 20px;" mat-raised-button color="warn">Decline
                         reservation </button>

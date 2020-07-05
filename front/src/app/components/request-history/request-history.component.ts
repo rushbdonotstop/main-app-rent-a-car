@@ -7,6 +7,7 @@ import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
 import { User } from 'src/app/shared/models/user/User';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { VehicleStatisticComponent } from './vehicle-statistic/vehicle-statistic.component';
+import { NewMessageDialogComponent } from '../user-inbox/new-message-dialog/new-message-dialog.component';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class RequestHistoryComponent implements OnInit {
 
   selectedHistory = 'receivedRequests';
   showSelectedHistory = 'Received Requests'
-  displayedColumns: string[] = ['username', 'totalCost', 'numberOfRequests', 'status', 'details'];
+  displayedColumns: string[] = ['username', 'totalCost', 'numberOfRequests', 'status', 'details', 'message'];
   displayedColumns2: string[] = ['username', 'makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report'];
   bundleList : BundleDTO[];
   requestList : RequestDTO[];
@@ -25,7 +26,7 @@ export class RequestHistoryComponent implements OnInit {
   dataSourceRequests : MatTableDataSource<RequestDTO>
 
 
-  constructor(private requestService : RequestService, public dialog: MatDialog)  { 
+  constructor(private requestService : RequestService, public dialog: MatDialog, public messageDialog : MatDialog)  { 
     
   }
 
@@ -96,6 +97,20 @@ export class RequestHistoryComponent implements OnInit {
       this.onChange();
 
     });
+  }
+
+  openMessageDialog(bundle: BundleDTO) {
+    const messageDialogRef = this.messageDialog.open(NewMessageDialogComponent , {
+      width: '1200px',
+      height: '600px',
+      data: { bundle: bundle,
+              selectedHistory : this.selectedHistory }
+    });
+
+    messageDialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
 
   openStatistic(){

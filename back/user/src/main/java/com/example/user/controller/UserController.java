@@ -33,7 +33,11 @@ public class UserController {
      */
     @PostMapping(value = "/loginTest", consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> loginTest(@RequestBody LoginRequestDTO loginRequestDTO) throws Exception {
+        System.out.println(loginRequestDTO.toString());
         User user = userService.loginTest(loginRequestDTO);
+        if (user == null) {
+            System.err.println("USER JE NULL");
+        }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 

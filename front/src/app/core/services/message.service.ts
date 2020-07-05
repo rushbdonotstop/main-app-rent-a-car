@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/models/user/User';
 import { Conversation } from 'src/app/shared/models/message/Conversation';
 import { Message } from 'src/app/shared/models/message/Message';
 import { NotificationFromServer } from 'src/app/shared/models/Notification';
+import { NewMessageDTO } from 'src/app/shared/models/message/NewMessageDTO';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
@@ -30,5 +31,9 @@ export class MessageService {
 
   sendMessage(message : Message){
     return this.http.post<NotificationFromServer>('server/message/message', JSON.stringify(message), httpOptions);
+  }
+
+  sendNewMessage(message : NewMessageDTO){
+    return this.http.post<NotificationFromServer>('server/message/message/newMessage', JSON.stringify(message), httpOptions);
   }
 }

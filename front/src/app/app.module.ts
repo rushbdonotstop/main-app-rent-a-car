@@ -18,6 +18,7 @@ import { RequestDetailsComponent } from './components/request-history/request-de
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 import { ConversationContentComponent } from './components/user-inbox/conversation-content/conversation-content.component';
 import { AgmCoreModule } from '@agm/core';
+import { NewMessageDialogComponent } from './components/user-inbox/new-message-dialog/new-message-dialog.component';
 
 @NgModule({
   declarations: [

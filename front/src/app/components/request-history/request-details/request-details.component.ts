@@ -5,6 +5,7 @@ import { RequestService } from 'src/app/core/services/request.service';
 import { BundleDTO } from 'src/app/shared/models/request/bundleDTO';
 import { User } from 'src/app/shared/models/user/User';
 import { ReportDialogComponent } from '../../report-dialog/report-dialog.component';
+import { RequestStatus } from 'src/app/shared/models/request/RequestStatus';
 
 @Component({
   selector: 'pm-request-details',
@@ -104,5 +105,14 @@ export class RequestDetailsComponent implements OnInit {
     else{
       return false;
     };
+  }
+
+  
+  shouldButtonsBeShownAcceptDecline(requestStatus : RequestStatus) {
+    if ((requestStatus.toString() == 'PENDING') && (this.selectedHistory == "receivedRequests")) {
+      return true;
+    } else { 
+      return false;
+    }
   }
 }
