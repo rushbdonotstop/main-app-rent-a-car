@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/shared/models/user/User';
 import { UserDetails } from 'src/app/shared/models/user/UserDetails';
-import { UserType } from 'src/app/shared/models/user/UserType';
 
 @Component({
   templateUrl: './register.component.html',

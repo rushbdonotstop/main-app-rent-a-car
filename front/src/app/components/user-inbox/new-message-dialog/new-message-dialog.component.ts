@@ -4,7 +4,6 @@ import { NewMessageDTO } from 'src/app/shared/models/message/NewMessageDTO';
 import { MatDialogRef, MatDialog, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { MessageType } from 'src/app/shared/models/message/MessageType';
 import { MessageService } from 'src/app/core/services/message.service';
-import { NotificationFromServer } from 'src/app/shared/models/Notification';
 
 @Component({
   selector: 'pm-new-message-dialog',
@@ -32,7 +31,7 @@ export class NewMessageDialogComponent implements OnInit {
 
   sendNewMessage() {
     this.user = JSON.parse(localStorage.getItem('userObject'));
-    let userId = this.user.id;
+
     let messageToSend = new NewMessageDTO()
     
     var today = new Date();
@@ -49,7 +48,6 @@ export class NewMessageDialogComponent implements OnInit {
     this.messageService.sendNewMessage(messageToSend).subscribe(
       notification => {
             this.newMessageText = '';
-            alert(notification.text)
             this._snackBar.open(notification.text, "", {
               duration: 2000,
               verticalPosition: 'bottom'
