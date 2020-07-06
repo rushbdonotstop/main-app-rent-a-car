@@ -139,7 +139,6 @@ public class RequestController {
     public ResponseEntity<List<RequestForFrontDTO>> buyerSingleRequests(@RequestParam(value = "userId") Long ownerId) throws Exception {
         List<UserDTO> users = (this.getUsernames()).getBody();
         List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
-
         List<Request> requestList = requestService.getSingleRequestsForUser(ownerId);
         List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
 
