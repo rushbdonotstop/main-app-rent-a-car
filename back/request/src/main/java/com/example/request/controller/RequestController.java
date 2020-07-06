@@ -27,6 +27,7 @@ public class RequestController {
 
     @Autowired
     RestTemplate restTemplate;
+    private ResponseEntity<List<BundleDTO>> listResponseEntity;
 
     /**
      * GET /server/request
@@ -144,6 +145,7 @@ public class RequestController {
 
         return new ResponseEntity<List<RequestForFrontDTO>>(requestDTOList, HttpStatus.OK);
     }
+
     //TYPE IS FOR ACCEPTING REQUEST, TYPE 2 IS FOR CANCELING
     @GetMapping(value = "/changeStatus", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> changeStaus(@RequestParam(value = "bundleId") Long bundleId, @RequestParam(value = "changeType") Long changeType) throws Exception {
@@ -186,16 +188,42 @@ public class RequestController {
         return new ResponseEntity<Boolean>(this.requestService.canUserPostReview(vehicleId, userId), HttpStatus.OK);
     }
 
+
+    //FINISHED REQUESTS
+
     /**
      * GET /server/request/rentingFinished
      *
-     * @return return true if user can post review
+     * @return return renting finished requests
      */
     @GetMapping(value = "/rentingFinished", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Request>> rentingFinishedRequests() {
+    public ResponseEntity<List<RequestForFrontDTO>> rentingFinishedRequests() {
         try {
-            return new ResponseEntity<>(this.requestService.rentingFinishedReports(), HttpStatus.OK);
+            List<UserDTO> users = (this.getUsernames()).getBody();
+            List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
+            List<Request> requestList = requestService.rentingFinishedRequests();
+            List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
+            System.out.println(requestDTOList);
+            return new ResponseEntity<>(requestDTOList, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/rentingFinishedBundle", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<BundleDTO>> finishedBundles() throws Exception {
+        try {
+            List<UserDTO> users = (this.getUsernames()).getBody();
+            List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
+
+            List<Request> requestList = requestService.rentingFinishedRequestsInBundle();
+            List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
+            List<BundleDTO> bundleList = requestService.getBundles(requestDTOList);
+            System.out.println(bundleList);
+            return new ResponseEntity<>(bundleList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

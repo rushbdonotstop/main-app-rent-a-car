@@ -11,6 +11,7 @@ import { NewMessageDialogComponent } from '../user-inbox/new-message-dialog/new-
 import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.component';
 
 
+
 @Component({
   templateUrl: './request-history.component.html',
   styleUrls: ['./request-history.component.css']
@@ -19,13 +20,13 @@ export class RequestHistoryComponent implements OnInit {
 
   selectedHistory = 'receivedRequests';
   showSelectedHistory = 'Received Requests'
+
   displayedColumns: string[] = ['username', 'totalCost', 'numberOfRequests', 'status', 'details', 'message'];
   displayedColumns2: string[] = ['username', 'makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report', 'message', 'review'];
   bundleList : BundleDTO[];
   requestList : RequestDTO[];
   dataSource: MatTableDataSource<BundleDTO>;
-  dataSourceRequests : MatTableDataSource<RequestDTO>
-
+  dataSourceRequests: MatTableDataSource<RequestDTO>
 
   constructor(private requestService : RequestService, public dialog: MatDialog, public messageDialog : MatDialog)  { 
     
@@ -33,56 +34,124 @@ export class RequestHistoryComponent implements OnInit {
 
   ngOnInit() {
 
-    this.requestService.getOwnerRequestHistory().subscribe(
-      bundleList => {
-        
-        this.bundleList = bundleList;
-        this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
-        console.log(bundleList)
-      }
-    );
-
-    this.requestService.getOwnerSingleRequests().subscribe(
-      requestList => {
-        this.requestList = requestList;
-        this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
-      }
-    )
-  }
-  
-  onChange() {
-    if(this.selectedHistory == 'sentRequests') {
-      this.showSelectedHistory = 'Sent Requests';
-      this.requestService.getBuyerRequestHistory().subscribe(
+    var user = JSON.parse(localStorage.getItem('userObject'));
+    if (user.userDetails.userType == "AGENT") {
+      this.requestService.finishedBundle().subscribe(
         bundleList => {
+
           this.bundleList = bundleList;
           this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+          console.log("bundle:")
+          console.log(bundleList)
         }
-      )
+      );
 
-      this.requestService.getBuyerSingleRequests().subscribe(
+      this.requestService.finishedRequests().subscribe(
         requestList => {
           this.requestList = requestList;
           this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+          console.log("request:")
+          console.log(requestList)
         }
       )
-    }
+    } else {
 
-    if(this.selectedHistory == 'receivedRequests') {
-      this.showSelectedHistory = 'Received Requests'
       this.requestService.getOwnerRequestHistory().subscribe(
         bundleList => {
+
           this.bundleList = bundleList;
           this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+          console.log(bundleList)
         }
-      )
+      );
 
       this.requestService.getOwnerSingleRequests().subscribe(
         requestList => {
           this.requestList = requestList;
           this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+          console.log(requestList)
         }
       )
+    }
+  }
+
+  onChange() {
+    if (this.selectedHistory == 'sentRequests') {
+      this.showSelectedHistory = 'Sent Requests';
+      var user = JSON.parse(localStorage.getItem('userObject'));
+      if (user.userDetails.userType == "AGENT") {
+        this.requestService.finishedBundle().subscribe(
+          bundleList => {
+
+            this.bundleList = bundleList;
+            this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+            console.log("bundle:")
+            console.log(bundleList)
+          }
+        );
+
+        this.requestService.finishedRequests().subscribe(
+          requestList => {
+            this.requestList = requestList;
+            this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+            console.log("request:")
+            console.log(requestList)
+          }
+        )
+      } else {
+        this.requestService.getBuyerRequestHistory().subscribe(
+          bundleList => {
+            this.bundleList = bundleList;
+            this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+          }
+        )
+
+        this.requestService.getBuyerSingleRequests().subscribe(
+          requestList => {
+            this.requestList = requestList;
+            this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+          }
+        )
+      }
+    }
+
+    if (this.selectedHistory == 'receivedRequests') {
+      this.showSelectedHistory = 'Received Requests'
+      var user = JSON.parse(localStorage.getItem('userObject'));
+      if (user.userDetails.userType == "AGENT") {
+        this.requestService.finishedBundle().subscribe(
+          bundleList => {
+
+            this.bundleList = bundleList;
+            this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+            console.log("bundle:")
+            console.log(bundleList)
+          }
+        );
+
+        this.requestService.finishedRequests().subscribe(
+          requestList => {
+            this.requestList = requestList;
+            this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+            console.log("request:")
+            console.log(requestList)
+          }
+        )
+      } else {
+        this.requestService.getOwnerRequestHistory().subscribe(
+          bundleList => {
+            this.bundleList = bundleList;
+            this.dataSource = new MatTableDataSource<BundleDTO>(this.bundleList);
+          }
+        )
+
+        this.requestService.getOwnerSingleRequests().subscribe(
+          requestList => {
+            this.requestList = requestList;
+            this.dataSourceRequests = new MatTableDataSource<RequestDTO>(this.requestList);
+          }
+        )
+      }
     }
   }
 
@@ -90,10 +159,12 @@ export class RequestHistoryComponent implements OnInit {
     const dialogRef = this.dialog.open(RequestDetailsComponent, {
       width: '1200px',
       height: '600px',
-      data: { bundle: bundle,
-              selectedHistory : this.selectedHistory }
+      data: {
+        bundle: bundle,
+        selectedHistory: this.selectedHistory
+      }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       this.onChange();
 
@@ -156,16 +227,22 @@ export class RequestHistoryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit()
     });
   }
 
   isRentingFinished(request: RequestDTO) {
-    if (new Date(request.endDate) < new Date()){
+    if (new Date(request.endDate) < new Date()) {
       return true;
     }
-    else{
+    else {
       return false;
     };
   }
 
+  agentLogged() {
+    if (JSON.parse(localStorage.getItem('userObject')).userDetails.userType == "AGENT")
+      return true
+    return false
+  }
 }

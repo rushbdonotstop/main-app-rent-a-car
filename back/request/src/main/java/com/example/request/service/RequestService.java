@@ -10,6 +10,7 @@ import com.example.request.model.Report;
 import com.example.request.model.Request;
 import com.example.request.model.enums.Status;
 import com.example.request.repository.BundleRepository;
+import com.example.request.repository.ReportRepository;
 import com.example.request.repository.RequestRepository;
 import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class RequestService {
 
     @Autowired
     BundleRepository bundleRepository;
+
+    @Autowired
+    ReportRepository reportRepository;
 
     public boolean areDatesValid(LocalDateTime startDate, LocalDateTime endDate) {
         if (startDate == null || endDate == null)
@@ -192,6 +196,7 @@ public class RequestService {
         }
         return newRequestList;
     }
+
     //RETURNING LIST OF REQUESTS THAT ARE NOT IN THE BUNDLE!!!
     public List<Request> getSingleRequestsForOwner(Long ownerId) {
         List<Request> requestList = requestRepository.findAll();
@@ -384,7 +389,57 @@ public class RequestService {
         return false;
     }
 
-    public List<Request> rentingFinishedReports() {
-        return this.requestRepository.rentingFinishedRequests(LocalDateTime.now());
+    public List<Request> rentingFinishedRequests() {
+        List<Request> finishedRequests = this.requestRepository.rentingFinishedRequests(LocalDateTime.now());
+        List<Request> nonReviewedRequests = new ArrayList<>();
+        for (Request r : finishedRequests) {
+            System.out.println("request already reviewed here:" + reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size());
+            if (reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size() == 0) {
+                nonReviewedRequests.add(r);
+            }
+        }
+        return nonReviewedRequests;
     }
+
+    public List<Request> rentingFinishedRequestsInBundle() {
+        List<Request> requestsInBundles = new ArrayList<>();
+        for (Request r : this.requestRepository.rentingFinishedRequestsInBundle(LocalDateTime.now()))
+            if (r.getBundle() != null && reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size() == 0) {
+                requestsInBundles.add(r);
+            }
+        return requestsInBundles;
+    }
+
+    public List<RequestForFrontDTO> getDTOList(List<Request> requestsList, List<UserDTO> userDTOList, List<VehicleMainViewDTO> vehiclesList) {
+        List<RequestForFrontDTO> newDTOList = new ArrayList<>();
+
+        for (Request request : requestsList) {
+            RequestForFrontDTO dto = new RequestForFrontDTO();
+            dto.setId(request.getId());
+            dto.setTotalCost(request.getTotalCost());
+            dto.setStartDate(request.getStartDate());
+            dto.setEndDate(request.getEndDate());
+            dto.setStatus(request.getStatus());
+            for (UserDTO user : userDTOList) {
+                if (user.getId().equals(request.getUserId())) {
+                    dto.setUsername(user.getUsername());
+                }
+            }
+            //SETTING VEHICLE MAKE AND MODEL FOR REQUEST DTO
+            for (VehicleMainViewDTO vehicle : vehiclesList) {
+                if (vehicle.getId().equals(request.getVehicleId())) {
+                    dto.setMakePlusModel(vehicle.getMake() + " " + vehicle.getModel());
+                    break;
+                }
+            }
+            dto.setVehicleId((request.getVehicleId()));
+            if (request.getBundle() != null) {
+                dto.setBundleId(request.getBundle().getId());
+            }
+            newDTOList.add(dto);
+
+        }
+        return newDTOList;
+    }
+
 }
