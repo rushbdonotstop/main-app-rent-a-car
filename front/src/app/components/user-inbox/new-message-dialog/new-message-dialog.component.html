@@ -1,0 +1,28 @@
+<div style="overflow-y: hidden; overflow-x: hidden;" class="container">
+    <div class="row">
+        <div class="col-10">
+            <h1>Create new message</h1>
+        </div>
+        <div class="col-2">
+            <button mat-raised-button color="warn" class="pull-right" (click)="close()">X</button>
+        </div>
+    </div>
+
+
+    <div mat-dialog-content>
+        <div class="row" style="justify-content: left;">
+            <mat-card style="width: 70%; box-sizing: border-box;">
+
+                <mat-card-content>
+                    <mat-form-field style="width: 400px;" [style.fontSize]="16">
+                        <mat-label>Content of your message</mat-label>
+                        <textarea matInput [(ngModel)]="newMessageText" cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"></textarea>
+                    </mat-form-field>
+                    <button (click)="sendNewMessage()" style="margin-left: 20px; padding-left: 20px;" mat-raised-button
+                        color="primary">Send message</button>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

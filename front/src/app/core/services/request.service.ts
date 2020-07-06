@@ -40,11 +40,12 @@ export class RequestService {
         return this.http.get<Array<RequestDTO>>('server/request/request/ownerSingleRequests?ownerId=' + ownerId, httpOptions);
     }
 
-    getBuyerSingleRequests() {
-        this.user = JSON.parse(localStorage.getItem('userObject'));
-        let userId = this.user.id;
-        return this.http.get<Array<RequestDTO>>('server/request/request/buyerSingleRequests?ownerId=' + userId, httpOptions);
-    }
+   getBuyerSingleRequests() {
+    this.user = JSON.parse(localStorage.getItem('userObject'));
+    let userId = this.user.id;
+    return this.http.get<Array<RequestDTO>>('server/request/request/buyerSingleRequests?userId=' + userId, httpOptions);
+}
+
 
     changeStatusOfRequest(bundleId: number, changeType: number) {
 

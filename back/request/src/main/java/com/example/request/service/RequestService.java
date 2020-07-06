@@ -242,6 +242,7 @@ public class RequestService {
             dto.setStartDate(request.getStartDate());
             dto.setEndDate(request.getEndDate());
             dto.setStatus(request.getStatus());
+            dto.setVehicleId(request.getVehicleId());
             for (UserDTO user : userDTOList) {
                 if (user.getId().equals(request.getUserId())) {
                     dto.setUsername(user.getUsername());
@@ -273,6 +274,7 @@ public class RequestService {
             dto.setTotalCost(request.getTotalCost());
             dto.setStartDate(request.getStartDate());
             dto.setEndDate(request.getEndDate());
+            dto.setVehicleId(request.getVehicleId());
             dto.setStatus(request.getStatus());
             for (UserDTO user : userDTOList) {
                 if (user.getId().equals(request.getOwnerId())) {

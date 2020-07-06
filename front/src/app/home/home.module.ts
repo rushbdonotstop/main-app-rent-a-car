@@ -40,6 +40,8 @@ import { RequestDetailsComponent } from '../components/request-history/request-d
 import { ConversationContentComponent } from '../components/user-inbox/conversation-content/conversation-content.component';
 import { VehicleStatisticComponent } from '../components/request-history/vehicle-statistic/vehicle-statistic.component';
 import { AgmCoreModule } from '@agm/core';
+import { NewMessageDialogComponent } from '../components/user-inbox/new-message-dialog/new-message-dialog.component';
+import { RegisterVerificationComponent } from './register/register-verification/register-verification.component';
 
 @NgModule({
   declarations: [
@@ -77,10 +79,12 @@ import { AgmCoreModule } from '@agm/core';
     EditStyleDialog,
     EditTransmissionlDialog,
     UserDetailsDialog,
-    EditPermissionsComponent
+    EditPermissionsComponent,
+    NewMessageDialogComponent,
+    RegisterVerificationComponent
   ],
   entryComponents: [
-    VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent,
+    VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent, NewMessageDialogComponent,
     EditFuelTypeDialog,
     EditMakeDialog,
     EditModelDialog,

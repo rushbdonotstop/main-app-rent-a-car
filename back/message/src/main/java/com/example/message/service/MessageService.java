@@ -1,8 +1,6 @@
 package com.example.message.service;
 
-import com.example.message.DTO.MessageDTO;
-import com.example.message.DTO.RequestDTO;
-import com.example.message.DTO.Status;
+import com.example.message.DTO.*;
 import com.example.message.model.Conversation;
 import com.example.message.model.Message;
 import com.example.message.model.enums.MessageType;
@@ -29,7 +27,7 @@ public class MessageService {
     public List<Message> getMessageByConversationId(Long id) { return messageRepository.findAllByConversationId(id); }
 
     public boolean sendMessage(MessageDTO message, List<RequestDTO> requestList) {
-
+        System.err.println("datum primljen je: " + message.getDateAndTime().toString());
         for (RequestDTO request : requestList) {
             if (((request.getOwnerId().equals(message.getSenderId()) && request.getUserId().equals(message.getReceiverId())) || (request.getOwnerId().equals(message.getReceiverId()) && request.getUserId().equals(message.getSenderId()))) && (request.getStatus().equals(Status.RESERVED) || request.getStatus().equals(Status.PAID))  ) {
                 Message mess = new Message(message);
@@ -92,5 +90,22 @@ public class MessageService {
 
         Collections.sort(listToSend, Collections.reverseOrder());
         return listToSend;
+    }
+
+    public MessageDTO convertMessage(NewMessageDTO message, List<UserDTO> userList) {
+        MessageDTO convertedMessage = new MessageDTO();
+
+        for (UserDTO user : userList) {
+            if (user.getUsername().equals(message.getReceiverUsername())) {
+                convertedMessage.setReceiverId(user.getId());
+                break;
+            }
+        }
+        convertedMessage.setSenderId(message.getSenderId());
+        convertedMessage.setMessageType(message.getMessageType());
+        convertedMessage.setDateAndTime(message.getDateAndTime());
+        convertedMessage.setText(message.getText());
+
+        return convertedMessage;
     }
 }
