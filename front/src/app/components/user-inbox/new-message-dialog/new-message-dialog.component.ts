@@ -26,26 +26,17 @@ export class NewMessageDialogComponent implements OnInit {
   ngOnInit() {
   }
 
+  close(): void {
+    this.messageDialogRef.close();
+  }
+
   sendNewMessage() {
     this.user = JSON.parse(localStorage.getItem('userObject'));
     let userId = this.user.id;
     let messageToSend = new NewMessageDTO()
     
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var hours = today.getHours();
-    if (hours == 23) {
-      let properHours = '01';
-    } else if (hours == 24) {
-      var properHours = '02'
-    } else {
-      var properHourse = today.getHours()+2;
-    }
-    alert(properHours);
-    var time = properHours + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
-
-    messageToSend.dateAndTime = new Date(dateTime);
+    messageToSend.dateAndTime = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds()));
 
     messageToSend.senderId = this.user.id;
 
@@ -57,8 +48,8 @@ export class NewMessageDialogComponent implements OnInit {
 
     this.messageService.sendNewMessage(messageToSend).subscribe(
       notification => {
-        var notification = new NotificationFromServer();
             this.newMessageText = '';
+            alert(notification.text)
             this._snackBar.open(notification.text, "", {
               duration: 2000,
               verticalPosition: 'bottom'

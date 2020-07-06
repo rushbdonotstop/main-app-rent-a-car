@@ -27,7 +27,7 @@ public class MessageService {
     public List<Message> getMessageByConversationId(Long id) { return messageRepository.findAllByConversationId(id); }
 
     public boolean sendMessage(MessageDTO message, List<RequestDTO> requestList) {
-
+        System.err.println("datum primljen je: " + message.getDateAndTime().toString());
         for (RequestDTO request : requestList) {
             if (((request.getOwnerId().equals(message.getSenderId()) && request.getUserId().equals(message.getReceiverId())) || (request.getOwnerId().equals(message.getReceiverId()) && request.getUserId().equals(message.getSenderId()))) && (request.getStatus().equals(Status.RESERVED) || request.getStatus().equals(Status.PAID))  ) {
                 Message mess = new Message(message);

@@ -43,7 +43,7 @@ export class RequestService {
    getBuyerSingleRequests() {
     this.user = JSON.parse(localStorage.getItem('userObject'));
     let userId = this.user.id;
-    return this.http.get<Array<RequestDTO>>('server/request/request/buyerSingleRequests?ownerId=' + userId, httpOptions);
+    return this.http.get<Array<RequestDTO>>('server/request/request/buyerSingleRequests?userId=' + userId, httpOptions);
 }
 
    changeStatusOfRequest(bundleId: number, changeType: number) {
