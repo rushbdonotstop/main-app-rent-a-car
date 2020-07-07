@@ -18,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
@@ -143,18 +145,24 @@ public class UserController {
     @DeleteMapping(value="/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> deleteUser(@PathVariable String id) throws Exception {
         try {
-            Boolean userHasVehicle = restTemplate.exchange("http://vehicle/vehicle/canUserDelete/" + id, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
-            Boolean userHasRequest = restTemplate.exchange("http://request/request/canUserDelete/" + id, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
+            boolean hasRequest = userHasRequest(id);
+            boolean hasVehicle = userHasVehicle(id);
 
-            if(userHasRequest || userHasVehicle) {
-                return new ResponseEntity<>(new Notification("User id: "+id+"cant be deleted.", false), HttpStatus.CONFLICT);
-            }
-
-            userService.deleteUser(id);
+            userService.deleteUser(id, hasRequest, hasVehicle);
             return new ResponseEntity<Notification>(new Notification("User with id " + id + " deleted.", true), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(new Notification("User id: "+id+"doesn't exist.", false), HttpStatus.CONFLICT);
         } catch (Exception e) {
-            return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new Notification("User id: "+id+"cant be deleted.", false), HttpStatus.CONFLICT);
         }
+    }
+
+    public boolean userHasVehicle(String id) {
+        return restTemplate.exchange("http://vehicle/vehicle/canUserDelete/" + id, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
+    }
+
+    public boolean userHasRequest(String id) {
+        return restTemplate.exchange("http://request/request/canUserDelete/" + id, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
     }
 
     /**
