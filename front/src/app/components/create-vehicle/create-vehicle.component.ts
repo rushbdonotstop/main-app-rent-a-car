@@ -109,6 +109,7 @@ export class CreateVehicleComponent implements OnInit {
         if(result){
           this.imgURL = 'assets/vehicles/nopicture.jpg'
           this.minDate = new Date();
+          this.minDate.setDate(this.minDate.getDate() + 2)
           this.collisionProtection = false
           this.vehicleInfoValid = false
           this.vehicleInfoShow = true

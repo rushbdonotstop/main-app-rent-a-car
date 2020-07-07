@@ -3,7 +3,6 @@ package com.example.user.model;
 
 import com.example.user.model.enums.Privilege;
 import com.example.user.model.enums.UserType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,6 +20,9 @@ public class UserDetails {
 
     @Column(name = "address", nullable = true)
     private String address;
+
+    @Column(name = "email", nullable = true, unique = true)
+    private String email;
 
     @Column(name = "business_num")
     private String businessNum;
@@ -41,12 +43,14 @@ public class UserDetails {
     }
 
 
-    public UserDetails(String fullName, String address, String businessNum, int vehicleNum, UserType userType, List<Privilege> privilegeList) {
+    public UserDetails(String fullName, String address, String email, String businessNum, int vehicleNum, UserType userType, Set<Penalty> penalties, List<Privilege> privilegeList) {
         this.fullName = fullName;
         this.address = address;
+        this.email = email;
         this.businessNum = businessNum;
         this.vehicleNum = vehicleNum;
         this.userType = userType;
+        this.penalties = penalties;
         this.privilegeList = privilegeList;
     }
 
@@ -112,6 +116,14 @@ public class UserDetails {
 
     public void setPrivilegeList(List<Privilege> privilegeList) {
         this.privilegeList = privilegeList;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

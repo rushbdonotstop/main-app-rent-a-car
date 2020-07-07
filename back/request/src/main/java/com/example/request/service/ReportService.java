@@ -15,7 +15,10 @@ public class ReportService {
     ReportRepository reportRepository;
 
     public Report addReport(Report report) {
-        return this.reportRepository.save(report);
+        if(reportRepository.findByVehicleIdAndStartDateAndEndDate(report.getVehicleId(), report.getStartDate(), report.getEndDate()).size() == 0)
+            return this.reportRepository.save(report);
+        else
+            return null;
     }
 
     public List<Report> findAll() {

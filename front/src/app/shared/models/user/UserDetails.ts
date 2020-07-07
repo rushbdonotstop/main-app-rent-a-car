@@ -8,7 +8,7 @@ export class UserDetails{
     businessNum : String;
     vehicleNum : number;
     userType : UserType;
-
+    email : String;
 
     public UserDetails(){}
 

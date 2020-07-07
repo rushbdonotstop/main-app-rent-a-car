@@ -3,6 +3,7 @@ package com.example.request.model;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Report {
@@ -23,6 +24,12 @@ public class Report {
     @Column
     private Long userId; //nullable when renting was done manualy, in the store
 
+    @Column(nullable = false)
+    private LocalDateTime startDate;
+
+    @Column(nullable = false)
+    private LocalDateTime endDate;
+
     public Report() {
     }
 
@@ -31,6 +38,22 @@ public class Report {
         this.additionalInfo = additionalInfo;
         this.vehicleId = vehicleId;
         this.userId = userId;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 
     public Long getId() {
