@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/shared/models/user/User';
 import { UserDetails } from 'src/app/shared/models/user/UserDetails';
+import { UserType } from 'src/app/shared/models/user/UserType';
 
 @Component({
   templateUrl: './register.component.html',
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
   public passwordInvalid: boolean;
   public passwordsDontMatch: boolean;
   public emailInvalid: boolean;
+  public agentRequest = false;
 
 
   constructor(private fb: FormBuilder, private _snackBar: MatSnackBar,private authService : AuthService) { 
@@ -33,7 +35,8 @@ export class RegisterComponent implements OnInit {
       email : ['', Validators.required],
       businessNum: [''],
       fullName: ['', Validators.required],
-      address:['', Validators.required]
+      address:['', Validators.required],
+      agentRequest: new FormControl(false)
     });
   }
 
@@ -43,7 +46,6 @@ export class RegisterComponent implements OnInit {
     this.passwordInvalid = false;
     this.passwordsDontMatch = false;
     this.emailInvalid = false;
-
 
     if (this.form.valid) {
       if(this.invalidUsername(this.form.get('username').value)){
@@ -71,6 +73,11 @@ export class RegisterComponent implements OnInit {
       userDetails.businessNum = this.form.get('businessNum').value
       userDetails.email = this.form.get('email').value
       userDetails.fullName = this.form.get('fullName').value
+      if(this.agentRequest) {
+        userDetails.userType = UserType.AGENT;
+      } else {
+        userDetails.userType = UserType.END_USER;
+      }
       user.userDetails = userDetails
 
       this.authService.register(user).subscribe(notification => {

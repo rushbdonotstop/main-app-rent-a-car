@@ -81,7 +81,7 @@ import { RegisterVerificationComponent } from './register/register-verification/
     UserDetailsDialog,
     EditPermissionsComponent,
     NewMessageDialogComponent,
-    RegisterVerificationComponent
+    RegisterVerificationComponent,
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent, NewMessageDialogComponent,

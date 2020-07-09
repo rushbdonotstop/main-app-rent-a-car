@@ -57,10 +57,15 @@ public class RegistrationController {
 
     public ResponseEntity<String> sendVerificationMail(EmailDTO emailDTO) {
         try {
+            System.out.println("POKUSA MAIL");
             String response = restTemplate.postForEntity("https://fine-email-service.herokuapp.com/email/send",
                     new HttpEntity<EmailDTO>(emailDTO), String.class).getBody();
+            System.out.println("EMAIL SENT");
+            System.out.println(emailDTO.getBody());
             return new ResponseEntity<String>(response, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println("ERROR");
+            e.printStackTrace();
             return new ResponseEntity<String>("Server error", HttpStatus.BAD_REQUEST);
         }
     }

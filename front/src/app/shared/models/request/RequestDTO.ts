@@ -10,4 +10,5 @@ export class RequestDTO {
     makePlusModel : String;
     vehicleId : number;
     bundleId : number;
+    viewMode: boolean;
 }
