@@ -42,6 +42,7 @@ import { VehicleStatisticComponent } from '../components/request-history/vehicle
 import { AgmCoreModule } from '@agm/core';
 import { NewMessageDialogComponent } from '../components/user-inbox/new-message-dialog/new-message-dialog.component';
 import { RegisterVerificationComponent } from './register/register-verification/register-verification.component';
+import { MyVehiclesComponent } from '../components/my-vehicles/my-vehicles.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { RegisterVerificationComponent } from './register/register-verification/
     EditPermissionsComponent,
     NewMessageDialogComponent,
     RegisterVerificationComponent,
+    MyVehiclesComponent
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent, NewMessageDialogComponent,

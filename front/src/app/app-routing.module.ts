@@ -14,6 +14,7 @@ import { UserInboxComponent } from './components/user-inbox/user-inbox.component
 import { ViewCodebookComponent } from './components/admin-dashboard/vehicles-codebook/view-codebook/view-codebook.component';
 import { ViewUsersComponent } from './components/admin-dashboard/system-users/view-users/view-users.component';
 import { RegisterAgentComponent } from './components/admin-dashboard/system-users/register-agent/register-agent.component';
+import { MyVehiclesComponent } from './components/my-vehicles/my-vehicles.component';
 
 
 const routes: Routes = [{ path: 'login', component: LoginComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [{ path: 'login', component: LoginComponent},
 { path: 'catalogue', component: ViewCodebookComponent},
 { path: 'users', component: ViewUsersComponent},
 { path: 'agentRequests', component: RegisterAgentComponent},
+{ path: 'myVehicles', component: MyVehiclesComponent},
 { path: '', redirectTo: 'home', pathMatch : 'full'},
 { path: '**', component: HomeComponent }];
 

@@ -10,6 +10,7 @@ import com.example.vehicle.dto.review.Review;
 import com.example.vehicle.dto.user.UserDTO;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.service.SearchVehicleService;
+import com.example.vehicle.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,7 +33,34 @@ public class SearchVehicleController {
     private SearchVehicleService searchVehicleService;
 
     @Autowired
+    private VehicleService vehicleService;
+
+    @Autowired
     RestTemplate restTemplate;
+
+    /**
+     * GET /server/vehicle/user/{userId}
+     *
+     * @return return all vehicle from a user
+     */
+    @GetMapping(value = "user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<VehicleMainViewDTO>> getAllFromUser(@PathVariable Long userId) throws Exception {
+        List<Vehicle> vehicles = vehicleService.getAllFromUser(userId);
+
+        List<Pricelist> pricelist = (this.getPricelists()).getBody();
+
+        List<VehicleMake> vehicleMakeList = (this.getVehicleMakes()).getBody();
+
+        List<VehicleModel> vehicleModelsList = (this.getVehicleModels()).getBody();
+
+        List<UserDTO> usersList = (this.getUsernames()).getBody();
+
+        List<Review> reviewList = (this.getReviews()).getBody();
+
+        List<VehicleMainViewDTO> vehicleDTOList = searchVehicleService.getAllVehicleMainViewDTO(vehicles, vehicleMakeList, pricelist, vehicleModelsList, usersList, reviewList);
+
+        return new ResponseEntity<>(vehicleDTOList, HttpStatus.OK);
+    }
 
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleMainViewDTO>> parameterizedSearch(@RequestParam(value = "vehicleMake") Long vehicleMake, @RequestParam(value = "vehicleModel") Long vehicleModel, @RequestParam(value = "vehicleStyle") Long vehicleStyle, @RequestParam(value = "vehicleFuel") Long vehicleFuel, @RequestParam(value = "vehicleTransmission") Long vehicleTransmission, @RequestParam(value = "priceLowerLimit") float priceLowerLimit, @RequestParam(value = "priceUpperLimit") float priceUpperLimit, @RequestParam(value = "maxMileage") int maxMileage, @RequestParam(value = "mileageLimit") int mileageLimit, @RequestParam(value = "collisionProtection") Boolean collisionProtection, @RequestParam(value = "childrenSeats") int childrenSeats, @RequestParam(value = "state") String state, @RequestParam(value = "city") String city, @RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) throws Exception {
