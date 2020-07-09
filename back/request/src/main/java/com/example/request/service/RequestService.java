@@ -446,6 +446,15 @@ public class RequestService {
         return newDTOList;
     }
 
+    public Boolean canUserDelete(Long userId) {
+        try {
+            this.requestRepository.findByStatus(Status.PENDING);
+        } catch (Exception e) {
+            return true;
+        }
+        return false;
+    }
+
     public void startScheduledTask() {
         List<Request> requestList = requestRepository.findAll();
         LocalDateTime now = LocalDateTime.now();
@@ -461,5 +470,4 @@ public class RequestService {
             }
         }
     }
-
 }

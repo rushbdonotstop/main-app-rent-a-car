@@ -125,4 +125,14 @@ public class VehicleService {
         }
         return newVehicle;
     }
+
+    public Boolean canUserDelete(Long userId) {
+        try {
+            this.vehicleRepository.findAllByUserId(userId);
+
+        } catch (Exception e) {
+            return true;
+        }
+        return false;
+    }
 }
