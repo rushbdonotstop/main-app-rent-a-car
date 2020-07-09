@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/user-details"
+           targetNamespace="http://rentacar.com/user-details" elementFormDefault="qualified"
+           xmlns:user-penalty="http://rentacar.com/user-penalty">
+
+    <xs:import namespace="http://rentacar.com/user-penalty" schemaLocation="user-penalty.xsd"/>
+
+    <xs:element name="userDetails">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="fullName" type="xs:string"/>
+                <xs:element name="address" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="businessNum" type="xs:string"/>
+                <xs:element name="vehicleNum" type="xs:int"/>
+                <xs:element name="userType">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="ADMINISTRATOR"/>
+                            <xs:enumeration value="AGENT"/>
+                            <xs:enumeration value="END_USER"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="penalties">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="user-penalty:penalty" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserDetailsById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user_details_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllUserDetails">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="userDetails" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserDetails">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="userDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
