@@ -219,4 +219,24 @@ public class UserService {
         }
         return newList;
     }
+
+    public User createUserFromAgentApp(User user) {
+        UserDetails newUserDetails = userDetailsRepository.save(user.getUserDetails());
+        User newUser = user;
+        newUser.setUserDetails(newUserDetails);
+        newUser.setAgentAppId(user.getId());
+        newUser.setId(null);
+        newUser = userRepository.save(newUser);
+        return newUser;
+    }
+
+    public User updateUserFromAgentApp(User user) {
+        UserDetails newUserDetails = userDetailsRepository.save(user.getUserDetails());
+        User userToUpdate = userRepository.findOneByAgentAppId(user.getId());
+        userToUpdate.setUserDetails(newUserDetails);
+        userToUpdate.setPassword(user.getPassword());
+        userToUpdate.setVerified(user.getVerified());
+        userRepository.save(userToUpdate);
+        return userToUpdate;
+    }
 }

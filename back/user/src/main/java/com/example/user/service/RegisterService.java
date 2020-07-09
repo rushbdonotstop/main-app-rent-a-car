@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class RegisterService {
 
@@ -28,12 +31,11 @@ public class RegisterService {
         newUserDetails.setVehicleNum(0);
         UserDetails udFromBase = userDetailsRepository.save(newUserDetails);
 
-        String salt = BCrypt.gensalt(12);
-        String saltedPassword = BCrypt.hashpw(user.getPassword(), salt);
+
 
         User newUser = user;
-        newUser.setSalt(salt);
-        newUser.setPassword(saltedPassword);
+
+        newUser.setPassword(user.getPassword());
         newUser.setUserDetails(udFromBase);
         newUser.setVerified(false);
         newUser = userRepository.save(user);
@@ -44,5 +46,37 @@ public class RegisterService {
         email.setBody(verificationTokenService.generateVerificationToken(newUser));
 
         return email;
+    }
+
+    public boolean validate(User user) {
+        boolean match1 = false;
+        boolean match2 = false;
+        boolean match3 = false;
+
+        Pattern emailRegex = Pattern.compile("[^@]+@[^\\.]+\\..+", Pattern.CASE_INSENSITIVE);
+        Matcher emailMatcher = emailRegex.matcher(user.getUserDetails().getEmail());
+
+
+        Pattern passwordRegex = Pattern.compile("(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}");
+        Matcher passwordMatcher = passwordRegex.matcher(user.getPassword());
+
+        Pattern usernameRegex = Pattern.compile("[a-zA-Z0-9]+");
+        Matcher usernameMatcher = usernameRegex.matcher(user.getUsername());
+
+        if (emailMatcher.find()) {
+            match1 = true;
+        }
+        if (passwordMatcher.find()) {
+            match2 = true;
+        }
+        if (usernameMatcher.find()) {
+            match3 = true;
+        }
+
+        if (match1 && match2 && match3) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

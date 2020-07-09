@@ -13,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -227,7 +228,6 @@ public class RequestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
     /**
      * GET /server/request/canUserDelete/{userId}
      *
@@ -236,5 +236,12 @@ public class RequestController {
     @GetMapping(value = "/canUserDelete/{userId}")
     ResponseEntity<Boolean> canUserDelete(@PathVariable Long userId) {
         return new ResponseEntity<Boolean>(this.requestService.canUserDelete(userId), HttpStatus.OK);
+    }
+  
+    @Scheduled(initialDelayString = "${request.initialdelay}", fixedRateString = "${request.fixedrate}")
+    public void fixedRateJobWithInitialDelay() throws InterruptedException {
+
+        System.out.println("Prošlo 5 minuta, vidi zahteve!");
+        requestService.startScheduledTask();
     }
 }

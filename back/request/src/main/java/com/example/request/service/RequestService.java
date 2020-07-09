@@ -13,11 +13,13 @@ import com.example.request.repository.BundleRepository;
 import com.example.request.repository.ReportRepository;
 import com.example.request.repository.RequestRepository;
 import org.bouncycastle.cert.ocsp.Req;
+import org.joda.time.Hours;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -131,7 +133,9 @@ public class RequestService {
 
         }
         for (Request request : requests.getRequests()) {
+            LocalDateTime ldt = LocalDateTime.now();
             request.setStatus(Status.PENDING);
+            request.setTimeOfCreation(ldt);
             requestRepository.saveAndFlush(request);
         }
         return true;
@@ -449,5 +453,21 @@ public class RequestService {
             return true;
         }
         return false;
+    }
+
+    public void startScheduledTask() {
+        List<Request> requestList = requestRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Request request : requestList) {
+            if (request.getStatus().equals(Status.PENDING)) {
+                long hours = ChronoUnit.HOURS.between(request.getTimeOfCreation(), now);
+                System.err.println("Sati proslo: " + hours);
+                if (hours > 23) {
+                    request.setStatus(Status.CANCELLED);
+                    requestRepository.save(request);
+                }
+            }
+        }
     }
 }
