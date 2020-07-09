@@ -44,15 +44,20 @@ public class RegistrationController {
 
     @PostMapping(value= "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> register(@RequestBody User user) {
-        try {
 
-            EmailDTO email = registerService.registerUser(user);
+            if (registerService.validate(user)) {
+                try {
+                EmailDTO email = registerService.registerUser(user);
 
-            String response = (this.sendVerificationMail(email).getBody());
-            return new ResponseEntity<>(new Notification("You registered successfully, you will get verification mail soon!", true), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
-        }
+                String response = (this.sendVerificationMail(email).getBody());
+                return new ResponseEntity<>(new Notification("You registered successfully, you will get verification mail soon!", true), HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(new Notification(e.getMessage(), false), HttpStatus.CONFLICT);
+            }
+            } else {
+                return new ResponseEntity<>(new Notification("User input didn't pass server valdiation!", false), HttpStatus.BAD_REQUEST);
+            }
+
     }
 
     public ResponseEntity<String> sendVerificationMail(EmailDTO emailDTO) {
