@@ -1,6 +1,14 @@
 package com.example.user.model;
 
+import com.example.user.xmlmodel.user.user_penalty.Penalty;
+import com.example.user.xmlmodel.user.user_privilege.UserPrivilege;
+
 import javax.persistence.*;
+import javax.xml.datatype.DatatypeConfigurationException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
 @Entity
 @Table(name="sys_user")
@@ -80,6 +88,8 @@ public class User {
         this.agentAppId = agentAppId;
     }
 
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -98,11 +108,45 @@ public class User {
         this.salt = salt;
     }
 
-    public boolean isVerified() {
+    public boolean getVerified() {
         return verified;
     }
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public com.example.user.xmlmodel.user.User toXml(User user) throws DatatypeConfigurationException {
+        com.example.user.xmlmodel.user.User xmlUserModel = new com.example.user.xmlmodel.user.User();
+
+        com.example.user.xmlmodel.user.user_details.UserDetails xmlUserDetailsModel = new com.example.user.xmlmodel.user.user_details.UserDetails();
+
+        com.example.user.xmlmodel.user.user_details.UserDetails.Penalties penalties = new com.example.user.xmlmodel.user.user_details.UserDetails.Penalties();
+        for(com.example.user.model.Penalty penalty : user.getUserDetails().getPenalties()) {
+            Penalty newPenalty = new Penalty();
+            newPenalty.setId(penalty.getId());
+            newPenalty.setTotal(penalty.getTotal());
+            newPenalty.setPenaltyStatus(penalty.getPenaltyStatus().toString());
+            penalties.getPenalty().add(newPenalty);
+        }
+
+        List<UserPrivilege> listPrivile
+
+        xmlUserDetailsModel.setPenalties(penalties);
+        xmlUserDetailsModel.setId(user.getUserDetails().getId());
+        xmlUserDetailsModel.setAddress(user.getUserDetails().getAddress());
+        xmlUserDetailsModel.setBusinessNum(user.getUserDetails().getBusinessNum());
+        xmlUserDetailsModel.setEmail(user.getUserDetails().getEmail());
+        xmlUserDetailsModel.setFullName(user.getUserDetails().getFullName());
+        xmlUserDetailsModel.setUserType(user.getUserDetails().getUserType().toString());
+        xmlUserDetailsModel.setVehicleNum(user.getUserDetails().getVehicleNum());
+
+        xmlUserModel.setId(user.getId());
+        xmlUserModel.setPassword(user.getPassword());
+        xmlUserModel.setUsername(user.getUsername());
+        xmlUserModel.setUserDetails(xmlUserDetailsModel);
+        xmlUserModel.setVerified(user.getVerified());
+
+        return xmlUserModel;
     }
 }

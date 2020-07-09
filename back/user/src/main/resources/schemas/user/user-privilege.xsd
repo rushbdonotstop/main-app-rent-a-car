@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/user-privilege"
+           targetNamespace="http://rentacar.com/user-privilege" elementFormDefault="qualified"
+           xmlns:user="http://rentacar.com/user">
+
+    <xs:import namespace="http://rentacar.com/user" schemaLocation="user.xsd"/>
+
+    <xs:element name="userPrivilege">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element ref="user:user"/>
+                <xs:element name="privilege">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="RENT_VEHICLE"/>
+                            <xs:enumeration value="ADD_DISCOUNT"/>
+                            <xs:enumeration value="GET_STATISTIC"/>
+                            <xs:enumeration value="ADD_VEHICLE"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserPrivilegeById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user_privilege_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllUserPrivilege">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="userPrivilege" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserPrivilege">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="userPrivilege"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

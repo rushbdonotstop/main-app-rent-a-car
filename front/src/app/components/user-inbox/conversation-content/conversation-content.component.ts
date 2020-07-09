@@ -72,12 +72,9 @@ export class ConversationContentComponent implements OnInit {
     messageToSend.messageType = MessageType.SENT_MESSAGE;
 
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
 
-    messageToSend.dateAndTime = new Date(dateTime);
-
+    messageToSend.dateAndTime = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds()));
+    
     this.messageService.sendMessage(messageToSend).subscribe(
       notification => {
         var notification = new NotificationFromServer();

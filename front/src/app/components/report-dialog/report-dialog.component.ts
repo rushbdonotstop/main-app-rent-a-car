@@ -18,6 +18,8 @@ export class ReportDialogComponent implements OnInit {
   additionalInfo: any
   vehicleId: any
   userId: any
+  startDate: Date
+  endDate: Date
 
 
   valid: any
@@ -33,6 +35,8 @@ export class ReportDialogComponent implements OnInit {
     loggedInUser = JSON.parse(localStorage.getItem('userObject'))
     this.userId = loggedInUser.id
     this.valid = true
+    this.startDate = this.data.startDate
+    this.endDate = this.data.endDate
   }
 
   close() {
@@ -41,8 +45,8 @@ export class ReportDialogComponent implements OnInit {
   }
 
   createReport() {
-    if (this.mileage != null ) {
-      var report = new Report(this.mileage, this.additionalInfo, this.vehicleId, this.userId)
+    if (this.mileage != null) {
+      var report = new Report(this.mileage, this.additionalInfo, this.vehicleId, this.userId, this.startDate, this.endDate)
       this.reportService.sendReport(report).subscribe()
       this._snackBar.open("Report sent", "", {
         duration: 2000,

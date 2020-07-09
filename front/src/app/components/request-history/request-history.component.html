@@ -10,7 +10,7 @@
   <div class="container">
     <div class="row">
       <div class="col-6">
-        <mat-form-field>
+        <mat-form-field *ngIf="agentLogged()">
           <mat-label>Select history</mat-label>
           <mat-select (selectionChange)="onChange()" [(value)]="selectedHistory">
             <mat-option value="receivedRequests">Recevied Requests</mat-option>
@@ -19,8 +19,8 @@
         </mat-form-field>
       </div>
       <div class="col-1">
-        <button style="margin-top: 20px;" (click)="openStatistic()" mat-raised-button
-        color="accent">Show statistics</button>
+        <button style="margin-top: 20px;" (click)="openStatistic()" mat-raised-button color="accent">Show
+          statistics</button>
       </div>
       <div class="col-4">
       </div>
@@ -33,8 +33,8 @@
         </mat-card-title>
         <mat-card-content>
           <h6>Requests in bundles</h6>
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <!--- Note that these columns can be defined in any order.
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
 
             <!-- Position Column -->
@@ -66,11 +66,17 @@
                   color="warn">Details</button> </td>
             </ng-container>
 
+            <ng-container matColumnDef="message">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element"> <button (click)="openMessageDialog(element)" mat-raised-button
+                  color="primary">Send message</button> </td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-        </mat-card-content>
 
+        </mat-card-content>
         <mat-card-content>
           <h6>Single requests</h6>
           <table mat-table [dataSource]="dataSourceRequests" class="mat-elevation-z8">
@@ -114,7 +120,19 @@
 
             <ng-container matColumnDef="report">
               <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let element"> <button *ngIf="isRentingFinished(element)" (click)="createReport(element)" mat-raised-button color="primary">Report</button> </td>
+              <td mat-cell *matCellDef="let element"> <button *ngIf="isRentingFinished(element)" (click)="createReport(element)" mat-raised-button color="warn">Report</button> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="message">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element"> <button (click)="openMessageDialogSingleRequest(element)" mat-raised-button
+                  color="basic">Send message</button> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="review">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element"> <button *ngIf="canUserReview(element)" (click)="leaveReview(element.vehicleId)" mat-raised-button
+                  color="primary">Review</button> </td>
             </ng-container>
 
             <!-- <ng-container matColumnDef="details">
