@@ -1,14 +1,10 @@
 package com.example.user.model;
 
 import com.example.user.xmlmodel.user.user_penalty.Penalty;
-import com.example.user.xmlmodel.user.user_privilege.UserPrivilege;
 
 import javax.persistence.*;
 import javax.xml.datatype.DatatypeConfigurationException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Entity
 @Table(name="sys_user")
@@ -130,7 +126,6 @@ public class User {
             penalties.getPenalty().add(newPenalty);
         }
 
-        List<UserPrivilege> listPrivile
 
         xmlUserDetailsModel.setPenalties(penalties);
         xmlUserDetailsModel.setId(user.getUserDetails().getId());

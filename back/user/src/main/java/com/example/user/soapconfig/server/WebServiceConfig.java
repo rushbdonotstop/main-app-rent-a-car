@@ -83,7 +83,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
     @Bean
     public XsdSchema penaltySchema() {
-        return new SimpleXsdSchema(new ClassPathResource("schemas/user/penalty.xsd"));
+        return new SimpleXsdSchema(new ClassPathResource("schemas/user/user-penalty.xsd"));
     }
 
 }
