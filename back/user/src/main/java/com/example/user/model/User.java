@@ -4,7 +4,6 @@ import com.example.user.xmlmodel.user.user_penalty.Penalty;
 
 import javax.persistence.*;
 import javax.xml.datatype.DatatypeConfigurationException;
-import java.util.*;
 
 @Entity
 @Table(name="sys_user")
@@ -24,11 +23,8 @@ public class User {
     private Long agentAppId;
 
     @OneToOne
-    @JoinColumn(name = "user_details_id", referencedColumnName = "id", nullable = true, unique = true)
+    @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;
-
-    @Column(name = "salt", nullable = true)
-    private String salt;
 
     @Column(name = "verified", nullable = true)
     private boolean verified;
@@ -96,14 +92,6 @@ public class User {
                 '}';
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
     public boolean getVerified() {
         return verified;
     }
@@ -125,7 +113,6 @@ public class User {
             newPenalty.setPenaltyStatus(penalty.getPenaltyStatus().toString());
             penalties.getPenalty().add(newPenalty);
         }
-
 
         xmlUserDetailsModel.setPenalties(penalties);
         xmlUserDetailsModel.setId(user.getUserDetails().getId());

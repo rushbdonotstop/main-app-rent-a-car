@@ -1,7 +1,11 @@
 package com.example.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.io.Serializable;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = EmailDTO.class)
 public class EmailDTO implements Serializable {
 
     private String emailFrom;

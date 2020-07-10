@@ -11,7 +11,7 @@ export class Request{
     status:Status
     userId:number
     vehicleId:number
-    ownerId:number = 1
+    ownerId:number
     bundle:number
 
     constructor(details : RequestAndVehicle){
@@ -19,6 +19,8 @@ export class Request{
         this.userId=details.ownerId
         this.startDate=details.startDate
         this.endDate=details.endDate
+        this.ownerId=details.ownerId
+        this.totalCost=details.totalCost
     }
 
 }

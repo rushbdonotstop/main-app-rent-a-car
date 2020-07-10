@@ -29,7 +29,7 @@ export class CartService {
       var request = new RequestAndVehicle(vehicle)
       request.startDate = startDate
       request.endDate = endDate
-      request.ownerId = 1
+      request.ownerId = vehicle.ownerId
       newCart.requests.push(request)
       localStorage.setItem('cart', JSON.stringify(newCart))
       console.log(localStorage.getItem('cart'))

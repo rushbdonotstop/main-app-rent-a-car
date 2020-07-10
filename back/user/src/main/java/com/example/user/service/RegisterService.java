@@ -31,8 +31,6 @@ public class RegisterService {
         newUserDetails.setVehicleNum(0);
         UserDetails udFromBase = userDetailsRepository.save(newUserDetails);
 
-
-
         User newUser = user;
 
         newUser.setPassword(user.getPassword());
