@@ -22,11 +22,7 @@ export class RequestDetailsComponent implements OnInit {
   userId: number;
   selectedHistory: String;
   dataSource: MatTableDataSource<RequestDTO>;
-<<<<<<< HEAD
-  displayedColumns: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status'];
-=======
   displayedColumns: string[] = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report', 'review'];
->>>>>>> ed530cdf02f3a9a30452acfeec9287ae08d1cbd5
   isUserAgent: boolean;
 
   constructor(public dialogRef: MatDialogRef<RequestDetailsComponent>,
