@@ -2,7 +2,7 @@
 ## Rent-a-car Main App
 ### Team 43
 ![GitHub Logo](https://github.com/rushbdonotstop/main-app-rent-a-car/blob/master/service.png)
-<a href='https://pngtree.com/so/isometric'>isometric png from pngtree.com</a>
+<a href='https://pngtree.com/so/isometric'></a>
 <br>
 
 <br>
