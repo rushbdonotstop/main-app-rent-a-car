@@ -1,4 +1,4 @@
-package com.example.request.DTO;
+package com.example.request.dto;
 
 import com.example.request.model.Bundle;
 import com.example.request.model.Request;

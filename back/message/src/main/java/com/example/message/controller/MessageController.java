@@ -1,9 +1,9 @@
 package com.example.message.controller;
 
-import com.example.message.DTO.MessageDTO;
-import com.example.message.DTO.NewMessageDTO;
-import com.example.message.DTO.RequestDTO;
-import com.example.message.DTO.UserDTO;
+import com.example.message.dto.MessageDTO;
+import com.example.message.dto.NewMessageDTO;
+import com.example.message.dto.RequestDTO;
+import com.example.message.dto.UserDTO;
 import com.example.message.model.Message;
 import com.example.message.model.Notification;
 import com.example.message.service.MessageService;

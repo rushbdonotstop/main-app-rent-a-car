@@ -1,4 +1,4 @@
-package com.example.request.DTO;
+package com.example.request.dto;
 
 import java.util.ArrayList;
 import java.util.List;

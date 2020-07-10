@@ -1,6 +1,6 @@
 package com.example.message.service;
 
-import com.example.message.DTO.*;
+import com.example.message.dto.*;
 import com.example.message.model.Conversation;
 import com.example.message.model.Message;
 import com.example.message.model.enums.MessageType;

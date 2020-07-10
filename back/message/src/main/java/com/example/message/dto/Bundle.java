@@ -1,8 +1,5 @@
-package com.example.message.DTO;
+package com.example.message.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import javax.persistence.*;
 import java.util.List;
 
 

@@ -1,4 +1,4 @@
-package com.example.request.DTO.vehicle;
+package com.example.request.dto.vehicle;
 
 import java.util.Arrays;
 

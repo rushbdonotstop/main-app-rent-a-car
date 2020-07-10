@@ -1,10 +1,10 @@
 package com.example.request.controller;
 
-import com.example.request.DTO.BundleDTO;
-import com.example.request.DTO.RequestDTO;
-import com.example.request.DTO.RequestForFrontDTO;
-import com.example.request.DTO.VehicleMainViewDTO;
-import com.example.request.DTO.user.UserDTO;
+import com.example.request.dto.BundleDTO;
+import com.example.request.dto.RequestDTO;
+import com.example.request.dto.RequestForFrontDTO;
+import com.example.request.dto.VehicleMainViewDTO;
+import com.example.request.dto.user.UserDTO;
 import com.example.request.model.Request;
 import com.example.request.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;

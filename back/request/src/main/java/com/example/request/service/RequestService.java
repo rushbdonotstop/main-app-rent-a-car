@@ -1,27 +1,22 @@
 package com.example.request.service;
 
-import com.example.request.DTO.BundleDTO;
-import com.example.request.DTO.RequestDTO;
-import com.example.request.DTO.RequestForFrontDTO;
-import com.example.request.DTO.VehicleMainViewDTO;
-import com.example.request.DTO.user.UserDTO;
+import com.example.request.dto.BundleDTO;
+import com.example.request.dto.RequestDTO;
+import com.example.request.dto.RequestForFrontDTO;
+import com.example.request.dto.VehicleMainViewDTO;
+import com.example.request.dto.user.UserDTO;
 import com.example.request.model.Bundle;
-import com.example.request.model.Report;
 import com.example.request.model.Request;
 import com.example.request.model.enums.Status;
 import com.example.request.repository.BundleRepository;
 import com.example.request.repository.ReportRepository;
 import com.example.request.repository.RequestRepository;
-import org.bouncycastle.cert.ocsp.Req;
-import org.joda.time.Hours;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.TreeSet;
 

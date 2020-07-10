@@ -1,7 +1,7 @@
-package com.example.request.DTO.vehicle.builder;
+package com.example.request.dto.vehicle.builder;
 
-import com.example.request.DTO.vehicle.Vehicle;
-import com.example.request.DTO.vehicle.VehicleImage;
+import com.example.request.dto.vehicle.Vehicle;
+import com.example.request.dto.vehicle.VehicleImage;
 
 import java.time.LocalDateTime;
 

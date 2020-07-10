@@ -1,7 +1,7 @@
 package com.example.request.controller;
 
-import com.example.request.DTO.user.PenaltyDTO;
-import com.example.request.DTO.vehicle.Vehicle;
+import com.example.request.dto.user.PenaltyDTO;
+import com.example.request.dto.vehicle.Vehicle;
 import com.example.request.model.Report;
 import com.example.request.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;

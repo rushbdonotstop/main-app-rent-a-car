@@ -1,4 +1,4 @@
-package com.example.message.DTO;
+package com.example.request.dto.user;
 
 
 public class UserDTO {

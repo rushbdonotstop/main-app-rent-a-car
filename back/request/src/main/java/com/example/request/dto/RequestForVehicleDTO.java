@@ -1,33 +1,39 @@
-package com.example.message.DTO;
+package com.example.request.dto;
 
+import com.example.request.model.Request;
+import com.example.request.model.enums.Status;
 
 import java.time.LocalDateTime;
 
-public class RequestDTO {
+public class RequestForVehicleDTO {
 
     private Long id;
-    private Float totalCost;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private Status status;
-    private Long userId;
-    private Long vehicleId;
-    private Long ownerId;
-    private Bundle bundle;
 
-    public RequestDTO() {
+    private LocalDateTime startDate;
+
+    private LocalDateTime endDate;
+
+    private Status status;
+
+    private Long vehicleId;
+
+    public RequestForVehicleDTO(Request request) {
+        this.id = request.getId();
+        this.startDate = request.getStartDate();
+        this.endDate = request.getEndDate();
+        this.status = request.getStatus();
+        this.vehicleId = request.getVehicleId();
     }
 
-    public RequestDTO(Long id, Float totalCost, LocalDateTime startDate, LocalDateTime endDate, Status status, Long userId, Long vehicleId, Long ownerId, Bundle bundle) {
+    public RequestForVehicleDTO() {
+    }
+
+    public RequestForVehicleDTO(Long id, LocalDateTime startDate, LocalDateTime endDate, Status status, Long vehicleId) {
         this.id = id;
-        this.totalCost = totalCost;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
-        this.userId = userId;
         this.vehicleId = vehicleId;
-        this.ownerId = ownerId;
-        this.bundle = bundle;
     }
 
     public Long getId() {
@@ -36,14 +42,6 @@ public class RequestDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Float getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(Float totalCost) {
-        this.totalCost = totalCost;
     }
 
     public LocalDateTime getStartDate() {
@@ -70,14 +68,6 @@ public class RequestDTO {
         this.status = status;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public Long getVehicleId() {
         return vehicleId;
     }
@@ -86,34 +76,14 @@ public class RequestDTO {
         this.vehicleId = vehicleId;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public Bundle getBundle() {
-        return bundle;
-    }
-
-    public void setBundle(Bundle bundle) {
-        this.bundle = bundle;
-    }
-
     @Override
     public String toString() {
-        return "RequestDTO{" +
+        return "RequestForVehicleDTO{" +
                 "id=" + id +
-                ", totalCost=" + totalCost +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", status=" + status +
-                ", userId=" + userId +
                 ", vehicleId=" + vehicleId +
-                ", ownerId=" + ownerId +
-                ", bundle=" + bundle +
                 '}';
     }
 }

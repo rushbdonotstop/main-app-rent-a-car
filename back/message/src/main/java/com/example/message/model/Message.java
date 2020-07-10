@@ -1,7 +1,7 @@
 package com.example.message.model;
 
 
-import com.example.message.DTO.MessageDTO;
+import com.example.message.dto.MessageDTO;
 import com.example.message.model.enums.MessageType;
 
 import javax.persistence.*;

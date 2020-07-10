@@ -1,21 +1,22 @@
-package com.example.request.DTO.user;
+package com.example.request.dto.user;
 
-public class PenaltyDTO {
+public class Penalty {
+
     private Long id;
 
     private Long total;
 
-    private Long userId;
+    private PenaltyStatus penaltyStatus;
 
-    public PenaltyDTO() {
+    public Penalty() {
     }
 
-    public Long getUserId() {
-        return userId;
+    public PenaltyStatus getPenaltyStatus() {
+        return penaltyStatus;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setPenaltyStatus(PenaltyStatus penaltyStatus) {
+        this.penaltyStatus = penaltyStatus;
     }
 
     public Long getId() {
