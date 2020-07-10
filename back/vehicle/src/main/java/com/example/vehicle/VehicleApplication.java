@@ -34,7 +34,7 @@ public class VehicleApplication {
 
     static final String topicExchangeName = "spring-boot-exchange";
 
-    static final String queueName = "spring-boot";
+    static final String queueName = "spring-boot-coords";
 
     // method creates an AMQP queue
     @Bean

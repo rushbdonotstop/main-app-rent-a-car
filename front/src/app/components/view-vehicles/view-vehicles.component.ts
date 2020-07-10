@@ -14,6 +14,7 @@ import { DialogType } from 'src/app/shared/models/cart/DialogType';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserType } from 'src/app/shared/models/user/UserType';
 import { User } from 'src/app/shared/models/user/User';
+import { MapDialogComponent } from '../map-dialog/map-dialog.component';
 
 @Component({
   templateUrl: './view-vehicles.component.html',
@@ -21,7 +22,7 @@ import { User } from 'src/app/shared/models/user/User';
 })
 export class ViewVehiclesComponent implements OnInit {
 
-  displayedColumns: string[] = ['make', 'model', 'averageRating', 'price', 'mileage', 'owner', 'details', 'prices', 'add', 'bundle', 'rent'];
+  displayedColumns: string[] = ['make', 'model', 'averageRating', 'price', 'mileage', 'owner', 'details', 'prices', 'add', 'bundle', 'rent', 'map'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
   vehicleList: VehicleMainViewDTO[];
   bundleList: VehicleMainViewDTO[];
@@ -154,6 +155,20 @@ export class ViewVehiclesComponent implements OnInit {
     this.openManualRentDialog(element)
   }
 
+  viewMap(element){
+    this.openMapDialog(element)
+  }
+
+  openMapDialog(element): void {
+    const dialogRef = this.dialog.open(MapDialogComponent, {
+      width: '400px',
+      data:{id: element.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
   openManualRentDialog(element): void {
     const dialogRef = this.dialog.open(RentDialogComponent, {
       width: '400px',
@@ -205,6 +220,14 @@ export class ViewVehiclesComponent implements OnInit {
     else
         return true;
 
+  }
+
+  //simulate false check
+  hasApp(element){
+    if(element.id==1)
+    return true
+    else
+    return false
   }
 
 }
