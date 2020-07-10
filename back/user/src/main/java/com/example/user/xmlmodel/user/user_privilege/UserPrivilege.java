@@ -8,7 +8,7 @@
 
 package com.example.user.xmlmodel.user.user_privilege;
 
-import com.example.agentapp.xmlmodel.user.User;
+import com.example.user.xmlmodel.user.User;
 
 import javax.xml.bind.annotation.*;
 

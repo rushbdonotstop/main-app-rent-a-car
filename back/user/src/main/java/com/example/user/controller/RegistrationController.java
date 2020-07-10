@@ -1,9 +1,8 @@
 package com.example.user.controller;
-
-import com.example.user.config.RabbitMQSender;
 import com.example.user.dto.EmailDTO;
 import com.example.user.model.Notification;
 import com.example.user.model.User;
+import com.example.user.rabbitcloud.EmailProducerController;
 import com.example.user.service.RegisterService;
 import com.example.user.service.UserDetailsService;
 import com.example.user.service.UserService;
@@ -37,7 +36,7 @@ public class RegistrationController {
     private RestTemplate restTemplate;
 
     @Autowired
-    RabbitMQSender rabbitMQSender;
+    EmailProducerController emailProducerController;
 
     @PostMapping(value= "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> register(@RequestBody User user) {
@@ -58,13 +57,10 @@ public class RegistrationController {
 
       public void sendVerificationMail(EmailDTO emailDTO) {
         try {
-            rabbitMQSender.send(emailDTO);
-            System.err.println("Email sent to RabbitMQ successsfully!");
-//            String response = restTemplate.postForEntity("https://fine-email-service.herokuapp.com/email/send",
-//                    new HttpEntity<EmailDTO>(emailDTO), String.class).getBody();
-//            return new ResponseEntity<String>(response, HttpStatus.OK);
+            System.err.println("Sending email to RabbitMQ!");
+            emailProducerController.publish(emailDTO);
+            System.err.println("Email published!");
         } catch (Exception e) {
-//            return new ResponseEntity<String>("Server error", HttpStatus.BAD_REQUEST);
         }
     }
 

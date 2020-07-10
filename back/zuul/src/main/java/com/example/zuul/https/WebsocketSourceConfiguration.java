@@ -22,7 +22,7 @@ public class WebsocketSourceConfiguration {
             @Override
             protected void postProcessContext(Context context) {
                 SecurityConstraint securityConstraint = new SecurityConstraint();
-                securityConstraint.setUserConstraint("CONFIDENTIAL");
+                securityConstraint.setUserConstraint("CONFIDENTI AL");
                 SecurityCollection collection = new SecurityCollection();
                 collection.addPattern("/*");
                 securityConstraint.addCollection(collection);

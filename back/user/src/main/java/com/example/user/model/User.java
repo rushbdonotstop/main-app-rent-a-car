@@ -28,7 +28,7 @@ public class User {
     private Long agentAppId;
 
     @OneToOne
-    @JoinColumn(name = "user_details_id", referencedColumnName = "id", nullable = true, unique = true)
+    @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;
 
     @Column(name = "salt", nullable = true)
@@ -130,7 +130,7 @@ public class User {
             penalties.getPenalty().add(newPenalty);
         }
 
-        List<UserPrivilege> listPrivile
+        List<UserPrivilege> listPrivile;
 
         xmlUserDetailsModel.setPenalties(penalties);
         xmlUserDetailsModel.setId(user.getUserDetails().getId());
