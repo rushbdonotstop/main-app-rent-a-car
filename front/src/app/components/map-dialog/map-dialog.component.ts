@@ -1,7 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, NgZone } from '@angular/core';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
+import { MAT_DIALOG_DATA } from '@angular/material';
+import { MapsAPILoader } from '@agm/core';
 
+class MapDTO {
+  id: number
+}
 
 @Component({
   selector: 'pm-map-dialog',
@@ -20,20 +25,26 @@ export class MapDialogComponent implements OnInit {
   address: any;
 
   loadMap = false;
-  firstCenter: number
+  firstCenter: number = null;
   marker: any
 
   private serverUrl = 'http://localhost:8081/vehicle/socket'
   private title = 'WebSockets chat';
   private stompClient;
+  vehicleId: any;
 
-  private vehicleId: number;
 
-  constructor(public data: number) { }
+  constructor(private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    console.log(data.id)
+    this.vehicleId = data.id;
+    console.log(this.vehicleId)
+    this.initializeWebSocketConnection(this.vehicleId,this.firstCenter)
+  }
 
   ngOnInit() {
-
-    this.vehicleId = this.data
 
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: -34.397, lng: 150.644 },
@@ -46,11 +57,11 @@ export class MapDialogComponent implements OnInit {
       title: 'Live vehicle feed',
       icon: image
     });
-    this.initializeWebSocketConnection()
+    
   }
 
 
-  initializeWebSocketConnection() {
+  initializeWebSocketConnection(vehicleId,firstCenter) {
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
@@ -60,14 +71,24 @@ export class MapDialogComponent implements OnInit {
           var coordsAndId = []
           coordsAndId = message.body.split(',')
           var id = coordsAndId[2]
-          if (id == this.vehicleId) {
+          console.log(id)
+          console.log(vehicleId)
+          if (id == vehicleId) {
             console.log('recieved coords')
-            if (this.firstCenter == null) {
-              this.firstCenter = { lat: Number(coordsAndId[0]), lng: Number(coordsAndId[1].substr(1)) }
+            if (firstCenter == null) {
+              firstCenter = { lat: Number(coordsAndId[0]), lng: Number(coordsAndId[1].substr(1)) }
               this.map = new google.maps.Map(document.getElementById('map'), {
-                center: this.firstCenter,
+                center: firstCenter,
                 zoom: 8
               });
+              var image = "assets/img/car.png"
+              this.marker = new google.maps.Marker({
+                position: { lat: Number(coordsAndId[0]), lng: Number(coordsAndId[1].substr(1)) },
+                map: this.map,
+                title: 'Live vehicle feed',
+                icon: image
+              });
+            
             }
             else {
               //deletes the last marker

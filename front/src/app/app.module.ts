@@ -46,6 +46,6 @@ import { MapDialogComponent } from './components/map-dialog/map-dialog.component
   bootstrap: [AppComponent],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent]
+  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent,MapDialogComponent]
 })
 export class AppModule { }

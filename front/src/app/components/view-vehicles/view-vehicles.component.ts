@@ -162,7 +162,7 @@ export class ViewVehiclesComponent implements OnInit {
   openMapDialog(element): void {
     const dialogRef = this.dialog.open(MapDialogComponent, {
       width: '400px',
-      data: element.vehicleId
+      data:{id: element.id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -220,6 +220,14 @@ export class ViewVehiclesComponent implements OnInit {
     else
         return true;
 
+  }
+
+  //simulate false check
+  hasApp(element){
+    if(element.id==1)
+    return true
+    else
+    return false
   }
 
 }
