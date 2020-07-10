@@ -28,6 +28,10 @@ export class UserService {
     return this.http.put<NotificationFromServer>('server/user/user/updateUserVehicleNumAfterCreate/'+userId,  httpOptions);
   }
 
+  deleteUser(userId: number) {
+    return this.http.delete<NotificationFromServer>('server/user/user/'+userId,  httpOptions);
+  }
+
   getAllUsers() {
     return this.http.get<User[]>('server/user/user',  httpOptions);
   }

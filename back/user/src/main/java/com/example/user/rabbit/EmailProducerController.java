@@ -1,4 +1,4 @@
-package com.example.user.rabbitcloud;
+package com.example.user.rabbit;
 
 import com.example.user.dto.EmailDTO;
 import org.springframework.messaging.MessageChannel;

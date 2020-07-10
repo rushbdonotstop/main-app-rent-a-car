@@ -2,7 +2,7 @@ package com.example.user.controller;
 import com.example.user.dto.EmailDTO;
 import com.example.user.model.Notification;
 import com.example.user.model.User;
-import com.example.user.rabbitcloud.EmailProducerController;
+import com.example.user.rabbit.EmailProducerController;
 import com.example.user.service.RegisterService;
 import com.example.user.service.UserDetailsService;
 import com.example.user.service.UserService;

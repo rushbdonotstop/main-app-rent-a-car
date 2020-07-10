@@ -121,14 +121,22 @@ public class UserService {
         }
     }
 
-    public void deleteUser(String id) throws Exception {
+    public void deleteUser(String id, boolean hasRequest, boolean hasVehicle) throws Exception, EntityNotFoundException {
         try {
             User user = userRepository.findOneById(Long.parseLong(id));
 
+            if(!canDeleteUser(hasRequest, hasVehicle)) {
+                throw new Exception("Can't delete user id " + id);
+            }
+
             userRepository.delete(user);
         } catch (EntityNotFoundException e) {
-            throw new Exception("Id doesn't exists.");
+            throw new EntityNotFoundException("Id doesn't exists.");
         }
+    }
+
+    private boolean canDeleteUser(boolean hasRequest, boolean hasVehicle) {
+        return !(hasRequest&&hasVehicle);
     }
 
     public boolean canUserCreate(Long userId) {

@@ -1,4 +1,4 @@
-package com.example.user.rabbitcloud;
+package com.example.user.rabbit;
 
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;

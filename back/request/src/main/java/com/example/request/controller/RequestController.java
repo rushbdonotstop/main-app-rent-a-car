@@ -228,12 +228,20 @@ public class RequestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
+    /**
+     * GET /server/request/canUserDelete/{userId}
+     *
+     * @return return true if user can can be deleted
+     */
+    @GetMapping(value = "/canUserDelete/{userId}")
+    ResponseEntity<Boolean> canUserDelete(@PathVariable Long userId) {
+        return new ResponseEntity<Boolean>(this.requestService.canUserDelete(userId), HttpStatus.OK);
+    }
+  
     @Scheduled(initialDelayString = "${request.initialdelay}", fixedRateString = "${request.fixedrate}")
     public void fixedRateJobWithInitialDelay() throws InterruptedException {
 
         System.out.println("Prošlo 5 minuta, vidi zahteve!");
         requestService.startScheduledTask();
-
     }
 }
