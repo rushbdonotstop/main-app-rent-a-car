@@ -39,8 +39,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    var loggedInUser = new User()
-    loggedInUser = JSON.parse(localStorage.getItem('userObject'))
+    var loggedInUser = JSON.parse(localStorage.getItem('userObject'))
     if (loggedInUser.userDetails.userType.toString() == "AGENT") {
       this.isUserAgent = true;
       this.displayedColumns = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report', 'review'];
