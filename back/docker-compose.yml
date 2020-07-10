@@ -47,7 +47,7 @@ services:
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
-      - DATABASE_SCHEMA=jpa
+      - DATABASE_SCHEMA=dockertest
     tty: true
     networks:
       - xml
@@ -67,7 +67,7 @@ services:
     environment:
       - POSTGRES_USERNAME=postgres
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=jpa
+      - POSTGRES_DB=dockertest
       
   pg_admin:
     image: dpage/pgadmin4:latest
