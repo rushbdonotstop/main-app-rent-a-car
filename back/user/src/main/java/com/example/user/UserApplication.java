@@ -23,6 +23,8 @@ public class UserApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+
+
 }
 
 

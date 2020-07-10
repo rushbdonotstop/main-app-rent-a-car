@@ -15,6 +15,7 @@ import { CartDialogComponent } from './components/cart-dialog/cart-dialog.compon
 import { MatListModule, MatListItem } from '@angular/material/list';
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 import { AgmCoreModule } from '@agm/core';
+import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AgmCoreModule } from '@agm/core';
     RentDialogComponent,
     CartDialogComponent,
     ReportDialogComponent,
+    MapDialogComponent,
   ],
   imports: [
     BrowserModule,
