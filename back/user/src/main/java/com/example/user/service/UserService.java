@@ -221,6 +221,22 @@ public class UserService {
     }
 
     public User createUserFromAgentApp(User user) {
+        List<Privilege> privilegeList = new ArrayList<>();
+        privilegeList.add(Privilege.RENT_VEHICLE);
+        privilegeList.add(Privilege.ADD_VEHICLE);
+        user.getUserDetails().setPrivilegeList(privilegeList);
+        UserPrivilege privilege1 = new UserPrivilege();
+        privilege1.setPrivilege(Privilege.RENT_VEHICLE);
+        privilege1.setUser(user);
+
+        userPrivilegeRepository.save(privilege1);
+
+        UserPrivilege privilege2 = new UserPrivilege();
+        privilege2.setPrivilege(Privilege.ADD_VEHICLE);
+        privilege2.setUser(user);
+
+        userPrivilegeRepository.save(privilege2);
+
         UserDetails newUserDetails = userDetailsRepository.save(user.getUserDetails());
         User newUser = user;
         newUser.setUserDetails(newUserDetails);
