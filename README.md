@@ -12,8 +12,6 @@ Model was created using PowerDesigner15. If unable to open, screenshot is also p
 <br>
 
 ### Microservices:
-#### cart
-manages shopping. database: user cart and cart items.
 #### catalogue
 keeps track of vehicle catalogue. database parts: eveerything about vehicle details.
 #### location
@@ -23,8 +21,6 @@ manages messaging. database: message, user inbox
 #### pricelist
 all about managing prices.
 database part: price list and vehicle discount tables.
-#### report
-manages user renting reports. dataabase: user report table.
 #### request
 manages vehicle requests. database part: vehicle request table.
 #### review
