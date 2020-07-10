@@ -48,11 +48,12 @@ export class HomeComponent implements OnInit {
     this.stompClient.connect({}, function (frame) {
       that.stompClient.subscribe("/chat", (message) => {
         if (message.body) {
-          var coords = []
-          coords = message.body.split(',')
+          var coordsAndId = []
+          coordsAndId = message.body.split(',')
+          var id =coordsAndId[2]
           console.log('recieved coords')
           if (this.firstCenter == null) {
-            this.firstCenter = { lat: Number(coords[0]), lng: Number(coords[1].substr(1)) }
+            this.firstCenter = { lat: Number(coordsAndId[0]), lng: Number(coordsAndId[1].substr(1)) }
             this.map = new google.maps.Map(document.getElementById('map'), {
               center: this.firstCenter,
               zoom: 8
@@ -63,7 +64,7 @@ export class HomeComponent implements OnInit {
             this.marker.setMap(null);
           var image = "assets/img/car.png"
           this.marker = new google.maps.Marker({
-            position: { lat: Number(coords[0]), lng: Number(coords[1].substr(1)) },
+            position: { lat: Number(coordsAndId[0]), lng: Number(coordsAndId[1].substr(1)) },
             map: this.map,
             title: 'Live vehicle feed',
             icon: image

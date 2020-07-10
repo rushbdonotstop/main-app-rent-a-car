@@ -55,7 +55,7 @@ def openConnection():
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
     # same as in main app
-    channel.queue_declare(queue='spring-boot')
+    channel.queue_declare(queue='spring-boot-coords')
     return connection, channel
 
 

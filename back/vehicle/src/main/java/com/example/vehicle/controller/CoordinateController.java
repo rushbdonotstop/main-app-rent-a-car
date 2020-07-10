@@ -31,10 +31,7 @@ public class CoordinateController {
     public ResponseEntity<?> generateToken(@RequestBody Map<String, Object> claims) {
         System.out.println("Token request recieved");
         //boolean valid = service.testAuthenticate(vehicleId);
-        String jws = Jwts.builder()
-                .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS256, secretService.getHS256SecretBytes())
-                .compact();
+        String jws = secretService.createJWT((Integer) claims.get("id"),300000); //5 mins for simulation purposes
         return new ResponseEntity<>(new JwtResponse(jws), HttpStatus.OK);
 
     }
