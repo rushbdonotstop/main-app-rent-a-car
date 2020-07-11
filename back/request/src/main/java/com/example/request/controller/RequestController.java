@@ -142,7 +142,7 @@ public class RequestController {
         List<UserDTO> users = (this.getUsernames()).getBody();
         List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
         List<Request> requestList = requestService.getSingleRequestsForUser(ownerId);
-        List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
+        List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForUser(requestList, users, vehicles);
 
         return new ResponseEntity<List<RequestForFrontDTO>>(requestDTOList, HttpStatus.OK);
     }
@@ -155,6 +155,19 @@ public class RequestController {
             value = requestService.changeBundleStatusToPaid(bundleId);
         } else if (changeType == 2) {
             value = requestService.changeBundleStatusToCancelled(bundleId);
+        } else {
+            value = false;
+        }
+        return new ResponseEntity<Boolean>(value, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/changeSingleStatus", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> changeSingleStatus(@RequestParam(value = "requestId") Long requestId, @RequestParam(value = "changeType") Long changeType) throws Exception {
+        Boolean value;
+        if (changeType == 1) {
+            value = requestService.changeRequestStatusToPaid(requestId);
+        } else if (changeType == 2) {
+            value = requestService.changeRequestStatusToCancelled(requestId);
         } else {
             value = false;
         }
@@ -198,11 +211,11 @@ public class RequestController {
      * @return return renting finished requests
      */
     @GetMapping(value = "/rentingFinished", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<RequestForFrontDTO>> rentingFinishedRequests() {
+    public ResponseEntity<List<RequestForFrontDTO>> rentingFinishedRequests(@RequestParam(value = "ownerId") Long ownerId) {
         try {
             List<UserDTO> users = (this.getUsernames()).getBody();
             List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
-            List<Request> requestList = requestService.rentingFinishedRequests();
+            List<Request> requestList = requestService.rentingFinishedRequests(ownerId);
             List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
             System.out.println(requestDTOList);
             return new ResponseEntity<>(requestDTOList, HttpStatus.OK);
@@ -213,12 +226,12 @@ public class RequestController {
     }
 
     @GetMapping(value = "/rentingFinishedBundle", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<BundleDTO>> finishedBundles() throws Exception {
+    public ResponseEntity<List<BundleDTO>> finishedBundles(@RequestParam(value = "ownerId") Long ownerId) throws Exception {
         try {
             List<UserDTO> users = (this.getUsernames()).getBody();
             List<VehicleMainViewDTO> vehicles = (this.getVehicleMainViewDTO()).getBody();
 
-            List<Request> requestList = requestService.rentingFinishedRequestsInBundle();
+            List<Request> requestList = requestService.rentingFinishedRequestsInBundle(ownerId);
             List<RequestForFrontDTO> requestDTOList = requestService.getDTOListForOwner(requestList, users, vehicles);
             List<BundleDTO> bundleList = requestService.getBundles(requestDTOList);
             System.out.println(bundleList);

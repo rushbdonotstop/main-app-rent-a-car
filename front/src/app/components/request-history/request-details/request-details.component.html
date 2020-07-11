@@ -69,11 +69,21 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </mat-card-content>
-                <mat-card-content *ngIf="shouldButtonsBeShownAcceptDecline(requestList[0].status)">
-                    <button (click)="accept()" mat-raised-button color="primary">Accept reservation </button>
-                    <button (click)="decline()" style="margin-left: 20px;" mat-raised-button color="warn">Decline
-                        reservation </button>
-                </mat-card-content>
+                <div *ngIf="showTwoOrOneButton();then content else other_content"></div>
+                <ng-template #content>
+                    <mat-card-content *ngIf="shouldButtonsBeShownAcceptDecline(requestList[0].status)">
+                        <button (click)="accept()" mat-raised-button color="primary">Accept reservation </button>
+                        <button (click)="decline()" style="margin-left: 20px;" mat-raised-button color="warn">Decline
+                            reservation </button>
+                    </mat-card-content>
+                </ng-template>
+
+                <ng-template #other_content>
+                    <mat-card-content *ngIf="shouldCancelBeShown(requestList[0].status)">
+                        <button (click)="decline()" mat-raised-button color="warn">Decline
+                            reservation </button>
+                    </mat-card-content>
+                </ng-template>
             </mat-card>
         </div>
 

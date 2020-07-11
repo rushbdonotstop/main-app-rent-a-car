@@ -20,10 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 @Service
 public class RequestService {
@@ -292,7 +289,9 @@ public class RequestService {
                     break;
                 }
             }
-            dto.setBundleId(request.getBundle().getId());
+            if (request.getBundle() != null) {
+                dto.setBundleId(request.getBundle().getId());
+            }
             newDTOList.add(dto);
 
         }
@@ -352,7 +351,8 @@ public class RequestService {
     //RETURN FALSE IF THERE IS ALREADY PAID REQUEST WITH DATE THAT OVERLAP
     public boolean changeBundleStatusToPaid(Long bundleId) {
         boolean value = true;
-        List<Request> requestList = requestRepository.findAll();
+        Bundle bundle = bundleRepository.findOneById(bundleId);
+        List<Request> requestList = requestRepository.bundleMembers(bundle);
         for (Request request : requestList) {
             if (request.getBundle().getId().equals(bundleId)) {
                 value = changeRequestStatusToPaid(request.getId());
@@ -370,7 +370,8 @@ public class RequestService {
     }
 
     public boolean changeBundleStatusToCancelled(Long bundleId) {
-        List<Request> requestList = requestRepository.findAll();
+        Bundle bundle = bundleRepository.findOneById(bundleId);
+        List<Request> requestList = requestRepository.bundleMembers(bundle);
         for (Request request : requestList) {
             boolean value = changeRequestStatusToCancelled(request.getId());
         }
@@ -393,22 +394,22 @@ public class RequestService {
         return false;
     }
 
-    public List<Request> rentingFinishedRequests() {
+    public List<Request> rentingFinishedRequests(Long ownerId) {
         List<Request> finishedRequests = this.requestRepository.rentingFinishedRequests(LocalDateTime.now());
         List<Request> nonReviewedRequests = new ArrayList<>();
         for (Request r : finishedRequests) {
             System.out.println("request already reviewed here:" + reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size());
-            if (reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size() == 0) {
+            if (reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size() == 0 && r.getOwnerId().equals(ownerId)) {
                 nonReviewedRequests.add(r);
             }
         }
         return nonReviewedRequests;
     }
 
-    public List<Request> rentingFinishedRequestsInBundle() {
+    public List<Request> rentingFinishedRequestsInBundle(Long ownerId) {
         List<Request> requestsInBundles = new ArrayList<>();
         for (Request r : this.requestRepository.rentingFinishedRequestsInBundle(LocalDateTime.now()))
-            if (r.getBundle() != null && reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size() == 0) {
+            if (r.getBundle() != null && reportRepository.findByVehicleIdAndStartDateAndEndDate(r.getVehicleId(), r.getStartDate(), r.getEndDate()).size() == 0 && r.getOwnerId().equals(ownerId)) {
                 requestsInBundles.add(r);
             }
         return requestsInBundles;
