@@ -12,7 +12,6 @@ services:
       - xml
     tty: true
 
-   
   zuul-service:
     build: 
         context: ./zuul
@@ -31,8 +30,7 @@ services:
     depends_on:
       - eureka-serviceregistry    
       
-
-   vehicle-service:
+  vehicle-service:
     build: 
         context: ./vehicle
         dockerfile: Dockerfile
@@ -54,7 +52,6 @@ services:
     depends_on:
       - postgres
       - eureka-serviceregistry
-      
       
   user-service:
     build: 
