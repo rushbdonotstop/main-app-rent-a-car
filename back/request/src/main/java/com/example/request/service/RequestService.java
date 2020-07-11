@@ -448,9 +448,14 @@ public class RequestService {
 
     public Boolean canUserDelete(Long userId) {
         try {
-            this.requestRepository.findByStatus(Status.PENDING);
+            if(requestRepository.findByStatus(Status.PENDING).size() != 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
         } catch (Exception e) {
-            return true;
         }
         return false;
     }

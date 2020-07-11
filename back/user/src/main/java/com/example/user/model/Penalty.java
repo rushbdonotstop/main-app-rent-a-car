@@ -1,5 +1,7 @@
 package com.example.user.model;
 
+import com.example.user.model.enums.PenaltyStatus;
+
 import javax.persistence.*;
 
 @Entity

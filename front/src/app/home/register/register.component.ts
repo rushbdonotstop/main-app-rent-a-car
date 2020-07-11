@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   public agentRequest = false;
 
 
-  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar,private authService : AuthService) { 
+  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar,private authService : AuthService, private router: Router) { 
     this.usernameInvalid = false;
     this.passwordInvalid = false;
     this.passwordsDontMatch = false;
@@ -93,6 +93,7 @@ export class RegisterComponent implements OnInit {
         });
       })
     }
+    this.router.navigate(['home']);
   }
 
   invalidUsername(username : String) : boolean{

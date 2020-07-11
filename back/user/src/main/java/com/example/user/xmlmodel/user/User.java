@@ -9,7 +9,7 @@
 package com.example.user.xmlmodel.user;
 
 import com.example.user.model.Penalty;
-import com.example.user.model.PenaltyStatus;
+import com.example.user.model.enums.PenaltyStatus;
 import com.example.user.model.enums.Privilege;
 import com.example.user.model.enums.UserType;
 import com.example.user.xmlmodel.user.user_details.UserDetails;
