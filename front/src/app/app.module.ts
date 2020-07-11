@@ -15,11 +15,8 @@ import { CartDialogComponent } from './components/cart-dialog/cart-dialog.compon
 import { MatListModule, MatListItem } from '@angular/material/list';
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 import { AgmCoreModule } from '@agm/core';
-<<<<<<< HEAD
 import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
-=======
 import { MyVehiclesReportDialogComponent } from './components/my-vehicles/my-vehicles-report-dialog/my-vehicles-report-dialog.component';
->>>>>>> afd8393b65383ba3db77531a50ee4e181109ed9b
 
 
 @NgModule({
@@ -28,11 +25,8 @@ import { MyVehiclesReportDialogComponent } from './components/my-vehicles/my-veh
     RentDialogComponent,
     CartDialogComponent,
     ReportDialogComponent,
-<<<<<<< HEAD
     MapDialogComponent,
-=======
     MyVehiclesReportDialogComponent
->>>>>>> afd8393b65383ba3db77531a50ee4e181109ed9b
   ],
   imports: [
     BrowserModule,
@@ -54,10 +48,6 @@ import { MyVehiclesReportDialogComponent } from './components/my-vehicles/my-veh
   bootstrap: [AppComponent],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-<<<<<<< HEAD
-  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent,MapDialogComponent]
-=======
-  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent, MyVehiclesReportDialogComponent]
->>>>>>> afd8393b65383ba3db77531a50ee4e181109ed9b
+  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent, MyVehiclesReportDialogComponent, MapDialogComponent]
 })
 export class AppModule { }
