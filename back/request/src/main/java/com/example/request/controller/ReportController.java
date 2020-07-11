@@ -23,6 +23,16 @@ public class ReportController {
     RestTemplate restTemplate;
 
     /**
+     * GET /server/report/vehicle/{vehicleId}
+     *
+     * @return return all reports
+     */
+    @GetMapping(value = "vehicle/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Report>> vehicleReports(@PathVariable Long vehicleId) {
+        return new ResponseEntity<>(this.reportService.findAllByVehicleId(vehicleId), HttpStatus.OK);
+    }
+
+    /**
      * GET /server/report
      *
      * @return return all reports

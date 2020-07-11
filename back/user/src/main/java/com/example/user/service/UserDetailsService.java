@@ -29,7 +29,7 @@ public class UserDetailsService {
             UserDetails userDetails = userDetailsRepository.getOne(Long.parseLong(id));
 
             UserDetailsDTO userDetailsDTO = new UserDetailsDTO(userDetails.getId(), userDetails.getFullName(), userDetails.getAddress()
-                    , userDetails.getBusinessNum(), userDetails.getVehicleNum(), userDetails.getUserType().toString());
+                    , userDetails.getBusinessNum(), userDetails.getVehicleNum(), userDetails.getUserType().toString(), userDetails.getEmail());
 
             return userDetailsDTO;
         } catch (EntityNotFoundException e) {

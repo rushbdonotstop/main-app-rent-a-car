@@ -29,4 +29,8 @@ public class ReportService {
         return this.reportRepository.findById(id);
     }
 
+    public List<Report> findAllByVehicleId(Long vehicleId) {
+        List<Report> reportList = reportRepository.findAllByVehicleId(vehicleId);
+        return reportList;
+    }
 }

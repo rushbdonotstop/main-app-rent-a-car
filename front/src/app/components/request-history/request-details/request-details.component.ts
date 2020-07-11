@@ -111,6 +111,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   createReport(element: RequestDTO) {
+    element.viewMode = false;
     const dialogRef = this.dialog.open(ReportDialogComponent, {
       width: '400px',
       data: element

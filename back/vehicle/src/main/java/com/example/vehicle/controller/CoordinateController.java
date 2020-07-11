@@ -1,16 +1,12 @@
 package com.example.vehicle.controller;
 
-import com.example.vehicle.WebSocketConfig;
 import com.example.vehicle.model.JwtResponse;
 import com.example.vehicle.service.CoordinateService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

@@ -466,5 +466,4 @@ public class SearchVehicleService {
         }
         return rating;
     }
-
 }

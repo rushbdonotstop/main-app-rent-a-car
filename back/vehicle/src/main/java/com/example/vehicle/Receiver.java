@@ -2,7 +2,6 @@ package com.example.vehicle;
 
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.CountDownLatch;
-
 import com.example.vehicle.model.Message;
 import com.example.vehicle.service.CoordinateService;
 import com.fasterxml.jackson.core.JsonProcessingException;
