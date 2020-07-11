@@ -29,7 +29,7 @@ public class MessageService {
     public boolean sendMessage(MessageDTO message, List<RequestDTO> requestList) {
         System.err.println("datum primljen je: " + message.getDateAndTime().toString());
         for (RequestDTO request : requestList) {
-            if (((request.getOwnerId().equals(message.getSenderId()) && request.getUserId().equals(message.getReceiverId())) || (request.getOwnerId().equals(message.getReceiverId()) && request.getUserId().equals(message.getSenderId()))) && (request.getStatus().equals(Status.RESERVED) || request.getStatus().equals(Status.PAID))  ) {
+            if (((request.getOwnerId().equals(message.getSenderId()) && request.getUserId().equals(message.getReceiverId())) || (request.getOwnerId().equals(message.getReceiverId()) && request.getUserId().equals(message.getSenderId()))) && (request.getStatus().equals(Status.RESERVED) || request.getStatus().equals(Status.PAID) || request.getStatus().equals(Status.PENDING))  ) {
                 Message mess = new Message(message);
                 if (getConversationId(message) != null) {
                     System.out.println("USAO U IF");
@@ -105,7 +105,7 @@ public class MessageService {
         convertedMessage.setMessageType(message.getMessageType());
         convertedMessage.setDateAndTime(message.getDateAndTime());
         convertedMessage.setText(message.getText());
-
+        System.err.println(convertedMessage.toString());
         return convertedMessage;
     }
 }

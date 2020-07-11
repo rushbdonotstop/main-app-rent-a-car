@@ -37,7 +37,7 @@ public class VerificationTokenService {
         verificationTokenRepository.save(vToken);
 
         String emailText = "You registered successfully, you can verify your account by following next link:\n" +
-                "Verification link:\t" + "https://localhost:4201/registrationConfirm?token=" + token;
+                "Verification link:\t" + "http://localhost:4201/registrationConfirm?token=" + token;
 
         return emailText;
     }

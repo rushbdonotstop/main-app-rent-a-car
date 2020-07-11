@@ -47,16 +47,24 @@ export class RequestService {
 }
 
 
-    changeStatusOfRequest(bundleId: number, changeType: number) {
+    changeStatusOfBundle(bundleId: number, changeType: number) {
 
         return this.http.get<boolean>('server/request/request/changeStatus?bundleId=' + bundleId + '&changeType=' + changeType, httpOptions);
     }
 
+    changeStatusOfRequest(requestId: number, changeType: number) {
+        return this.http.get<boolean>('server/request/request/changeSingleStatus?requestId=' + requestId + '&changeType=' + changeType, httpOptions);
+    }
+
     finishedRequests() {
-        return this.http.get<Array<RequestDTO>>('server/request/request/rentingFinished', httpOptions);
+        this.user = JSON.parse(localStorage.getItem('userObject'));
+        let ownerId = this.user.id;
+        return this.http.get<Array<RequestDTO>>('server/request/request/rentingFinished?ownerId=' + ownerId, httpOptions);
     }
     finishedBundle() {
-        return this.http.get<Array<BundleDTO>>('server/request/request/rentingFinishedBundle', httpOptions);
+        this.user = JSON.parse(localStorage.getItem('userObject'));
+        let ownerId = this.user.id;
+        return this.http.get<Array<BundleDTO>>('server/request/request/rentingFinishedBundle?ownerId=' + ownerId, httpOptions);
     }
 
 }

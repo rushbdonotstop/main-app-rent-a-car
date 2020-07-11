@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BundleRepository extends JpaRepository<Bundle,Long> {
-    public Optional<Bundle> findById(Long id);
-    public List<Bundle> findAll();
+    Bundle findOneById(Long id);
+    List<Bundle> findAll();
 
 }

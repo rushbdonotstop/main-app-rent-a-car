@@ -33,7 +33,6 @@ export class RequestDetailsComponent implements OnInit {
     this.requestList = data.bundle.requestsList;
     this.selectedHistory = data.selectedHistory;
     this.dataSource = new MatTableDataSource<RequestDTO>(this.requestList);
-    alert(JSON.stringify(this.requestList));
   }
 
   ngOnInit() {
@@ -50,8 +49,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   accept() {
-    alert(this.bundleId)
-    this.requestService.changeStatusOfRequest(this.bundleId, 1).subscribe(
+    this.requestService.changeStatusOfBundle(this.bundleId, 1).subscribe(
       data => {
         if (data) {
           this._snackBar.open('Request/s are accepted successfully.', "", {
@@ -70,7 +68,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   decline() {
-    this.requestService.changeStatusOfRequest(this.bundleId, 2).subscribe(
+    this.requestService.changeStatusOfBundle(this.bundleId, 2).subscribe(
       data => {
         if (data) {
           this._snackBar.open('Request/s are canceled successfully.', "", {
@@ -122,10 +120,10 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   isRentingFinished(request: RequestDTO) {
-    if (new Date(request.endDate) < new Date()){
+    if (new Date(request.endDate) < new Date() && request.status.toString() == 'PAID' && this.selectedHistory == 'finishedRequests') {
       return true;
     }
-    else{
+    else {
       return false;
     };
   }
@@ -135,6 +133,28 @@ export class RequestDetailsComponent implements OnInit {
     if ((requestStatus.toString() == 'PENDING') && (this.selectedHistory == "receivedRequests")) {
       return true;
     } else { 
+      return false;
+    }
+  }
+
+  shouldCancelBeShown(requestStatus: RequestStatus) {
+    if ((requestStatus.toString() == 'PENDING') && (this.selectedHistory == 'sentRequests')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  agentLogged() {
+    if (JSON.parse(localStorage.getItem('userObject')).userDetails.userType == "AGENT")
+      return true
+    return false
+  }
+
+  showTwoOrOneButton() {
+    if (this.selectedHistory == 'receivedRequests') {
+      return true;
+    } else {
       return false;
     }
   }
