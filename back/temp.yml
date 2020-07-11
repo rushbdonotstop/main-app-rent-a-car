@@ -1,99 +1,3 @@
-user-service:
-    build: 
-        context: ./user
-        dockerfile: Dockerfile
-    restart: on-failure
-    image: user-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
-    ports:
-    - "8083:8083"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=admin
-      - DATABASE_DOMAIN=postgres
-      - DATABASE_SCHEMA=maindb
-    tty: true
-    networks:
-      - xml
-    depends_on:
-      - postgres
-      - eureka-serviceregistry
-      
-
-  pricelist-service:
-    build: 
-        context: ./pricelist
-        dockerfile: Dockerfile
-    restart: on-failure
-    image: pricelist-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
-    ports:
-    - "8084:8084"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=admin
-      - DATABASE_DOMAIN=postgres
-      - DATABASE_SCHEMA=maindb
-    tty: true
-    networks:
-      - xml
-    depends_on:
-      - postgres
-      - eureka-serviceregistry
-      
-
-  location-service:
-    build: 
-        context: ./location
-        dockerfile: Dockerfile
-    restart: on-failure
-    image: location-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
-    ports:
-    - "8085:8085"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=admin
-      - DATABASE_DOMAIN=postgres
-      - DATABASE_SCHEMA=maindb
-    tty: true
-    networks:
-      - xml
-    depends_on:
-      - postgres
-      - eureka-serviceregistry
-      
-  
-  catalogue-service:
-    build: 
-        context: ./catalogue
-        dockerfile: Dockerfile
-    restart: on-failure
-    image: catalogue-image 
-    volumes:
-    - $USERPROFILE/.m2:/root/.m2
-    ports:
-    - "8086:8086"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=admin
-      - DATABASE_DOMAIN=postgres
-      - DATABASE_SCHEMA=maindb
-    tty: true
-    networks:
-      - xml
-    depends_on:
-      - postgres
-      - eureka-serviceregistry
-      
-
   request-service:
     build: 
         context: ./request
@@ -164,3 +68,100 @@ user-service:
     depends_on:
       - postgres
       - eureka-serviceregistry
+      
+        vehicle-service:
+    build: 
+        context: ./vehicle
+        dockerfile: Dockerfile
+    restart: on-failure
+    image: vehicle-image 
+    volumes:
+    - $USERPROFILE/.m2:/root/.m2
+    ports:
+    - "8082:8082"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=admin
+      - DATABASE_DOMAIN=postgres
+      - DATABASE_SCHEMA=maindb
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+    tty: true
+    networks:
+      - xml
+    depends_on:
+      - postgres
+      - eureka-serviceregistry
+      
+  user-service:
+    build: 
+        context: ./user
+        dockerfile: Dockerfile
+    restart: on-failure
+    image: user-image 
+    volumes:
+    - $USERPROFILE/.m2:/root/.m2
+    ports:
+    - "8083:8083"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=admin
+      - DATABASE_DOMAIN=postgres
+      - DATABASE_SCHEMA=maindb
+    tty: true
+    networks:
+      - xml
+    depends_on:
+      - postgres
+      - eureka-serviceregistry
+      
+
+  pricelist-service:
+    build: 
+        context: ./pricelist
+        dockerfile: Dockerfile
+    restart: on-failure
+    image: pricelist-image 
+    volumes:
+    - $USERPROFILE/.m2:/root/.m2
+    ports:
+    - "8084:8084"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=admin
+      - DATABASE_DOMAIN=postgres
+      - DATABASE_SCHEMA=maindb
+    tty: true
+    networks:
+      - xml
+    depends_on:
+      - postgres
+      - eureka-serviceregistry
+      
+
+  location-service:
+    build: 
+        context: ./location
+        dockerfile: Dockerfile
+    restart: on-failure
+    image: location-image 
+    volumes:
+    - $USERPROFILE/.m2:/root/.m2
+    ports:
+    - "8085:8085"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=admin
+      - DATABASE_DOMAIN=postgres
+      - DATABASE_SCHEMA=maindb
+    tty: true
+    networks:
+      - xml
+    depends_on:
+      - postgres
+      - eureka-serviceregistry
+      

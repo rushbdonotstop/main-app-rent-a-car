@@ -23,15 +23,21 @@ services:
         - $USERPROFILE/.m2:/root/.m2
     ports:
         - "8081:8081"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
     depends_on:
-      - eureka-serviceregistry    
-      
-  vehicle-service:
+      - eureka-serviceregistry   
+
+
+vehicle-service:
     build: 
         context: ./vehicle
         dockerfile: Dockerfile
@@ -41,14 +47,17 @@ services:
     - $USERPROFILE/.m2:/root/.m2
     ports:
     - "8082:8082"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
@@ -66,12 +75,17 @@ services:
     - $USERPROFILE/.m2:/root/.m2
     ports:
     - "8083:8083"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
@@ -90,12 +104,17 @@ services:
     - $USERPROFILE/.m2:/root/.m2
     ports:
     - "8084:8084"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
@@ -114,12 +133,17 @@ services:
     - $USERPROFILE/.m2:/root/.m2
     ports:
     - "8085:8085"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
@@ -138,12 +162,17 @@ services:
     - $USERPROFILE/.m2:/root/.m2
     ports:
     - "8086:8086"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
@@ -151,7 +180,6 @@ services:
       - postgres
       - eureka-serviceregistry
       
-
   request-service:
     build: 
         context: ./request
@@ -162,12 +190,17 @@ services:
     - $USERPROFILE/.m2:/root/.m2
     ports:
     - "8087:8087"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
@@ -186,12 +219,17 @@ services:
     - $USERPROFILE/.m2:/root/.m2
     ports:
     - "8088:8088"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
@@ -210,18 +248,24 @@ services:
     - $USERPROFILE/.m2:/root/.m2
     ports:
     - "8089:8089"
+    command: sh -c "/wait && /entrypoint.sh"
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
+      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
     tty: true
     networks:
       - xml
     depends_on:
       - postgres
       - eureka-serviceregistry
+     
       
   rabbitmq:
    image: rabbitmq:management
