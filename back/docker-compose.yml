@@ -6,6 +6,7 @@ services:
     build: 
         context: ./eureka
         dockerfile: Dockerfile
+    restart: on-failure
     ports:
      - "8761:8761"
     networks:
