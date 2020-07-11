@@ -15,9 +15,11 @@ import { ViewCodebookComponent } from './components/admin-dashboard/vehicles-cod
 import { ViewUsersComponent } from './components/admin-dashboard/system-users/view-users/view-users.component';
 import { RegisterAgentComponent } from './components/admin-dashboard/system-users/register-agent/register-agent.component';
 import { MyVehiclesComponent } from './components/my-vehicles/my-vehicles.component';
+import { RegisterVerificationComponent } from './home/register/register-verification/register-verification.component';
 
 
 const routes: Routes = [{ path: 'login', component: LoginComponent},
+{ path: 'registrationConfirm', component: RegisterVerificationComponent},
 { path: 'register', component: RegisterComponent},
 { path: 'search', component: ViewVehiclesComponent},
 { path: 'add', component: CreateVehicleComponent },
