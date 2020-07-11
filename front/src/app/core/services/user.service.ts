@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/models/user/User';
 import { UserDetails } from 'src/app/shared/models/user/UserDetails';
 import { UserPrivilegesDTO } from 'src/app/shared/models/user/UserPrivilegesDTO';
 import { UserPrivilegeRequest } from 'src/app/shared/models/user/UserPrivilegeRequest';
+import { AgentRequest } from 'src/app/shared/models/AgentRequest';
 
 const httpOptions = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
 
@@ -15,6 +16,14 @@ const httpOptions = {headers: new HttpHeaders({'Content-Type' : 'application/jso
 export class UserService {
   privilegeRequest: UserPrivilegeRequest = new UserPrivilegeRequest();
   constructor(private http: HttpClient) { }
+
+  getUser(id: number) {
+    return this.http.get<User>('server/user/user/'+id, httpOptions);
+  }
+
+  getAllAgentRequests() {
+    return this.http.get<AgentRequest[]>('server/user/agentRequest', httpOptions);
+  }
 
   getUsername(id : number) {
     return this.http.get<LoginRequestDTO>('server/user/user/username/'+id,  httpOptions);
@@ -51,5 +60,13 @@ export class UserService {
   postPermission(id: number, permission: string) {
     this.privilegeRequest.userPrivilege = permission;
     return this.http.post<NotificationFromServer>('server/user/userPrivilege/'+id, JSON.stringify(this.privilegeRequest), httpOptions);
+  }
+
+  rejectAgent(agentRequest: any) {
+    return this.http.delete('server/user/agentRequest/'+agentRequest.id, httpOptions);
+  }
+
+  approveAgent(agentRequest: any) {
+    return this.http.put('server/user/agentRequest/'+agentRequest.id, httpOptions);
   }
 }

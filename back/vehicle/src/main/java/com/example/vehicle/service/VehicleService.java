@@ -135,4 +135,8 @@ public class VehicleService {
         }
         return false;
     }
+
+    public List<Vehicle> getAllFromUser(Long userId) {
+        return this.vehicleRepository.findAllByUserId(userId);
+    }
 }

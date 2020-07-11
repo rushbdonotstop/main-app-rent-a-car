@@ -7,17 +7,19 @@ public class UserDetailsDTO {
     private String businessNum;
     private int vehicleNum;
     private String userType;
+    private String email;
 
     public UserDetailsDTO() {
     }
 
-    public UserDetailsDTO(Long id, String fullName, String address, String businessNum, int vehicleNum, String userType) {
+    public UserDetailsDTO(Long id, String fullName, String address, String businessNum, int vehicleNum, String userType, String email) {
         this.id = id;
         this.fullName = fullName;
         this.address = address;
         this.businessNum = businessNum;
         this.vehicleNum = vehicleNum;
         this.userType = userType;
+        this.email = email;
     }
 
     public Long getId() {
@@ -66,5 +68,13 @@ public class UserDetailsDTO {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

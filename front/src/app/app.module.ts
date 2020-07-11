@@ -15,6 +15,8 @@ import { CartDialogComponent } from './components/cart-dialog/cart-dialog.compon
 import { MatListModule, MatListItem } from '@angular/material/list';
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 import { AgmCoreModule } from '@agm/core';
+import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
+import { MyVehiclesReportDialogComponent } from './components/my-vehicles/my-vehicles-report-dialog/my-vehicles-report-dialog.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { AgmCoreModule } from '@agm/core';
     RentDialogComponent,
     CartDialogComponent,
     ReportDialogComponent,
+    MapDialogComponent,
+    MyVehiclesReportDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,6 @@ import { AgmCoreModule } from '@agm/core';
   bootstrap: [AppComponent],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent]
+  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent, MyVehiclesReportDialogComponent, MapDialogComponent]
 })
 export class AppModule { }

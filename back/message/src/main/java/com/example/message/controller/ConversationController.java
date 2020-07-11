@@ -1,7 +1,7 @@
 package com.example.message.controller;
 
-import com.example.message.DTO.ConversationDTO;
-import com.example.message.DTO.UserDTO;
+import com.example.message.dto.ConversationDTO;
+import com.example.message.dto.UserDTO;
 import com.example.message.model.Conversation;
 import com.example.message.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;

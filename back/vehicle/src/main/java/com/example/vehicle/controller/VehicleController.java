@@ -25,6 +25,8 @@ public class VehicleController {
     @Autowired
     RestTemplate restTemplate;
 
+
+
     /**
      * POST /server/vehicle
      *

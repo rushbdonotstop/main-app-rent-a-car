@@ -9,6 +9,7 @@
             <ul class="navbar-nav text-uppercase ml-auto">
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/dashboard']">Home</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/users']">System users</a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/agentRequests']">Agent requests</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/reviews']">Review requests</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/catalogue']">Catalogue</a></li>
                 <li *ngIf="loggedUser == null"  class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/login']">Login</a></li>

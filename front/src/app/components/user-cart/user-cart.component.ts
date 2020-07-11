@@ -29,9 +29,10 @@ export class UserCartComponent implements OnInit {
   bundleList: BundleAndVehicle[] = []
   dataSourceRequests: MatTableDataSource<RequestAndVehicle>;
   dataSourceBundle: MatTableDataSource<BundleAndVehicle>;
-  displayedColumns: string[] = ['make', 'model', 'price', 'owner', 'details', 'prices', 'remove'];
+  displayedColumns: string[] = ['make', 'model', 'price', 'startDate', 'endDate', 'owner', 'details', 'prices', 'remove'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
   price: number = 0
+  discounts = []
   rentingPrivilege: boolean = false
   hasPenalties: boolean = false
 
@@ -40,13 +41,12 @@ export class UserCartComponent implements OnInit {
 
   ngOnInit() {
     this.cart = this.cartService.getCart()
-
-    if(this.cart != null){
+    if (this.cart != null) {
       this.requests = this.cart.requests
       this.bundleList = this.cart.bundles
       this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>(this.requests);
       this.dataSourceBundle = new MatTableDataSource<BundleAndVehicle>(this.bundleList);
-  
+
       if (this.requests.length == 0 && this.bundleList.length == 0)
         this.emptyCart = true
       else {
@@ -73,7 +73,7 @@ export class UserCartComponent implements OnInit {
       }
     }
 
-  
+
   }
 
   removeFromBundle(element: RequestAndVehicle, bundle: BundleAndVehicle) {
@@ -131,22 +131,22 @@ export class UserCartComponent implements OnInit {
 
   buy() {
     if (this.rentingPrivilege && !this.hasPenalties) {
-        this.cartService.buy().subscribe(data => {
-          this._snackBar.open("Successfully rented!", "", {
+      this.cartService.buy().subscribe(data => {
+        this._snackBar.open("Successfully rented!", "", {
+          duration: 2000,
+          verticalPosition: 'bottom'
+        });
+        this.cartService.newCart()
+        this.cart = new DetailedCart()
+        if (this.isCartEmpty)
+          this.emptyCart = true
+      },
+        error => {
+          this._snackBar.open("Error occured", "", {
             duration: 2000,
             verticalPosition: 'bottom'
           });
-          this.cartService.newCart()
-          this.cart = new DetailedCart()
-          if (this.isCartEmpty)
-            this.emptyCart = true
-        },
-          error => {
-            this._snackBar.open("Error occured", "", {
-              duration: 2000,
-              verticalPosition: 'bottom'
-            });
-          })
+        })
     }
     else {
       this._snackBar.open("You have no renting privileges. Please try contacting an administrator to get the issue resolved", "", {
@@ -162,6 +162,9 @@ export class UserCartComponent implements OnInit {
   }
 
   calculateTotalPrice() {
+
+    this.discounts = []
+
     this.calculateRequestPrice(this.requests)
 
     for (let b of this.bundleList) {
@@ -180,20 +183,65 @@ export class UserCartComponent implements OnInit {
         prices = data
         console.log(prices)
         for (let p of prices) {
-          console.log(startDate, endDate, p.startDate, p.endDate)
-          console.log(p.price)
-          console.log(this.daysDiff(endDate, startDate))
           if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == 1) {
-            this.price += p.price * (this.daysDiff(endDate, startDate))
-            requestPrice += p.price * (this.daysDiff(endDate, startDate))
+            console.log("whole renting time is on 1 pricelist")
+            var daysOnPriceList = this.daysDiff(endDate, startDate) //whole renting time is on 1 pricelist
+            var discount = 0
+            if (daysOnPriceList >= p.vehicleDiscount.numDays) {
+              discount = (p.vehicleDiscount.discount / 100)
+              this.discounts.push('discount ' + p.vehicleDiscount.discount + "% on vehicle " + r.make + " " + r.model + " (" + daysOnPriceList + " days / required " + p.vehicleDiscount.numDays + ")")
+            }
+            this.price += p.price * (daysOnPriceList) * (1-discount)
+            requestPrice += p.price * (daysOnPriceList) * (1-discount)
+            console.log(p.price)
+            console.log(daysOnPriceList)
+            console.log(discount)
           }
           else if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == -1) {
-            this.price += p.price * (this.daysDiff(p.endDate, startDate))
-            requestPrice += p.price * (this.daysDiff(p.endDate, startDate))
+            if (this.datesOverlap(startDate, endDate, p.startDate, p.endDate)) {
+              console.log("pricelist starts before but ends before request")
+              var daysOnPriceList = this.daysDiff(p.endDate, startDate) //pricelist starts before but ends before request
+              var discount = 0
+              if (daysOnPriceList >= p.vehicleDiscount.numDays) {
+                this.discounts.push('discount ' + p.vehicleDiscount.discount + "% on vehicle " + r.make + " " + r.model + " (" + daysOnPriceList + " days / required " + p.vehicleDiscount.numDays + ")")
+                discount = (p.vehicleDiscount.discount / 100)
+              }
+              this.price += p.price * (this.daysDiff(p.endDate, startDate)) * (1-discount)
+              requestPrice += p.price * (this.daysDiff(p.endDate, startDate)) * (1-discount)
+              console.log(p.price)
+              console.log(daysOnPriceList)
+              console.log(discount)
+            }
           }
-          else if (this.compareDate(p.startDate, startDate) == 1 && this.compareDate(p.endDate, endDate) == -1) {
-            this.price += p.price * (this.daysDiff(endDate, p.startDate))
-            requestPrice += p.price * (this.daysDiff(endDate, p.startDate))
+          else if (this.compareDate(p.startDate, startDate) == 1 && this.compareDate(p.endDate, endDate) == 1) {
+            if (this.datesOverlap(startDate, endDate, p.startDate, p.endDate)) {
+              console.log("pricelist starts after but ends after")
+              var daysOnPriceList = this.daysDiff(endDate, p.startDate) //pricelist starts after but ends after
+              var discount = 0
+              if (daysOnPriceList >= p.vehicleDiscount.numDays) {
+                this.discounts.push('discount ' + p.vehicleDiscount.discount + "% on vehicle " + r.make + " " + r.model + " (" + daysOnPriceList + " days / required " + p.vehicleDiscount.numDays + ")")
+                discount = (p.vehicleDiscount.discount / 100)
+              }
+              this.price += p.price * (this.daysDiff(endDate, p.startDate)) * (1-discount)
+              requestPrice += p.price * (this.daysDiff(endDate, p.startDate)) * (1-discount)
+              console.log(p.price)
+              console.log(daysOnPriceList)
+              console.log(discount)
+            }
+            else if (this.compareDate(p.startDate, startDate) == 1 && this.compareDate(p.endDate, endDate) == -1) {
+              console.log("pricelist in between start and end date")
+              var daysOnPriceList = this.daysDiff(p.endDate, p.startDate) //pricelist in between start and end date
+              var discount = 0
+              if (daysOnPriceList >= p.vehicleDiscount.numDays) {
+                this.discounts.push('discount ' + p.vehicleDiscount.discount + "% on vehicle " + r.make + " " + r.model + " (" + daysOnPriceList + " days / required " + p.vehicleDiscount.numDays + ")")
+                discount = (p.vehicleDiscount.discount / 100)
+              }
+              this.price += p.price * (daysOnPriceList) * (1-discount)
+              requestPrice += p.price * (daysOnPriceList) * (1-discount)
+              console.log(p.price)
+              console.log(daysOnPriceList)
+              console.log(discount)
+            }
           }
         }
         r.price = requestPrice
@@ -220,6 +268,10 @@ export class UserCartComponent implements OnInit {
     var diff = Math.abs(new Date(date1).getTime() - new Date(date2).getTime());
     var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     return diffDays
+  }
+
+  datesOverlap(e1start, e1end, e2start, e2end) {
+    return (e1start > e2start && e1start < e2end || e2start > e1start && e2start < e1end);
   }
 
   isCartEmpty(): boolean {

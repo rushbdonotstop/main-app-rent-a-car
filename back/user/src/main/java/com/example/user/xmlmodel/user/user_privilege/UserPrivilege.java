@@ -8,7 +8,6 @@
 
 package com.example.user.xmlmodel.user.user_privilege;
 
-
 import com.example.user.xmlmodel.user.User;
 
 import javax.xml.bind.annotation.*;

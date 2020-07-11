@@ -15,6 +15,10 @@ export class VehicleService {
 
   constructor(private http: HttpClient) { }
 
+  getAllFromUser(id: number) {
+    return this.http.get<VehicleMainViewDTO[]>('server/vehicle/search/user/'+id, httpOptions);
+  }
+
   getAll() {
     return this.http.get<VehicleMainViewDTO[]>('server/vehicle/search',  httpOptions);
   }

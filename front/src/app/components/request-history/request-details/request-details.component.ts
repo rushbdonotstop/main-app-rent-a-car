@@ -2,8 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { RequestDTO } from 'src/app/shared/models/request/requestDTO';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { RequestService } from 'src/app/core/services/request.service';
-import { BundleDTO } from 'src/app/shared/models/request/bundleDTO';
-import { User } from 'src/app/shared/models/user/User';
 import { ReportDialogComponent } from '../../report-dialog/report-dialog.component';
 import { RequestStatus } from 'src/app/shared/models/request/RequestStatus';
 import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details.component';
@@ -38,8 +36,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    var loggedInUser = new User()
-    loggedInUser = JSON.parse(localStorage.getItem('userObject'))
+    var loggedInUser = JSON.parse(localStorage.getItem('userObject'))
     if (loggedInUser.userDetails.userType.toString() == "AGENT") {
       this.isUserAgent = true;
       this.displayedColumns = ['makePlusModel', 'startDate', 'endDate', 'totalCost', 'status', 'report', 'review'];
@@ -112,6 +109,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   createReport(element: RequestDTO) {
+    element.viewMode = false;
     const dialogRef = this.dialog.open(ReportDialogComponent, {
       width: '400px',
       data: element

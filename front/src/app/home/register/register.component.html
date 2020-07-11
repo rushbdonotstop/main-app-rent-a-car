@@ -86,6 +86,10 @@
                                 </mat-form-field>
                             </div>
                         </div>
+                    
+                        <div class="row" style="justify-content: center">
+                            <mat-checkbox [(ngModel)]="agentRequest" formControlName="agentRequest">I want to be agent</mat-checkbox>
+                        </div>
                     </div>
                     <div class="row" style="justify-content: center; margin-top:30px;">
                         <button mat-raised-button color="primary">Register</button>

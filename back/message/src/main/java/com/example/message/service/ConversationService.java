@@ -1,8 +1,8 @@
 package com.example.message.service;
 
 
-import com.example.message.DTO.ConversationDTO;
-import com.example.message.DTO.UserDTO;
+import com.example.message.dto.ConversationDTO;
+import com.example.message.dto.UserDTO;
 import com.example.message.model.Conversation;
 import com.example.message.repository.ConversationRepository;
 import com.example.message.repository.MessageRepository;

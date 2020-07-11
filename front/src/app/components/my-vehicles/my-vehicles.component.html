@@ -1,0 +1,48 @@
+<pm-header></pm-header>
+<header class="masthead">
+    <div class="container">
+      <div class="masthead-subheading">See what we offer</div>
+      <div class="masthead-heading text-uppercase">Find your dream car</div>
+    </div>
+</header>
+
+<section class="page-section">
+    <div class="container">
+        <div class="row" style="justify-content: center;">
+            <mat-card style="width: 100%; box-sizing: border-box;">
+              <mat-card-title> Vehicles </mat-card-title>
+              <mat-card-content>
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+      
+                  <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+      
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="make">
+                    <th mat-header-cell *matHeaderCellDef> Make </th>
+                    <td mat-cell *matCellDef="let element"> {{element.make}} </td>
+                  </ng-container>
+      
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="model">
+                    <th mat-header-cell *matHeaderCellDef> Model </th>
+                    <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="reports">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                      <button mat-raised-button color="warn"
+                                        (click)="openReports(element)">Reports</button>
+                    </td>
+                  </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]"></mat-paginator>
+              </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</section>

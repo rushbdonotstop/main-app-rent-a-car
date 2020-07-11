@@ -11,7 +11,6 @@ from generateCoords import get_points_along_path
 global token
 timeout = 5.0  # 5 seconds
 
-
 # send request for jwt token to mainapp
 def sendTokenRequest():
     headers = {'Content-type': 'application/json'}
@@ -55,7 +54,7 @@ def openConnection():
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
     # same as in main app
-    channel.queue_declare(queue='spring-boot')
+    channel.queue_declare(queue='spring-boot-coords')
     return connection, channel
 
 

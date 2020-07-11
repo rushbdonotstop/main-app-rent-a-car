@@ -17,4 +17,5 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     List<Report> findByVehicleIdAndStartDateAndEndDate(Long vehicleId, LocalDateTime startDate, LocalDateTime endDate);
 
+    List<Report> findAllByVehicleId(Long vehicleId);
 }

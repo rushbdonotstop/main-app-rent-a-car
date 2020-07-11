@@ -8,11 +8,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ml-auto">
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/home']">Home</a></li>
-                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/search']">Search vehicle</a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/search']">Search</a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/myVehicles']">My vehicles</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/add']">Add vehicle</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/history']">Request history</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/cart']">Cart</a></li>
                 <li *ngIf="loggedUser == null"  class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/login']">Login</a></li>
+                <li *ngIf="loggedUser == null"  class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/register']">Register</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/inbox']">Inbox</a></li>
                 <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" (click)="logout()">Logout</a></li>
             </ul>

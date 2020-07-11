@@ -1,7 +1,7 @@
 package com.example.request.controller;
 
-import com.example.request.DTO.user.PenaltyDTO;
-import com.example.request.DTO.vehicle.Vehicle;
+import com.example.request.dto.user.PenaltyDTO;
+import com.example.request.dto.vehicle.Vehicle;
 import com.example.request.model.Report;
 import com.example.request.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,16 @@ public class ReportController {
 
     @Autowired
     RestTemplate restTemplate;
+
+    /**
+     * GET /server/report/vehicle/{vehicleId}
+     *
+     * @return return all reports
+     */
+    @GetMapping(value = "vehicle/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Report>> vehicleReports(@PathVariable Long vehicleId) {
+        return new ResponseEntity<>(this.reportService.findAllByVehicleId(vehicleId), HttpStatus.OK);
+    }
 
     /**
      * GET /server/report
