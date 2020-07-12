@@ -156,6 +156,9 @@ public class RequestService {
 
     public boolean addPhysicalRenting(Request request) {
 
+        LocalDateTime ldt = LocalDateTime.now();
+        request.setTimeOfCreation(ldt);
+
         if (request.getVehicleId() == null)
             return false;
 
