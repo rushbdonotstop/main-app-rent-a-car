@@ -183,12 +183,12 @@ export class ViewVehiclesComponent implements OnInit {
     if (this.isRentingAllowed(element)) {
       const dialogRef = this.dialog.open(CartDialogComponent, {
         width: '400px',
-        data: { make: element.make, price: element.price, ownerUsername: element.ownerUsername, model: element.model, id: element.id, dialog: dialog }
+        data: { make: element.make, price: element.price, ownerUsername: element.ownerUsername, ownerId: element.ownerId, model: element.model, id: element.id, dialog: dialog }
       });
 
       if (dialog == 1) {
         dialogRef.afterClosed().subscribe(result => {
-          var request = new VehicleMainViewDTO(element.id, element.make, element.model, element.price, element.ownerUsername)
+          var request = new VehicleMainViewDTO(element.id, element.make, element.model, element.price, element.ownerUsername, element.ownerId)
           request.startDate = result.startDate
           request.endDate = result.endDate
           this.addToBundle(request)

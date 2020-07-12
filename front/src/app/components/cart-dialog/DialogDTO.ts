@@ -7,4 +7,5 @@ export class DialogDTO{
     price: any
     ownerUsername: any
     dialog: DialogType
+    ownerId:any
 }

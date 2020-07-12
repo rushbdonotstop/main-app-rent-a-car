@@ -122,8 +122,10 @@ public class RequestService {
         for (Bundle bundle : requests.getBundles()) {
             Bundle newBundle = bundleRepository.saveAndFlush(new Bundle(requests.getRequests())); //contains Id
             for (Request request : bundle.getRequests()) {
+                LocalDateTime ldt = LocalDateTime.now();
                 request.setBundle(newBundle);
                 request.setStatus(Status.PENDING);
+                request.setTimeOfCreation(ldt);
                 requestRepository.saveAndFlush(request);
             }
 
