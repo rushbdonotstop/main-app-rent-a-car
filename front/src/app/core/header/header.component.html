@@ -1,0 +1,41 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/navbar-logo.svg"
+                alt="" /></a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">Menu<i class="fas fa-bars ml-1"></i></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/home']">
+                    Home
+                </a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/search']">Search</a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/myVehicles']">My vehicles</a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/add']">Add vehicle</a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/history']">Request history</a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/cart']">
+                    <span class="material-icons">
+                        shopping_cart
+                    </span>
+                </a></li>
+                <li *ngIf="loggedUser == null"  class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/register']">Register</a></li>
+                <li *ngIf="loggedUser == null"  class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/login']">
+                    <span class="material-icons">
+                        login
+                    </span>
+                </a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" [routerLink]="['/inbox']">
+                    <span class="material-icons">
+                        chat
+                    </span>
+                </a></li>
+                <li *ngIf="loggedUser != null" class="nav-item"><a class="nav-link js-scroll-trigger" href="" (click)="logout()">
+                    <span class="material-icons">
+                        logout
+                    </span>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

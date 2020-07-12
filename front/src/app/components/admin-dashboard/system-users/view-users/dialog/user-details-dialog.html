@@ -1,0 +1,42 @@
+<div style="overflow-y: hidden; overflow-x: hidden;" class="container">
+    <div class="row">
+        <div class="col-10">
+            <h3>User details</h3>
+        </div>
+        <div class="col-2">
+            <button mat-raised-button color="warn" class="pull-right" (click)="onNoClick()">X</button>
+        </div>
+    </div>
+    <div mat-dialog-content>
+        <mat-card>
+            <mat-card-content style="margin-top: 20px;">
+                <form>
+                    <div class="row">
+                        <mat-form-field style="width: 400px;" [style.fontSize]="16">
+                            <mat-label>Full name</mat-label>
+                            <input disabled matInput value="{{value.fullName}}">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field style="width: 400px;" [style.fontSize]="16">
+                            <mat-label>Address</mat-label>
+                            <input disabled matInput value="{{value.address}}">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field style="width: 400px;" [style.fontSize]="16">
+                            <mat-label>Business Number</mat-label>
+                            <input disabled matInput value="{{value.businessNum}}">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field style="width: 400px;" [style.fontSize]="16">
+                            <mat-label>Vehicle Number</mat-label>
+                            <input disabled matInput value="{{value.vehicleNum}}">
+                        </mat-form-field>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

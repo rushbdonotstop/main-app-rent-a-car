@@ -1,0 +1,30 @@
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+.example-button-row {
+  display: table-cell;
+}
+
+button {
+  margin: 10px;
+  margin-top: 30px;
+}
+
+.icon {
+  height: 70px;
+  float: right;
+  margin-top: 20px;
+  margin-right: 60px;
+}
+
+input {
+  border: none;
+  border-bottom: 2px solid black;
+  margin-top: 10px;
+}
+
+.h4 {
+  margin-bottom: 10px;
+}
+
+.validation {
+  color: red
+}

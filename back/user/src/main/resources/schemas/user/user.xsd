@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/user"
+           targetNamespace="http://rentacar.com/user" elementFormDefault="qualified"
+           xmlns:user-details="http://rentacar.com/user-details">
+
+    <xs:import namespace="http://rentacar.com/user-details" schemaLocation="user-details.xsd"/>
+
+    <xs:element name="user">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="username" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+                <xs:element ref="user-details:userDetails"/>
+                <xs:element name="verified" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteUserById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllUser">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="user" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUser">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createUser">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateUser">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

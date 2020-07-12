@@ -1,0 +1,69 @@
+table {
+  width: 100%;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.rentButton {
+  height: 50px;
+  width: 200px;
+  margin-top: 40px;
+  margin-right: 5px;
+}
+
+.clearButton {
+  height: 50px;
+  width: 70px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.icon {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60px;
+  margin-top: 30px;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+td {
+  width: 25%;
+}
+
+.price {
+  text-align: center;
+  margin-top: 20px;
+  color:rgb(85, 10, 10);
+  font-size: 20px;
+}
+
+.discount {
+  text-align: center;
+  margin-top: 20px;
+  color:darkgoldenrod;
+  font-size: 20px;
+}
+
+.neutral {
+  text-align: center;
+  margin-top: 20px;
+  color:rgb(54, 54, 54);
+  font-size: 20px;
+}

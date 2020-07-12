@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/location"
+           targetNamespace="http://rentacar.com/location" elementFormDefault="qualified"
+           xmlns:city="http://rentacar.com/city"
+           xmlns:state="http://rentacar.com/state"
+           xmlns:street="http://rentacar.com/street">
+
+    <xs:import namespace="http://rentacar.com/city" schemaLocation="city.xsd"/>
+    <xs:import namespace="http://rentacar.com/street" schemaLocation="street.xsd"/>
+    <xs:import namespace="http://rentacar.com/state" schemaLocation="state.xsd"/>
+
+    <xs:element name="location">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element ref="state:state"/>
+                <xs:element ref="city:city"/>
+                <xs:element ref="street:street"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getLocationById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="location_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllLocation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="location" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getLocation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="location"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createLocation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="location"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateLocation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="location"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteLocationById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="location_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

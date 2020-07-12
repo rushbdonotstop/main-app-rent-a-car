@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/pricelist"
+           targetNamespace="http://rentacar.com/pricelist" elementFormDefault="qualified"
+           xmlns:vehicle-discount="http://rentacar.com/vehicle-discount">
+
+    <xs:import namespace="http://rentacar.com/vehicle-discount" schemaLocation="vehicle-discount.xsd"/>
+
+    <xs:element name="pricelist">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="startDate" type="xs:dateTime"/>
+                <xs:element name="endDate" type="xs:dateTime"/>
+                <xs:element name="price" type="xs:float"/>
+                <xs:element name="priceByMile" type="xs:float"/>
+                <xs:element name="priceCollision" type="xs:float"/>
+                <xs:element name="vehicleId" type="xs:long"/>
+                <xs:element ref="vehicle-discount:vehicleDiscount"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getPricelistsByVehicleId">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getPricelistById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pricelist_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllPricelist">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pricelist" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getPricelist">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pricelist"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createPricelists">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pricelist" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updatePricelists">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pricelist" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deletePricelistById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pricelist_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,17 @@
+<h4 >File a report</h4>
+<img  class="icon" src=".\.\.\assets\img\report.png">
+
+<div>
+    <input placeholder="mileage" [(ngModel)]="mileage" [disabled]="data.viewMode">
+</div>
+
+<div>
+    <input placeholder="additional info" [(ngModel)]="additionalInfo">
+</div>
+
+<p class="validation" *ngIf="!valid">mileage is required</p>
+
+<div class="example-button-row">
+    <button mat-raised-button color="accent" (click)="createReport()">Send</button>
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

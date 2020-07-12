@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rentacar.com/vehicle-image"
+           targetNamespace="http://rentacar.com/vehicle-image" elementFormDefault="qualified">
+
+    <xs:element name="vehicleImage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="type" type="xs:string"/>
+                <xs:element name="picByte" type="xs:base64Binary" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleImageById">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="make_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllVehicleImage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleImage" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getVehicleImage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="vehicleImage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
