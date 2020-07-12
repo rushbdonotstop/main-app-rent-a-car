@@ -11,8 +11,6 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     List<Report> findAll();
 
-    List<Report> findByVehicleId(Long vehicleId);
-
     Optional<Report> findById(Long id);
 
     List<Report> findByVehicleIdAndStartDateAndEndDate(Long vehicleId, LocalDateTime startDate, LocalDateTime endDate);

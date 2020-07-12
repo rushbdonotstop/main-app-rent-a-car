@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/shared/models/user/User';
 import { UserDetails } from 'src/app/shared/models/user/UserDetails';
 import { UserType } from 'src/app/shared/models/user/UserType';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './register.component.html',
@@ -20,7 +21,7 @@ export class RegisterComponent implements OnInit {
   public agentRequest = false;
 
 
-  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar,private authService : AuthService) { 
+  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar,private authService : AuthService, private router: Router) { 
     this.usernameInvalid = false;
     this.passwordInvalid = false;
     this.passwordsDontMatch = false;
@@ -93,6 +94,7 @@ export class RegisterComponent implements OnInit {
         });
       })
     }
+    this.router.navigate(['home']);
   }
 
   invalidUsername(username : String) : boolean{

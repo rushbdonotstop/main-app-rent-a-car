@@ -21,12 +21,7 @@ import { MyVehiclesReportDialogComponent } from './components/my-vehicles/my-veh
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RentDialogComponent,
-    CartDialogComponent,
-    ReportDialogComponent,
-    MapDialogComponent,
-    MyVehiclesReportDialogComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -34,20 +29,11 @@ import { MyVehiclesReportDialogComponent } from './components/my-vehicles/my-veh
     CoreModule,
     HomeModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
-    MatButtonModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    FormsModule,
-    MatListModule,
-    MatTabsModule,
-    MatTableModule,
-    AgmCoreModule
+    AppRoutingModule
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
   bootstrap: [AppComponent],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [RentDialogComponent, CartDialogComponent, ReportDialogComponent, MyVehiclesReportDialogComponent, MapDialogComponent]
 })
 export class AppModule { }

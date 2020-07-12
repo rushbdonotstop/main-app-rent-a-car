@@ -1,4 +1,4 @@
-package com.example.user.model;
+package com.example.user.model.enums;
 
 public enum PenaltyStatus {
     NOT_PAID, PAID;

@@ -2,11 +2,10 @@ package com.example.user.service;
 
 import com.example.user.dto.PenaltyDTO;
 import com.example.user.model.Penalty;
-import com.example.user.model.PenaltyStatus;
+import com.example.user.model.enums.PenaltyStatus;
 import com.example.user.model.User;
 import com.example.user.model.UserDetails;
 import com.example.user.repository.PenaltyRepository;
-import com.example.user.repository.UserDetailsRepository;
 import com.example.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

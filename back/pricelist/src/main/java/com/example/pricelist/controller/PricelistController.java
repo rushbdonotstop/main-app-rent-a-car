@@ -63,8 +63,6 @@ public class PricelistController {
                 HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
         Notification notification = new Notification("Vehicle id does not exist.");
         if (exists){
-            System.err.println(startDate);
-            System.err.println(endDate);
             notification = priceListService.savePricelists(pricelists, startDate, endDate);
         }
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);

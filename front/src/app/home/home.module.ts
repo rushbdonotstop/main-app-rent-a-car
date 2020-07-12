@@ -43,6 +43,12 @@ import { AgmCoreModule } from '@agm/core';
 import { NewMessageDialogComponent } from '../components/user-inbox/new-message-dialog/new-message-dialog.component';
 import { RegisterVerificationComponent } from './register/register-verification/register-verification.component';
 import { MyVehiclesComponent } from '../components/my-vehicles/my-vehicles.component';
+import { RentDialogComponent } from '../components/rent-dialog/rent-dialog.component';
+import { CartDialogComponent } from '../components/cart-dialog/cart-dialog.component';
+import { ReportDialogComponent } from '../components/report-dialog/report-dialog.component';
+import { MapDialogComponent } from '../components/map-dialog/map-dialog.component';
+import { MyVehiclesReportDialogComponent } from '../components/my-vehicles/my-vehicles-report-dialog/my-vehicles-report-dialog.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -83,7 +89,12 @@ import { MyVehiclesComponent } from '../components/my-vehicles/my-vehicles.compo
     EditPermissionsComponent,
     NewMessageDialogComponent,
     RegisterVerificationComponent,
-    MyVehiclesComponent
+    MyVehiclesComponent,
+    RentDialogComponent,
+    CartDialogComponent,
+    ReportDialogComponent,
+    MapDialogComponent,
+    MyVehiclesReportDialogComponent
   ],
   entryComponents: [
     VehicleDetailsComponent, ViewPriceListComponent, RequestDetailsComponent, ConversationContentComponent, NewMessageDialogComponent,
@@ -95,7 +106,8 @@ import { MyVehiclesComponent } from '../components/my-vehicles/my-vehicles.compo
     UserDetailsDialog,
     RequestDetailsComponent,
     EditPermissionsComponent,
-    VehicleStatisticComponent
+    VehicleStatisticComponent,
+    RentDialogComponent, CartDialogComponent, ReportDialogComponent, MyVehiclesReportDialogComponent, MapDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -132,7 +144,15 @@ import { MyVehiclesComponent } from '../components/my-vehicles/my-vehicles.compo
     MatPaginatorModule,
     MatTooltipModule,
     TextFieldModule,
+    MatTabsModule,    
+    MatButtonModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    FormsModule,
+    MatListModule,
     MatTabsModule,
+    MatTableModule,
+    AgmCoreModule,
     MatTableModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBcBUQxfS6JldNG0Ltoju5YxE_0-CKJsu4',

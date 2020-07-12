@@ -22,9 +22,6 @@ public class VerificationController {
     @Autowired
     VerificationTokenService verificationTokenService;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
     @GetMapping(value = "/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> confirmVerification(@PathVariable String token) throws Exception {
         try {

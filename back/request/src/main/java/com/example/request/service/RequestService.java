@@ -128,8 +128,10 @@ public class RequestService {
             Bundle newBundle = bundleRepository.save(b);
 
             for (Request request : bundle.getRequests()) {
+                LocalDateTime ldt = LocalDateTime.now();
                 request.setBundle(newBundle);
                 request.setStatus(Status.PENDING);
+                request.setTimeOfCreation(ldt);
                 requestRepository.save(request);
             }
 
@@ -454,9 +456,14 @@ public class RequestService {
 
     public Boolean canUserDelete(Long userId) {
         try {
-            this.requestRepository.findByStatus(Status.PENDING);
+            if(requestRepository.findByStatus(Status.PENDING).size() != 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
         } catch (Exception e) {
-            return true;
         }
         return false;
     }

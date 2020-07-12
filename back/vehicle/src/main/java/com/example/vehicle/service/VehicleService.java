@@ -127,10 +127,14 @@ public class VehicleService {
 
     public Boolean canUserDelete(Long userId) {
         try {
-            this.vehicleRepository.findAllByUserId(userId);
+            if(vehicleRepository.findAllByUserId(userId).size() != 0){
+                return false;
+            }
+            else{
+                return true;
+            }
 
         } catch (Exception e) {
-            return true;
         }
         return false;
     }

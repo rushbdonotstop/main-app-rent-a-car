@@ -33,9 +33,6 @@ public class RegistrationController {
     RegisterService registerService;
 
     @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
     EmailProducerController emailProducerController;
 
     @PostMapping(value= "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

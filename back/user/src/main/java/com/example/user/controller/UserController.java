@@ -161,12 +161,18 @@ public class UserController {
      * @return returns notification
      */
     @DeleteMapping(value="/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> deleteUser(@PathVariable String id) throws Exception {
+    public ResponseEntity<Notification> deleteUser(@PathVariable Long id) throws Exception {
         try {
             boolean hasRequest = userHasRequest(id);
             boolean hasVehicle = userHasVehicle(id);
 
-            userService.deleteUser(id, hasRequest, hasVehicle);
+            if(hasRequest || hasVehicle){
+                return new ResponseEntity<Notification>(new Notification("User can't be deleted.", true), HttpStatus.OK);
+            }
+            else{
+                userService.deleteUser(id);
+            }
+
             return new ResponseEntity<Notification>(new Notification("User with id " + id + " deleted.", true), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(new Notification("User id: "+id+"doesn't exist.", false), HttpStatus.CONFLICT);
@@ -175,11 +181,11 @@ public class UserController {
         }
     }
 
-    public boolean userHasVehicle(String id) {
+    public boolean userHasVehicle(Long id) {
         return restTemplate.exchange("http://vehicle/vehicle/canUserDelete/" + id, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
     }
 
-    public boolean userHasRequest(String id) {
+    public boolean userHasRequest(Long id) {
         return restTemplate.exchange("http://request/request/canUserDelete/" + id, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>() {}).getBody();
     }
 

@@ -67,13 +67,13 @@
                         <ng-container matColumnDef="details">
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element"> <button mat-raised-button
-                                    (click)="openDetails(element.id)">Details</button> </td>
+                                    (click)="openDetails(element.vehicleId)">Details</button> </td>
                         </ng-container>
 
                         <ng-container matColumnDef="prices">
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary"
-                                    (click)="openPrices(element.id)">Prices</button> </td>
+                                    (click)="openPrices(element.vehicleId)">Prices</button> </td>
                         </ng-container>
 
 
@@ -117,9 +117,9 @@
                             <td>{{request.startDate | date : 'mediumDate'}}</td>
                             <td>{{request.endDate | date : 'mediumDate'}}</td>
                             <td>{{request.ownerUsername}}</td>
-                            <td><button mat-raised-button (click)="openDetails(request.id)">Details</button></td>
+                            <td><button mat-raised-button (click)="openDetails(request.vehicleId)">Details</button></td>
                             <td> <button mat-raised-button color="primary"
-                                    (click)="openPrices(request.id)">Prices</button> </td>
+                                    (click)="openPrices(request.vehicleId)">Prices</button> </td>
                             <td><button mat-raised-button color="warn"
                                     (click)="removeFromBundle(request,bundle)">Remove</button></td>
                         </tr>

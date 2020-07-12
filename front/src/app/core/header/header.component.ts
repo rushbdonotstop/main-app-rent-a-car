@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pm-header',
@@ -12,13 +13,14 @@ export class HeaderComponent implements OnInit {
 
   loggedUser = localStorage.getItem("userObject")
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   logout(){
     localStorage.clear();
+    this.router.navigate(['home']);
   }
 
 }
