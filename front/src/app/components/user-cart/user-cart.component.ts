@@ -31,7 +31,7 @@ export class UserCartComponent implements OnInit {
   dataSourceBundle: MatTableDataSource<BundleAndVehicle>;
   displayedColumns: string[] = ['make', 'model', 'price', 'startDate', 'endDate', 'owner', 'details', 'prices', 'remove'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
-  price: number
+  private price: number = 0
   discounts = []
   rentingPrivilege: boolean = false
   hasPenalties: boolean = false
@@ -73,8 +73,6 @@ export class UserCartComponent implements OnInit {
         })
       }
     }
-
-
   }
 
   removeFromBundle(element: RequestAndVehicle, bundle: BundleAndVehicle) {
@@ -164,7 +162,7 @@ export class UserCartComponent implements OnInit {
 
   calculateTotalPrice() {
 
-    this.price = 0
+    var price = 0
 
     this.discounts = []
 
@@ -173,17 +171,18 @@ export class UserCartComponent implements OnInit {
     for (let b of this.bundleList) {
       this.calculateRequestPrice(b.requests)
     }
+    
   }
 
   calculateRequestPrice(requests) {
     for (let r of requests) {
-      console.log("curr price")
-      console.log(this.price)
-      var requestPrice = 0
-      var startDate = r.startDate
-      var endDate = r.endDate
-      var prices = []
       this.pricelistService.getPricelists(r.vehicleId).subscribe(data => {
+        console.log("curr price")
+        console.log(this.price)
+        var requestPrice = 0
+        var startDate = r.startDate
+        var endDate = r.endDate
+        var prices = []
         prices = data
         console.log(prices)
         for (let p of prices) {
@@ -195,6 +194,7 @@ export class UserCartComponent implements OnInit {
               discount = (p.vehicleDiscount.discount / 100)
               this.discounts.push('discount ' + p.vehicleDiscount.discount + "% on vehicle " + r.make + " " + r.model + " (" + daysOnPriceList + " days / required " + p.vehicleDiscount.numDays + ")")
             }
+            console.log(this.price)
             this.price += p.price * (daysOnPriceList) * (1-discount)
             requestPrice += p.price * (daysOnPriceList) * (1-discount)
             console.log(p.price)
@@ -211,6 +211,7 @@ export class UserCartComponent implements OnInit {
                 this.discounts.push('discount ' + p.vehicleDiscount.discount + "% on vehicle " + r.make + " " + r.model + " (" + daysOnPriceList + " days / required " + p.vehicleDiscount.numDays + ")")
                 discount = (p.vehicleDiscount.discount / 100)
               }
+              console.log(this.price)
               this.price += p.price * (this.daysDiff(p.endDate, startDate)) * (1-discount)
               requestPrice += p.price * (this.daysDiff(p.endDate, startDate)) * (1-discount)
               console.log(p.price)
@@ -228,6 +229,7 @@ export class UserCartComponent implements OnInit {
                 this.discounts.push('discount ' + p.vehicleDiscount.discount + "% on vehicle " + r.make + " " + r.model + " (" + daysOnPriceList + " days / required " + p.vehicleDiscount.numDays + ")")
                 discount = (p.vehicleDiscount.discount / 100)
               }
+              console.log(this.price)
               this.price += p.price * (this.daysDiff(endDate, p.startDate)) * (1-discount)
               requestPrice += p.price * (this.daysDiff(endDate, p.startDate)) * (1-discount)
               console.log(p.price)
@@ -243,6 +245,7 @@ export class UserCartComponent implements OnInit {
                 this.discounts.push('discount ' + p.vehicleDiscount.discount + "% on vehicle " + r.make + " " + r.model + " (" + daysOnPriceList + " days / required " + p.vehicleDiscount.numDays + ")")
                 discount = (p.vehicleDiscount.discount / 100)
               }
+              console.log(this.price)
               this.price += p.price * (daysOnPriceList) * (1-discount)
               requestPrice += p.price * (daysOnPriceList) * (1-discount)
               console.log(p.price)
@@ -253,7 +256,9 @@ export class UserCartComponent implements OnInit {
           }
         }
         r.price = requestPrice
+        console.log("subscribe")
         console.log(this.price)
+        this.price = this.price
       });
     }
   }
