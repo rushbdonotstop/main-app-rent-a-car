@@ -137,6 +137,8 @@ export class UserCartComponent implements OnInit {
         });
         this.cartService.newCart()
         this.cart = new DetailedCart()
+        this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>();
+        this.bundleList = [];
         if (this.isCartEmpty)
           this.emptyCart = true
       },

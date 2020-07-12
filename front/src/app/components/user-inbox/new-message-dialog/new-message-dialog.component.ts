@@ -44,8 +44,7 @@ export class NewMessageDialogComponent implements OnInit {
     messageToSend.receiverUsername = this.receiverUsername;
 
     messageToSend.messageType = MessageType.SENT_MESSAGE;
-
-    this.messageService.sendNewMessage(messageToSend).subscribe(
+     this.messageService.sendNewMessage(messageToSend).subscribe(
       notification => {
             this.newMessageText = '';
             this._snackBar.open(notification.text, "", {

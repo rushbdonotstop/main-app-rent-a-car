@@ -301,13 +301,13 @@ export class ViewCodebookComponent implements OnInit {
           this.snackBar.open(data.text, "", { 
             duration: 2000,
           verticalPosition: 'bottom'});
+          this.dataSourceMakes = new MatTableDataSource<CatalogueItem>();
       });
       this.newMake.value = "";
     }
   }
 
   addModel() {
-    alert(JSON.stringify(this.selectedMake));
     if(!this.newModel.value) {
       this.snackBar.open("Enter vehicle model value!", "", {
         duration: 2000,
@@ -324,6 +324,8 @@ export class ViewCodebookComponent implements OnInit {
           this.snackBar.open(data.text, "", { 
             duration: 2000,
           verticalPosition: 'bottom'});
+          this.dataSourceModels = new MatTableDataSource<VehicleModel>();
+
       });
       this.newModel.value = "";
       this.selectedMake = new CatalogueItem();
@@ -341,6 +343,7 @@ export class ViewCodebookComponent implements OnInit {
           this.snackBar.open(data.text, "", { 
             duration: 2000,
           verticalPosition: 'bottom'});
+          this.dataSourceTransmissionTypes = new MatTableDataSource<CatalogueItem>();
       });
       this.newTransmission.value = "";
     }
@@ -357,6 +360,7 @@ export class ViewCodebookComponent implements OnInit {
           this.snackBar.open(data.text, "", { 
             duration: 2000,
           verticalPosition: 'bottom'});
+          this.dataSourceStyles = new MatTableDataSource<CatalogueItem>();
       });
       this.newStyle.value = "";
     }

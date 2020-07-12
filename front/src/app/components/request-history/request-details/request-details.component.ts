@@ -96,7 +96,6 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   leaveReview(vehicleId: number) {
-    alert('id je: ' + vehicleId);
     const reviewDialogRef = this.dialog.open(VehicleDetailsComponent, {
       width: '1200px',
       height: '700px',

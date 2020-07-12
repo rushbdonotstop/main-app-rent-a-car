@@ -186,8 +186,8 @@ export class RequestHistoryComponent implements OnInit {
 
   openMessageDialog(bundle: BundleDTO) {
     const messageDialogRef = this.messageDialog.open(NewMessageDialogComponent, {
-      width: '1200px',
-      height: '600px',
+      width: '600px',
+      height: '300px',
       data: {
         bundle: bundle,
         selectedHistory: this.selectedHistory

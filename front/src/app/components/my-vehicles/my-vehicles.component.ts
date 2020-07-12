@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { VehicleMainViewDTO } from 'src/app/shared/models/vehicle/VehicleMainViewDTO';
 import { User } from 'src/app/shared/models/user/User';
 import { MyVehiclesReportDialogComponent } from './my-vehicles-report-dialog/my-vehicles-report-dialog.component';
+import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.component';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { MyVehiclesReportDialogComponent } from './my-vehicles-report-dialog/my-
     styleUrls: ['./my-vehicles.component.css']
 })
 export class MyVehiclesComponent implements OnInit {
-    displayedColumns: string[] = ['make', 'model', 'reports'];
+    displayedColumns: string[] = ['make', 'model', 'reports', 'details'];
     dataSource: MatTableDataSource<VehicleMainViewDTO>;
     vehicleList: VehicleMainViewDTO[] = [];
 
@@ -47,5 +48,17 @@ export class MyVehiclesComponent implements OnInit {
       
           dialogRef.afterClosed().subscribe(result => {
           });
+    }
+
+    openDetails(vehicleId: number) {
+      const dialogRef = this.dialog.open(VehicleDetailsComponent, {
+        width: '1200px',
+        height: '700px',
+        data: { id: vehicleId }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
     }
 }

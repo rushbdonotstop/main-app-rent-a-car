@@ -129,13 +129,19 @@
 
             <ng-container matColumnDef="rent">
               <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let element"> <button mat-raised-button (click)="inStoreRent(element)">In store
-                  rent</button> </td>
+              <td mat-cell *matCellDef="let element"> 
+                <button mat-mini-fab color="primary" (click)="inStoreRent(element)">
+                  <mat-icon>store</mat-icon>
+                </button>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="map">
               <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let element"> <button mat-raised-button *ngIf="hasApp(element)"(click)="viewMap(element)">View in map</button> </td>
+              <td mat-cell *matCellDef="let element">
+                <button mat-mini-fab color="accent" *ngIf="hasApp(element)"(click)="viewMap(element)">
+                  <mat-icon>location_on</mat-icon>
+                </button>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
