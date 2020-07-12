@@ -31,7 +31,7 @@ export class UserCartComponent implements OnInit {
   dataSourceBundle: MatTableDataSource<BundleAndVehicle>;
   displayedColumns: string[] = ['make', 'model', 'price', 'startDate', 'endDate', 'owner', 'details', 'prices', 'remove'];
   displayedColumns2: string[] = ['make', 'model', 'price', 'owner', 'remove'];
-  price: number = 0
+  price: number
   discounts = []
   rentingPrivilege: boolean = false
   hasPenalties: boolean = false
@@ -46,6 +46,7 @@ export class UserCartComponent implements OnInit {
       this.bundleList = this.cart.bundles
       this.dataSourceRequests = new MatTableDataSource<RequestAndVehicle>(this.requests);
       this.dataSourceBundle = new MatTableDataSource<BundleAndVehicle>(this.bundleList);
+      console.log(this.requests)
 
       if (this.requests.length == 0 && this.bundleList.length == 0)
         this.emptyCart = true
@@ -163,6 +164,8 @@ export class UserCartComponent implements OnInit {
 
   calculateTotalPrice() {
 
+    this.price = 0
+
     this.discounts = []
 
     this.calculateRequestPrice(this.requests)
@@ -173,8 +176,9 @@ export class UserCartComponent implements OnInit {
   }
 
   calculateRequestPrice(requests) {
-    this.price = 0
     for (let r of requests) {
+      console.log("curr price")
+      console.log(this.price)
       var requestPrice = 0
       var startDate = r.startDate
       var endDate = r.endDate
@@ -196,6 +200,7 @@ export class UserCartComponent implements OnInit {
             console.log(p.price)
             console.log(daysOnPriceList)
             console.log(discount)
+            console.log(this.price)
           }
           else if (this.compareDate(p.startDate, startDate) == -1 && this.compareDate(p.endDate, endDate) == -1) {
             if (this.datesOverlap(startDate, endDate, p.startDate, p.endDate)) {
@@ -211,6 +216,7 @@ export class UserCartComponent implements OnInit {
               console.log(p.price)
               console.log(daysOnPriceList)
               console.log(discount)
+              console.log(this.price)
             }
           }
           else if (this.compareDate(p.startDate, startDate) == 1 && this.compareDate(p.endDate, endDate) == 1) {
@@ -227,6 +233,7 @@ export class UserCartComponent implements OnInit {
               console.log(p.price)
               console.log(daysOnPriceList)
               console.log(discount)
+              console.log(this.price)
             }
             else if (this.compareDate(p.startDate, startDate) == 1 && this.compareDate(p.endDate, endDate) == -1) {
               console.log("pricelist in between start and end date")
@@ -241,13 +248,14 @@ export class UserCartComponent implements OnInit {
               console.log(p.price)
               console.log(daysOnPriceList)
               console.log(discount)
+              console.log(this.price)
             }
           }
         }
         r.price = requestPrice
+        console.log(this.price)
       });
     }
-
   }
 
   compareDate(date1: Date, date2: Date): number {
