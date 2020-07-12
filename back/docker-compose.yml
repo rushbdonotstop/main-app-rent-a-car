@@ -37,7 +37,7 @@ services:
       - eureka-serviceregistry   
 
 
-vehicle-service:
+  vehicle-service:
     build: 
         context: ./vehicle
         dockerfile: Dockerfile
@@ -54,10 +54,12 @@ vehicle-service:
       - DATABASE_PASSWORD=admin
       - DATABASE_DOMAIN=postgres
       - DATABASE_SCHEMA=maindb
-      - WAIT_HOSTS=eureka-serviceregistry:8761
+      - WAIT_HOSTS=eureka-serviceregistry:8761, rabbitmq:5672
       - WAIT_HOSTS_TIMEOUT=300
       - WAIT_SLEEP_INTERVAL=30
       - WAIT_HOST_CONNECT_TIMEOUT=30
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
     tty: true
     networks:
       - xml

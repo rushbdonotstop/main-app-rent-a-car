@@ -221,28 +221,31 @@ public class UserService {
     }
 
     public User createUserFromAgentApp(User user) {
+        UserDetails newUserDetails = user.getUserDetails();
+        newUserDetails.setId(null);
+        UserDetails savedDetails = userDetailsRepository.save(newUserDetails);
         List<Privilege> privilegeList = new ArrayList<>();
         privilegeList.add(Privilege.RENT_VEHICLE);
         privilegeList.add(Privilege.ADD_VEHICLE);
-        user.getUserDetails().setPrivilegeList(privilegeList);
+
+        User newUser = user;
+        newUser.setUserDetails(savedDetails);
+        newUser.setAgentAppId(user.getId());
+        newUser.setId(null);
+        newUser = userRepository.save(newUser);
+
         UserPrivilege privilege1 = new UserPrivilege();
         privilege1.setPrivilege(Privilege.RENT_VEHICLE);
-        privilege1.setUser(user);
+        privilege1.setUser(newUser);
 
         userPrivilegeRepository.save(privilege1);
 
         UserPrivilege privilege2 = new UserPrivilege();
         privilege2.setPrivilege(Privilege.ADD_VEHICLE);
-        privilege2.setUser(user);
+        privilege2.setUser(newUser);
 
         userPrivilegeRepository.save(privilege2);
 
-        UserDetails newUserDetails = userDetailsRepository.save(user.getUserDetails());
-        User newUser = user;
-        newUser.setUserDetails(newUserDetails);
-        newUser.setAgentAppId(user.getId());
-        newUser.setId(null);
-        newUser = userRepository.save(newUser);
         return newUser;
     }
 
@@ -254,5 +257,15 @@ public class UserService {
         userToUpdate.setVerified(user.getVerified());
         userRepository.save(userToUpdate);
         return userToUpdate;
+    }
+
+    public UserDTO getUserFromAgentApp(Long id) {
+        User user = userRepository.findOneByAgentAppId(id);
+        user.getUserDetails().setVehicleNum(user.getUserDetails().getVehicleNum() + 1);
+        userRepository.save(user);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setUsername(user.getUsername());
+        return userDTO;
     }
 }

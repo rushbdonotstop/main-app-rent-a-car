@@ -3,6 +3,7 @@ package com.example.vehicle.soapconfig.server;
 import com.example.vehicle.dto.catalogue.forsoap.*;
 import com.example.vehicle.dto.location.Location;
 import com.example.vehicle.dto.request.RequestForVehicleDTO;
+import com.example.vehicle.dto.user.UserDTO;
 import com.example.vehicle.model.Notification;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.service.VehicleImageService;
@@ -92,6 +93,12 @@ public class VehicleEndpoint {
         System.err.println(request.getVehicle());
 
         System.err.println("---------------- POZIVANJE KONTROLERA -------------------");
+        // User controller
+        UserDTO userDTO = restTemplate.exchange("http://user/user/getUserFromAgentApp/"+request.getVehicle().getUserId(),
+                HttpMethod.GET, null, new ParameterizedTypeReference<UserDTO>() {}).getBody();
+
+        request.getVehicle().setUserId(userDTO.getId());
+        System.err.println("---------------- USER PROSAO ------------------- User id : " + userDTO.getId());
 
         // Pozvati location controller
 
@@ -155,7 +162,9 @@ public class VehicleEndpoint {
 
             com.example.vehicle.dto.pricelist.Pricelist pricelist1 = pricelist.toModel(pricelist);
             pricelist1.setId(null);
-            pricelist1.getVehicleDiscount().setId(null);
+            if (pricelist1.getVehicleDiscount() != null){
+                pricelist1.getVehicleDiscount().setId(null);
+            }
             pricelistsModel.add(pricelist1);
         }
 

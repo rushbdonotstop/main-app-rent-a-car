@@ -7,6 +7,7 @@ import com.example.message.dto.UserDTO;
 import com.example.message.model.Message;
 import com.example.message.model.Notification;
 import com.example.message.service.MessageService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -67,20 +68,25 @@ public class MessageController {
     }
 
     @PostMapping(value = "/newMessage", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> newMessage(@RequestBody NewMessageDTO message) throws Exception {
-        List<UserDTO> userList = (this.getUsernames()).getBody();
-        List<RequestDTO>  requestList = (this.getRequests()).getBody();
-        boolean status = this.messageService.sendMessage(this.messageService.convertMessage(message, userList), requestList);
+    public ResponseEntity<Notification> newMessage(@RequestBody NewMessageDTO message) {
+        try {
+            List<UserDTO> userList = (this.getUsernames()).getBody();
+            List<RequestDTO> requestList = (this.getRequests()).getBody();
+            System.err.println("VELICINA LISTE U KONTROLERU: " + requestList.size());
+            boolean status = this.messageService.sendMessage(this.messageService.convertMessage(message, userList), requestList);
 
-        Notification not = new Notification();
+            Notification not = new Notification();
 
-        if (status){
-            not.setText("Message successfully sent.");
-            return new ResponseEntity<Notification>(not, HttpStatus.OK);
-        }
-        else{
-            not.setText("You dont have any reserved or paid requests from this user.");
-            return new ResponseEntity<Notification>(not, HttpStatus.BAD_REQUEST);
+            if (status) {
+                not.setText("Message successfully sent.");
+                return new ResponseEntity<Notification>(not, HttpStatus.OK);
+            } else {
+                not.setText("You dont have any reserved or paid requests from this user.");
+                return new ResponseEntity<Notification>(not, HttpStatus.BAD_REQUEST);
+            }
+        } catch(Exception e) {
+            System.err.println(e.toString());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 

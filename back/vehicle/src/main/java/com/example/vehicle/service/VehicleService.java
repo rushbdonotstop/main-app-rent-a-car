@@ -117,7 +117,6 @@ public class VehicleService {
             VehicleImage vi = imageRepository.save(toModel.getImage());
             toModel.setImage(imageRepository.findByName(vi.getName()).get());
             newVehicle = vehicleRepository.save(toModel);
-            newVehicle.setAgentAppId(toModel.getId());
             vehicleRepository.save(newVehicle);
         }
         catch (Exception e){

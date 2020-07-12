@@ -66,7 +66,7 @@ public class Pricelist {
     protected float priceByMile;
     protected float priceCollision;
     protected long vehicleId;
-    @XmlElement(namespace = "http://rentacar.com/vehicle-discount", required = true)
+    @XmlElement(namespace = "http://rentacar.com/vehicle-discount")
     protected VehicleDiscount vehicleDiscount;
 
     /**
@@ -248,9 +248,11 @@ public class Pricelist {
 
         com.example.vehicle.dto.pricelist.VehicleDiscount vehicleDiscountModel = new com.example.vehicle.dto.pricelist.VehicleDiscount();
 
-        vehicleDiscountModel.setDiscount(pricelist.getVehicleDiscount().getDiscount());
-        vehicleDiscountModel.setId(pricelist.getVehicleDiscount().getId());
-        vehicleDiscountModel.setNumDays(pricelist.getVehicleDiscount().getNumDays());
+        if(pricelist.getVehicleDiscount() != null){
+            vehicleDiscountModel.setDiscount(pricelist.getVehicleDiscount().getDiscount());
+            vehicleDiscountModel.setId(pricelist.getVehicleDiscount().getId());
+            vehicleDiscountModel.setNumDays(pricelist.getVehicleDiscount().getNumDays());
+        }
 
         pricelistModel.setVehicleDiscount(vehicleDiscountModel);
 
