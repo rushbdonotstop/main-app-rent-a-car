@@ -28,7 +28,7 @@ export class MapDialogComponent implements OnInit {
   firstCenter: number = null;
   marker: any
 
-  private serverUrl = 'http://localhost:8081/vehicle/socket'
+  private serverUrl = 'http://192.168.0.103:8081/vehicle/socket'
   private title = 'WebSockets chat';
   private stompClient;
   vehicleId: any;

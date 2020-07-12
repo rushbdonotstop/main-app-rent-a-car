@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/shared/models/user/User';
 import { UserDetails } from 'src/app/shared/models/user/UserDetails';
 import { UserType } from 'src/app/shared/models/user/UserType';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './register.component.html',
