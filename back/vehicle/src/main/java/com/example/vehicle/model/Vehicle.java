@@ -12,7 +12,7 @@ import java.time.ZoneId;
 import java.util.GregorianCalendar;
 
 @Entity
-public class Vehicle {
+public class  Vehicle {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
