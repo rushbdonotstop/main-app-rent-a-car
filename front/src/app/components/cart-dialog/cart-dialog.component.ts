@@ -22,6 +22,7 @@ export class CartDialogComponent implements OnInit {
   model: any
   price: any
   owner: any
+  ownerId : any
   dialog: DialogType
 
   startDate: Date
@@ -56,6 +57,7 @@ export class CartDialogComponent implements OnInit {
     this.model = this.data.model
     this.price = this.data.price
     this.owner = this.data.ownerUsername
+    this.ownerId=this.data.ownerId
     this.dialog = this.data.dialog
     this.datesValid = true
   }
@@ -67,7 +69,7 @@ export class CartDialogComponent implements OnInit {
 
   addToCart() {
     if (this.startDate != null && this.endDate != null) {
-      var request = new VehicleMainViewDTO(this.id, this.make, this.model, this.price, this.owner)
+      var request = new VehicleMainViewDTO(this.id, this.make, this.model, this.price, this.owner, this.ownerId)
       this.rentService.addItemToCart(request, this.startDate, this.endDate)
       this._snackBar.open("Item added to cart", "", {
         duration: 2000,

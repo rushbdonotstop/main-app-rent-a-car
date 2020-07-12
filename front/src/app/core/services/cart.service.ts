@@ -17,7 +17,7 @@ const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/js
 @Injectable({
   providedIn: 'root'
 })
-//TODO : get owner id
+
 export class CartService {
 
   constructor(private http: HttpClient, private loginService: UserService) { }
@@ -39,7 +39,7 @@ export class CartService {
       var request = new RequestAndVehicle(vehicle)
       request.startDate = startDate
       request.endDate = endDate
-      request.ownerId = 1
+      request.ownerId = vehicle.ownerId
       oldCart.requests.push(request)
       localStorage.setItem('cart', JSON.stringify(oldCart))
       console.log(localStorage.getItem('cart'))
@@ -48,12 +48,15 @@ export class CartService {
 
   addBundleToCart(bundleList: VehicleMainViewDTO[]) {
     var cart = localStorage.getItem('cart')
+    console.log(bundleList)
     if (cart == null) {
       var newCart = new DetailedCart()
       var bundle = new BundleAndVehicle()
       bundle.id=null
       for (let b of bundleList) {
-        bundle.requests.push(new RequestAndVehicle(b))
+        var bun = new RequestAndVehicle(b)
+        bun.ownerId = bundleList[0].ownerId
+        bundle.requests.push(bun)
       }
       newCart.bundles.push(bundle)
       localStorage.setItem('cart', JSON.stringify(newCart))
@@ -64,10 +67,13 @@ export class CartService {
       var bundle = new BundleAndVehicle()
       bundle.id=null
       for (let b of bundleList) {
-        bundle.requests.push(new RequestAndVehicle(b))
+        var bun = new RequestAndVehicle(b)
+        bun.ownerId = bundleList[0].ownerId
+        bundle.requests.push(bun)
       }
       oldCart.bundles.push(bundle)
       localStorage.setItem('cart', JSON.stringify(oldCart))
+      console.log(localStorage.getItem('cart'))
     }
   }
 

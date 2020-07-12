@@ -16,7 +16,7 @@ export class Request{
 
     constructor(details : RequestAndVehicle){
         this.vehicleId=details.vehicleId
-        this.userId=details.ownerId
+        this.userId=details.userId
         this.startDate=details.startDate
         this.endDate=details.endDate
         this.ownerId=details.ownerId
