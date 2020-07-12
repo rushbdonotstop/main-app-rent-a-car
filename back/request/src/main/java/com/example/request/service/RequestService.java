@@ -14,6 +14,7 @@ import com.example.request.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -113,20 +114,25 @@ public class RequestService {
         }
         return null;
     }
-
+    @Transactional
     public boolean addRequest(RequestDTO requests) {
 
         if (!isRentingAllowed(requests))
             return false;
-
+        System.out.println("VELICINA LISTE BUNDLE-OVA: " + requests.getBundles().size());
         for (Bundle bundle : requests.getBundles()) {
-            Bundle newBundle = bundleRepository.saveAndFlush(new Bundle(requests.getRequests())); //contains Id
+
+            System.err.println("BUNDLE JE: \t" + bundle.toString());
+            Bundle b = new Bundle(bundle.getRequests());
+            System.err.println("posle kreiranja bundlea" + b.toString());
+            Bundle newBundle = bundleRepository.save(b);
+
             for (Request request : bundle.getRequests()) {
                 LocalDateTime ldt = LocalDateTime.now();
                 request.setBundle(newBundle);
                 request.setStatus(Status.PENDING);
                 request.setTimeOfCreation(ldt);
-                requestRepository.saveAndFlush(request);
+                requestRepository.save(request);
             }
 
         }
@@ -134,7 +140,7 @@ public class RequestService {
             LocalDateTime ldt = LocalDateTime.now();
             request.setStatus(Status.PENDING);
             request.setTimeOfCreation(ldt);
-            requestRepository.saveAndFlush(request);
+            requestRepository.save(request);
         }
         return true;
     }
@@ -149,6 +155,9 @@ public class RequestService {
     }
 
     public boolean addPhysicalRenting(Request request) {
+
+        LocalDateTime ldt = LocalDateTime.now();
+        request.setTimeOfCreation(ldt);
 
         if (request.getVehicleId() == null)
             return false;

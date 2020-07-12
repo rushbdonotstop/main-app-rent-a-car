@@ -2,9 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b0aecf0-3a5d-48a5-8084-b39e6370197d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/request/src/main/resources/data-postgres.sql" beforeDir="false" afterPath="$PROJECT_DIR$/back/request/src/main/resources/data-postgres.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/app/components/user-cart/user-cart.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/components/user-cart/user-cart.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/catalogue/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/catalogue/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/back/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/location/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/location/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/message/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/message/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/pricelist/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/pricelist/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/request/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/request/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/review/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/review/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/user/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/user/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/vehicle/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/vehicle/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/zuul/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/back/zuul/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/proxy.conf.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-scriot/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-scriot/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-scriot/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-scriot/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-scriot/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-scriot/.idea/vehicle-scriot.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-scriot/generateCoords.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-scriot/script.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,14 +47,14 @@
   <component name="ProjectId" id="1cdCJxrCtgec6w7iQh7qtZtDICp" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/back/vehicle" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -54,30 +70,31 @@
       <workItem from="1592094115518" duration="1318000" />
       <workItem from="1592095461588" duration="987000" />
       <workItem from="1592240300731" duration="41000" />
+      <workItem from="1594516692758" duration="101000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="580" y="184" key="FileChooserDialogImpl" timestamp="1592240326429">
-      <screen x="0" y="0" width="1600" height="860" />
+    <state x="609" y="216" key="FileChooserDialogImpl" timestamp="1594516814961">
+      <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="580" y="184" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1592240326429" />
+    <state x="609" y="216" key="FileChooserDialogImpl/0.0.1680.1010/3600.-29.1280.680/4880.-29.1280.680/1680.-29.1536.824@0.0.1680.1010" timestamp="1594516814961" />
     <state x="495" y="252" key="com.intellij.ide.util.TipDialog" timestamp="1592095649259">
       <screen x="0" y="0" width="1600" height="860" />
     </state>

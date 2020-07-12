@@ -112,6 +112,20 @@ public class UserController {
     }
 
     /**
+     * GET /user/{id}
+     *
+     * @return returns object of type UserDTO with user id and username
+     */
+    @GetMapping(value= "/getUserFromAgentApp/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> getUserFromAgentApp(@PathVariable Long id) throws Exception {
+        try {
+            return new ResponseEntity<UserDTO>(userService.getUserFromAgentApp(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    /**
      * POST /user
      *
      * @return returns notification

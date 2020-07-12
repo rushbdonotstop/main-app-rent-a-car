@@ -61,9 +61,6 @@ public class  Vehicle {
     @Column(name="user_id", nullable = false)
     private Long userId;
 
-    @Column(name="agent_app_id")
-    private Long agentAppId;
-
     public Vehicle(Long id, int mileage, int mileageLimit, boolean collisionProtection, int childrenSeats, LocalDateTime startDate, LocalDateTime endDate, Long fuelTypeId, Long makeId, Long modelId, Long styleId, Long transmissionId, Long locationId, Long userId, VehicleImage vehicleImage) {
         this.id = id;
         this.mileage = mileage;
@@ -207,14 +204,6 @@ public class  Vehicle {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getAgentAppId() {
-        return agentAppId;
-    }
-
-    public void setAgentAppId(Long agentAppId) {
-        this.agentAppId = agentAppId;
     }
 
     @Override

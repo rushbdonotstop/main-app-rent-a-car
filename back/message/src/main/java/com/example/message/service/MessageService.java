@@ -9,6 +9,7 @@ import com.example.message.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,9 +27,13 @@ public class MessageService {
 
     public List<Message> getMessageByConversationId(Long id) { return messageRepository.findAllByConversationId(id); }
 
+    @Transactional
     public boolean sendMessage(MessageDTO message, List<RequestDTO> requestList) {
+        System.err.println("PRINTOVI  UNUTAR  SLANJA  PORUKE");
         System.err.println("datum primljen je: " + message.getDateAndTime().toString());
+        System.out.println("BROJ REQUESTOVA: " + requestList.size());
         for (RequestDTO request : requestList) {
+            System.out.println("REQUEST: \n" + request.toString());
             if (((request.getOwnerId().equals(message.getSenderId()) && request.getUserId().equals(message.getReceiverId())) || (request.getOwnerId().equals(message.getReceiverId()) && request.getUserId().equals(message.getSenderId()))) && (request.getStatus().equals(Status.RESERVED) || request.getStatus().equals(Status.PAID) || request.getStatus().equals(Status.PENDING))  ) {
                 Message mess = new Message(message);
                 if (getConversationId(message) != null) {
@@ -53,11 +58,10 @@ public class MessageService {
                 }
                 messageRepository.save(mess);
                 return true;
-            } else {
-                return false;
             }
         }
-        return false;
+                return false;
+
     }
 
     public Long getConversationId(MessageDTO mess) {
@@ -94,7 +98,8 @@ public class MessageService {
 
     public MessageDTO convertMessage(NewMessageDTO message, List<UserDTO> userList) {
         MessageDTO convertedMessage = new MessageDTO();
-
+        System.err.println("-----PRINTOVANJE  UNUTAR  KONVERTOVANJA  PORUKE");
+        System.out.println("PORUKA KOJA STIGNE: \n" + message.toString());
         for (UserDTO user : userList) {
             if (user.getUsername().equals(message.getReceiverUsername())) {
                 convertedMessage.setReceiverId(user.getId());
